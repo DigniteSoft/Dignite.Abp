@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Dignite.Abp.BlobStoring.Shared</AssemblyName>
+    <PackageId>Dignite.Abp.BlobStoring.Shared</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Localization" Version="4.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <content Remove="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
+    <EmbeddedResource Include="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
+  </ItemGroup>
+
+</Project>

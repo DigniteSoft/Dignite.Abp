@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Dignite.Abp.BlobStoring.HttpApi.Client</AssemblyName>
+    <PackageId>Dignite.Abp.BlobStoring.HttpApi.Client</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <RootNamespace />
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Http.Client" Version="4.2.2" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Application.Contracts\Dignite.Abp.BlobStoring.Application.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

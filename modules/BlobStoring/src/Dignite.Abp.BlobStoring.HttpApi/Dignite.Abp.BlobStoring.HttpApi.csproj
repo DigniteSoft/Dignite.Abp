@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Dignite.Abp.BlobStoring.HttpApi</AssemblyName>
+    <PackageId>Dignite.Abp.BlobStoring.HttpApi</PackageId>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mime" Version="3.2.2" />
+    <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.BlobStoring" Version="4.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Application.Contracts\Dignite.Abp.BlobStoring.Application.Contracts.csproj" />
+  </ItemGroup>
+  
+</Project>
