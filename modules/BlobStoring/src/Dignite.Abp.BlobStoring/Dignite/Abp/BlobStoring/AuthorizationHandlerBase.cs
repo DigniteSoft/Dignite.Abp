@@ -42,15 +42,15 @@ namespace Dignite.Abp.BlobStoring
                 }
 
                 //进一步验证基于资源的权限
-                await CheckResourcePermissionAsync(containerConfiguration);
+                await CheckResourcePermissionAsync(operation);
             }
         }
 
         /// <summary>
         /// 基于资源的权限验证
         /// </summary>
-        /// <param name="containerConfiguration"></param>
+        /// <param name="operation"></param>
         /// <returns></returns>
-        protected abstract Task CheckResourcePermissionAsync(BlobContainerConfiguration containerConfiguration);
+        protected abstract Task CheckResourcePermissionAsync(AuthorizationOperations operation);
     }
 }

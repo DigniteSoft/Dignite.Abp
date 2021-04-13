@@ -63,10 +63,9 @@ namespace Dignite.Abp.BlobStoring
             await BlobProcessHandlers(stream);
 
             //保存blob
-            await SaveBlobAndInfoAsync(name, stream, overrideExisting, cancellationToken);
+            await HashAndSaveAsync(name, stream, overrideExisting, cancellationToken);
 
-            //执行回调方法
-            SavedCallback(name);
+            //TODO:考虑使用Event Bus技术实现回调
         }
 
         private async Task AuthorizationCheckAsync()
@@ -110,7 +109,7 @@ namespace Dignite.Abp.BlobStoring
             }
         }
 
-        private async Task SaveBlobAndInfoAsync(
+        private async Task HashAndSaveAsync(
             string name,
             Stream stream,
             bool overrideExisting = false,
@@ -159,20 +158,5 @@ namespace Dignite.Abp.BlobStoring
             }
         }
 
-        private Task SavedCallback(string blobName)
-        {
-            var callbackType = Configuration.GetConfigurationOrDefault(
-                DigniteAbpBlobContainerConfigurationNames.SavedCallback,
-                typeof(NullSavedCallback)
-                );
-
-            using (var scope = ServiceProvider.CreateScope())
-            {
-                var saved = scope.ServiceProvider
-                    .GetRequiredService(callbackType)
-                    .As<ISavedCallback>();
-                return saved.CallbackAsync(blobName);
-            }
-        }
     }
 }

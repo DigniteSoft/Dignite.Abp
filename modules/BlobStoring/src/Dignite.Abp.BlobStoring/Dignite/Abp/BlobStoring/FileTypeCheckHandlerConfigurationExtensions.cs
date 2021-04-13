@@ -16,11 +16,11 @@ namespace Dignite.Abp.BlobStoring
             this BlobContainerConfiguration containerConfiguration,
             Action<FileTypeCheckHandlerConfiguration> configureAction)
         {
-            var savingHandlers = containerConfiguration.GetConfigurationOrDefault(
+            var blobProcessHandlers = containerConfiguration.GetConfigurationOrDefault(
                 DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
                 new TypeList<IBlobProcessHandler>());
 
-            if (savingHandlers.TryAdd<FileTypeCheckHandler>())
+            if (blobProcessHandlers.TryAdd<FileTypeCheckHandler>())
             {
                 configureAction(new FileTypeCheckHandlerConfiguration(containerConfiguration));
             }
