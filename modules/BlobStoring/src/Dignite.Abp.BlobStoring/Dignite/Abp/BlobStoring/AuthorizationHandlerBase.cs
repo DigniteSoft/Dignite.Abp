@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,21 +27,26 @@ namespace Dignite.Abp.BlobStoring
             {
                 if (!CurrentUser.IsAuthenticated)
                 {
-                    //TODO:考虑异常改为 BusinessException 
+                    // TODO: 考虑异常改为 BusinessException
                     throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
+                    // throw new BusinessException(
+                    //     code: "Dignite.Abp.BlobStoring:010001",
+                    //     message: "Unauthorized!",
+                    //     details: "Current user is not authorized!"
+                    // );
                 }
                 else if (!configuration.Policy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.Policy))
                 {
-                    //TODO:考虑异常改为 BusinessException 
+                    // TODO: 考虑异常改为 BusinessException
                     throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
                 }
                 else if (configuration.Roles != null && configuration.Roles.Any() && !CurrentUser.Roles.Intersect(configuration.Roles).Any())
                 {
-                    //TODO:考虑异常改为 BusinessException 
+                    // TODO: 考虑异常改为 BusinessException
                     throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
                 }
 
-                //进一步验证基于资源的权限
+                // 进一步验证基于资源的权限
                 await CheckResourcePermissionAsync(operation);
             }
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 
 namespace Dignite.Abp.BlobStoring
@@ -13,7 +13,7 @@ namespace Dignite.Abp.BlobStoring
         public virtual Task<string> Create(string extensionName)
         {
             return Task.FromResult(
-                Guid.NewGuid().ToString("N")+ (extensionName.IsNullOrEmpty()?"": extensionName.EnsureStartsWith('.'))
+                Guid.NewGuid().ToString("N") + (extensionName.IsNullOrEmpty() ? "" : extensionName.EnsureStartsWith('.'))
                 );
         }
     }

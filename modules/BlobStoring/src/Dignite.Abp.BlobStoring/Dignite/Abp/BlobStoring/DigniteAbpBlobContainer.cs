@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Linq;
@@ -59,13 +59,13 @@ namespace Dignite.Abp.BlobStoring
             // authorization handlers
             await AuthorizationCheckAsync();
 
-            //blob process handlers
+            // blob process handlers
             await BlobProcessHandlers(stream);
 
-            //保存blob
+            // 保存blob
             await HashAndSaveAsync(name, stream, overrideExisting, cancellationToken);
 
-            //TODO:考虑使用Event Bus技术实现回调
+            // TODO:考虑使用Event Bus技术实现回调
         }
 
         private async Task AuthorizationCheckAsync()
@@ -128,12 +128,12 @@ namespace Dignite.Abp.BlobStoring
 
                 if (blobInfoStore is NullBlobInfoStore)
                 {
-                    //保存到容器中
+                    // 保存到容器中
                     await base.SaveAsync(name, stream, overrideExisting, cancellationToken);
                 }
                 else
                 {
-                    //计算stream hash
+                    // 计算stream hash
                     var hash = stream.ToMd5();
                     var blobInfo = new BasicBlobInfo(ContainerName, name)
                     {
@@ -142,17 +142,17 @@ namespace Dignite.Abp.BlobStoring
                     };
                     if (await BlobInfoStore.AnyByHashAsync(ContainerName, hash))
                     {
-                        //如果存在相同hash的blob，则创建其副本
+                        // 如果存在相同hash的blob，则创建其副本
                         var mainBlob = await BlobInfoStore.GetMainAsync(ContainerName, hash);
                         blobInfo.ReferBlobName = mainBlob.BlobName;
                     }
                     else
                     {
-                        //保存到容器中
+                        // 保存到容器中
                         await base.SaveAsync(name, stream, overrideExisting, cancellationToken);
                     }
 
-                    //记录Blob信息
+                    // 记录Blob信息
                     await BlobInfoStore.CreateAsync(blobInfo);
                 }
             }

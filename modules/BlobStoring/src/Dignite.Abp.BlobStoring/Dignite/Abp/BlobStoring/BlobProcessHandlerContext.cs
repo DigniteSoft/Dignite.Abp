@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.MultiTenancy;
@@ -10,14 +10,14 @@ namespace Dignite.Abp.BlobStoring
         public BlobProcessHandlerContext(
             Stream blobStream,
             BlobContainerConfiguration containerConfiguration,
-            ICurrentTenant currentTenant, 
+            ICurrentTenant currentTenant,
             IServiceProvider serviceProvider
             )
         {
-            BlobStream = blobStream;
+            BlobStream             = blobStream;
             ContainerConfiguration = containerConfiguration;
-            CurrentTenant = currentTenant;
-            ServiceProvider = serviceProvider;
+            CurrentTenant          = currentTenant;
+            ServiceProvider        = serviceProvider;
         }
 
 
@@ -27,6 +27,6 @@ namespace Dignite.Abp.BlobStoring
 
         public Stream BlobStream { get; }
 
-        public BlobContainerConfiguration ContainerConfiguration { get;  }
+        public BlobContainerConfiguration ContainerConfiguration { get; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using System.Collections.Generic;
 
 namespace Dignite.Abp.BlobStoring
@@ -11,7 +11,7 @@ namespace Dignite.Abp.BlobStoring
             )
         {
             ContainerName = containerName;
-            BlobName = blobName;
+            BlobName      = blobName;
         }
 
 

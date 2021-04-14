@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Dignite.Abp.BlobStoring
 {
@@ -6,18 +6,18 @@ namespace Dignite.Abp.BlobStoring
     public enum AuthorizationOperations
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        Saving=1,
+        Saving = 1,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        Getting=2,
+        Getting = 2,
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
-        Deleting=4
+        Deleting = 4
     }
 }

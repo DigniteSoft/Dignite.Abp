@@ -1,5 +1,3 @@
-﻿
-
 namespace Dignite.Abp.BlobStoring
 {
     public static class AuthorizationHandlerConfigurationNames
