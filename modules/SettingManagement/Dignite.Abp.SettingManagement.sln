@@ -13,10 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManageme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.HttpApi.Client", "src\Dignite.Abp.SettingManagement.HttpApi.Client\Dignite.Abp.SettingManagement.HttpApi.Client.csproj", "{8C0DC461-3E3A-4450-868C-15690BEBDC4D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings", "..\..\framework\src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj", "{7FCB42DC-1253-448F-B11C-1291244C927B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FieldCustomizing", "..\..\framework\src\Dignite.FieldCustomizing\Dignite.FieldCustomizing.csproj", "{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,14 +35,6 @@ Global
 		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7FCB42DC-1253-448F-B11C-1291244C927B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FCB42DC-1253-448F-B11C-1291244C927B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FCB42DC-1253-448F-B11C-1291244C927B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FCB42DC-1253-448F-B11C-1291244C927B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
