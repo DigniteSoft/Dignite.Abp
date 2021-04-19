@@ -14,7 +14,7 @@ namespace Dignite.FieldCustomizing.TextboxField
             this FieldConfiguration fieldConfiguration,
             Action<TextboxFieldProviderConfiguration> textboxFieldConfigureAction)
         {
-            fieldConfiguration.ProviderName = TextboxFieldProviderConfigurationNames.ProviderName;
+            fieldConfiguration.ProviderName = TextboxFieldProvider.ProviderName;
 
             textboxFieldConfigureAction(new TextboxFieldProviderConfiguration(fieldConfiguration));
 

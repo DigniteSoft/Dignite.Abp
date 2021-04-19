@@ -4,8 +4,6 @@ namespace Dignite.FieldCustomizing.TextboxField
 {
     public class TextboxFieldProviderConfigurationNames
     {
-
-        public const string ProviderName = "TextboxField";
         public const string Required = "TextboxField.Required";
         public const string Description = "TextboxField.Description";
         public const string Placeholder = "TextboxField.Placeholder";

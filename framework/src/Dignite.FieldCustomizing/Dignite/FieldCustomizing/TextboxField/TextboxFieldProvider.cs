@@ -6,7 +6,9 @@ namespace Dignite.FieldCustomizing.TextboxField
 {
     public class TextboxFieldProvider : FieldProviderBase
     {
-        public override string Name => TextboxFieldProviderConfigurationNames.ProviderName;
+        public const string ProviderName = "TextboxField";
+
+        public override string Name => ProviderName;
 
         public override ILocalizableString DisplayName => L("DisplayName:Dignite.TextboxField.Name");
 
@@ -29,6 +31,11 @@ namespace Dignite.FieldCustomizing.TextboxField
             }
 
             return Task.FromResult(validateResult);
+        }
+
+        public override FieldProviderConfigurationBase GetConfiguration(FieldConfiguration fieldConfiguration)
+        {
+            return new TextboxFieldProviderConfiguration(fieldConfiguration);
         }
     }
 }
