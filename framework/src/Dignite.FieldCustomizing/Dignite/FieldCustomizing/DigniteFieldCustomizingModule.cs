@@ -3,6 +3,7 @@ using Dignite.FieldCustomizing.Localization;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
+using Volo.Abp.VirtualFileSystem;
 
 namespace Dignite.FieldCustomizing
 {
@@ -14,6 +15,11 @@ namespace Dignite.FieldCustomizing
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.AddEmbedded<DigniteFieldCustomizingModule>();
+            });
+
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources

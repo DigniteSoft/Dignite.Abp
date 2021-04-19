@@ -1,6 +1,6 @@
 ﻿namespace Dignite.FieldCustomizing.TextboxField
 {
-    public class TextboxFieldProviderConfiguration
+    public class TextboxFieldProviderConfiguration:FieldProviderConfigurationBase
     {
         /// <summary>
         /// 标记字段是否为必填
@@ -53,11 +53,10 @@
         }
 
 
-        private readonly FieldConfiguration _fieldConfiguration;
 
         public TextboxFieldProviderConfiguration(FieldConfiguration fieldConfiguration)
+            :base(fieldConfiguration)
         {
-            _fieldConfiguration = fieldConfiguration;
         }
     }
 }

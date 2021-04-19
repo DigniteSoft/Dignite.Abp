@@ -12,6 +12,9 @@ namespace Dignite.FieldCustomizing
 
         public abstract Task<FieldValueValidateResult> ValidateValueAsync(FieldProviderValidateValueArgs args);
 
+
+        public abstract FieldProviderConfigurationBase GetConfiguration(FieldConfiguration fieldConfiguration);
+
         protected static LocalizableString L(string name)
         {
             return LocalizableString.Create<FieldCustomizingResource>(name);
