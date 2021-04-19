@@ -9,7 +9,7 @@ namespace Dignite.Abp.BlobStoring
         /// </summary>
         public int ImageWidth
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<float>(ImageResizeHandlerConfigurationNames.ImageWidth, 0.0);
+            get => _containerConfiguration.GetConfigurationOrDefault<float?>(ImageResizeHandlerConfigurationNames.ImageWidth, null);
             set => _containerConfiguration.SetConfiguration(ImageResizeHandlerConfigurationNames.ImageWidth, value);
         }
 
@@ -18,7 +18,7 @@ namespace Dignite.Abp.BlobStoring
         /// </summary>
         public int ImageHeight
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<float>(ImageResizeHandlerConfigurationNames.ImageHeight, 0.0);
+            get => _containerConfiguration.GetConfigurationOrDefault<float?>(ImageResizeHandlerConfigurationNames.ImageHeight, null);
             set => _containerConfiguration.SetConfiguration(ImageResizeHandlerConfigurationNames.ImageHeight, value);
         }
 
