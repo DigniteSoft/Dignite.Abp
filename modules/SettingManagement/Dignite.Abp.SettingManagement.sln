@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5D2E5161-D1D9-4B06-A9CF-C25E43630E74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.Application", "src\Dignite.Abp.SettingManagement.Application\Dignite.Abp.SettingManagement.Application.csproj", "{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.Application.Contracts", "src\Dignite.Abp.SettingManagement.Application.Contracts\Dignite.Abp.SettingManagement.Application.Contracts.csproj", "{E953CDA9-D030-4334-9A2D-5862CD27CD64}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.HttpApi", "src\Dignite.Abp.SettingManagement.HttpApi\Dignite.Abp.SettingManagement.HttpApi.csproj", "{26027C54-7FC9-427C-B692-FB749FD09914}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.SettingManagement.HttpApi.Client", "src\Dignite.Abp.SettingManagement.HttpApi.Client\Dignite.Abp.SettingManagement.HttpApi.Client.csproj", "{8C0DC461-3E3A-4450-868C-15690BEBDC4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings", "..\..\framework\src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj", "{7FCB42DC-1253-448F-B11C-1291244C927B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FieldCustomizing", "..\..\framework\src\Dignite.FieldCustomizing\Dignite.FieldCustomizing.csproj", "{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E953CDA9-D030-4334-9A2D-5862CD27CD64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E953CDA9-D030-4334-9A2D-5862CD27CD64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E953CDA9-D030-4334-9A2D-5862CD27CD64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E953CDA9-D030-4334-9A2D-5862CD27CD64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26027C54-7FC9-427C-B692-FB749FD09914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26027C54-7FC9-427C-B692-FB749FD09914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26027C54-7FC9-427C-B692-FB749FD09914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26027C54-7FC9-427C-B692-FB749FD09914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C0DC461-3E3A-4450-868C-15690BEBDC4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FCB42DC-1253-448F-B11C-1291244C927B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FCB42DC-1253-448F-B11C-1291244C927B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FCB42DC-1253-448F-B11C-1291244C927B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FCB42DC-1253-448F-B11C-1291244C927B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17E32D3E-4FEF-4510-A3AF-0A55B78B58B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F77DBDB0-FABB-4C23-93D3-AADF85F09FF9} = {5D2E5161-D1D9-4B06-A9CF-C25E43630E74}
+		{E953CDA9-D030-4334-9A2D-5862CD27CD64} = {5D2E5161-D1D9-4B06-A9CF-C25E43630E74}
+		{26027C54-7FC9-427C-B692-FB749FD09914} = {5D2E5161-D1D9-4B06-A9CF-C25E43630E74}
+		{8C0DC461-3E3A-4450-868C-15690BEBDC4D} = {5D2E5161-D1D9-4B06-A9CF-C25E43630E74}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B85B1C1-5223-48D8-87F2-F6059FC629E4}
+	EndGlobalSection
+EndGlobal

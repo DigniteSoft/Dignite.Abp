@@ -1,0 +1,9 @@
+{
+  "culture": "en",
+  "texts": {
+    "Settings": "Settings",
+    "Permission:SettingManagement": "Setting Management",
+    "Permission:Global": "Global",
+    "Permission:Tenant": "Tenant"
+  }
+}

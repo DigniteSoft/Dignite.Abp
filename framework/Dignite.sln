@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Core", "src\Dignite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.FieldCustomizing", "src\Dignite.FieldCustomizing\Dignite.FieldCustomizing.csproj", "{D3F1D0AB-521C-488A-A0E8-18CBFDDD8B14}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings", "..\modules\Settings\src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj", "{334170E8-9ED4-4721-BEC4-EEDDA7E058C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings", "src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj", "{334170E8-9ED4-4721-BEC4-EEDDA7E058C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +59,7 @@ Global
 		{9C3AC962-5B81-402C-870C-2FB6A0E3E80F} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{E1431942-335F-4A02-9DEA-39320EE6A393} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{D3F1D0AB-521C-488A-A0E8-18CBFDDD8B14} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
+		{334170E8-9ED4-4721-BEC4-EEDDA7E058C6} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F622C42C-929D-4CAB-8CC6-23E387FFDD36}

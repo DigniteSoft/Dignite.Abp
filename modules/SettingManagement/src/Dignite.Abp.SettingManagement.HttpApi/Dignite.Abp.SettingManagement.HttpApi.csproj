@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\..\configureawait.props" />
+  <Import Project="..\..\..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Dignite.Abp.SettingManagement.HttpApi</AssemblyName>
+    <PackageId>Dignite.Abp.SettingManagement.HttpApi</PackageId>
+    <RootNamespace />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dignite\Abp\SettingManagement\" />
+  </ItemGroup>
+
+</Project>
