@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring", "src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj", "{4C5FE72B-3E79-4764-ADA5-14362549412E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Application.Contracts", "src\Dignite.Abp.BlobStoring.Application.Contracts\Dignite.Abp.BlobStoring.Application.Contracts.csproj", "{60297CF2-6FAA-4526-A7C5-8C61635D3464}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{7869E1B7-6CC9-4C08-9B94-85D21A5F5968}"
@@ -17,18 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Htt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.HttpApi", "src\Dignite.Abp.BlobStoring.HttpApi\Dignite.Abp.BlobStoring.HttpApi.csproj", "{C8CE25DD-7351-4679-9611-90B1D93A9A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.BlobStoring.Shared", "src\Dignite.Abp.BlobStoring.Shared\Dignite.Abp.BlobStoring.Shared.csproj", "{371A808E-4558-463D-8380-90A642C385FB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4C5FE72B-3E79-4764-ADA5-14362549412E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4C5FE72B-3E79-4764-ADA5-14362549412E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4C5FE72B-3E79-4764-ADA5-14362549412E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4C5FE72B-3E79-4764-ADA5-14362549412E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60297CF2-6FAA-4526-A7C5-8C61635D3464}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60297CF2-6FAA-4526-A7C5-8C61635D3464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60297CF2-6FAA-4526-A7C5-8C61635D3464}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,21 +37,15 @@ Global
 		{C8CE25DD-7351-4679-9611-90B1D93A9A4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8CE25DD-7351-4679-9611-90B1D93A9A4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8CE25DD-7351-4679-9611-90B1D93A9A4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{371A808E-4558-463D-8380-90A642C385FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{371A808E-4558-463D-8380-90A642C385FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{371A808E-4558-463D-8380-90A642C385FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{371A808E-4558-463D-8380-90A642C385FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4C5FE72B-3E79-4764-ADA5-14362549412E} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{60297CF2-6FAA-4526-A7C5-8C61635D3464} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{6CBBCD60-08AD-4AD5-9C05-71699EBC8219} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{17FD85EF-1874-4A11-B7F0-FE673C21A458} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{C8CE25DD-7351-4679-9611-90B1D93A9A4D} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
-		{371A808E-4558-463D-8380-90A642C385FB} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F622C42C-929D-4CAB-8CC6-23E387FFDD36}

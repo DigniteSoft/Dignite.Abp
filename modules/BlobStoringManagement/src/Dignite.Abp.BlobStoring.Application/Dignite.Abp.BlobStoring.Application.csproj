@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Dignite.Abp.BlobStoring.Application.Contracts</AssemblyName>
-    <PackageId>Dignite.Abp.BlobStoring.Application.Contracts</PackageId>
+    <AssemblyName>Dignite.Abp.BlobStoring.Application</AssemblyName>
+    <PackageId>Dignite.Abp.BlobStoring.Application</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -14,12 +14,10 @@
     <RootNamespace />
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.2.2" />
-  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Shared\Dignite.Abp.BlobStoring.Shared.csproj" />
+    <ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj" />
+    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Application.Contracts\Dignite.Abp.BlobStoring.Application.Contracts.csproj" />
   </ItemGroup>
-  
+
 </Project>

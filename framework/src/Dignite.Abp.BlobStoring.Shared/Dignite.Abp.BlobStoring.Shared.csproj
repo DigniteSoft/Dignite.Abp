@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\..\..\configureawait.props" />
-  <Import Project="..\..\..\..\common.props" />
+  
+  <Import Project="..\..\..\configureawait.props" />
+  <Import Project="..\..\..\common.props" />
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Dignite.Abp.BlobStoring</AssemblyName>
-    <PackageId>Dignite.Abp.BlobStoring</PackageId>
+    <AssemblyName>Dignite.Abp.BlobStoring.Shared</AssemblyName>
+    <PackageId>Dignite.Abp.BlobStoring.Shared</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -16,14 +17,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mime" Version="3.2.2" />
-    <PackageReference Include="Volo.Abp.BlobStoring" Version="4.2.2" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Localization" Version="4.2.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Shared\Dignite.Abp.BlobStoring.Shared.csproj" />
-    <ProjectReference Include="..\..\..\..\framework\src\Dignite.Core\Dignite.Core.csproj" />
+    <content Remove="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
+    <EmbeddedResource Include="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
   </ItemGroup>
 
 </Project>
