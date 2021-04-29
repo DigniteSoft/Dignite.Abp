@@ -1,4 +1,5 @@
 ﻿using Dignite.FieldCustomizing;
+using System.Threading.Tasks;
 using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
@@ -12,10 +13,10 @@ namespace Dignite.Abp.Settings
             _settingManager = settingManager;
         }
 
-        public FieldConfiguration Get(string name)
+        public Task<FieldConfiguration> Get(string name,object fieldDefinitionsSource=null)
         {
             var setting = _settingManager.Get(name);
-            return setting.GetField();
+            return Task.FromResult( setting.GetField());
         }
     }
 }

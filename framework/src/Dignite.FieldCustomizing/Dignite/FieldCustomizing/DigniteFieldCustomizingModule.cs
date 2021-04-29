@@ -24,7 +24,7 @@ namespace Dignite.FieldCustomizing
             {
                 options.Resources
                     .Add<FieldCustomizingResource>("en")
-                    .AddVirtualJson("/Dignite/FieldCustomizing/Localization");
+                    .AddVirtualJson("/Dignite/FieldCustomizing/Localization/Resources");
             });
         }
     }

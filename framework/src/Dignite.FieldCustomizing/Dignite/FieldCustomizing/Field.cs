@@ -32,11 +32,11 @@ namespace Dignite.FieldCustomizing
             ServiceProvider = serviceProvider;
         }
 
-        public virtual async Task<FieldValueValidateResult> ValidateValueAsync(
+        public virtual async Task<FieldValueValidateResult> ValidateAsync(
             object value,
             CancellationToken cancellationToken = default)
         {
-                return await Provider.ValidateValueAsync(
+                return await Provider.ValidateAsync(
                     new FieldProviderValidateValueArgs(
                         Name,
                         Configuration,

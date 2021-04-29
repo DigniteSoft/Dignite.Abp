@@ -8,7 +8,7 @@ namespace Dignite.Abp.SettingManagement
     {
         Task<ListResultDto<SettingNavigationDto>> GetNavigationsAsync();
 
-        Task<ListResultDto<SettingGroupDto>> GetListAsync(string navigationName);
+        Task<ListResultDto<SettingDto>> GetListAsync(string navigationName);
 
         Task UpdateAsync(UpdateSettingsInput input);
     }

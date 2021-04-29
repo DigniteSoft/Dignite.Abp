@@ -49,12 +49,12 @@ namespace Dignite.Abp.SettingManagement
                 ));
         }
 
-        public async Task<ListResultDto<SettingGroupDto>> GetListAsync(string navigationName)
+        public async Task<ListResultDto<SettingDto>> GetListAsync(string navigationName)
         {
             var settingDefinitions = GetSettingDefinitions(navigationName);
             var settingValues = await GetSettingValues();
             return Task.FromResult(
-                new ListResultDto<SettingGroupDto>(GetSettingGroups(settingDefinitions, settingValues))
+                new ListResultDto<SettingDto>(GetSettings(settingDefinitions, settingValues))
                 ).Result;
         }
 
@@ -96,21 +96,24 @@ namespace Dignite.Abp.SettingManagement
                 .ToList();
         }
 
-        private List<SettingGroupDto> GetSettingGroups (List<SettingDefinition> settingDefinitions,List<SettingValue> settingValues)
+        private IReadOnlyList<SettingDto> GetSettings (List<SettingDefinition> settingDefinitions,List<SettingValue> settingValues)
         {
-            return settingDefinitions.GroupBy(s => s.GetGroup()).Select(s =>
-                  new SettingGroupDto(
-                      s.Key.DisplayName.Localize(StringLocalizerFactory),
-                      s.Key.Description.Localize(StringLocalizerFactory),
-                      s.Select(sd => new SettingDto(
+            var settings = new List<SettingDto>();
+            foreach (var sd in settingDefinitions)
+            {
+                var group = sd.GetGroup();
+                var fieldConfiguration = sd.GetField();
+                settings.Add(new SettingDto(
+                          group == null?null: group.Localize(StringLocalizerFactory),
                           sd.Name,
                           sd.DisplayName.Localize(StringLocalizerFactory),
                           sd.Description.Localize(StringLocalizerFactory),
                           settingValues.Single(sv=>sv.Name==sd.Name).Value,
-                          sd.GetField().ProviderName,
-                          _fieldProviders.Single(fp => fp.Name == sd.GetField().ProviderName).GetConfiguration(sd.GetField())
-                          )).ToImmutableList()
-                      )).ToList();
+                          fieldConfiguration.ProviderName,
+                          _fieldProviders.Single(fp => fp.Name == fieldConfiguration.ProviderName).GetConfiguration(fieldConfiguration)
+                          ));
+            }
+            return settings.ToImmutableList();
         }
     }
 }

@@ -15,9 +15,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Dignite\FieldCustomizing\Localization\*.json" />
-    <EmbeddedResource Include="Dignite\FieldCustomizing\Localization\*.json" />
+    <Content Remove="Dignite\FieldCustomizing\Localization\Resources\*.json" />
+    <EmbeddedResource Include="Dignite\FieldCustomizing\Localization\Resources\*.json" />
   </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Localization" Version="4.2.2" />

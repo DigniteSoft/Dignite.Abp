@@ -12,7 +12,9 @@ namespace Dignite.FieldCustomizing
 
         ILocalizableString DisplayName { get; }
 
-        Task<FieldValueValidateResult> ValidateValueAsync(FieldProviderValidateValueArgs args);
+        FieldProviderType Type { get; }
+
+        Task<FieldValueValidateResult> ValidateAsync(FieldProviderValidateValueArgs args);
 
         FieldProviderConfigurationBase GetConfiguration(FieldConfiguration fieldConfiguration);
     }

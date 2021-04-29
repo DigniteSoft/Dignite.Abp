@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj" />
+    <ProjectReference Include="..\..\..\..\framework\src\Dignite.FieldCustomizing\Dignite.FieldCustomizing.csproj" />
   </ItemGroup>
 
 </Project>

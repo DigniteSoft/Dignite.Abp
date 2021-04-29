@@ -9,11 +9,13 @@ namespace Dignite.FieldCustomizing
         /// Gets a named field.
         /// </summary>
         /// <param name="name">The name of the field</param>
+        /// <param name="fieldDefinitionsSource">The source of the field definitions</param>
         /// <returns>
         /// The field object.
         /// </returns>
         IField Create(
-            string name
+            string name,
+            object fieldDefinitionsSource=null
         );
     }
 }

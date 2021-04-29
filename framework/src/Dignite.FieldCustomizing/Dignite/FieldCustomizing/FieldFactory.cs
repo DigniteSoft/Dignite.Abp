@@ -25,7 +25,8 @@ namespace Dignite.FieldCustomizing
             ServiceProvider = serviceProvider;
         }
 
-        public virtual IField Create(string name)
+        public virtual IField Create(string name,
+            object fieldDefinitionsSource = null)
         {
             using (var scope = ServiceProvider.CreateScope())
             {
@@ -33,7 +34,7 @@ namespace Dignite.FieldCustomizing
                     .GetRequiredService(typeof(TFieldConfigurationProvider))
                     .As<IFieldConfigurationProvider>();
 
-                var configuration = configurationProvider.Get(name);
+                var configuration = configurationProvider.Get(name,fieldDefinitionsSource).Result;
                 return new Field(
                     name,
                     configuration,

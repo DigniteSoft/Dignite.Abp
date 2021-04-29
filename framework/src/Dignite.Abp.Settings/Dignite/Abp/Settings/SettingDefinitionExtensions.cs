@@ -1,6 +1,7 @@
 ﻿using Dignite.FieldCustomizing;
 using System;
 using System.Collections.Generic;
+using Volo.Abp.Localization;
 using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
@@ -9,11 +10,14 @@ namespace Dignite.Abp.Settings
     {
         public static SettingDefinition SetField(
             this SettingDefinition setting,
-            SettingGroup group,
-            Action<FieldConfiguration> fieldConfiguration
+            Action<FieldConfiguration> fieldConfiguration,
+            ILocalizableString groupName=null
             )
         {
-            setting.WithProperty(SettingDefinitionPropertiesNames.Group, group);
+            if (groupName != null)
+            {
+                setting.WithProperty(SettingDefinitionPropertiesNames.Group, groupName);
+            }
             setting.WithProperty(SettingDefinitionPropertiesNames.FieldConfiguration, fieldConfiguration);
 
             return setting;
@@ -25,10 +29,15 @@ namespace Dignite.Abp.Settings
             return (FieldConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FieldConfiguration);
         }
 
-        public static SettingGroup GetGroup(
+        public static ILocalizableString GetGroup(
             this SettingDefinition setting)
         {
-            return (SettingGroup)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.Group);
+            var group = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.Group);
+            if (group != null)
+            {
+                return (ILocalizableString)group;
+            }
+            return null;
         }
     }
 }

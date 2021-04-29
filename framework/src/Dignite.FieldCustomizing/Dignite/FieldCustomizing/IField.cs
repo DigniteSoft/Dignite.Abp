@@ -5,6 +5,6 @@ namespace Dignite.FieldCustomizing
 {
     public interface IField
     {
-        Task<FieldValueValidateResult> ValidateValueAsync(object value, CancellationToken cancellationToken);
+        Task<FieldValueValidateResult> ValidateAsync(object value, CancellationToken cancellationToken = default);
     }
 }
