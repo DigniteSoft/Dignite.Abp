@@ -71,24 +71,27 @@ namespace Dignite.Abp.BlobStoring
             /// When allowed(DEFAULT) less than preset
             /// scale it to the preset value
             /// </summary>
-            if (ImageResizeHandlerConfiguration.ImageSizeCouldBeLessThanPreset == false)
+            if (imageResize.ImageHeight != null && imageResize.ImageWidth != null)
             {
-                if (Img.Width >= imageResize.ImageWidth && Img.Height >= imageResize.ImageHeight)
+                if (ImageResizeHandlerConfiguration.ImageSizeCouldBeLessThanPreset == false)
                 {
-                    ImageResizeScaled(Img);
+                    if (Img.Width >= imageResize.ImageWidth && Img.Height >= imageResize.ImageHeight)
+                    {
+                        ImageResizeScaled(Img);
+                    }
+                    else
+                    {
+                        throw new BusinessException(
+                            code: "Dignite.Abp.BlobStoring:010004",
+                            message: "Image size should not be less than required!",
+                            details: "Uploaded image should not be less than: " + imageResize.ImageWidth + "x" + imageResize.ImageHeight
+                        );
+                    }
                 }
                 else
                 {
-                    throw new BusinessException(
-                        code: "Dignite.Abp.BlobStoring:010004",
-                        message: "Image size should not be less than required!",
-                        details: "Uploaded image should not be less than: " + imageResize.ImageWidth + "x" + imageResize.ImageHeight
-                    );
+                    ImageResizeScaled(Img);
                 }
-            }
-            else
-            {
-                ImageResizeScaled(Img);
             }
 
             return Task.CompletedTask;
