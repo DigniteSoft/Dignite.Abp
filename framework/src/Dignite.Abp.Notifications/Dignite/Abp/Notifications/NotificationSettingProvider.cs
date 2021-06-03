@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Volo.Abp.Configuration;
+using Volo.Abp.Settings;
 using Volo.Abp.Localization;
 
 namespace Dignite.Abp.Notifications

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Ddd.Domain.Entities;
 
 namespace Dignite.Abp.Notifications
 {

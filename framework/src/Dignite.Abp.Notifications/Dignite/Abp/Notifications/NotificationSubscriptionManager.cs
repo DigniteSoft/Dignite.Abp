@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.Core;
 using Volo.Abp.Json;
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Ddd.Domain.Entities;
 
 namespace Dignite.Abp.Notifications
 {

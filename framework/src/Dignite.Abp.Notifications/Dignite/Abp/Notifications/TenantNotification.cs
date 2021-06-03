@@ -1,6 +1,6 @@
 using System;
 using Volo.Abp.Application.Services.Dto;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Ddd.Domain.Entities.Auditing;
 using Volo.Abp.Timing;
 
 namespace Dignite.Abp.Notifications

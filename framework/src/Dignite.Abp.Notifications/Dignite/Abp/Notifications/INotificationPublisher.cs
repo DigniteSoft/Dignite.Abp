@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Ddd.Domain.Entities;
 using Volo.Abp.Runtime.Session;
 
 namespace Dignite.Abp.Notifications
@@ -17,8 +17,8 @@ namespace Dignite.Abp.Notifications
         /// <param name="entityIdentifier">The entity identifier if this notification is related to an entity</param>
         /// <param name="severity">Notification severity</param>
         /// <param name="userIds">
-        /// Target user id(s). 
-        /// Used to send notification to specific user(s) (without checking the subscription). 
+        /// Target user id(s).
+        /// Used to send notification to specific user(s) (without checking the subscription).
         /// If this is null/empty, the notification is sent to subscribed users.
         /// </param>
         /// <param name="excludedUserIds">
@@ -32,7 +32,7 @@ namespace Dignite.Abp.Notifications
         /// This should not be set if <paramref name="userIds"/> is set.
         /// <see cref="NotificationPublisher.AllTenants"/> can be passed to indicate all tenants.
         /// But this can only work in a single database approach (all tenants are stored in host database).
-        /// If this is null, then it's automatically set to the current tenant on <see cref="IAbpSession.TenantId"/>. 
+        /// If this is null, then it's automatically set to the current tenant on <see cref="IAbpSession.TenantId"/>.
         /// </param>
         Task PublishAsync(
             string notificationName,

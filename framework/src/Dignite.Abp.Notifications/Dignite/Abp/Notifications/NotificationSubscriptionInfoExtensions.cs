@@ -1,5 +1,5 @@
 using System;
-using Volo.Abp.Domain.Entities;
+using Volo.Abp.Ddd.Domain.Entities;
 using Volo.Abp.Extensions;
 using Newtonsoft.Json;
 

@@ -1,5 +1,5 @@
 using System;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Ddd.Domain.Entities.Auditing;
 using Volo.Abp.Timing;
 
 namespace Dignite.Abp.Notifications

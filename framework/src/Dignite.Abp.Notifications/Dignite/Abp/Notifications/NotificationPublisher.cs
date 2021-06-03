@@ -5,7 +5,7 @@ using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Collections.Extensions;
 using Volo.Abp.Core;
 using Volo.Abp.Ddd.Domain.Entities;
-using Volo.Abp.Ddd.Domain.Uow;
+using Volo.Abp.Uow;
 using Volo.Abp.Extensions;
 using Volo.Abp.Json;
 using Volo.Abp.Runtime.Session;
