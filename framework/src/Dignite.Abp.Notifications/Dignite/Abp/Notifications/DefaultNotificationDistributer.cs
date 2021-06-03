@@ -8,6 +8,7 @@ using Volo.Abp.Domain.Services;
 using Volo.Abp.Domain.Uow;
 using Volo.Abp.Extensions;
 using Castle.Core.Internal;
+using Volo.Abp.Uow;
 
 namespace Dignite.Abp.Notifications
 {

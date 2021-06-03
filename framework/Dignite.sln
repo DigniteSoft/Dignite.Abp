@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Sha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring", "src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj", "{2BBCE950-6408-4E4D-97E4-F2C97121036B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notifications", "src\Dignite.Abp.Notifications\Dignite.Abp.Notifications.csproj", "{343A6423-A1E9-45FE-8BAF-B9F9070EDF77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.SignalR", "Src\Dignite.Abp.SignalR\Dignite.Abp.SignalR.csproj", "{3AA740A0-6FD9-47B9-B86B-773C35152AE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +77,14 @@ Global
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{343A6423-A1E9-45FE-8BAF-B9F9070EDF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{343A6423-A1E9-45FE-8BAF-B9F9070EDF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{343A6423-A1E9-45FE-8BAF-B9F9070EDF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{343A6423-A1E9-45FE-8BAF-B9F9070EDF77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +100,8 @@ Global
 		{EC6CE645-6C44-444D-8915-75F59D0F006E} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{2796C9F7-106A-4868-B6B2-83078F4953BC} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
+		{343A6423-A1E9-45FE-8BAF-B9F9070EDF77} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F622C42C-929D-4CAB-8CC6-23E387FFDD36}
