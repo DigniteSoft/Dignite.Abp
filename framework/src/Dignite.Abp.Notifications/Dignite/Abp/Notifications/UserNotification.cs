@@ -1,5 +1,5 @@
 using System;
-using Volo.Abp.Application.Services.Dto;
+using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Abp.Notifications
 {

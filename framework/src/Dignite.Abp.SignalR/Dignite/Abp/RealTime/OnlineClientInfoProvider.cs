@@ -1,20 +1,25 @@
-﻿using System;
+﻿using Dignite.Abp.Notifications.RealTime;
+using Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp.AspNetCore.WebClientInfo;
 
 namespace Dignite.Abp.SignalR.Dignite.Abp.RealTime
 {
     public class OnlineClientInfoProvider : IOnlineClientInfoProvider
     {
 
-        private readonly IClientInfoProvider _clientInfoProvider;
+        private readonly IWebClientInfoProvider _clientInfoProvider;
 
-        public OnlineClientInfoProvider(IClientInfoProvider clientInfoProvider)
+        public OnlineClientInfoProvider(IWebClientInfoProvider clientInfoProvider,ILogger<OnlineClientInfoProvider> logger)
         {
             _clientInfoProvider = clientInfoProvider;
-            Logger = NullLogger.Instance;
+            Logger = logger;
         }
 
         public ILogger Logger { get; set; }
@@ -37,8 +42,8 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.RealTime
             }
             catch (Exception ex)
             {
-                Logger.Error("Can not find IP address of the client! connectionId: " + context.ConnectionId);
-                Logger.Error(ex.Message, ex);
+                Logger.LogError("Can not find IP address of the client! connectionId: " + context.ConnectionId);
+                Logger.LogError(ex.Message, ex);
                 return "";
             }
         }

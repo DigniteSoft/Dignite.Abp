@@ -1,8 +1,10 @@
 ﻿using Dignite.Abp.Notifications;
+using Dignite.Abp.Notifications.RealTime;
+using Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
@@ -16,7 +18,14 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.Notifications
 
         private readonly IHubContext<AbpCommonHub> _hubContext;
 
-
+        public SignalRRealTimeNotifier(
+        IOnlineClientManager onlineClientManager,
+        IHubContext<AbpCommonHub> hubContext)
+        {
+            _onlineClientManager = onlineClientManager;
+            _hubContext = hubContext;
+            Logger = NullLogger.Instance;
+        }
 
 
         public async Task SendNotificationsAsync(UserNotification[] userNotifications)
@@ -31,7 +40,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.Notifications
                         var signalRClient = _hubContext.Clients.Client(onlineClient.ConnectionId);
                         if (signalRClient == null)
                         {
-                            Logger.Debug("Can not get user " + userNotification.ToUserIdentifier() + " with connectionId " + onlineClient.ConnectionId + " from SignalR hub!");
+                            Logger.LogDebug("Can not get user " + new UserIdentifier(userNotification.TenantId, userNotification.UserId) + " with connectionId " + onlineClient.ConnectionId + " from SignalR hub!");
                             continue;
                         }
 
@@ -41,8 +50,8 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.Notifications
                 }
                 catch (Exception ex)
                 {
-                    Logger.Warn("Could not send notification to user: " + userNotification.ToUserIdentifier());
-                    Logger.Warn(ex.ToString(), ex);
+                    Logger.LogWarning("Could not send notification to user: " + new UserIdentifier(userNotification.TenantId, userNotification.UserId));
+                    Logger.LogWarning(ex.ToString(), ex);
                 }
             }
         }

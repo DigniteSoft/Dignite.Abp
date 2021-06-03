@@ -1,8 +1,7 @@
-﻿using Dignite.Abp.SignalR.Dignite.Abp.RealTime;
+﻿using Dignite.Abp.Notifications.RealTime;
+using Dignite.Abp.SignalR.Dignite.Abp.RealTime;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.DependencyInjection;
@@ -14,13 +13,21 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
         protected IOnlineClientManager OnlineClientManager { get; }
         protected IOnlineClientInfoProvider OnlineClientInfoProvider { get; }
 
+        protected OnlineClientHubBase(
+            IOnlineClientManager onlineClientManager,
+            IOnlineClientInfoProvider clientInfoProvider)
+        {
+            OnlineClientManager = onlineClientManager;
+            OnlineClientInfoProvider = clientInfoProvider;
+        }
+
         public override async Task OnConnectedAsync()
         {
             await base.OnConnectedAsync();
 
             var client = CreateClientForCurrentConnection();
 
-            Logger.Debug("A client is connected: " + client);
+            Logger.LogDebug("A client is connected: " + client);
 
             OnlineClientManager.Add(client);
         }
@@ -29,7 +36,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
         {
             await base.OnDisconnectedAsync(exception);
 
-            Logger.Debug("A client is disconnected: " + Context.ConnectionId);
+            Logger.LogDebug("A client is disconnected: " + Context.ConnectionId);
 
             try
             {
@@ -37,7 +44,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
             }
             catch (Exception ex)
             {
-                Logger.Warn(ex.ToString(), ex);
+                Logger.LogWarning(ex.ToString(), ex);
             }
         }
 
