@@ -1,25 +1,7 @@
 ﻿namespace Dignite.FieldCustomizing.TextboxField
 {
-    public class TextboxFieldProviderConfiguration:FieldProviderConfigurationBase
+    public class TextboxFieldProviderConfiguration:CustomizeFieldProviderConfigurationBase
     {
-        /// <summary>
-        /// 标记字段是否为必填
-        /// </summary>
-        public bool Required
-        {
-            get => _fieldConfiguration.GetConfigurationOrDefault(TextboxFieldProviderConfigurationNames.Required, false);
-            set => _fieldConfiguration.SetConfiguration(TextboxFieldProviderConfigurationNames.Required, value);
-        }
-
-        /// <summary>
-        /// 字段的填写说明文本
-        /// </summary>
-        public string Description
-        {
-            get => _fieldConfiguration.GetConfigurationOrDefault<string>(TextboxFieldProviderConfigurationNames.Description, null);
-            set => _fieldConfiguration.SetConfiguration(TextboxFieldProviderConfigurationNames.Description, value);
-        }
-
 
         /// <summary>
         /// 占位符
@@ -54,7 +36,7 @@
 
 
 
-        public TextboxFieldProviderConfiguration(FieldConfiguration fieldConfiguration)
+        public TextboxFieldProviderConfiguration(CustomizeFieldConfiguration fieldConfiguration)
             :base(fieldConfiguration)
         {
         }
