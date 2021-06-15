@@ -6,8 +6,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Dignite.Abp.BlobStoring</AssemblyName>
-    <PackageId>Dignite.Abp.BlobStoring</PackageId>
+    <AssemblyName>Dignite.Abp.Notifications</AssemblyName>
+    <PackageId>Dignite.Abp.Notifications</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
@@ -17,14 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mime" Version="3.2.2" />
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
-    <PackageReference Include="Volo.Abp.BlobStoring" Version="4.2.2" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Authorization" Version="4.3.0" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Shared\Dignite.Abp.BlobStoring.Shared.csproj" />
     <ProjectReference Include="..\Dignite.Core\Dignite.Core.csproj" />
   </ItemGroup>
 

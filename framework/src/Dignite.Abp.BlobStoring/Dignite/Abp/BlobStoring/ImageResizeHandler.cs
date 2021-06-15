@@ -7,21 +7,17 @@ using Volo.Abp;
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
-    /// 对上传的图片文件进行缩放处理
+    /// Resize uploaded images to fit predefined values
     /// </summary>
     public class ImageResizeHandler : IBlobProcessHandler
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {
-            using SixLabors.ImageSharp;
-
             var ImageResizeHandlerConfiguration = context.ContainerConfiguration.GetImageResizeConfiguration();
             Image Img = Image.Load(context.BlobStream);
 
-            private void ImageResizeScaled(IImageProcessingContext image)
+            void ImageResizeScaled(IImageProcessingContext image)
             {
-                using SixLabors.ImageSharp.Processing;
-
                 if (image.Height > imageResize.ImageHeight && image.Width > imageResize.ImageWidth)
                 {
                     if ((image.Height - imageResize.ImageHeight) > (image.Width - imageResize.ImageWidth))

@@ -1,10 +1,8 @@
-﻿
 using Volo.Abp;
 using Volo.Abp.Localization;
 
 namespace Dignite.Abp.Settings
 {
-    
     public class SettingNavigation
     {
         public string Name { get; }

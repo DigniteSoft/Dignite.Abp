@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.BlobStoring.Localization;
+using Dignite.Abp.BlobStoring.Localization;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
