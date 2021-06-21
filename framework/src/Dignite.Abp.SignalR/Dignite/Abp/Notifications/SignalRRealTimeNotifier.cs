@@ -20,11 +20,12 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.Notifications
 
         public SignalRRealTimeNotifier(
         IOnlineClientManager onlineClientManager,
-        IHubContext<AbpCommonHub> hubContext)
+        IHubContext<AbpCommonHub> hubContext,
+        Logger<SignalRRealTimeNotifier> logger)
         {
             _onlineClientManager = onlineClientManager;
             _hubContext = hubContext;
-            Logger = NullLogger.Instance;
+            Logger = logger;
         }
 
 
