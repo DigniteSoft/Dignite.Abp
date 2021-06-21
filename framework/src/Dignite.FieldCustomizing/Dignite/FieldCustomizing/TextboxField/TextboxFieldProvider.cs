@@ -1,53 +1,40 @@
 ﻿
-using System.Threading.Tasks;
-using Volo.Abp.Localization;
-using Volo.Abp.Validation;
-
 namespace Dignite.FieldCustomizing.TextboxField
 {
-    public class TextboxFieldProvider : FieldProviderBase
+    public class TextboxFieldProvider : CustomizeFieldProviderBase
     {
+
         public const string ProviderName = "TextboxField";
 
         public override string Name => ProviderName;
 
-        public override ILocalizableString DisplayName => L("DisplayName:Dignite.TextboxField");
+        public override string DisplayName => L["DisplayName:Dignite.TextboxField"].Value;
 
-        public override FieldProviderType Type => FieldProviderType.Simple;
+        public override CustomizeFieldType FieldType => CustomizeFieldType.Simple;
 
-        public override Task<FieldValueValidateResult> ValidateAsync(FieldProviderValidateValueArgs args)
+        public override void Validate(CustomizeFieldProviderValidateArgs args)
         {
-            var validateResult = new FieldValueValidateResult();
-            var configuration = new TextboxFieldProviderConfiguration(args.Configuration);
-
-            if (args.Value is not string)
-            {
-                //TODO...
-                throw new AbpValidationException($"必须是字符类型");
-            }
+            var configuration = new TextboxFieldProviderConfiguration(args.FieldDefinition.Configuration);
 
             if (configuration.Required && (args.Value == null || args.Value.ToString().Length==0))
             {
-                //TODO
-                //validateResult.Succeeded = false;
-                validateResult.Errors.Add(new FieldValueValidateError(
-                    "ValidateValue:Required",
-                    L("ValidateValue:Required")
-                    ));
+                args.ValidationErrors.Add(
+                    new System.ComponentModel.DataAnnotations.ValidationResult(
+                        L["ValidateValue:Required"].Value, 
+                        new[] { args.FieldDefinition.Name }
+                        ));
             }
 
             if (args.Value != null && configuration.CharLimit < args.Value.ToString().Length)
             {
-                //TODO...
-                throw new AbpValidationException($"{args.FieldName} 字符数不能超过 {configuration.CharLimit} 个！");
+                args.ValidationErrors.Add(
+                    new System.ComponentModel.DataAnnotations.ValidationResult(
+                        L["{0} 字符限制不超 {1} 个字符",args.FieldDefinition.DisplayName, configuration.CharLimit].Value,
+                        new[] { args.FieldDefinition.Name }
+                        ));
             }
 
-            return Task.FromResult( validateResult);
         }
 
-        public override FieldProviderConfigurationBase GetConfiguration(FieldConfiguration fieldConfiguration)
-        {
-            return new TextboxFieldProviderConfiguration(fieldConfiguration);
-        }
     }
 }

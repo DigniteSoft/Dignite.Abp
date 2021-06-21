@@ -10,7 +10,7 @@ namespace Dignite.Abp.Settings
     {
         public static SettingDefinition SetField(
             this SettingDefinition setting,
-            Action<FieldConfiguration> fieldConfiguration,
+            Action<CustomizeFieldConfiguration> fieldConfiguration,
             ILocalizableString groupName=null
             )
         {
@@ -23,10 +23,10 @@ namespace Dignite.Abp.Settings
             return setting;
         }
 
-        public static FieldConfiguration GetField(
+        public static CustomizeFieldConfiguration GetField(
             this SettingDefinition setting)
         {
-            return (FieldConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FieldConfiguration);
+            return (CustomizeFieldConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FieldConfiguration);
         }
 
         public static ILocalizableString GetGroup(
