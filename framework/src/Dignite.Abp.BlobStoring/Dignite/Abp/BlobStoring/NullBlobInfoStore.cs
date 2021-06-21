@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dignite.Abp.BlobStoring
@@ -8,22 +9,40 @@ namespace Dignite.Abp.BlobStoring
         {
         }
 
-        public Task<bool> AnyAsync(string containerName, string blobName)
+        public Task<bool> ExistsAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
         {
             return Task.FromResult(false);
         }
 
-        public Task<bool> AnyByHashAsync(string containerName, string hash)
-        {
-            return Task.FromResult(false);
-        }
-        public async Task<IBlobInfo> GetMainAsync(string containerName, string hash)
+        public async Task<IBlobInfo> FindAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
         {
             BasicBlobInfo blobInfo = null;
             return await Task.FromResult(blobInfo);
         }
 
-        public Task CreateAsync(IBlobInfo blobInfo)
+        public Task<bool> HashExistsAsync(string containerName, string hash, CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(false);
+        }
+        public async Task<IBlobInfo> FindByHashAsync(string containerName, string hash, CancellationToken cancellationToken = default)
+        {
+            BasicBlobInfo blobInfo = null;
+            return await Task.FromResult(blobInfo);
+        }
+
+
+        public Task<bool> ReferenceExistsAsync(string containerName, string blobName,  CancellationToken cancellationToken = default)
+        {
+            return Task.FromResult(false);
+        }
+
+
+        public Task CreateAsync(BasicBlobInfo blobInfo, CancellationToken cancellationToken = default)
+        {
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

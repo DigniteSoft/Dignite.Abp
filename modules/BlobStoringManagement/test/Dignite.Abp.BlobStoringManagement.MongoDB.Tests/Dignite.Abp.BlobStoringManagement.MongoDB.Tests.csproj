@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\..\configureawait.props" />
+  <Import Project="..\..\..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Dignite.Abp.BlobStoringManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
+    <PackageReference Include="Mongo2Go" Version="3.1.1" />
+    <ProjectReference Include="..\..\src\Dignite.Abp.BlobStoringManagement.MongoDB\Dignite.Abp.BlobStoringManagement.MongoDB.csproj" />
+    <ProjectReference Include="..\Dignite.Abp.BlobStoringManagement.TestBase\Dignite.Abp.BlobStoringManagement.TestBase.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,6 +1,5 @@
 using System;
 using Volo.Abp.BlobStoring;
-using Volo.Abp.Collections;
 
 namespace Dignite.Abp.BlobStoring
 {
@@ -12,19 +11,17 @@ namespace Dignite.Abp.BlobStoring
             return new AuthorizationHandlerConfiguration(containerConfiguration);
         }
 
-        public static void AddAuthorizationHandler<TAuthorizationHandler>(
+        public static void SetAuthorizationHandler<TAuthorizationHandler>(
             this BlobContainerConfiguration containerConfiguration,
             Action<AuthorizationHandlerConfiguration> configureAction)
-            where TAuthorizationHandler:IAuthorizationHandler
+            where TAuthorizationHandler : class, IAuthorizationHandler
         {
-            var authorizationHandlers = containerConfiguration.GetConfigurationOrDefault(
-                DigniteAbpBlobContainerConfigurationNames.AuthorizationHandlers,
-                new TypeList<IAuthorizationHandler>());
+            containerConfiguration.SetConfiguration(
+                DigniteAbpBlobContainerConfigurationNames.AuthorizationHandler,
+                typeof(TAuthorizationHandler));
 
-            if (authorizationHandlers.TryAdd<TAuthorizationHandler>())
-            {
-                configureAction(new AuthorizationHandlerConfiguration(containerConfiguration));
-            }
+            //
+            configureAction(new AuthorizationHandlerConfiguration(containerConfiguration));
         }
     }
 }

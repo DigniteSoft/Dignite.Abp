@@ -9,7 +9,7 @@ namespace Dignite.Abp.BlobStoring
         /// </summary>
         public int ImageWidth
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<float?>(ImageResizeHandlerConfigurationNames.ImageWidth, null);
+            get => _containerConfiguration.GetConfigurationOrDefault<int>(ImageResizeHandlerConfigurationNames.ImageWidth);
             set => _containerConfiguration.SetConfiguration(ImageResizeHandlerConfigurationNames.ImageWidth, value);
         }
 
@@ -18,16 +18,16 @@ namespace Dignite.Abp.BlobStoring
         /// </summary>
         public int ImageHeight
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<float?>(ImageResizeHandlerConfigurationNames.ImageHeight, null);
+            get => _containerConfiguration.GetConfigurationOrDefault<int>(ImageResizeHandlerConfigurationNames.ImageHeight);
             set => _containerConfiguration.SetConfiguration(ImageResizeHandlerConfigurationNames.ImageHeight, value);
         }
 
         /// <summary>
-        /// Whether allow uploaded image's size less than preset size
+        /// Whether allow uploaded image's size larger than preset size
         /// </summary>
-        public bool ImageSizeCouldBeLessThanPreset
+        public bool ImageSizeMustBeLargerThanPreset
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<bool>(ImageResizeHandlerConfigurationNames.SizeCouldBeLessThanPreset, true);
+            get => _containerConfiguration.GetConfigurationOrDefault<bool>(ImageResizeHandlerConfigurationNames.ImageSizeMustBeLargerThanPreset, false);
             set => _containerConfiguration.SetConfiguration(ImageResizeHandlerConfigurationNames.ImageHeight, value);
         }
 

@@ -1,6 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
+using SixLabors.ImageSharp.Processing;
+using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 
@@ -13,85 +14,44 @@ namespace Dignite.Abp.BlobStoring
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {
-            var ImageResizeHandlerConfiguration = context.ContainerConfiguration.GetImageResizeConfiguration();
-            Image Img = Image.Load(context.BlobStream);
+            var configuration = context.ContainerConfiguration.GetImageResizeConfiguration();
 
-            void ImageResizeScaled(IImageProcessingContext image)
+            using (Image image = Image.Load(context.BlobStream))
             {
-                if (image.Height > imageResize.ImageHeight && image.Width > imageResize.ImageWidth)
+                if (configuration.ImageSizeMustBeLargerThanPreset)
                 {
-                    if ((image.Height - imageResize.ImageHeight) > (image.Width - imageResize.ImageWidth))
-                    {
-                        image.Width  = (imageResize.ImageHeight / image.Height) * image.Width;
-                        image.Height = imageResize.ImageHeight;
-                    }
-                    else if ((image.Height - imageResize.ImageHeight) == (image.Width - imageResize.ImageWidth))
-                    {
-                        if (imageResize.ImageHeight < imageResize.ImageWidth)
-                        {
-                            image.Width  = imageResize.ImageWidth;
-                            image.Height = (imageResize.ImageWidth / image.Width) * image.Height;
-                        }
-                        else if (imageResize.ImageHeight > imageResize.ImageWidth)
-                        {
-                            image.Width  = (imageResize.ImageHeight / image.Height) * image.Width;
-                            image.Height = imageResize.ImageHeight;
-                        }
-                    }
-                    else
-                    {
-                        image.Width  = imageResize.ImageWidth;
-                        image.Height = (imageResize.ImageWidth / image.Width) * image.Height;
-                    }
-                }
-                else if (image.Height > imageResize.ImageHeight && image.Width < imageResize.ImageWidth)
-                {
-                    image.Width  = (imageResize.ImageHeight / image.Height) * image.Width;
-                    image.Height = imageResize.ImageHeight;
-                }
-                else if (image.Height < imageResize.ImageHeight && image.Width > imageResize.ImageWidth)
-                {
-                    image.Width  = imageResize.ImageWidth;
-                    image.Height = (imageResize.ImageWidth / image.Width) * image.Height;
-                }
-
-                image.Mutate(x => x.Resize(image.Width, image.Height));
-                // Automatic encoder selected based on extension
-                image.Save(context.BlobStream);
-            }
-
-            /// <summary>
-            /// When not allowed less than preset
-            /// if less, throw a new exception
-            /// else scale it to the preset value
-            /// When allowed(DEFAULT) less than preset
-            /// scale it to the preset value
-            /// </summary>
-            if (imageResize.ImageHeight != null && imageResize.ImageWidth != null)
-            {
-                if (ImageResizeHandlerConfiguration.ImageSizeCouldBeLessThanPreset == false)
-                {
-                    if (Img.Width >= imageResize.ImageWidth && Img.Height >= imageResize.ImageHeight)
-                    {
-                        ImageResizeScaled(Img);
-                    }
-                    else
+                    if (image.Width < configuration.ImageWidth || image.Height < configuration.ImageHeight)
                     {
                         throw new BusinessException(
                             code: "Dignite.Abp.BlobStoring:010004",
-                            message: "Image size should not be less than required!",
-                            details: "Uploaded image should not be less than: " + imageResize.ImageWidth + "x" + imageResize.ImageHeight
+                            message: "Image size must be larger than Preset!",
+                            details: "Uploaded image must be larger than: " + configuration.ImageWidth + "x" + configuration.ImageHeight
                         );
                     }
                 }
-                else
+
+
+                if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
                 {
-                    ImageResizeScaled(Img);
+                    image.Mutate(x =>
+                    {
+                        x.Resize(new ResizeOptions() { 
+                            Mode= ResizeMode.Max,
+                            Size=new Size(configuration.ImageWidth, configuration.ImageHeight)
+                        });
+                    });
+                    using (var stream = new MemoryStream())
+                    {
+                        var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
+                        {
+                            Quality = 40
+                        };
+                        image.Save(stream, encoder);
+                        stream.CopyTo(context.BlobStream);
+                    }
                 }
             }
-
             return Task.CompletedTask;
         }
-
     }
 }

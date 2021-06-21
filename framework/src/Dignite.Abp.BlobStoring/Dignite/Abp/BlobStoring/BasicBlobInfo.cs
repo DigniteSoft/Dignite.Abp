@@ -1,5 +1,4 @@
 using JetBrains.Annotations;
-using System.Collections.Generic;
 
 namespace Dignite.Abp.BlobStoring
 {
@@ -30,9 +29,5 @@ namespace Dignite.Abp.BlobStoring
 
         [CanBeNull]
         public string ReferBlobName { get; set; }
-
-        [CanBeNull]
-        public Dictionary<string, object> Properties { get; private set; }
-
     }
 }

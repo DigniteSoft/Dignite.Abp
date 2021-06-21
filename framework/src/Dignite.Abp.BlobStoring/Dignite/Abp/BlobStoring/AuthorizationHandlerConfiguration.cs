@@ -4,22 +4,38 @@ namespace Dignite.Abp.BlobStoring
 {
     public class AuthorizationHandlerConfiguration
     {
-        public AuthorizationOperations Operations
+        public string SavingPolicy
         {
-            get => _containerConfiguration.GetConfigurationOrDefault(AuthorizationHandlerConfigurationNames.AuthorizationOperations, AuthorizationOperations.Saving|AuthorizationOperations.Getting|AuthorizationOperations.Deleting);
-            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.AuthorizationOperations, value);
+            get => _containerConfiguration.GetConfigurationOrDefault<string>(AuthorizationHandlerConfigurationNames.SavingAuthorizationPolicy, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.SavingAuthorizationPolicy, value);
         }
 
-        public string Policy
+        public string[] SavingRoles
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<string>(AuthorizationHandlerConfigurationNames.AuthorizationPolicy, null);
-            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.AuthorizationPolicy, value);
+            get => _containerConfiguration.GetConfigurationOrDefault<string[]>(AuthorizationHandlerConfigurationNames.SavingAuthorizationRoles, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.SavingAuthorizationRoles, value);
+        }
+        public string GettingPolicy
+        {
+            get => _containerConfiguration.GetConfigurationOrDefault<string>(AuthorizationHandlerConfigurationNames.GettingAuthorizationPolicy, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.GettingAuthorizationPolicy, value);
         }
 
-        public string[] Roles
+        public string[] GettingRoles
         {
-            get => _containerConfiguration.GetConfigurationOrDefault<string[]>(AuthorizationHandlerConfigurationNames.AuthorizationRoles, null);
-            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.AuthorizationRoles, value);
+            get => _containerConfiguration.GetConfigurationOrDefault<string[]>(AuthorizationHandlerConfigurationNames.GettingAuthorizationRoles, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.GettingAuthorizationRoles, value);
+        }
+        public string DeletingPolicy
+        {
+            get => _containerConfiguration.GetConfigurationOrDefault<string>(AuthorizationHandlerConfigurationNames.DeletingAuthorizationPolicy, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.DeletingAuthorizationPolicy, value);
+        }
+
+        public string[] DeletingRoles
+        {
+            get => _containerConfiguration.GetConfigurationOrDefault<string[]>(AuthorizationHandlerConfigurationNames.DeletingAuthorizationRoles, null);
+            set => _containerConfiguration.SetConfiguration(AuthorizationHandlerConfigurationNames.DeletingAuthorizationRoles, value);
         }
 
         private readonly BlobContainerConfiguration _containerConfiguration;

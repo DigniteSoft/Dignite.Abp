@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
-using Volo.Abp.BlobStoring;
 
 namespace Dignite.Abp.BlobStoring
 {
     public interface IAuthorizationHandler
     {
-        Task CheckAsync(AuthorizationOperations operation, BlobContainerConfiguration containerConfiguration);
+        Task CheckSavingPermissionAsync(AuthorizationHandlerConfiguration configuration);
+
+        Task CheckGettingPermissionAsync(AuthorizationHandlerConfiguration configuration, IBlobInfo blobInfo);
+
+        Task CheckDeletingPermissionAsync(AuthorizationHandlerConfiguration configuration, IBlobInfo blobInfo);
     }
 }
