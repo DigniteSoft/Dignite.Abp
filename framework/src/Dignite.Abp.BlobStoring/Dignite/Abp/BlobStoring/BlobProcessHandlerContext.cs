@@ -25,7 +25,7 @@ namespace Dignite.Abp.BlobStoring
 
         public IServiceProvider ServiceProvider { get; }
 
-        public Stream BlobStream { get; }
+        public Stream BlobStream { get; set; }
 
         public BlobContainerConfiguration ContainerConfiguration { get; }
     }

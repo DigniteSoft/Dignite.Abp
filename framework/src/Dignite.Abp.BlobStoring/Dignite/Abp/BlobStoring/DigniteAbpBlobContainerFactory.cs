@@ -8,16 +8,13 @@ namespace Dignite.Abp.BlobStoring
 {
     public class DigniteAbpBlobContainerFactory: BlobContainerFactory, ITransientDependency
     {
-        protected IBlobInfoStore BlobFileStore { get; }
-
 
         public DigniteAbpBlobContainerFactory(
             IBlobContainerConfigurationProvider configurationProvider,
             ICurrentTenant currentTenant,
             ICancellationTokenProvider cancellationTokenProvider,
             IBlobProviderSelector providerSelector,
-            IServiceProvider serviceProvider,
-            IBlobInfoStore blobFileStore)
+            IServiceProvider serviceProvider)
             :base(
                  configurationProvider,
                  currentTenant,
@@ -26,7 +23,6 @@ namespace Dignite.Abp.BlobStoring
                  serviceProvider
                  )
         {
-            BlobFileStore = blobFileStore;
         }
 
         public override IBlobContainer Create(string name)
@@ -39,8 +35,7 @@ namespace Dignite.Abp.BlobStoring
                 ProviderSelector.Get(name),
                 CurrentTenant,
                 CancellationTokenProvider,
-                ServiceProvider,
-                BlobFileStore
+                ServiceProvider
             );
         }
     }

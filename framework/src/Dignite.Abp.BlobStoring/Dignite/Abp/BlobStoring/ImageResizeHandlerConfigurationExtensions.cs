@@ -16,7 +16,7 @@ namespace Dignite.Abp.BlobStoring
             this BlobContainerConfiguration containerConfiguration,
             Action<ImageResizeHandlerConfiguration> configureAction)
         {
-            var imageResizeProcessHandlers = containerConfiguration.GetConfigurationOrDefault(
+            var blobProcessHandlers = containerConfiguration.GetConfigurationOrDefault(
                 DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
                 new TypeList<IBlobProcessHandler>());
 

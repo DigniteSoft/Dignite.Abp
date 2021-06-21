@@ -15,12 +15,7 @@ namespace Dignite.Abp.BlobStoring
         /// <summary>
         ///
         /// </summary>
-        public const string AuthorizationHandlers = "Dignite.AuthorizationHandlers";
-
-        /// <summary>
-        ///
-        /// </summary>
-        public const string SavedCallback = "Dignite.SavedCallback";
+        public const string AuthorizationHandler = "Dignite.AuthorizationHandler";
 
         /// <summary>
         ///

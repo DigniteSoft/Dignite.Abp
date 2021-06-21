@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 
   <Import Project="..\..\..\configureawait.props" />
@@ -21,11 +21,19 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
     <PackageReference Include="Volo.Abp.BlobStoring" Version="4.2.2" />
     <PackageReference Include="Volo.Abp.Authorization" Version="4.2.2" />
+    <PackageReference Include="Volo.Abp.Localization" Version="4.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>    
+    <ProjectReference Include="..\Dignite.Core\Dignite.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlobStoring.Shared\Dignite.Abp.BlobStoring.Shared.csproj" />
-    <ProjectReference Include="..\Dignite.Core\Dignite.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <content Remove="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
+    <EmbeddedResource Include="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
   </ItemGroup>
 
 </Project>

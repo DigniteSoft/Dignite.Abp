@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@dignite.Abp/blob-storing-management": [
+        "projects/blob-storing-management/src/public-api.ts"
+      ],
+      "@dignite.Abp/blob-storing-management/config": [
+        "projects/blob-storing-management/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/blob-storing-management/src/lib/proxy/index.ts"],
+      "@proxy/*": ["projects/blob-storing-management/src/lib/proxy/*"]
+    }
+  }
+}
