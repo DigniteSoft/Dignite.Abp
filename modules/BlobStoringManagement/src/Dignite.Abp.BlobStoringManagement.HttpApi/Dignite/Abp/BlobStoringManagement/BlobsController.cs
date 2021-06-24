@@ -14,7 +14,7 @@ namespace Dignite.Abp.BlobStoringManagement
 {
     [Area("BlobStoringManagement")]
     [RemoteService(Name = BlobStoringManagementRemoteServiceConsts.RemoteServiceName)]
-    [Route("api/blob-storing-management/blobs")]
+    [Route("api/blob-storing/blobs")]
     public class BlobsController : AbpController, IBlobsAppService
     {
         private readonly IBlobContainerFactory _blobContainerFactory;

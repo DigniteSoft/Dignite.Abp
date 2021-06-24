@@ -8,6 +8,9 @@ namespace Dignite.Abp.BlobStoringManagement
 {
     public class Blob : BasicAggregateRoot<Guid>, IBlobInfo, ICreationAuditedObject, IDeletionAuditedObject, IMultiTenant
     {
+        protected Blob()
+        { }
+
         public Blob(Guid id,string entityType,string entityId, BasicBlobInfo blobInfo, Guid? tenantId)
         {
             Id = id;
