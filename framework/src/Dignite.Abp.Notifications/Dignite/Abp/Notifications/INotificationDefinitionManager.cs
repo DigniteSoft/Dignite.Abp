@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,10 +9,6 @@ namespace Dignite.Abp.Notifications
     /// </summary>
     public interface INotificationDefinitionManager
     {
-        /// <summary>
-        /// Adds the specified notification definition.
-        /// </summary>
-        void Add(NotificationDefinition notificationDefinition);
 
         /// <summary>
         /// Gets a notification definition by name.
@@ -31,31 +28,13 @@ namespace Dignite.Abp.Notifications
         IReadOnlyList<NotificationDefinition> GetAll();
 
         /// <summary>
-        /// Checks if given notification (<paramref name="name"/>) is available for given user.
+        /// Checks if given notification (<paramref name="name"/>) is available for current user.
         /// </summary>
-        Task<bool> IsAvailableAsync(string name, UserIdentifier user);
+        Task<bool> IsAvailableAsync(string name);
 
         /// <summary>
-        /// Checks if given notification (<paramref name="name"/>) is available for given user.
+        /// Gets all available notification definitions for current user.
         /// </summary>
-        bool IsAvailable(string name, UserIdentifier user);
-
-        /// <summary>
-        /// Gets all available notification definitions for given user.
-        /// </summary>
-        /// <param name="user">User.</param>
-        Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync(UserIdentifier user);
-
-        /// <summary>
-        /// Gets all available notification definitions for given user.
-        /// </summary>
-        /// <param name="user">User.</param>
-        IReadOnlyList<NotificationDefinition> GetAllAvailable(UserIdentifier user);
-
-        /// <summary>
-        /// Remove notification with given name
-        /// </summary>
-        /// <param name="name"></param>
-        void Remove(string name);
+        Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync();
     }
 }

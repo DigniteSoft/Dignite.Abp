@@ -1,7 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Volo.Abp.Collections.Extensions;
-using Volo.Abp.Json;
 
 namespace Dignite.Abp.Notifications
 {
@@ -58,11 +56,6 @@ namespace Dignite.Abp.Notifications
         public NotificationData()
         {
             _properties = new Dictionary<string, object>();
-        }
-
-        public override string ToString()
-        {
-            return this.ToJsonString();
         }
     }
 }

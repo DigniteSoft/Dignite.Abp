@@ -1,8 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Volo.Abp.Application.Features;
-using Volo.Abp.Authorization;
-using Volo.Abp.Collections.Extensions;
 using Volo.Abp.Localization;
 
 namespace Dignite.Abp.Notifications
@@ -16,7 +13,7 @@ namespace Dignite.Abp.Notifications
         /// Unique name of the notification.
         /// </summary>
         public string Name { get; private set; }
-
+        
         /// <summary>
         /// Related entity type with this notification (optional).
         /// </summary>
@@ -35,16 +32,16 @@ namespace Dignite.Abp.Notifications
         public ILocalizableString Description { get; set; }
 
         /// <summary>
-        /// A permission dependency. This notification will be available to a user if this dependency is satisfied.
+        /// A permission name. This notification will be available to a user if this have permission.
         /// Optional.
         /// </summary>
-        public IPermissionDependency PermissionDependency { get; set; }
-
+        public string PermissionName { get; set; }
+        
         /// <summary>
-        /// A feature dependency. This notification will be available to a tenant if this feature is enabled.
+        /// A feature name. This notification will be available to a tenant if this feature is enabled.
         /// Optional.
         /// </summary>
-        public IFeatureDependency FeatureDependency { get; set; }
+        public string FeatureName { get; set; }
 
         /// <summary>
         /// Gets/sets arbitrary objects related to this object.
@@ -71,21 +68,21 @@ namespace Dignite.Abp.Notifications
         /// <param name="entityType">Related entity type with this notification (optional).</param>
         /// <param name="displayName">Display name of the notification.</param>
         /// <param name="description">Description for the notification</param>
-        /// <param name="permissionDependency">A permission dependency. This notification will be available to a user if this dependency is satisfied.</param>
-        /// <param name="featureDependency">A feature dependency. This notification will be available to a tenant if this feature is enabled.</param>
-        public NotificationDefinition(string name, Type entityType = null, ILocalizableString displayName = null, ILocalizableString description = null, IPermissionDependency permissionDependency = null, IFeatureDependency featureDependency = null)
+        /// <param name="permissionName">A permission name. This notification will be available to a user if this have permission.</param>
+        /// <param name="featureName">A feature name. This notification will be available to a tenant if this feature is enabled.</param>
+        public NotificationDefinition(string name, Type entityType = null, ILocalizableString displayName = null, ILocalizableString description = null, string permissionName = null, string featureName = null)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException("name", "name can not be null, empty or whitespace!");
             }
-
+            
             Name = name;
             EntityType = entityType;
             DisplayName = displayName;
             Description = description;
-            PermissionDependency = permissionDependency;
-            FeatureDependency = featureDependency;
+            PermissionName = permissionName;
+            FeatureName = featureName;
 
             Attributes = new Dictionary<string, object>();
         }

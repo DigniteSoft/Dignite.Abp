@@ -1,72 +1,48 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Volo.Abp.Ddd.Domain.Entities;
-using Volo.Abp.Ddd.Domain.Entities.Auditing;
-using Volo.Abp.Json;
+﻿using System;
 
 namespace Dignite.Abp.Notifications
 {
     /// <summary>
-    /// Used to store a notification subscription.
+    /// Represents a user subscription to a notification.
     /// </summary>
-    [Table("AbpNotificationSubscriptions")]
-    public class NotificationSubscriptionInfo : CreationAuditedEntity<Guid>, IMayHaveTenant
+    public class NotificationSubscriptionInfo
     {
-        /// <summary>
-        /// Tenant id of the subscribed user.
-        /// </summary>
-        public virtual int? TenantId { get; set; }
+        public NotificationSubscriptionInfo(Guid userId, string notificationName, string entityTypeName, string entityId, DateTime creationTime, Guid? tenantId)
+        {
+            UserId = userId;
+            NotificationName = notificationName;
+            EntityTypeName = entityTypeName;
+            EntityId = entityId;
+            CreationTime = creationTime;
+            TenantId = tenantId;
+        }
 
         /// <summary>
         /// User Id.
         /// </summary>
-        public virtual long UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Notification unique name.
         /// </summary>
-        [StringLength(NotificationInfo.MaxNotificationNameLength)]
-        public virtual string NotificationName { get; set; }
+        public string NotificationName { get; set; }
+
 
         /// <summary>
-        /// Gets/sets entity type name, if this is an entity level notification.
-        /// It's FullName of the entity type.
+        /// Name of the entity type (including namespaces).
         /// </summary>
-        [StringLength(NotificationInfo.MaxEntityTypeNameLength)]
-        public virtual string EntityTypeName { get; set; }
+        public string EntityTypeName { get; set; }
 
         /// <summary>
-        /// AssemblyQualifiedName of the entity type.
+        /// Entity Id.
         /// </summary>
-        [StringLength(NotificationInfo.MaxEntityTypeAssemblyQualifiedNameLength)]
-        public virtual string EntityTypeAssemblyQualifiedName { get; set; }
+        public string EntityId { get; set; }
 
         /// <summary>
-        /// Gets/sets primary key of the entity, if this is an entity level notification.
+        /// Creation time
         /// </summary>
-        [StringLength(NotificationInfo.MaxEntityIdLength)]
-        public virtual string EntityId { get; set; }
+        public DateTime CreationTime { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotificationSubscriptionInfo"/> class.
-        /// </summary>
-        public NotificationSubscriptionInfo()
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotificationSubscriptionInfo"/> class.
-        /// </summary>
-        public NotificationSubscriptionInfo(Guid id, int? tenantId, long userId, string notificationName, EntityIdentifier entityIdentifier = null)
-        {
-            Id = id;
-            TenantId = tenantId;
-            NotificationName = notificationName;
-            UserId = userId;
-            EntityTypeName = entityIdentifier == null ? null : entityIdentifier.Type.FullName;
-            EntityTypeAssemblyQualifiedName = entityIdentifier == null ? null : entityIdentifier.Type.AssemblyQualifiedName;
-            EntityId = entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString();
-        }
+        public Guid? TenantId { get; set; }
     }
 }

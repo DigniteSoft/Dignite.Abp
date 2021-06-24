@@ -1,4 +1,4 @@
-namespace Dignite.Abp.Notifications
+﻿namespace Dignite.Abp.Notifications
 {
     /// <summary>
     /// Represents state of a <see cref="UserNotification"/>.

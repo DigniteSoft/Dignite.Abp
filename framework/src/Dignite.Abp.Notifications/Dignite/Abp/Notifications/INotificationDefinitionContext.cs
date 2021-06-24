@@ -1,3 +1,5 @@
+﻿using System.Collections.Generic;
+
 namespace Dignite.Abp.Notifications
 {
     /// <summary>
@@ -5,9 +7,10 @@ namespace Dignite.Abp.Notifications
     /// </summary>
     public interface INotificationDefinitionContext
     {
-        /// <summary>
-        /// Gets the notification definition manager.
-        /// </summary>
-        INotificationDefinitionManager Manager { get; }
+        NotificationDefinition GetOrNull(string name);
+
+        IReadOnlyList<NotificationDefinition> GetAll();
+
+        void Add(params NotificationDefinition[] definitions);
     }
 }

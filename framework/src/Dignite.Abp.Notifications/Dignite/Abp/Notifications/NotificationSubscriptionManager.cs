@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp.Core;
-using Volo.Abp.Json;
-using Volo.Abp.Ddd.Domain.Entities;
+using Volo.Abp.DependencyInjection;
+using Volo.Abp.MultiTenancy;
+using Volo.Abp.Timing;
 
 namespace Dignite.Abp.Notifications
 {
@@ -14,194 +15,93 @@ namespace Dignite.Abp.Notifications
     {
         private readonly INotificationStore _store;
         private readonly INotificationDefinitionManager _notificationDefinitionManager;
-        private readonly IGuidGenerator _guidGenerator;
+        private readonly IClock _clock;
+        private readonly ICurrentTenant _currentTenant;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationSubscriptionManager"/> class.
         /// </summary>
         public NotificationSubscriptionManager(
-            INotificationStore store,
+            INotificationStore store, 
             INotificationDefinitionManager notificationDefinitionManager,
-            IGuidGenerator guidGenerator)
+            IClock clock,
+            ICurrentTenant currentTenant)
         {
             _store = store;
             _notificationDefinitionManager = notificationDefinitionManager;
-            _guidGenerator = guidGenerator;
+            _clock = clock;
+            _currentTenant = currentTenant;
         }
 
-        public async Task SubscribeAsync(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task SubscribeAsync(Guid userId, string notificationName, NotificationEntityIdentifier entityIdentifier = null)
         {
-            if (await IsSubscribedAsync(user, notificationName, entityIdentifier))
+            if (await IsSubscribedAsync(userId, notificationName, entityIdentifier))
             {
                 return;
             }
 
             await _store.InsertSubscriptionAsync(
                 new NotificationSubscriptionInfo(
-                    _guidGenerator.Create(),
-                    user.TenantId,
-                    user.UserId,
+                    userId,
                     notificationName,
-                    entityIdentifier
+                    entityIdentifier == null ? null : entityIdentifier.Type.FullName,
+                    entityIdentifier == null ? null : entityIdentifier.Id,
+                    _clock.Now,
+                    _currentTenant.Id
                     )
                 );
         }
 
-        public void Subscribe(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task SubscribeToAllAvailableNotificationsAsync(Guid userId)
         {
-            if (IsSubscribed(user, notificationName, entityIdentifier))
-            {
-                return;
-            }
-
-            _store.InsertSubscription(
-                new NotificationSubscriptionInfo(
-                    _guidGenerator.Create(),
-                    user.TenantId,
-                    user.UserId,
-                    notificationName,
-                    entityIdentifier
-                    )
-                );
-        }
-
-        public async Task SubscribeToAllAvailableNotificationsAsync(UserIdentifier user)
-        {
-            var notificationDefinitions = (await _notificationDefinitionManager
-                .GetAllAvailableAsync(user))
+            var notificationDefinitions = (
+                await _notificationDefinitionManager.GetAllAvailableAsync(userId)
+                )
                 .Where(nd => nd.EntityType == null)
                 .ToList();
 
             foreach (var notificationDefinition in notificationDefinitions)
             {
-                await SubscribeAsync(user, notificationDefinition.Name);
+                await SubscribeAsync(userId, notificationDefinition.Name);
             }
         }
 
-        public void SubscribeToAllAvailableNotifications(UserIdentifier user)
-        {
-            var notificationDefinitions = (_notificationDefinitionManager
-                .GetAllAvailable(user))
-                .Where(nd => nd.EntityType == null)
-                .ToList();
 
-            foreach (var notificationDefinition in notificationDefinitions)
-            {
-                Subscribe(user, notificationDefinition.Name);
-            }
-        }
-
-        public async Task UnsubscribeAsync(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task UnsubscribeAsync(Guid userId, string notificationName, NotificationEntityIdentifier entityIdentifier = null)
         {
             await _store.DeleteSubscriptionAsync(
-                user,
+                userId,
                 notificationName,
                 entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
+                entityIdentifier == null ? null : entityIdentifier.Id
                 );
         }
 
-        public void Unsubscribe(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
-        {
-             _store.DeleteSubscription(
-                user,
-                notificationName,
-                entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
-                );
-        }
-
-        // TODO: Can work only for single database approach!
-        public async Task<List<NotificationSubscription>> GetSubscriptionsAsync(string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(string notificationName, NotificationEntityIdentifier entityIdentifier = null)
         {
             var notificationSubscriptionInfos = await _store.GetSubscriptionsAsync(
                 notificationName,
                 entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
+                entityIdentifier == null ? null : entityIdentifier.Id
                 );
 
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
+            return notificationSubscriptionInfos;
         }
 
-        // TODO: Can work only for single database approach!
-        public List<NotificationSubscription> GetSubscriptions(string notificationName, EntityIdentifier entityIdentifier = null)
+        public async Task<List<NotificationSubscriptionInfo>> GetSubscribedNotificationsAsync(Guid userId)
         {
-            var notificationSubscriptionInfos =  _store.GetSubscriptions(
-                notificationName,
-                entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
-                );
+            var notificationSubscriptionInfos = await _store.GetSubscriptionsAsync(userId);
 
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
+            return notificationSubscriptionInfos;
         }
 
-        public async Task<List<NotificationSubscription>> GetSubscriptionsAsync(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
-        {
-            var notificationSubscriptionInfos = await _store.GetSubscriptionsAsync(
-                new[] { tenantId },
-                notificationName,
-                entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
-                );
-
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
-        }
-
-        public List<NotificationSubscription> GetSubscriptions(int? tenantId, string notificationName, EntityIdentifier entityIdentifier = null)
-        {
-            var notificationSubscriptionInfos =  _store.GetSubscriptions(
-                new[] { tenantId },
-                notificationName,
-                entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
-                );
-
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
-        }
-
-        public async Task<List<NotificationSubscription>> GetSubscribedNotificationsAsync(UserIdentifier user)
-        {
-            var notificationSubscriptionInfos = await _store.GetSubscriptionsAsync(user);
-
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
-        }
-
-        public List<NotificationSubscription> GetSubscribedNotifications(UserIdentifier user)
-        {
-            var notificationSubscriptionInfos =  _store.GetSubscriptions(user);
-
-            return notificationSubscriptionInfos
-                .Select(nsi => nsi.ToNotificationSubscription())
-                .ToList();
-        }
-
-        public Task<bool> IsSubscribedAsync(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
+        public Task<bool> IsSubscribedAsync(Guid userId, string notificationName, NotificationEntityIdentifier entityIdentifier = null)
         {
             return _store.IsSubscribedAsync(
-                user,
+                userId,
                 notificationName,
                 entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
-                );
-        }
-
-        public bool IsSubscribed(UserIdentifier user, string notificationName, EntityIdentifier entityIdentifier = null)
-        {
-            return _store.IsSubscribed(
-                user,
-                notificationName,
-                entityIdentifier == null ? null : entityIdentifier.Type.FullName,
-                entityIdentifier == null ? null : entityIdentifier.Id.ToJsonString()
+                entityIdentifier == null ? null : entityIdentifier.Id
                 );
         }
     }
