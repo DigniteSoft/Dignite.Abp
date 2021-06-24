@@ -34,7 +34,7 @@ namespace Dignite.Abp.FieldCustomizing
                 _localizer = null;
             }
         }
-        private Type _localizationResource = typeof(FieldCustomizingResource);
+        private Type _localizationResource = typeof(DigniteAbpFieldCustomizingResource);
 
         public abstract string Name { get; }
 

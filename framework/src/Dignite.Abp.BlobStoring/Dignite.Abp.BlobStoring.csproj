@@ -24,10 +24,6 @@
     <PackageReference Include="Volo.Abp.Localization" Version="4.2.2" />
   </ItemGroup>
 
-  <ItemGroup>    
-    <ProjectReference Include="..\Dignite.Core\Dignite.Core.csproj" />
-  </ItemGroup>
-
   <ItemGroup>
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using Dignite.FieldCustomizing;
+﻿using Dignite.Abp.FieldCustomizing;
 using System;
 using System.Collections.Generic;
 using Volo.Abp.Localization;

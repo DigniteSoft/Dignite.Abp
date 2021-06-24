@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\..\..\configureawait.props" />
+  <Import Project="..\..\..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace/>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="4.3.3" />
+    <ProjectReference Include="..\Dignite.Abp.Notifications.Domain.Shared\Dignite.Abp.Notifications.Domain.Shared.csproj" />
+    <ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.Notifications\Dignite.Abp.Notifications.csproj" />
+  </ItemGroup>
+
+</Project>

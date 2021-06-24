@@ -23,7 +23,7 @@ namespace Dignite.Abp.Notifications
 
         private static ILocalizableString L(string name)
         {
-            return LocalizableString.Create<DigniteNotificationsResource>(name);
+            return LocalizableString.Create<DigniteAbpNotificationsResource>(name);
         }
     }
 }

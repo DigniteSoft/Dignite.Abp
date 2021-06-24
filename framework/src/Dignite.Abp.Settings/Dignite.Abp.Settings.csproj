@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.FieldCustomizing\Dignite.FieldCustomizing.csproj" />
+    <ProjectReference Include="..\Dignite.Abp.FieldCustomizing\Dignite.Abp.FieldCustomizing.csproj" />
   </ItemGroup>
 
 

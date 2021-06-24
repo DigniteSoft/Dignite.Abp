@@ -24,7 +24,7 @@ namespace Dignite.Abp.BlobStoring
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Add<BlobStoringResource>("en")
+                    .Add<DigniteAbpBlobStoringResource>("en")
                     .AddVirtualJson("Dignite/Abp/BlobStroring/Localization/Resources");
             });
         }
