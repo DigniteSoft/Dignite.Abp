@@ -1,27 +1,29 @@
-using System.Collections.Generic;
-using Volo.Abp.Settings;
+﻿using Dignite.Abp.Notifications.Localization;
 using Volo.Abp.Localization;
+using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Notifications
 {
-    public class NotificationSettingProvider : SettingProvider
+    public class NotificationSettingProvider : SettingDefinitionProvider
     {
-        public override IEnumerable<SettingDefinition> GetSettingDefinitions(SettingDefinitionProviderContext context)
+
+        public override void Define(ISettingDefinitionContext context)
         {
-            return new[]
-            {
+            var definitions = new SettingDefinition[] {
                 new SettingDefinition(
-                    NotificationSettingNames.ReceiveNotifications,
-                    "true",
-                    L("ReceiveNotifications"),
-                    scopes: SettingScopes.User,
-                    clientVisibilityProvider: new VisibleSettingClientVisibilityProvider())
+                    name:NotificationSettingNames.ReceiveNotifications,
+                    defaultValue:"true",
+                    displayName:L("ReceiveNotifications"),
+                    isVisibleToClients:true)
+
             };
+
+            context.Add(definitions);
         }
 
-        private static LocalizableString L(string name)
+        private static ILocalizableString L(string name)
         {
-            return new LocalizableString(name, AbpConsts.LocalizationSourceName);
+            return LocalizableString.Create<DigniteNotificationsResource>(name);
         }
     }
 }

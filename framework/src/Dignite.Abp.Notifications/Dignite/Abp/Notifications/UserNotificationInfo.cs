@@ -1,56 +1,36 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Volo.Abp.Ddd.Domain.Entities;
-using Volo.Abp.Ddd.Domain.Entities.Auditing;
-using Volo.Abp.Timing;
+﻿using System;
 
 namespace Dignite.Abp.Notifications
 {
     /// <summary>
     /// Used to store a user notification.
     /// </summary>
-    [Serializable]
-    [Table("AbpUserNotifications")]
-    public class UserNotificationInfo : Entity<Guid>, IHasCreationTime, IMayHaveTenant
+    public class UserNotificationInfo 
     {
-        /// <summary>
-        /// Tenant Id.
-        /// </summary>
-        public virtual int? TenantId { get; set; }
+        public UserNotificationInfo(Guid userId, Guid notificationId, Guid? tenantId)
+        {
+            UserId = userId;
+            NotificationId = notificationId;
+            State = UserNotificationState.Unread;
+            TenantId = tenantId;
+        }
 
         /// <summary>
         /// User Id.
         /// </summary>
-        public virtual long UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// Notification Id.
         /// </summary>
-        [Required]
-        public virtual Guid TenantNotificationId { get; set; }
+        public Guid NotificationId { get; set; }
 
         /// <summary>
         /// Current state of the user notification.
         /// </summary>
-        public virtual UserNotificationState State { get; set; }
+        public UserNotificationState State { get; set; }
 
-        public virtual DateTime CreationTime { get; set; }
 
-        public UserNotificationInfo()
-        {
-
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserNotificationInfo"/> class.
-        /// </summary>
-        /// <param name="id"></param>
-        public UserNotificationInfo(Guid id)
-        {
-            Id = id;
-            State = UserNotificationState.Unread;
-            CreationTime = Clock.Now;
-        }
+        public Guid? TenantId { get; set; }
     }
 }

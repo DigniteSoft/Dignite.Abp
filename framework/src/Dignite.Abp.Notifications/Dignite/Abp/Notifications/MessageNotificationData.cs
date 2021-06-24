@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Dignite.Abp.Notifications
 {
@@ -27,7 +27,7 @@ namespace Dignite.Abp.Notifications
         /// </summary>
         private MessageNotificationData()
         {
-
+            
         }
 
         public MessageNotificationData(string message)

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Dignite.Abp.Notifications
 {
@@ -11,6 +11,6 @@ namespace Dignite.Abp.Notifications
         /// This method tries to deliver real time notifications to specified users.
         /// If a user is not online, it should ignore him.
         /// </summary>
-        Task SendNotificationsAsync(UserNotification[] userNotifications);
+        Task SendNotificationsAsync(UserNotificationInfo[] userNotifications);
     }
 }
