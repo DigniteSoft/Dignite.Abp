@@ -75,7 +75,7 @@ namespace Dignite.Abp.Identity
             {
                 if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.SuperAuthorization))
                     return true;
-                else if (parent != null && await AuthorizationCheck(context, parent))
+                else if (await AuthorizationCheck(context, parent))
                     return true;
             }
 

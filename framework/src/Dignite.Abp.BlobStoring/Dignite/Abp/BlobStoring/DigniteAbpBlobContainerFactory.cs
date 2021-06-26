@@ -14,13 +14,15 @@ namespace Dignite.Abp.BlobStoring
             ICurrentTenant currentTenant,
             ICancellationTokenProvider cancellationTokenProvider,
             IBlobProviderSelector providerSelector,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IBlobNormalizeNamingService blobNormalizeNamingService)
             :base(
                  configurationProvider,
                  currentTenant,
                  cancellationTokenProvider,
                  providerSelector,
-                 serviceProvider
+                 serviceProvider, 
+                 blobNormalizeNamingService
                  )
         {
         }
@@ -35,6 +37,7 @@ namespace Dignite.Abp.BlobStoring
                 ProviderSelector.Get(name),
                 CurrentTenant,
                 CancellationTokenProvider,
+                BlobNormalizeNamingService,
                 ServiceProvider
             );
         }

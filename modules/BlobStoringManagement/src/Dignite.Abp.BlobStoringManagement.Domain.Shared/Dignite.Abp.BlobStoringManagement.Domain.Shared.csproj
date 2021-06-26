@@ -10,8 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj" />
     <PackageReference Include="Volo.Abp.Validation" Version="4.3.2" />
+    <ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj" />
   </ItemGroup>
 
   <ItemGroup>

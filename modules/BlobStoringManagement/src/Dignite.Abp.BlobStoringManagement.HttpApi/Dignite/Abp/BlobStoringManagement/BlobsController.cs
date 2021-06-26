@@ -48,14 +48,14 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpPost]
         [Route("upload/{containerName}")]
-        public async Task<string> UploadAsync([NotNull] string containerName, UploadFileInput input)
+        public async Task<string> UploadAsync([NotNull] string containerName, IFormFile File, string EntityType, string EntityId)
         {
             return await _blobAppService.SaveAsync(containerName, 
                 new SaveBytesInput
                 {
-                    Bytes = input.File.GetAllBytes(),
-                    EntityType = input.EntityType,
-                    EntityId = input.EntityId
+                    Bytes = File.GetAllBytes(),
+                    EntityType = EntityType,
+                    EntityId = EntityId
                 });
         }
 

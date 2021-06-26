@@ -1,12 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
     /// Implements <see cref="INameGenerator"/> by using <see cref="Guid.NewGuid"/>.
     /// </summary>
-    public class SimpleNameGenerator:INameGenerator
+    public class SimpleNameGenerator:INameGenerator,ITransientDependency
     {
         public static SimpleNameGenerator Instance { get; } = new SimpleNameGenerator();
 

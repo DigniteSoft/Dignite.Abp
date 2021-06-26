@@ -20,7 +20,7 @@ namespace Dignite.Abp.BlobStoringManagement
             BlobName = blobInfo.BlobName;
             BinarySize = blobInfo.BinarySize;
             Hash = blobInfo.Hash;
-            ReferBlobName = blobInfo.Hash;
+            ReferBlobName = blobInfo.ReferBlobName;
             TenantId = tenantId;
         }
 

@@ -9,7 +9,7 @@ using Volo.Abp.Users;
 
 namespace Dignite.Abp.BlobStoring
 {
-    public class AuthorizationHandler:IAuthorizationHandler
+    public class AuthorizationHandler:IAuthorizationHandler,ITransientDependency
     {
         public IAbpLazyServiceProvider LazyServiceProvider { get; set; }
 

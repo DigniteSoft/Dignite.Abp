@@ -19,13 +19,16 @@ namespace Dignite.Abp.BlobStoring
             IBlobProvider provider,
             ICurrentTenant currentTenant,
             ICancellationTokenProvider cancellationTokenProvider,
+            IBlobNormalizeNamingService blobNormalizeNamingService,
             IServiceProvider serviceProvider) :base(
                 containerName,
                 configuration,
                 provider,
                 currentTenant,
-                cancellationTokenProvider,
-                serviceProvider)
+                cancellationTokenProvider, 
+                blobNormalizeNamingService,
+                serviceProvider
+                )
         {
         }
 

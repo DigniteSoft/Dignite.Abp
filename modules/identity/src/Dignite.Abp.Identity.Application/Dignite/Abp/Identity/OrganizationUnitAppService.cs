@@ -13,6 +13,9 @@ namespace Dignite.Abp.Identity
 {
     public class OrganizationUnitAppService : IdentityAppServiceBase, IOrganizationUnitAppService
     {
+        private const string AllOrganizationUnitsListCacheName = "GetAllOrganizationUnitsList";
+
+
         protected IIdentityUserRepository UserRepository { get; }
         protected IdentityUserManager UserManager { get; }
 
@@ -20,17 +23,16 @@ namespace Dignite.Abp.Identity
         protected OrganizationUnitManager OrganizationUnitManager { get; }
         protected IOrganizationUnitRepository OrganizationUnitRepository { get; }
 
-        private readonly IDistributedCache<List<OrganizationUnit>> _cacheOrganizationUnits;
+        protected IDistributedCache<List<OrganizationUnit>> CacheOrganizationUnits { get; }
 
-        private const string AllOrganizationUnitsListCacheName = "GetAllOrganizationUnitsList";
-
-        public OrganizationUnitAppService(IIdentityUserRepository userRepository, IdentityUserManager userManager, IIdentityRoleRepository roleRepository, OrganizationUnitManager organizationUnitManager, IOrganizationUnitRepository organizationUnitRepository)
+        public OrganizationUnitAppService(IIdentityUserRepository userRepository, IdentityUserManager userManager, IIdentityRoleRepository roleRepository, OrganizationUnitManager organizationUnitManager, IOrganizationUnitRepository organizationUnitRepository, IDistributedCache<List<OrganizationUnit>> cacheOrganizationUnits)
         {
             UserRepository = userRepository;
             UserManager = userManager;
             RoleRepository = roleRepository;
             OrganizationUnitManager = organizationUnitManager;
             OrganizationUnitRepository = organizationUnitRepository;
+            CacheOrganizationUnits = cacheOrganizationUnits;
         }
 
         [Authorize]
@@ -44,7 +46,6 @@ namespace Dignite.Abp.Identity
             return dto;
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetChildrenAsync(Guid? parentId, bool recursive = false)
         {
             List<OrganizationUnit> organizationUnits;
@@ -89,7 +90,7 @@ namespace Dignite.Abp.Identity
                 );
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Default)]
+
         public virtual async Task<ListResultDto<OrganizationUnitDto>> SearchAsync(string filter)
         {
             var allOrganizationUnits = await GetAllListAsync();
@@ -198,7 +199,14 @@ namespace Dignite.Abp.Identity
             var parentOrganizationUnit = input.ParentId.HasValue ?
                 await OrganizationUnitRepository.GetAsync(input.ParentId.Value, false)
                 : null;
-            await AuthorizationService.CheckAsync(parentOrganizationUnit, CommonOperations.Create);
+            if (parentOrganizationUnit != null)
+            {
+                await AuthorizationService.CheckAsync(parentOrganizationUnit, CommonOperations.Create);
+            }
+            else
+            {
+                await AuthorizationService.CheckAsync(IdentityPermissions.OrganizationUnits.SuperAuthorization);
+            }
 
             var children = await OrganizationUnitRepository.GetChildrenAsync(input.ParentId, false);
             await RepairPosition(children);//
@@ -221,7 +229,7 @@ namespace Dignite.Abp.Identity
             await OrganizationUnitManager.CreateAsync(ou);
 
             //remove cache
-            await _cacheOrganizationUnits.RemoveAsync(AllOrganizationUnitsListCacheName);
+            await CacheOrganizationUnits.RemoveAsync(AllOrganizationUnitsListCacheName);
 
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }
@@ -247,7 +255,7 @@ namespace Dignite.Abp.Identity
             await OrganizationUnitManager.UpdateAsync(ou);
 
             //remove cache
-            await _cacheOrganizationUnits.RemoveAsync(AllOrganizationUnitsListCacheName);
+            await CacheOrganizationUnits.RemoveAsync(AllOrganizationUnitsListCacheName);
 
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }
@@ -393,7 +401,7 @@ namespace Dignite.Abp.Identity
 
         protected async Task<List<OrganizationUnit>> GetAllListAsync()
         {
-            return await _cacheOrganizationUnits.GetOrAddAsync(
+            return await CacheOrganizationUnits.GetOrAddAsync(
                  AllOrganizationUnitsListCacheName, //Cache key
                 async () => await OrganizationUnitRepository.GetListAsync(includeDetails: false),
                 () => new DistributedCacheEntryOptions

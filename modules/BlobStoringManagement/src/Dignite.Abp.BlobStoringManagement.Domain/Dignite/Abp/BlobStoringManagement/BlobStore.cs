@@ -1,4 +1,5 @@
 ﻿using Dignite.Abp.BlobStoring;
+using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +12,10 @@ namespace Dignite.Abp.BlobStoringManagement
     {
         private readonly IBlobRepository _blobRepository;
         private readonly IBlobEntityResolver _blobEntityResolver;
-        private readonly DigniteBlobOptions _options;
+        private readonly IOptions<DigniteBlobOptions> _options;
 
         public BlobStore(IBlobRepository blobRepository, IBlobEntityResolver blobEntityResolver,
-             DigniteBlobOptions options)
+            IOptions<DigniteBlobOptions> options)
         {
             _blobRepository = blobRepository;
             _blobEntityResolver = blobEntityResolver;
@@ -39,10 +40,8 @@ namespace Dignite.Abp.BlobStoringManagement
             Check.NotNullOrWhiteSpace(blobEntityResult.EntityId, nameof(blobEntityResult.EntityId), BlobConsts.MaxEntityIdLength);
             Check.NotNullOrWhiteSpace(blobInfo.ContainerName, nameof(blobInfo.ContainerName), BlobConsts.MaxContainerNameLength);
             Check.NotNullOrWhiteSpace(blobInfo.BlobName, nameof(blobInfo.BlobName), BlobConsts.MaxBlobNameLength);
-            Check.NotNullOrWhiteSpace(blobInfo.ReferBlobName, nameof(blobInfo.ReferBlobName), BlobConsts.MaxBlobNameLength);
-            Check.NotNullOrWhiteSpace(blobInfo.Hash, nameof(blobInfo.Hash), BlobConsts.MaxBlobHashLength);
 
-            if (!_options.EntityTypes.Any(x => x.EntityType == blobEntityResult.EntityType))
+            if (!_options.Value.EntityTypes.Any(x => x.EntityType == blobEntityResult.EntityType))
             {
                 throw new EntityBlobNotAddableException(blobEntityResult.EntityType);
             }

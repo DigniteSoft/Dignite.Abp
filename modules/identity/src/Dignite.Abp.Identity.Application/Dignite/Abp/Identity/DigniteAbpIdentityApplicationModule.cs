@@ -23,9 +23,9 @@ namespace Dignite.Abp.Identity
 
             Configure<AuthorizationOptions>(options =>
             {
-                options.AddPolicy("DigniteCmsUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Create));
-                options.AddPolicy("DigniteCmsUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
-                options.AddPolicy("DigniteCmsDeletePolicy", policy => policy.Requirements.Add(CommonOperations.Delete));
+                options.AddPolicy("DigniteIdentityCreatePolicy", policy => policy.Requirements.Add(CommonOperations.Create));
+                options.AddPolicy("DigniteIdentityUpdatePolicy", policy => policy.Requirements.Add(CommonOperations.Update));
+                options.AddPolicy("DigniteIdentityDeletePolicy", policy => policy.Requirements.Add(CommonOperations.Delete));
             });
 
             context.Services.AddSingleton<IAuthorizationHandler, OrganizationAuthorizationHandler>();
