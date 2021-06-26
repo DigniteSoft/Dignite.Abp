@@ -23,6 +23,10 @@ namespace Dignite.Abp.BlobStoring
             if (blobProcessHandlers.TryAdd<FileTypeCheckHandler>())
             {
                 configureAction(new FileTypeCheckHandlerConfiguration(containerConfiguration));
+
+                containerConfiguration.SetConfiguration(
+                    DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
+                    blobProcessHandlers);
             }
         }
     }

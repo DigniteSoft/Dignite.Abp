@@ -20,9 +20,14 @@ namespace Dignite.Abp.BlobStoring
                 DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
                 new TypeList<IBlobProcessHandler>());
 
+
             if (blobProcessHandlers.TryAdd<FileSizeLimitHandler>())
             {
                 configureAction(new FileSizeLimitHandlerConfiguration(containerConfiguration));
+
+                containerConfiguration.SetConfiguration(
+                    DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
+                    blobProcessHandlers);
             }
         }
     }

@@ -23,6 +23,10 @@ namespace Dignite.Abp.BlobStoring
             if (blobProcessHandlers.TryAdd<ImageResizeHandler>())
             {
                 configureAction(new ImageResizeHandlerConfiguration(containerConfiguration));
+
+                containerConfiguration.SetConfiguration(
+                    DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
+                    blobProcessHandlers);
             }
         }
     }
