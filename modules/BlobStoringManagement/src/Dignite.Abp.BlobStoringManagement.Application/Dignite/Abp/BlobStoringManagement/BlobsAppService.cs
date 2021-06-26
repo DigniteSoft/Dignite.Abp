@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
+using MimeDetective.InMemory;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -44,9 +46,9 @@ namespace Dignite.Abp.BlobStoringManagement
                 //
                 MemoryStream ms = new MemoryStream();
                 response.GetResponseStream().CopyTo(ms);
+                var fileType = ms.DetectMimeType();
                 byte[] bytes = ms.ToArray();
-                var extensionName = HeyRed.Mime.MimeGuesser.GuessExtension(bytes);
-                var blobName = await GeneratorNameAsync(containerName, extensionName);
+                var blobName = await GeneratorNameAsync(containerName, fileType.Extension);
 
                 await blobContainer.SaveAsync(blobName, bytes, true);
                 return $"{containerName}/{blobName}";
@@ -58,9 +60,10 @@ namespace Dignite.Abp.BlobStoringManagement
             using (var stream = new MemoryStream(input.Bytes))
             {
                 var blobContainer = _blobContainerFactory.Create(containerName);
+                var fileType = stream.DetectMimeType();
                 var blobName = await GeneratorNameAsync(
                     containerName,
-                    HeyRed.Mime.MimeGuesser.GuessExtension(stream)
+                    fileType.Extension
                     );
 
                 await blobContainer.SaveAsync(blobName, stream, true);
@@ -105,6 +108,13 @@ namespace Dignite.Abp.BlobStoringManagement
 
                 await blobContainer.DeleteAsync(blob.BlobName);
             }
+        }
+
+        [RemoteService(IsEnabled = false)]
+        public async Task<Stream> GetOrNullAsync([NotNull] string containerName, [NotNull] string blobName)
+        {
+            var blobContainer = _blobContainerFactory.Create(containerName);
+            return await blobContainer.GetOrNullAsync(blobName);
         }
 
         private async Task<string> GeneratorNameAsync(string containerName, string extensionName = null)

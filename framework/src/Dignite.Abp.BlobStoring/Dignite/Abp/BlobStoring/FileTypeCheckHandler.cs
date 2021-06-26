@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
+using MimeDetective.InMemory;
 
 namespace Dignite.Abp.BlobStoring
 {
@@ -18,10 +19,10 @@ namespace Dignite.Abp.BlobStoring
             // TODO: case sensitivity
             if (fileTypeCheckHandlerConfiguration.AllowedFileTypeNames != null && fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Length > 0)
             {
-                string fileExtensionName = HeyRed.Mime.MimeGuesser.GuessExtension(context.BlobStream);
-                if (!fileExtensionName.IsNullOrEmpty())
+                var fileType = context.BlobStream.DetectMimeType();
+                if (fileType != null)
                 {
-                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileExtensionName))
+                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileType.Extension.EnsureStartsWith('.')))
                     {
                         throw new BusinessException(
                             code: "Dignite.Abp.BlobStoring:010002",

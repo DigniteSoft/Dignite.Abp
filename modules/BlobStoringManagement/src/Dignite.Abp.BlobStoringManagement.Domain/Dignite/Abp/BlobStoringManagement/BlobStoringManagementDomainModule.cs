@@ -7,7 +7,8 @@ namespace Dignite.Abp.BlobStoringManagement
 {
     [DependsOn(
         typeof(AbpDddDomainModule),
-        typeof(BlobStoringManagementDomainSharedModule)
+        typeof(BlobStoringManagementDomainSharedModule),
+        typeof(DigniteAbpBlobStoringModule)
     )]
     public class BlobStoringManagementDomainModule : AbpModule
     {

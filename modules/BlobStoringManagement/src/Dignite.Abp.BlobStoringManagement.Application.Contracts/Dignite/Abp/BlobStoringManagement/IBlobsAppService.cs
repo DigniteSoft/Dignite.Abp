@@ -1,5 +1,7 @@
 ﻿using JetBrains.Annotations;
+using System.IO;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
@@ -45,5 +47,8 @@ namespace Dignite.Abp.BlobStoringManagement
         /// <param name="entityId"></param>
         /// <returns></returns>
         Task DeleteByEntityAsync( [NotNull] string entityType, [NotNull] string entityId);
+
+        [RemoteService(IsEnabled = false)]
+        Task<Stream> GetOrNullAsync([NotNull] string containerName, [NotNull] string blobName);
     }
 }

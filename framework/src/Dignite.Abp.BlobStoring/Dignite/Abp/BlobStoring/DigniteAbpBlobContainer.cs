@@ -121,7 +121,7 @@ namespace Dignite.Abp.BlobStoring
             await CheckSavingPermissionAsync();
 
             // blob process handlers
-            await BlobProcessHandlers(stream);
+            await BlobProcessHandlers(name, stream);
 
             // save blob
             await HashAndSaveAsync(name, stream, overrideExisting, cancellationToken);
@@ -184,13 +184,13 @@ namespace Dignite.Abp.BlobStoring
             }
         }
 
-        private async Task BlobProcessHandlers(Stream stream)
+        private async Task BlobProcessHandlers(string name,Stream stream)
         {
             // blob process handlers
             var processHandlers = Configuration.GetConfigurationOrDefault<ITypeList<IBlobProcessHandler>>(DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers, null);
             if (processHandlers != null && processHandlers.Any())
             {
-                var context = new BlobProcessHandlerContext(stream, Configuration, CurrentTenant, ServiceProvider);
+                var context = new BlobProcessHandlerContext(name,stream, Configuration, CurrentTenant, ServiceProvider);
                 using (var scope = ServiceProvider.CreateScope())
                 {
                     foreach (var handlerType in processHandlers)

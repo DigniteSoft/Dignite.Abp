@@ -1,14 +1,12 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+using MimeDetective.InMemory;
 using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.BlobStoring;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -17,15 +15,12 @@ namespace Dignite.Abp.BlobStoringManagement
     [Route("api/blob-storing/blobs")]
     public class BlobsController : AbpController, IBlobsAppService
     {
-        private readonly IBlobContainerFactory _blobContainerFactory;
         private readonly IBlobsAppService _blobAppService;
 
         public BlobsController(
-            IBlobContainerFactory blobContainerFactory,
             IBlobsAppService blobAppService
             )
         {
-            _blobContainerFactory = blobContainerFactory;
             _blobAppService = blobAppService;
         }
 
@@ -61,10 +56,9 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpGet]
         [Route("{containerName}/{blobName}")]
-        public async Task<FileResult> GetAsync([NotNull] string containerName, [NotNull] string blobName)
+        public async Task<FileResult> LoadAsync([NotNull] string containerName, [NotNull] string blobName)
         {
-            var blobContainer = _blobContainerFactory.Create(containerName);
-            var stream = await blobContainer.GetOrNullAsync(blobName);
+            var stream = await GetOrNullAsync(containerName, blobName);
             var mimeType = GetMimeType(stream);
             return File(stream, mimeType);
         }
@@ -73,9 +67,8 @@ namespace Dignite.Abp.BlobStoringManagement
         [Route("download/{containerName}/{blobName}")]
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
-            var blobContainer = _blobContainerFactory.Create(containerName);
-            var stream = await blobContainer.GetOrNullAsync(blobName);
-            var mimeType = GetMimeType(stream, fileName);
+            var stream = await GetOrNullAsync(containerName, blobName);
+            var mimeType = GetMimeType(stream);
             return File(stream, mimeType, fileName);
         }
 
@@ -114,25 +107,29 @@ namespace Dignite.Abp.BlobStoringManagement
         }
 
 
+        [RemoteService(IsEnabled = false)]
+        public async Task<Stream> GetOrNullAsync([NotNull] string containerName, [NotNull] string blobName)
+        {
+            return await _blobAppService.GetOrNullAsync(containerName, blobName);
+        }
+
+
         /// <summary>
         /// 获取mimetype
         /// </summary>
         /// <param name="stream"></param>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        private static string GetMimeType(Stream stream, string fileName = null)
+        private static string GetMimeType(Stream stream)
         {
-            var contentType = HeyRed.Mime.MimeGuesser.GuessMimeType(stream);
-            if (string.IsNullOrEmpty(contentType))
+            var fileType = stream.DetectMimeType();
+            if (fileType != null)
             {
-                if (!fileName.IsNullOrEmpty())
-                    return HeyRed.Mime.MimeTypesMap.GetMimeType(fileName);
-                else
-                    return "application/octet-stream";
+                return fileType.Mime;
             }
-
-            return contentType;
+            else
+            {
+                return "application/octet-stream";
+            }
         }
-
     }
 }

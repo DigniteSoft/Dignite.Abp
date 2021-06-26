@@ -5,13 +5,11 @@ using Volo.Abp.Localization.ExceptionHandling;
 using Volo.Abp.Validation;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
-using Dignite.Abp.BlobStoring;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
     [DependsOn(
-        typeof(AbpValidationModule),
-        typeof(DigniteAbpBlobStoringModule)
+        typeof(AbpValidationModule)
     )]
     public class BlobStoringManagementDomainSharedModule : AbpModule
     {
