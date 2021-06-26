@@ -53,7 +53,7 @@ namespace Dignite.Abp.Notifications
         }
 
         public async Task SubscribeToAllAvailableNotificationsAsync(Guid userId)
-        {
+        {            
             var notificationDefinitions = (
                 await _notificationDefinitionManager.GetAllAvailableAsync(userId)
                 )
@@ -63,7 +63,7 @@ namespace Dignite.Abp.Notifications
             foreach (var notificationDefinition in notificationDefinitions)
             {
                 await SubscribeAsync(userId, notificationDefinition.Name);
-            }
+            }            
         }
 
 

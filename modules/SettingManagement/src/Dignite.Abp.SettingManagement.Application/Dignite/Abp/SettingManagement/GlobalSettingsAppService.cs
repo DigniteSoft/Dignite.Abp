@@ -1,5 +1,5 @@
 ﻿using Dignite.Abp.Settings;
-using Dignite.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System;

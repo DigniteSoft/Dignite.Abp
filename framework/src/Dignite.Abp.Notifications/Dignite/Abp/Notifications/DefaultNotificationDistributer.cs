@@ -10,6 +10,8 @@ using Volo.Abp.MultiTenancy;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Security.Claims;
 using Volo.Abp.Security.Claims;
+using Microsoft.Extensions.Options;
+using Volo.Abp.Uow;
 
 namespace Dignite.Abp.Notifications
 {
@@ -25,43 +27,36 @@ namespace Dignite.Abp.Notifications
         protected ISettingProvider SettingProvider { get; }
         protected IServiceProvider ServiceProvider { get; }
         protected ICurrentTenant CurrentTenant { get; }
-        protected ICurrentPrincipalAccessor CurrentPrincipalAccessor { get; }
+        protected IUnitOfWorkManager UnitOfWorkManager { get; }
+
 
         public DefaultNotificationDistributer(
-            NotificationOptions notificationOptions, 
+            IOptions<NotificationOptions> notificationOptions, 
             INotificationDefinitionManager notificationDefinitionManager, 
             INotificationStore notificationStore,
             ILoggerFactory loggerFactory, 
             ISettingProvider settingProvider, 
             IServiceProvider serviceProvider, 
             ICurrentTenant currentTenant,
-            ICurrentPrincipalAccessor currentPrincipalAccessor)
+            IUnitOfWorkManager unitOfWorkManager)
         {
-            Options = notificationOptions;
+            Options = notificationOptions.Value;
             NotificationDefinitionManager = notificationDefinitionManager;
             NotificationStore = notificationStore;
             Logger = loggerFactory?.CreateLogger(GetType().FullName) ?? NullLogger.Instance;
             SettingProvider = settingProvider;
             ServiceProvider = serviceProvider;
             CurrentTenant = currentTenant;
-            CurrentPrincipalAccessor = currentPrincipalAccessor;
+            UnitOfWorkManager = unitOfWorkManager;
         }
 
-        public async Task DistributeAsync(Guid notificationId,
+        public async Task DistributeAsync(
+            NotificationInfo notification,
             Guid[] userIds = null,
             Guid[] excludedUserIds = null)
         {
-            var notificationInfo = await NotificationStore.GetNotificationOrNullAsync(notificationId);
-            if (notificationInfo == null)
-            {
-                Logger.LogWarning("NotificationDistributionJob can not continue since could not found notification by id: " + notificationId);
-                return;
-            }
-
-            var users = await GetUsersAsync(notificationInfo,userIds,excludedUserIds);
-
-            var userNotifications = await SaveUserNotificationsAsync(users, notificationInfo);
-
+            var users = await GetUsersAsync(notification, userIds,excludedUserIds);            
+            var userNotifications = await SaveUserNotificationsAsync(users, notification);
             await NotifyAsync(userNotifications.ToArray());
         }
 
@@ -69,12 +64,12 @@ namespace Dignite.Abp.Notifications
             Guid[] userIds = null,
             Guid[] excludedUserIds = null)
         {
-            List<Guid> targetUserIds;
+            List<Guid> distributeUserIds;
 
             if (!userIds.IsNullOrEmpty())
             {
                 //Directly get from UserIds
-                targetUserIds = new List<Guid>(userIds);
+                distributeUserIds = new List<Guid>(userIds);
             }
             else
             {
@@ -90,29 +85,17 @@ namespace Dignite.Abp.Notifications
                     //Remove invalid subscriptions
                     foreach (var subscription in subscriptions)
                     {
-                        var claimsPrincipal = new ClaimsPrincipal(
-                            new ClaimsIdentity(new Claim[] {
-                                new Claim(AbpClaimTypes.UserId,subscription.UserId.ToString()),
-                                new Claim(AbpClaimTypes.Role,"½ÇÉ«1"),
-                                new Claim(AbpClaimTypes.Role,"½ÇÉ«2"),
-                                new Claim(AbpClaimTypes.Role,"½ÇÉ«3"),
-                                new Claim(AbpClaimTypes.TenantId,CurrentTenant.Id?.ToString())
-                            }));
-
-                        using (CurrentPrincipalAccessor.Change(claimsPrincipal))
+                        if (
+                            !await SettingProvider.GetAsync<bool>(NotificationSettingNames.ReceiveNotifications) ||
+                            !await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, subscription.UserId)
+                           )
                         {
-                            if (
-                                !await SettingProvider.GetAsync<bool>(NotificationSettingNames.ReceiveNotifications) ||
-                                !await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName)
-                               )
-                            {
-                                subscriptions.RemoveAll(s => s.UserId == subscription.UserId);
-                            }
+                            subscriptions.RemoveAll(s => s.UserId == subscription.UserId);
                         }
                     }
 
                     //Get user ids
-                    targetUserIds = subscriptions
+                    distributeUserIds = subscriptions
                         .Select(s => s.UserId)
                         .ToList();
                 }
@@ -121,16 +104,18 @@ namespace Dignite.Abp.Notifications
             if (!excludedUserIds.IsNullOrEmpty())
             {
                 //Exclude specified users.
-                targetUserIds.RemoveAll(uid => excludedUserIds.Any(euid => euid.Equals(uid)));
+                distributeUserIds.RemoveAll(uid => excludedUserIds.Any(euid => euid.Equals(uid)));
             }
 
-            return targetUserIds.ToArray();
+            return distributeUserIds.ToArray();
         }
 
 
 
+        [UnitOfWork]
         protected virtual async Task<List<UserNotificationInfo>> SaveUserNotificationsAsync(Guid[] users, NotificationInfo notificationInfo)
         {
+            await NotificationStore.InsertNotificationAsync(notificationInfo);
             var userNotifications = new List<UserNotificationInfo>();
             foreach (var user in users)
             {
@@ -138,6 +123,9 @@ namespace Dignite.Abp.Notifications
                 await NotificationStore.InsertUserNotificationAsync(userNotification);
                 userNotifications.Add(userNotification);
             }
+
+            await UnitOfWorkManager.Current.SaveChangesAsync();
+
             return userNotifications;
         }
 

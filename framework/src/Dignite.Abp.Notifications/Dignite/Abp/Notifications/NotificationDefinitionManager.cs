@@ -12,6 +12,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Features;
 using Volo.Abp.MultiTenancy;
 using Volo.Abp.Security.Claims;
+using Volo.Abp.Users;
 
 namespace Dignite.Abp.Notifications
 {
@@ -21,26 +22,34 @@ namespace Dignite.Abp.Notifications
     internal class NotificationDefinitionManager : INotificationDefinitionManager, ISingletonDependency
     {
         protected Lazy<IDictionary<string, NotificationDefinition>> NotificationDefinitions { get; }
-
         protected NotificationOptions Options { get; }
-
         protected IFeatureChecker FeatureChecker { get; }
-
         protected IServiceProvider ServiceProvider { get; }
-
         protected IAuthorizationService AuthorizationService { get; }
+        protected ICurrentPrincipalAccessor CurrentPrincipalAccessor { get; }
+        protected ICurrentTenant CurrentTenant { get; }
+        protected ICurrentUser CurrentUser { get; }
+        protected INotificationStore NotificationStore { get; }
 
         public NotificationDefinitionManager(
             IOptions<NotificationOptions> options,
             IServiceProvider serviceProvider,
             IFeatureChecker featureChecker,
-            IAuthorizationService authorizationService
+            ICurrentPrincipalAccessor currentPrincipalAccessor,
+            IAuthorizationService authorizationService,
+            ICurrentTenant currentTenant,
+            ICurrentUser currentUser,
+            INotificationStore notificationStore
             )
         {
             ServiceProvider = serviceProvider;
             Options = options.Value;
             FeatureChecker = featureChecker;
             AuthorizationService = authorizationService;
+            CurrentPrincipalAccessor = currentPrincipalAccessor;
+            CurrentTenant = currentTenant;
+            CurrentUser = currentUser;
+            NotificationStore = notificationStore;
             NotificationDefinitions = new Lazy<IDictionary<string, NotificationDefinition>>(CreateNotificationDefinitions, true);
         }
 
@@ -87,7 +96,7 @@ namespace Dignite.Abp.Notifications
 
             return settings;
         }
-        public async Task<bool> IsAvailableAsync(string name)
+        public async Task<bool> IsAvailableAsync(string name,Guid userId)
         {
             var notificationDefinition = GetOrNull(name);
             if (notificationDefinition == null)
@@ -96,7 +105,7 @@ namespace Dignite.Abp.Notifications
             }
 
             return (await FeatureCheckAsync(notificationDefinition)
-                && await PermissionCheckAsync(notificationDefinition)
+                && await PermissionCheckAsync(notificationDefinition,userId)
                 );
         }
 
@@ -114,34 +123,54 @@ namespace Dignite.Abp.Notifications
             return true;
         }
 
-        protected async Task<bool> PermissionCheckAsync(NotificationDefinition notificationDefinition)
+        protected async Task<bool> PermissionCheckAsync(NotificationDefinition notificationDefinition, Guid userId)
         {
             if (!notificationDefinition.PermissionName.IsNullOrEmpty())
             {
-                    var result = await AuthorizationService.AuthorizeAsync(notificationDefinition.PermissionName);
-                    if (!result.Succeeded)
+                AuthorizationResult result;
+                if (CurrentUser.Id == userId)
+                {
+                    result = await AuthorizationService.AuthorizeAsync(notificationDefinition.PermissionName);
+                }
+                else
+                {
+                    var userRoles = await NotificationStore.GetUserRoles(userId);
+                    var rolesClaims = userRoles.Select(ur => new Claim(AbpClaimTypes.Role, ur)).ToArray();
+                    var claimsIdentity = new ClaimsIdentity(new Claim[] {
+                                new Claim(AbpClaimTypes.UserId,userId.ToString()),
+                                new Claim(AbpClaimTypes.TenantId,CurrentTenant.Id?.ToString())
+                        });
+                    claimsIdentity.AddClaims(rolesClaims);
+
+                    //Switch current user identity
+                    using (CurrentPrincipalAccessor.Change(new ClaimsPrincipal(claimsIdentity)))
                     {
-                        return false;
+                        result = await AuthorizationService.AuthorizeAsync(notificationDefinition.PermissionName);
                     }
+                }
+                if (!result.Succeeded)
+                {
+                    return false;
+                }
             }
             return true;
         }
 
-
-
-        public async Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync()
+        public async Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync(Guid userId)
         {
             var availableDefinitions = new List<NotificationDefinition>();
 
             foreach (var notificationDefinition in GetAll())
             {
                 if (await FeatureCheckAsync(notificationDefinition)
-                    && await PermissionCheckAsync(notificationDefinition))
+                    && await PermissionCheckAsync(notificationDefinition, userId))
                 {
                     availableDefinitions.Add(notificationDefinition);
                 }
             }
             return availableDefinitions.ToImmutableList();
         }
+
+
     }
 }

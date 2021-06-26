@@ -76,7 +76,6 @@ namespace Dignite.Abp.Notifications
             {
                 throw new ArgumentNullException("name", "name can not be null, empty or whitespace!");
             }
-            
             Name = name;
             EntityType = entityType;
             DisplayName = displayName;

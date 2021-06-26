@@ -59,20 +59,18 @@ namespace Dignite.Abp.Notifications
                 _currentTenant.Id
             );
 
-            await _store.InsertNotificationAsync(notificationInfo);
-
 
             if (userIds != null && userIds.Length <= MaxUserCountToDirectlyDistributeANotification)
             {
                 //We can directly distribute the notification since there are not much receivers
-                await _notificationDistributer.DistributeAsync(notificationInfo.Id, userIds, excludedUserIds);
+                await _notificationDistributer.DistributeAsync(notificationInfo, userIds, excludedUserIds);
             }
             else
             {
                 //We enqueue a background job since distributing may get a long time
                 await _backgroundJobManager.EnqueueAsync(
                     new NotificationDistributionJobArgs(
-                        notificationInfo.Id,
+                        notificationInfo,
                         userIds,
                         excludedUserIds
                         )

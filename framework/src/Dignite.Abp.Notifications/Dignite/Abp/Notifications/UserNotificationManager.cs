@@ -20,7 +20,7 @@ namespace Dignite.Abp.Notifications
             _store = store;
         }
 
-        public async Task<List<UserNotificationInfo>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<List<UserNotificationWithNotification>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)            
         {
             return await _store.GetUserNotificationsAsync(userId, state, skipCount, maxResultCount, startDate, endDate);            
         }

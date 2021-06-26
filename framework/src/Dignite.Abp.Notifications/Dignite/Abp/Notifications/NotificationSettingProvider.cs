@@ -6,7 +6,6 @@ namespace Dignite.Abp.Notifications
 {
     public class NotificationSettingProvider : SettingDefinitionProvider
     {
-
         public override void Define(ISettingDefinitionContext context)
         {
             var definitions = new SettingDefinition[] {
