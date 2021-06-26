@@ -11,7 +11,7 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Distributes given notification to users.
         /// </summary>
-        /// <param name="notificationId">The notification id.</param>
+        /// <param name="notification">The notification info.</param>
         /// <param name="userIds">
         /// Target user id(s). 
         /// Used to send notification to specific user(s) (without checking the subscription). 
@@ -23,7 +23,7 @@ namespace Dignite.Abp.Notifications
         /// It's normally not set if <paramref name="userIds"/> is set.
         /// </param>
         Task DistributeAsync(
-            Guid notificationId,
+            NotificationInfo notification,
             Guid[] userIds = null,
             Guid[] excludedUserIds = null);
     }

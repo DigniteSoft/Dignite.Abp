@@ -28,13 +28,13 @@ namespace Dignite.Abp.Notifications
         IReadOnlyList<NotificationDefinition> GetAll();
 
         /// <summary>
-        /// Checks if given notification (<paramref name="name"/>) is available for current user.
+        /// Checks if given notification (<paramref name="name"/>) is available for given user.
         /// </summary>
-        Task<bool> IsAvailableAsync(string name);
+        Task<bool> IsAvailableAsync(string name, Guid userId);
 
         /// <summary>
-        /// Gets all available notification definitions for current user.
+        /// Gets all available notification definitions for given user.
         /// </summary>
-        Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync();
+        Task<IReadOnlyList<NotificationDefinition>> GetAllAvailableAsync(Guid userId);
     }
 }

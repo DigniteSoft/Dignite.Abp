@@ -9,9 +9,9 @@ namespace Dignite.Abp.Notifications
     public class NotificationDistributionJobArgs
     {
         /// <summary>
-        /// Notification Id.
+        /// Notification Info.
         /// </summary>
-        public Guid NotificationId { get; set; }
+        public NotificationInfo Notification { get; set; }
 
 
         public Guid[] UserIds { get; set; }
@@ -20,12 +20,13 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationDistributionJobArgs"/> class.
         /// </summary>
-        public NotificationDistributionJobArgs(Guid notificationId,
+        public NotificationDistributionJobArgs(
+            NotificationInfo notification,
             Guid[] userIds = null,
             Guid[] excludedUserIds = null            
             )
         {
-            NotificationId = notificationId;
+            Notification = notification;
             UserIds = userIds;
             ExcludedUserIds = excludedUserIds;
         }

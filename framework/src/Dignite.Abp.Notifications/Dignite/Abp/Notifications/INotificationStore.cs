@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,17 +18,12 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Deletes a notification subscription.
         /// </summary>
-        Task DeleteSubscriptionAsync(Guid user, string notificationName, string entityTypeName, string entityId);
+        Task DeleteSubscriptionAsync(Guid user, string notificationName, [CanBeNull] string entityTypeName, [CanBeNull] string entityId);
 
         /// <summary>
         /// Inserts a notification.
         /// </summary>
         Task InsertNotificationAsync(NotificationInfo notification);
-
-        /// <summary>
-        /// Gets a notification by Id, or returns null if not found.
-        /// </summary>
-        Task<NotificationInfo> GetNotificationOrNullAsync(Guid notificationId);
 
         /// <summary>
         /// Inserts a user notification.
@@ -37,7 +33,7 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Gets subscriptions for a notification.
         /// </summary>
-        Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(string notificationName, string entityTypeName, string entityId);
+        Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(string notificationName, [CanBeNull] string entityTypeName, [CanBeNull] string entityId);
 
         /// <summary>
         /// Gets subscriptions for a user.
@@ -47,7 +43,7 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Checks if a user subscribed for a notification
         /// </summary>
-        Task<bool> IsSubscribedAsync(Guid userId, string notificationName, string entityTypeName, string entityId);
+        Task<bool> IsSubscribedAsync(Guid userId, string notificationName, [CanBeNull] string entityTypeName, [CanBeNull] string entityId);
 
         /// <summary>
         /// Updates a user notification state.
@@ -67,7 +63,7 @@ namespace Dignite.Abp.Notifications
         /// <summary>
         /// Deletes all notifications of a user.
         /// </summary>
-        Task DeleteAllUserNotificationsAsync(Guid user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null);
+        Task DeleteAllUserNotificationsAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null);
 
         /// <summary>
         /// Gets notifications of a user.
@@ -78,21 +74,23 @@ namespace Dignite.Abp.Notifications
         /// <param name="maxResultCount">Maximum result count.</param>
         /// <param name="startDate">List notifications published after startDateTime</param>
         /// <param name="endDate">List notifications published before startDateTime</param>
-        Task<List<UserNotificationInfo>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null);
+        Task<List<UserNotificationWithNotification>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null);
 
         /// <summary>
         /// Gets user notification count.
         /// </summary>
-        /// <param name="user">User.</param>
+        /// <param name="userId">User.</param>
         /// <param name="state">The state.</param>
         /// <param name="startDate">List notifications published after startDateTime</param>
         /// <param name="endDate">List notifications published before startDateTime</param>
-        Task<int> GetUserNotificationCountAsync(Guid user, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null);
+        Task<int> GetUserNotificationCountAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null);
+
 
         /// <summary>
-        /// Deletes the notification.
+        /// Gets roles of a user.
         /// </summary>
-        /// <param name="notification">The notification.</param>
-        Task DeleteNotificationAsync(NotificationInfo notification);
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<string[]> GetUserRoles(Guid userId);
     }
 }

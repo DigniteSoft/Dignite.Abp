@@ -22,7 +22,7 @@ namespace Dignite.Abp.Notifications
 
         public async Task ExecuteAsync(NotificationDistributionJobArgs args)
         {
-            await _notificationDistributer.DistributeAsync(args.NotificationId,args.UserIds,args.ExcludedUserIds);
+            await _notificationDistributer.DistributeAsync(args.Notification,args.UserIds,args.ExcludedUserIds);
         }
     }
 }

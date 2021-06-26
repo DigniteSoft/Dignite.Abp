@@ -18,7 +18,7 @@ namespace Dignite.Abp.Notifications
         /// <param name="maxResultCount">Maximum result count.</param>
         /// <param name="startDate">List notifications published after startDateTime</param>
         /// <param name="endDate">List notifications published before startDateTime</param>
-        Task<List<UserNotificationInfo>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null);
+        Task<List<UserNotificationWithNotification>> GetUserNotificationsAsync(Guid userId, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null);            
 
         /// <summary>
         /// Gets user notification count.

@@ -8,7 +8,7 @@ using Volo.Abp;
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
-    /// Resize uploaded images to fit predefined values
+    /// Handler for limiting the size of blob
     /// </summary>
     public class FileSizeLimitHandler : IBlobProcessHandler
     {
