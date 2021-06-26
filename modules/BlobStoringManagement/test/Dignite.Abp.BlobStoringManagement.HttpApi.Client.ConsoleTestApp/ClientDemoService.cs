@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.Extensions.Configuration;
-using Dignite.Abp.BlobStoringManagement.Samples;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.IdentityModel;
 
@@ -11,16 +10,16 @@ namespace Dignite.Abp.BlobStoringManagement
 {
     public class ClientDemoService : ITransientDependency
     {
-        private readonly ISampleAppService _sampleAppService;
+        private readonly IBlobsAppService _blobAppService;
         private readonly IIdentityModelAuthenticationService _authenticationService;
         private readonly IConfiguration _configuration;
 
         public ClientDemoService(
-            ISampleAppService sampleAppService, 
+            IBlobsAppService sampleAppService, 
             IIdentityModelAuthenticationService authenticationService, 
             IConfiguration configuration)
         {
-            _sampleAppService = sampleAppService;
+            _blobAppService = sampleAppService;
             _authenticationService = authenticationService;
             _configuration = configuration;
         }
@@ -41,11 +40,13 @@ namespace Dignite.Abp.BlobStoringManagement
             Console.WriteLine();
             Console.WriteLine($"***** {nameof(TestWithDynamicProxiesAsync)} *****");
 
-            var result = await _sampleAppService.GetAsync();
+            /*
+            var result = await _blobAppService.GetAsync();
             Console.WriteLine("Result: " + result.Value);
 
-            result = await _sampleAppService.GetAuthorizedAsync();
+            result = await _blobAppService.GetAuthorizedAsync();
             Console.WriteLine("Result (authorized): " + result.Value);
+            */
         }
 
         /* Shows how to use HttpClient to perform a request to the HTTP API.

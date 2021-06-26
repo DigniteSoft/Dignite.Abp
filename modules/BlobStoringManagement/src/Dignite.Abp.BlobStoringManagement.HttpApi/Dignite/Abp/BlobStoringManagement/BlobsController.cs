@@ -1,12 +1,12 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MimeDetective.InMemory;
 using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
+using HeyRed.Mime;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -59,7 +59,7 @@ namespace Dignite.Abp.BlobStoringManagement
         public async Task<FileResult> LoadAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             var stream = await GetOrNullAsync(containerName, blobName);
-            var mimeType = GetMimeType(stream);
+            var mimeType = MimeTypesMap.GetMimeType(blobName);
             return File(stream, mimeType);
         }
 
@@ -68,7 +68,7 @@ namespace Dignite.Abp.BlobStoringManagement
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
             var stream = await GetOrNullAsync(containerName, blobName);
-            var mimeType = GetMimeType(stream);
+            var mimeType = MimeTypesMap.GetMimeType(blobName);
             return File(stream, mimeType, fileName);
         }
 
@@ -114,22 +114,5 @@ namespace Dignite.Abp.BlobStoringManagement
         }
 
 
-        /// <summary>
-        /// 获取mimetype
-        /// </summary>
-        /// <param name="stream"></param>
-        /// <returns></returns>
-        private static string GetMimeType(Stream stream)
-        {
-            var fileType = stream.DetectMimeType();
-            if (fileType != null)
-            {
-                return fileType.Mime;
-            }
-            else
-            {
-                return "application/octet-stream";
-            }
-        }
     }
 }

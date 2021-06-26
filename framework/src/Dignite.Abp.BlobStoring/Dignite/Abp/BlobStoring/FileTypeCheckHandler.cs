@@ -20,16 +20,11 @@ namespace Dignite.Abp.BlobStoring
             // TODO: case sensitivity
             if (fileTypeCheckHandlerConfiguration.AllowedFileTypeNames != null && fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Length > 0)
             {
-                string fileExtensionName = HeyRed.Mime.MimeGuesser.GuessExtension(context.BlobStream);
+                string fileExtensionName = Path.GetExtension(context.BlobName).EnsureStartsWith('.').ToLower();
 
                 if (!fileExtensionName.IsNullOrEmpty())
                 {
-                    if (fileExtensionName.EnsureStartsWith('.').ToLower() == ".zip")
-                    {
-                        fileExtensionName = CheckForMsOfficeTypes(context.BlobStream);
-                    }
-
-                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileExtensionName.EnsureStartsWith('.')))
+                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileExtensionName))
                     {
                         throw new BusinessException(
                             code: "Dignite.Abp.BlobStoring:010002",
@@ -50,28 +45,5 @@ namespace Dignite.Abp.BlobStoring
             return Task.CompletedTask;
         }
 
-        private static string CheckForMsOfficeTypes(Stream zip)
-        {
-            try
-            {
-                using (var zipFile = new ZipArchive(zip, ZipArchiveMode.Read,true))
-                {
-                    if (zipFile.Entries.Any(e => e.FullName.StartsWith("word/")))
-                        return ".docx";
-
-                    if (zipFile.Entries.Any(e => e.FullName.StartsWith("xl/")))
-                        return ".xlsx";
-
-                    if (zipFile.Entries.Any(e => e.FullName.StartsWith("ppt/")))
-                        return ".pptx";
-                }
-
-                return ".zip";
-            }
-            catch (InvalidDataException)
-            {
-                return null;  //ZIP archive can be corrupted
-            }
-        }
     }
 }

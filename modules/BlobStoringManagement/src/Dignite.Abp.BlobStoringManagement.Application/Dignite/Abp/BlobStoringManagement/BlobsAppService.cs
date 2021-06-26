@@ -3,13 +3,14 @@ using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
-using MimeDetective.InMemory;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -46,9 +47,9 @@ namespace Dignite.Abp.BlobStoringManagement
                 //
                 MemoryStream ms = new MemoryStream();
                 response.GetResponseStream().CopyTo(ms);
-                var fileType = ms.DetectMimeType();
+                string fileExtensionName = GetFileExtensionName(ms);
                 byte[] bytes = ms.ToArray();
-                var blobName = await GeneratorNameAsync(containerName, fileType.Extension);
+                var blobName = await GeneratorNameAsync(containerName, fileExtensionName);
 
                 await blobContainer.SaveAsync(blobName, bytes, true);
                 return $"{containerName}/{blobName}";
@@ -60,10 +61,10 @@ namespace Dignite.Abp.BlobStoringManagement
             using (var stream = new MemoryStream(input.Bytes))
             {
                 var blobContainer = _blobContainerFactory.Create(containerName);
-                var fileType = stream.DetectMimeType();
+                string fileExtensionName = GetFileExtensionName(stream);
                 var blobName = await GeneratorNameAsync(
                     containerName,
-                    fileType.Extension
+                    fileExtensionName
                     );
 
                 await blobContainer.SaveAsync(blobName, stream, true);
@@ -129,6 +130,38 @@ namespace Dignite.Abp.BlobStoringManagement
                 .As<INameGenerator>();
 
             return await generator.Create(extensionName);
+        }
+
+        private static string GetFileExtensionName(Stream stream)
+        {
+            string fileExtensionName = HeyRed.Mime.MimeGuesser.GuessExtension(stream);
+
+            if (fileExtensionName.EnsureStartsWith('.').ToLower() == ".zip")
+            {
+                try
+                {
+                    using (var zipFile = new ZipArchive(stream, ZipArchiveMode.Read, true))
+                    {
+                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("word/")))
+                            return ".docx";
+
+                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("xl/")))
+                            return ".xlsx";
+
+                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("ppt/")))
+                            return ".pptx";
+                    }
+
+                    return ".zip";
+                }
+                catch (InvalidDataException)
+                {
+                    return null;  //ZIP archive can be corrupted
+                }
+            }
+            else {
+                return fileExtensionName;            
+            }
         }
     }
 }
