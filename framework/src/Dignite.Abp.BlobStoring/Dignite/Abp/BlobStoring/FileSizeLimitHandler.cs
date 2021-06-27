@@ -4,18 +4,19 @@ using SixLabors.ImageSharp.Processing;
 using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
     /// Handler for limiting the size of blob
     /// </summary>
-    public class FileSizeLimitHandler : IBlobProcessHandler
+    public class FileSizeLimitHandler : IBlobProcessHandler, ITransientDependency
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {
             var configuration = context.ContainerConfiguration.GetFileSizeLimitConfiguration();
-            if (configuration.MaximumFileSize < context.BlobStream.Length)
+            if (configuration.MaximumFileSize*1024*1024 < context.BlobStream.Length)
             {
                 throw new BusinessException(
                     code: "Dignite.Abp.BlobStoring:010008",

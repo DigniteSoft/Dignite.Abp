@@ -4,13 +4,14 @@ using SixLabors.ImageSharp.Processing;
 using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
     /// Resize uploaded images to fit predefined values
     /// </summary>
-    public class ImageResizeHandler : IBlobProcessHandler
+    public class ImageResizeHandler : IBlobProcessHandler,ITransientDependency
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {
@@ -35,6 +36,7 @@ namespace Dignite.Abp.BlobStoring
 
                     if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
                     {
+                        throw new System.Exception(configuration.ImageWidth.ToString()+"/"+image.Height);
                         image.Mutate(x =>
                         {
                             x.Resize(new ResizeOptions()
@@ -43,6 +45,7 @@ namespace Dignite.Abp.BlobStoring
                                 Size = new Size(configuration.ImageWidth, configuration.ImageHeight)
                             });
                         });
+
                         using (var stream = new MemoryStream())
                         {
                             var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
@@ -57,11 +60,7 @@ namespace Dignite.Abp.BlobStoring
             }
             catch (SixLabors.ImageSharp.InvalidImageContentException exception)
             {
-                throw new BusinessException(
-                    code: "Dignite.Abp.BlobStoring:010005",
-                    message: " Image format not recognised.",
-                    details: ""
-                );
+               
             }
             return Task.CompletedTask;
         }

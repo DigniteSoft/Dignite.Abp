@@ -5,13 +5,14 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.BlobStoring
 {
     /// <summary>
     /// 上传 BLOB 文件时进行文件类型检查
     /// </summary>
-    public class FileTypeCheckHandler : IBlobProcessHandler
+    public class FileTypeCheckHandler : IBlobProcessHandler,ITransientDependency
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {
@@ -20,15 +21,15 @@ namespace Dignite.Abp.BlobStoring
             // TODO: case sensitivity
             if (fileTypeCheckHandlerConfiguration.AllowedFileTypeNames != null && fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Length > 0)
             {
-                string fileExtensionName = Path.GetExtension(context.BlobName).EnsureStartsWith('.').ToLower();
+                string fileExtensionName = Path.GetExtension(context.BlobName);
 
                 if (!fileExtensionName.IsNullOrEmpty())
                 {
-                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileExtensionName))
+                    if (!fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Contains(fileExtensionName.ToLower()))
                     {
                         throw new BusinessException(
                             code: "Dignite.Abp.BlobStoring:010002",
-                            message: "File type is incompatible!",
+                            message: "File type is incompatible!"+ "File type should be one of" + fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.JoinAsString("/") + "!",
                             details: "File type should be one of" + fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.JoinAsString("/") + "!"
                         );
                     }
