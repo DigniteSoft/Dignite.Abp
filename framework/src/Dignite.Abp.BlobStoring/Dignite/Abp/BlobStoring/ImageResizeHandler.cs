@@ -16,40 +16,52 @@ namespace Dignite.Abp.BlobStoring
         {
             var configuration = context.ContainerConfiguration.GetImageResizeConfiguration();
 
-            using (Image image = Image.Load(context.BlobStream))
+            try
             {
-                if (configuration.ImageSizeMustBeLargerThanPreset)
+                using (Image image = Image.Load(context.BlobStream))
                 {
-                    if (image.Width < configuration.ImageWidth || image.Height < configuration.ImageHeight)
+                    if (configuration.ImageSizeMustBeLargerThanPreset)
                     {
-                        throw new BusinessException(
-                            code: "Dignite.Abp.BlobStoring:010004",
-                            message: "Image size must be larger than Preset!",
-                            details: "Uploaded image must be larger than: " + configuration.ImageWidth + "x" + configuration.ImageHeight
-                        );
-                    }
-                }
-
-
-                if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
-                {
-                    image.Mutate(x =>
-                    {
-                        x.Resize(new ResizeOptions() { 
-                            Mode= ResizeMode.Max,
-                            Size=new Size(configuration.ImageWidth, configuration.ImageHeight)
-                        });
-                    });
-                    using (var stream = new MemoryStream())
-                    {
-                        var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
+                        if (image.Width < configuration.ImageWidth || image.Height < configuration.ImageHeight)
                         {
-                            Quality = 40
-                        };
-                        image.Save(stream, encoder);
-                        stream.CopyTo(context.BlobStream);
+                            throw new BusinessException(
+                                code: "Dignite.Abp.BlobStoring:010004",
+                                message: "Image size must be larger than Preset!",
+                                details: "Uploaded image must be larger than: " + configuration.ImageWidth + "x" + configuration.ImageHeight
+                            );
+                        }
+                    }
+
+
+                    if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
+                    {
+                        image.Mutate(x =>
+                        {
+                            x.Resize(new ResizeOptions()
+                            {
+                                Mode = ResizeMode.Max,
+                                Size = new Size(configuration.ImageWidth, configuration.ImageHeight)
+                            });
+                        });
+                        using (var stream = new MemoryStream())
+                        {
+                            var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
+                            {
+                                Quality = 40
+                            };
+                            image.Save(stream, encoder);
+                            stream.CopyTo(context.BlobStream);
+                        }
                     }
                 }
+            }
+            catch (SixLabors.ImageSharp.InvalidImageContentException exception)
+            {
+                throw new BusinessException(
+                    code: "Dignite.Abp.BlobStoring:010005",
+                    message: " Image format not recognised.",
+                    details: ""
+                );
             }
             return Task.CompletedTask;
         }
