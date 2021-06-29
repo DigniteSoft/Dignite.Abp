@@ -36,7 +36,6 @@ namespace Dignite.Abp.BlobStoring
 
                     if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
                     {
-                        throw new System.Exception(configuration.ImageWidth.ToString()+"/"+image.Height);
                         image.Mutate(x =>
                         {
                             x.Resize(new ResizeOptions()
@@ -46,15 +45,14 @@ namespace Dignite.Abp.BlobStoring
                             });
                         });
 
-                        using (var stream = new MemoryStream())
+                        var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
                         {
-                            var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
-                            {
-                                Quality = 40
-                            };
-                            image.Save(stream, encoder);
-                            stream.CopyTo(context.BlobStream);
-                        }
+                            Quality = 40
+                        };
+                        context.BlobStream.Position = 0;
+                        image.Save(context.BlobStream, encoder);
+                        context.BlobStream.SetLength(context.BlobStream.Position);
+                        context.BlobStream.Position = 0;
                     }
                 }
             }
@@ -63,6 +61,7 @@ namespace Dignite.Abp.BlobStoring
                
             }
             return Task.CompletedTask;
+            
         }
     }
 }

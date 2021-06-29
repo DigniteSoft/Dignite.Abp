@@ -8,6 +8,7 @@ namespace System.IO
         {
             using (var md5 = MD5.Create())
             {
+                stream.Position = 0;
                 var hash = md5.ComputeHash(stream);
                 var base64String = Convert.ToBase64String(hash);
                 return base64String;
