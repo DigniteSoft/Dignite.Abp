@@ -8,20 +8,20 @@ using Volo.Abp.Reflection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public static class HasExtraFieldsExtensions
+    public static class HasCustomizedFieldsExtensions
     {
-        public static bool HasField(this IHasExtraFields source, string name)
+        public static bool HasField(this IHasCustomizedFields source, string name)
         {
-            return source.ExtraFields.ContainsKey(name);
+            return source.CustomizedFields.ContainsKey(name);
         }
 
-        public static object GetField(this IHasExtraFields source, string name, object defaultValue = null)
+        public static object GetField(this IHasCustomizedFields source, string name, object defaultValue = null)
         {
-            return source.ExtraFields?.GetOrDefault(name)
+            return source.CustomizedFields?.GetOrDefault(name)
                    ?? defaultValue;
         }
 
-        public static TField GetField<TField>(this IHasExtraFields source, string name, TField defaultValue = default)
+        public static TField GetField<TField>(this IHasCustomizedFields source, string name, TField defaultValue = default)
         {
             var value = source.GetField(name);
             if (value == null)
@@ -52,22 +52,22 @@ namespace Dignite.Abp.FieldCustomizing
             this TSource source,
             string name,
             object value)
-            where TSource : IHasExtraFields
+            where TSource : IHasCustomizedFields
         {
-            source.ExtraFields[name] = value;
+            source.CustomizedFields[name] = value;
 
             return source;
         }
 
         public static TSource RemoveField<TSource>(this TSource source, string name)
-            where TSource : IHasExtraFields
+            where TSource : IHasCustomizedFields
         {
-            source.ExtraFields.Remove(name);
+            source.CustomizedFields.Remove(name);
             return source;
         }
 
         public static TSource SetDefaultsForExtraFields<TSource>(this TSource source, IReadOnlyList<BasicCustomizeFieldDefinition> fieldDefinitions)
-            where TSource : IHasExtraFields
+            where TSource : IHasCustomizedFields
         {
             foreach (var fieldDefinition in fieldDefinitions)
             {
@@ -76,7 +76,7 @@ namespace Dignite.Abp.FieldCustomizing
                     continue;
                 }
 
-                source.ExtraFields[fieldDefinition.Name] = fieldDefinition.DefaultValue;
+                source.CustomizedFields[fieldDefinition.Name] = fieldDefinition.DefaultValue;
             }
 
             return source;
@@ -84,24 +84,24 @@ namespace Dignite.Abp.FieldCustomizing
 
         public static void SetDefaultsForExtraFields(object source, IReadOnlyList<BasicCustomizeFieldDefinition> fieldDefinitions)
         {
-            if (!(source is IHasExtraFields))
+            if (!(source is IHasCustomizedFields))
             {
-                throw new ArgumentException($"Given {nameof(source)} object does not implement the {nameof(IHasExtraFields)} interface!", nameof(source));
+                throw new ArgumentException($"Given {nameof(source)} object does not implement the {nameof(IHasCustomizedFields)} interface!", nameof(source));
             }
 
-            ((IHasExtraFields)source).SetDefaultsForExtraFields(fieldDefinitions);
+            ((IHasCustomizedFields)source).SetDefaultsForExtraFields(fieldDefinitions);
         }
 
-        public static void SetCustomizableFieldsToRegularProperties(this IHasExtraFields source)
+        public static void SetCustomizableFieldsToRegularProperties(this IHasCustomizedFields source)
         {
             var properties = source.GetType().GetProperties()
-                .Where(x => source.ExtraFields.ContainsKey(x.Name)
+                .Where(x => source.CustomizedFields.ContainsKey(x.Name)
                             && x.GetSetMethod(true) != null)
                 .ToList();
 
             foreach (var property in properties)
             {
-                property.SetValue(source, source.ExtraFields[property.Name]);
+                property.SetValue(source, source.CustomizedFields[property.Name]);
                 source.RemoveField(property.Name);
             }
         }

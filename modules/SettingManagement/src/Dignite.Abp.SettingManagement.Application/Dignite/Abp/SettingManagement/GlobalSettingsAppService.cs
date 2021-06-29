@@ -16,8 +16,8 @@ namespace Dignite.Abp.SettingManagement
         public GlobalSettingsAppService(
             ISettingManager settingManager,
             IEnumerable<ISettingNavigationProvider> navigationProviders, 
-            IEnumerable<IFieldProvider> fieldProviders)
-            :base(settingManager,navigationProviders, fieldProviders)
+            IEnumerable<ICustomizeFieldFormProvider> formProviders)
+            :base(settingManager,navigationProviders, formProviders)
         {
         }
 

@@ -8,31 +8,31 @@ namespace Dignite.Abp.Settings
 {
     public static class SettingDefinitionExtensions
     {
-        public static SettingDefinition SetField(
+        public static SettingDefinition SetForm(
             this SettingDefinition setting,
-            Action<CustomizeFieldConfiguration> fieldConfiguration,
+            Action<CustomizeFieldFormConfiguration> form,
             ILocalizableString groupName=null
             )
         {
+            setting.WithProperty(SettingDefinitionPropertiesNames.FormName, form);
             if (groupName != null)
             {
-                setting.WithProperty(SettingDefinitionPropertiesNames.Group, groupName);
+                setting.WithProperty(SettingDefinitionPropertiesNames.GroupName, groupName);
             }
-            setting.WithProperty(SettingDefinitionPropertiesNames.FieldConfiguration, fieldConfiguration);
 
             return setting;
         }
 
-        public static CustomizeFieldConfiguration GetField(
+        public static CustomizeFieldFormConfiguration GetForm(
             this SettingDefinition setting)
         {
-            return (CustomizeFieldConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FieldConfiguration);
+            return (CustomizeFieldFormConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FormName);
         }
 
         public static ILocalizableString GetGroup(
             this SettingDefinition setting)
         {
-            var group = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.Group);
+            var group = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.GroupName);
             if (group != null)
             {
                 return (ILocalizableString)group;

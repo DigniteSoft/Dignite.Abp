@@ -13,7 +13,7 @@ namespace Dignite.Abp.BlobStoring
 
         public static void SetAuthorizationHandler<TAuthorizationHandler>(
             this BlobContainerConfiguration containerConfiguration,
-            Action<AuthorizationHandlerConfiguration> configureAction)
+            Action<AuthorizationHandlerConfiguration> configureAction=null)
             where TAuthorizationHandler : class, IAuthorizationHandler
         {
             containerConfiguration.SetConfiguration(
@@ -21,7 +21,8 @@ namespace Dignite.Abp.BlobStoring
                 typeof(TAuthorizationHandler));
 
             //
-            configureAction(new AuthorizationHandlerConfiguration(containerConfiguration));
+            if (configureAction != null)
+                configureAction(new AuthorizationHandlerConfiguration(containerConfiguration));
         }
     }
 }

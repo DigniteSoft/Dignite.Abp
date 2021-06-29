@@ -2,16 +2,16 @@
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public interface ICustomizeFieldProviderSelector
+    public interface ICustomizeFieldFormProviderSelector
     {
         /// <summary>
         /// Get provider using field name
         /// </summary>
         /// <param name="providerName">
-        /// <see cref="ICustomizeFieldProvider.Name"/>
+        /// <see cref="ICustomizeFieldFormProvider.Name"/>
         /// </param>
         /// <returns></returns>
         [NotNull]
-        ICustomizeFieldProvider Get(string providerName);
+        ICustomizeFieldFormProvider Get(string providerName);
     }
 }

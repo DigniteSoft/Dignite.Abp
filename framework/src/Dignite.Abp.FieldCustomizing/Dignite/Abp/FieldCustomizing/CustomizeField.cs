@@ -8,23 +8,23 @@ namespace Dignite.Abp.FieldCustomizing
     {
         protected ICustomizeFieldDefinition FieldDefinition { get;  }
 
-        protected ICustomizeFieldProvider Provider { get; }
+        protected ICustomizeFieldFormProvider FormProvider { get; }
 
 
         public CustomizeField(
             ICustomizeFieldDefinition fieldDefinition,
-            ICustomizeFieldProvider provider)
+            ICustomizeFieldFormProvider formProvider)
         {
             FieldDefinition = fieldDefinition;
-            Provider = provider;
+            FormProvider = formProvider;
         }
 
         public virtual void Validate(
             object value,
              List<ValidationResult> validationErrors)
         {
-            Provider.Validate(
-                new CustomizeFieldProviderValidateArgs(
+            FormProvider.Validate(
+                new CustomizeFieldFormValidateArgs(
                     FieldDefinition,
                     value,
                     validationErrors

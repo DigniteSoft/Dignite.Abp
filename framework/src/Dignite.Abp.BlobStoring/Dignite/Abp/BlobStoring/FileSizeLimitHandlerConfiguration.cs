@@ -6,7 +6,7 @@ namespace Dignite.Abp.BlobStoring
     {
 
         /// <summary>
-        /// Limit file size
+        /// Limit file size(MB)
         /// </summary>
         public int MaximumFileSize
         {

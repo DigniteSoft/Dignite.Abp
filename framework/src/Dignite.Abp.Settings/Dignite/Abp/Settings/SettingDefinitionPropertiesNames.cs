@@ -2,8 +2,8 @@
 {
     public static class SettingDefinitionPropertiesNames
     {
-        public const string Group= "Dignite.FieldGroup";
+        public const string GroupName= "Dignite.SettingItemFormGroupName";
 
-        public const string FieldConfiguration = "Dignite.FieldConfiguration";
+        public const string FormName = "Dignite.SettingItemFormName";
     }
 }

@@ -2,49 +2,48 @@
 using System.Linq;
 using JetBrains.Annotations;
 using Volo.Abp;
-using Volo.Abp.Data;
 
 namespace Dignite.Abp.FieldCustomizing
 {
     public static class CustomizableObjectMapper
     {
         /// <summary>
-        /// Copies extra properties from the <paramref name="source"/> object
+        /// Copies customized fields from the <paramref name="source"/> object
         /// to the <paramref name="destination"/> object.
         /// </summary>
         /// <typeparam name="TSource">Source class type</typeparam>
         /// <typeparam name="TDestination">Destination class type</typeparam>
         /// <param name="source">The source object</param>
         /// <param name="destination">The destination object</param>
-        /// <param name="properties">Used to map properties</param>
-        /// <param name="ignoredProperties">Used to ignore some properties</param>
-        public static void MapExtraFieldsTo<TSource, TDestination>(
+        /// <param name="fields">Used to map properties</param>
+        /// <param name="ignoredFields">Used to ignore some properties</param>
+        public static void MapCustomizedFieldsTo<TSource, TDestination>(
             [NotNull] TSource source,
             [NotNull] TDestination destination,
-            string[] properties=null,
-            string[] ignoredProperties = null)
-            where TSource : IHasExtraFields
-            where TDestination : IHasExtraFields
+            string[] fields=null,
+            string[] ignoredFields = null)
+            where TSource : IHasCustomizedFields
+            where TDestination : IHasCustomizedFields
         {
             Check.NotNull(source, nameof(source));
             Check.NotNull(destination, nameof(destination));
 
-            foreach (var keyValue in source.ExtraFields)
+            foreach (var keyValue in source.CustomizedFields)
             {
-                if (ignoredProperties != null &&
-                    ignoredProperties.Contains(keyValue.Key))
+                if (ignoredFields != null &&
+                    ignoredFields.Contains(keyValue.Key))
                 {
                     continue;
                 }
 
-                if (properties == null)
+                if (fields == null)
                 {
-                    destination.ExtraFields[keyValue.Key] = keyValue.Value;
+                    destination.CustomizedFields[keyValue.Key] = keyValue.Value;
                 }
-                else if (properties != null &&
-                    properties.Contains(keyValue.Key))
+                else if (fields != null &&
+                    fields.Contains(keyValue.Key))
                 {
-                    destination.ExtraFields[keyValue.Key] = keyValue.Value;
+                    destination.CustomizedFields[keyValue.Key] = keyValue.Value;
                 }
             }
         }

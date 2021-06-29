@@ -7,12 +7,12 @@ namespace Dignite.Abp.FieldCustomizing
     public class BasicCustomizeFieldDefinition : ICustomizeFieldDefinition
     {
 
-        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, CustomizeFieldConfiguration configuration)
+        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, CustomizeFieldFormConfiguration configuration)
         {
             Name = name;
             DisplayName = displayName;
             DefaultValue = defaultValue;
-            Configuration = configuration;
+            FormConfiguration = configuration;
         }
 
         [NotNull]
@@ -29,6 +29,6 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        public CustomizeFieldConfiguration Configuration { get; set; }
+        public CustomizeFieldFormConfiguration FormConfiguration { get; set; }
     }
 }

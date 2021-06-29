@@ -29,7 +29,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notifications", "src\Dignite.Abp.Notifications\Dignite.Abp.Notifications.csproj", "{39D5ED2D-C23D-44DD-8B7C-EF8CA9603DC3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.Notifications.Shared", "src\Dignite.Abp.Notifications.Shared\Dignite.Abp.Notifications.Shared.csproj", "{E1ABC71D-AA24-4813-AA15-681CB6CB6642}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notifications.Shared", "src\Dignite.Abp.Notifications.Shared\Dignite.Abp.Notifications.Shared.csproj", "{E1ABC71D-AA24-4813-AA15-681CB6CB6642}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Tests", "test\Dignite.Abp.BlobStoring.Tests\Dignite.Abp.BlobStoring.Tests.csproj", "{959A7986-7AF8-4BF7-9268-593C558226DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.FileSystem.Tests", "test\Dignite.Abp.BlobStoring.FileSystem.Tests\Dignite.Abp.BlobStoring.FileSystem.Tests.csproj", "{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +89,14 @@ Global
 		{E1ABC71D-AA24-4813-AA15-681CB6CB6642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1ABC71D-AA24-4813-AA15-681CB6CB6642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1ABC71D-AA24-4813-AA15-681CB6CB6642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959A7986-7AF8-4BF7-9268-593C558226DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959A7986-7AF8-4BF7-9268-593C558226DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959A7986-7AF8-4BF7-9268-593C558226DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959A7986-7AF8-4BF7-9268-593C558226DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +114,8 @@ Global
 		{163A8AA9-D73D-490C-B3BB-2CF1DC9E2D5B} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{39D5ED2D-C23D-44DD-8B7C-EF8CA9603DC3} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{E1ABC71D-AA24-4813-AA15-681CB6CB6642} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
+		{959A7986-7AF8-4BF7-9268-593C558226DF} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
+		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F622C42C-929D-4CAB-8CC6-23E387FFDD36}

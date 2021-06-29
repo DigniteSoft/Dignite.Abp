@@ -1,22 +1,26 @@
 ﻿
-using Dignite.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing;
 
 namespace Dignite.Abp.SettingManagement
 {
     public class SettingDto
     {
-        public SettingDto(string groupName, string name, string displayName, string description, 
+        public SettingDto(
+            string groupName, 
+            string name, 
+            string displayName, 
+            string description, 
             string value,
-            string fieldProviderName, 
-            FieldProviderConfigurationBase fieldProviderConfiguration)
+            string formProviderName,
+            CustomizeFieldFormProviderConfigurationBase formProviderConfiguration)
         {
             GroupName = groupName;
             Name = name;
             DisplayName = displayName;
             Description = description;
             Value = value;
-            FieldProviderName = fieldProviderName;
-            FieldProviderConfiguration = fieldProviderConfiguration;
+            FormProviderName = formProviderName;
+            FormProviderConfiguration = formProviderConfiguration;
         }
 
         public string GroupName { get;  }
@@ -27,8 +31,8 @@ namespace Dignite.Abp.SettingManagement
 
         public string Value { get;  }
 
-        public string FieldProviderName { get; }
+        public string FormProviderName { get; }
 
-        public FieldProviderConfigurationBase FieldProviderConfiguration { get; }
+        public CustomizeFieldFormProviderConfigurationBase FormProviderConfiguration { get; }
     }
 }

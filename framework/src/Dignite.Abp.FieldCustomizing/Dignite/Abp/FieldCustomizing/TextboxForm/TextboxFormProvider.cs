@@ -1,20 +1,20 @@
 ﻿
-namespace Dignite.Abp.FieldCustomizing.TextboxField
+namespace Dignite.Abp.FieldCustomizing.TextboxForm
 {
-    public class TextboxFieldProvider : CustomizeFieldProviderBase
+    public class TextboxFormProvider : CustomizeFieldFormProviderBase
     {
 
-        public const string ProviderName = "TextboxField";
+        public const string ProviderName = "TextboxForm";
 
         public override string Name => ProviderName;
 
         public override string DisplayName => L["DisplayName:Dignite.TextboxField"].Value;
 
-        public override CustomizeFieldType FieldType => CustomizeFieldType.Simple;
+        public override CustomizeFieldFormType FormType => CustomizeFieldFormType.Simple;
 
-        public override void Validate(CustomizeFieldProviderValidateArgs args)
+        public override void Validate(CustomizeFieldFormValidateArgs args)
         {
-            var configuration = new TextboxFieldProviderConfiguration(args.FieldDefinition.Configuration);
+            var configuration = new TextboxFormProviderConfiguration(args.FieldDefinition.FormConfiguration);
 
             if (configuration.Required && (args.Value == null || args.Value.ToString().Length==0))
             {
@@ -34,6 +34,11 @@ namespace Dignite.Abp.FieldCustomizing.TextboxField
                         ));
             }
 
+        }
+
+        public override CustomizeFieldFormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
+        {
+            return new TextboxFormProviderConfiguration(fieldConfiguration);
         }
 
     }

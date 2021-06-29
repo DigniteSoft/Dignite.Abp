@@ -3,15 +3,15 @@ using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldFactory : ITransientDependency
+    public class CustomizeFieldFactory : ICustomizeFieldFactory,ITransientDependency
     {
-        protected ICustomizeFieldProviderSelector ProviderSelector { get; }
+        protected ICustomizeFieldFormProviderSelector FormProviderSelector { get; }
 
 
         public CustomizeFieldFactory(
-            ICustomizeFieldProviderSelector providerSelector)
+            ICustomizeFieldFormProviderSelector providerSelector)
         {
-            ProviderSelector = providerSelector;
+            FormProviderSelector = providerSelector;
         }
 
 
@@ -19,7 +19,7 @@ namespace Dignite.Abp.FieldCustomizing
         {
             return new CustomizeField(
                 fieldDefinition,
-                ProviderSelector.Get(fieldDefinition.Configuration.ProviderName)
+                FormProviderSelector.Get(fieldDefinition.FormConfiguration.FormProviderName)
             );
         }
     }

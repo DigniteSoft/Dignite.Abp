@@ -1,5 +1,5 @@
 ﻿using Dignite.Abp.Settings;
-using Dignite.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,16 +16,16 @@ namespace Dignite.Abp.SettingManagement
     {
         protected readonly ISettingManager _settingManager;
         private readonly IEnumerable<ISettingNavigationProvider> _navigationProviders;
-        private readonly IEnumerable<IFieldProvider> _fieldProviders;
+        private readonly IEnumerable<ICustomizeFieldFormProvider> _formProviders;
 
         protected SettingsAppServiceBase(
             ISettingManager settingManager,
             IEnumerable<ISettingNavigationProvider> navigationProviders,
-            IEnumerable<IFieldProvider> fieldProviders)
+            IEnumerable<ICustomizeFieldFormProvider> formProviders)
         {
             _settingManager = settingManager;
             _navigationProviders = navigationProviders;
-            _fieldProviders = fieldProviders;
+            _formProviders = formProviders;
         }
 
         protected abstract ISettingValueProvider SettingValueProvider { get; }
@@ -36,15 +36,14 @@ namespace Dignite.Abp.SettingManagement
             foreach (var provider in _navigationProviders)
             {
                 var navigation = provider.Navigation;
-                navigations.Add(new SettingNavigation(navigation.Name, navigation.DisplayName, navigation.Icon));
+                navigations.Add(new SettingNavigation(navigation.Name, navigation.DisplayName));
             }
 
             return Task.FromResult(
                 new ListResultDto<SettingNavigationDto>(
                     navigations.Select(nav => new SettingNavigationDto(
                         nav.Name,
-                        nav.DisplayName.Localize(StringLocalizerFactory),
-                        nav.Icon
+                        nav.DisplayName.Localize(StringLocalizerFactory)
                         )).ToList()
                 ));
         }
@@ -102,15 +101,15 @@ namespace Dignite.Abp.SettingManagement
             foreach (var sd in settingDefinitions)
             {
                 var group = sd.GetGroup();
-                var fieldConfiguration = sd.GetField();
+                var fieldConfiguration = sd.GetForm();
                 settings.Add(new SettingDto(
                           group == null?null: group.Localize(StringLocalizerFactory),
                           sd.Name,
                           sd.DisplayName.Localize(StringLocalizerFactory),
                           sd.Description.Localize(StringLocalizerFactory),
                           settingValues.Single(sv=>sv.Name==sd.Name).Value,
-                          fieldConfiguration.ProviderName,
-                          _fieldProviders.Single(fp => fp.Name == fieldConfiguration.ProviderName).GetConfiguration(fieldConfiguration)
+                          fieldConfiguration.FormProviderName,
+                          _formProviders.Single(fp => fp.FormProviderName == fieldConfiguration.FormProviderName).GetConfiguration(fieldConfiguration)
                           ));
             }
             return settings.ToImmutableList();

@@ -11,7 +11,7 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
     public static class FieldsEntityTypeBuilderExtensions
     {
         public static void ConfigureCustomizeFieldDefinitions<T>(this EntityTypeBuilder<T> b)
-            where T : class, IHasExtraFields
+            where T : class, ICustomizeFieldDefinition
         {
             b.As<EntityTypeBuilder>().ConfigureCustomizeFieldDefinitions();
         }
@@ -25,29 +25,29 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 
             b.Property<string>(nameof(ICustomizeFieldDefinition.DisplayName)).IsRequired().HasMaxLength(64);
             b.Property<string>(nameof(ICustomizeFieldDefinition.Name)).IsRequired().HasMaxLength(64);
-            b.Property<CustomizeFieldConfiguration>(nameof(ICustomizeFieldDefinition.Configuration))
-                .HasColumnName(nameof(ICustomizeFieldDefinition.Configuration))
+            b.Property<CustomizeFieldFormConfiguration>(nameof(ICustomizeFieldDefinition.FormConfiguration))
+                .HasColumnName(nameof(ICustomizeFieldDefinition.FormConfiguration))
                 .HasConversion(
                     config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                    jsonData => JsonConvert.DeserializeObject<CustomizeFieldConfiguration>(jsonData)
+                    jsonData => JsonConvert.DeserializeObject<CustomizeFieldFormConfiguration>(jsonData)
                     );
         }
 
-        public static void ConfigureExtraProperties<T>(this EntityTypeBuilder<T> b)
-            where T : class, IHasExtraFields
+        public static void ConfigureCustomizedFields<T>(this EntityTypeBuilder<T> b)
+            where T : class, IHasCustomizedFields
         {
-            b.As<EntityTypeBuilder>().TryConfigureExtraProperties();
+            b.As<EntityTypeBuilder>().TryConfigureCustomizedFields();
         }
 
-        public static void TryConfigureExtraProperties(this EntityTypeBuilder b)
+        public static void TryConfigureCustomizedFields(this EntityTypeBuilder b)
         {
-            if (!b.Metadata.ClrType.IsAssignableTo<IHasExtraFields>())
+            if (!b.Metadata.ClrType.IsAssignableTo<IHasCustomizedFields>())
             {
                 return;
             }
 
-            b.Property<ExtraFieldDictionary>(nameof(IHasExtraFields.ExtraFields))
-                .HasColumnName(nameof(IHasExtraFields.ExtraFields))
+            b.Property<CustomizedFieldDictionary>(nameof(IHasCustomizedFields.CustomizedFields))
+                .HasColumnName(nameof(IHasCustomizedFields.CustomizedFields))
                 .HasConversion(new ExtraFieldsValueConverter())
                 .Metadata.SetValueComparer(new ExtraFieldDictionaryValueComparer());
         }

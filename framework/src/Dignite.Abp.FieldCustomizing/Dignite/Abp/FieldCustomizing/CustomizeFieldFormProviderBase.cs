@@ -5,7 +5,7 @@ using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public abstract class CustomizeFieldProviderBase : ICustomizeFieldProvider
+    public abstract class CustomizeFieldFormProviderBase : ICustomizeFieldFormProvider
     {
         public IAbpLazyServiceProvider LazyServiceProvider { get; set; }
 
@@ -40,10 +40,11 @@ namespace Dignite.Abp.FieldCustomizing
 
         public abstract string DisplayName { get; }
 
-        public abstract CustomizeFieldType FieldType { get; }
+        public abstract CustomizeFieldFormType FormType { get; }
 
-        public abstract void Validate(CustomizeFieldProviderValidateArgs args);
+        public abstract void Validate(CustomizeFieldFormValidateArgs args);
 
+        public abstract CustomizeFieldFormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration);
 
         protected virtual IStringLocalizer CreateLocalizer()
         {

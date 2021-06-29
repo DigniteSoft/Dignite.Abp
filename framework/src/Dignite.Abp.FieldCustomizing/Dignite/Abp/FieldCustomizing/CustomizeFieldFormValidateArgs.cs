@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldProviderValidateArgs
+    public class CustomizeFieldFormValidateArgs
     {
         public ICustomizeFieldDefinition FieldDefinition { get; }
 
@@ -12,7 +12,7 @@ namespace Dignite.Abp.FieldCustomizing
 
         public List<ValidationResult> ValidationErrors { get; }
 
-        public CustomizeFieldProviderValidateArgs(
+        public CustomizeFieldFormValidateArgs(
             [NotNull] ICustomizeFieldDefinition fieldDefinition,
             object value,
             List<ValidationResult> validationErrors)

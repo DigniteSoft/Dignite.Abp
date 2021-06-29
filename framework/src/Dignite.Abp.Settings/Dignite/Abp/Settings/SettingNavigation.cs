@@ -3,6 +3,9 @@ using Volo.Abp.Localization;
 
 namespace Dignite.Abp.Settings
 {
+    /// <summary>
+    /// Setting Navigation Info
+    /// </summary>
     public class SettingNavigation
     {
         public string Name { get; }
@@ -15,14 +18,11 @@ namespace Dignite.Abp.Settings
         }
         private ILocalizableString _displayName;
 
-        public string Icon { get; set; }
 
-
-        public SettingNavigation(string name, ILocalizableString displayName=null, string icon=null)
+        public SettingNavigation(string name, ILocalizableString displayName=null)
         {
             Name = name;
             DisplayName = displayName ?? new FixedLocalizableString(name);
-            Icon = icon;
         }
     }
 }

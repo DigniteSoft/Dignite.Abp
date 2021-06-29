@@ -1,5 +1,6 @@
-﻿using Dignite.Abp.Settings.Localization;
+﻿
 using Volo.Abp.Application.Services;
+using Volo.Abp.SettingManagement.Localization;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -8,7 +9,7 @@ namespace Dignite.Abp.SettingManagement
         protected SettingManagementAppServiceBase()
         {
             ObjectMapperContext = typeof(DigniteSettingManagementApplicationModule);
-            LocalizationResource = typeof(DigniteAbpSettingsResource);
+            LocalizationResource = typeof(AbpSettingManagementResource);
         }
     }
 }

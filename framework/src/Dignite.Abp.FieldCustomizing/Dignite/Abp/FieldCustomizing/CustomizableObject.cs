@@ -7,9 +7,9 @@ using System.Linq;
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
-    public abstract class CustomizableObject : IHasExtraFields, IValidatableObject
+    public abstract class CustomizableObject : IHasCustomizedFields, IValidatableObject
     {
-        public ExtraFieldDictionary ExtraFields { get; set; }
+        public CustomizedFieldDictionary CustomizedFields { get; set; }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -17,7 +17,7 @@ namespace Dignite.Abp.FieldCustomizing
             var fieldDefinitions = GetFieldDefinitions(validationContext);
             var fieldFactory = validationContext.GetRequiredService<ICustomizeFieldFactory>();
 
-            foreach (var customField in ExtraFields)
+            foreach (var customField in CustomizedFields)
             {
                 var field = fieldFactory.Create(fieldDefinitions.Single(fi => fi.Name == customField.Key));
                 field.Validate(customField.Value, validationErrors);

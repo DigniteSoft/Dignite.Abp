@@ -1,22 +1,24 @@
 ﻿using JetBrains.Annotations;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using Volo.Abp;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldConfiguration
+    public class CustomizeFieldFormConfiguration
     {
         /// <summary>
-        /// The provider to be used to <see cref="ICustomizeFieldProvider.Name"/>
+        /// The provider to be used to <see cref="ICustomizeFieldFormProvider.Name"/>
         /// </summary>
-        public string ProviderName { get; set; }
+        [JsonProperty]
+        public string FormProviderName { get; internal set; }
 
-
+        [JsonProperty]
         [NotNull]
-        public Dictionary<string, object> Properties { get; set; }
+        public Dictionary<string, object> Properties { get; private set; }
 
 
-        public CustomizeFieldConfiguration()
+        public CustomizeFieldFormConfiguration()
         {
             Properties = new Dictionary<string, object>();
         }
@@ -35,7 +37,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         [NotNull]
-        public CustomizeFieldConfiguration SetConfiguration([NotNull] string name, [CanBeNull] object value)
+        public CustomizeFieldFormConfiguration SetConfiguration([NotNull] string name, [CanBeNull] object value)
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
             Check.NotNull(value, nameof(value));
@@ -46,7 +48,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         [NotNull]
-        public CustomizeFieldConfiguration ClearConfiguration([NotNull] string name)
+        public CustomizeFieldFormConfiguration ClearConfiguration([NotNull] string name)
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
 

@@ -1,5 +1,5 @@
 ﻿using Dignite.Abp.Settings;
-using Dignite.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,8 +16,8 @@ namespace Dignite.Abp.SettingManagement
         public UserSettingsAppService(
             ISettingManager settingManager,
             IEnumerable<ISettingNavigationProvider> navigationProviders, 
-            IEnumerable<IFieldProvider> fieldProviders)
-            :base(settingManager,navigationProviders, fieldProviders)
+            IEnumerable<ICustomizeFieldFormProvider> formProviders)
+            :base(settingManager,navigationProviders, formProviders)
         {
         }
 
