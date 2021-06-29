@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.FileSystem.Tests", "test\Dignite.Abp.BlobStoring.FileSystem.Tests\Dignite.Abp.BlobStoring.FileSystem.Tests.csproj", "{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.FieldCustomizing.Tests", "test\Dignite.Abp.FieldCustomizing.Tests\Dignite.Abp.FieldCustomizing.Tests.csproj", "{02A0C261-0677-4A47-B3DF-4E09C243284C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpTestBase", "test\AbpTestBase\AbpTestBase.csproj", "{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,14 @@ Global
 		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02A0C261-0677-4A47-B3DF-4E09C243284C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02A0C261-0677-4A47-B3DF-4E09C243284C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02A0C261-0677-4A47-B3DF-4E09C243284C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02A0C261-0677-4A47-B3DF-4E09C243284C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +128,8 @@ Global
 		{E1ABC71D-AA24-4813-AA15-681CB6CB6642} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{959A7986-7AF8-4BF7-9268-593C558226DF} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
 		{AEDF9147-8BC3-4CB9-A1A9-9400FB463407} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
+		{02A0C261-0677-4A47-B3DF-4E09C243284C} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
+		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F622C42C-929D-4CAB-8CC6-23E387FFDD36}

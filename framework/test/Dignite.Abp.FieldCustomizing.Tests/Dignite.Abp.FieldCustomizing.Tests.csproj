@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\..\common.test.props" />
 
@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj" />
+    <ProjectReference Include="..\..\src\Dignite.Abp.FieldCustomizing\Dignite.Abp.FieldCustomizing.csproj" />
     <ProjectReference Include="..\AbpTestBase\AbpTestBase.csproj" />
     <PackageReference Include="Volo.Abp.Autofac" Version="4.3.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNETTestSdkPackageVersion)" />

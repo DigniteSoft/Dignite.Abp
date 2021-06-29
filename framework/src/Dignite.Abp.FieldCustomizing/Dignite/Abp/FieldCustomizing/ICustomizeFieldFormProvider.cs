@@ -1,8 +1,8 @@
-﻿
+﻿using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public interface ICustomizeFieldFormProvider
+    public interface ICustomizeFieldFormProvider: ITransientDependency
     {
         /// <summary>
         /// Unique name of the field provider.
