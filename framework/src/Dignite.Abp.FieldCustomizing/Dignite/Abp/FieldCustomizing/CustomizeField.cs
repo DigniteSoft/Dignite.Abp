@@ -8,12 +8,12 @@ namespace Dignite.Abp.FieldCustomizing
     {
         protected ICustomizeFieldDefinition FieldDefinition { get;  }
 
-        protected ICustomizeFieldFormProvider FormProvider { get; }
+        protected IFormProvider FormProvider { get; }
 
 
         public CustomizeField(
             ICustomizeFieldDefinition fieldDefinition,
-            ICustomizeFieldFormProvider formProvider)
+            IFormProvider formProvider)
         {
             FieldDefinition = fieldDefinition;
             FormProvider = formProvider;

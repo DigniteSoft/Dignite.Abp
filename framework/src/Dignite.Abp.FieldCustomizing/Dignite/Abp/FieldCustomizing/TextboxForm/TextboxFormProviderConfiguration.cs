@@ -1,6 +1,6 @@
 ﻿namespace Dignite.Abp.FieldCustomizing.TextboxForm
 {
-    public class TextboxFormProviderConfiguration:CustomizeFieldFormProviderConfigurationBase
+    public class TextboxFormProviderConfiguration:FormProviderConfigurationBase
     {
 
         /// <summary>

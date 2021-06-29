@@ -6,18 +6,18 @@ using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldFormProviderSelector : ICustomizeFieldFormProviderSelector, ITransientDependency
+    public class FormProviderSelector : IFormProviderSelector, ITransientDependency
     {
-        protected IEnumerable<ICustomizeFieldFormProvider> FormProviders { get; }
+        protected IEnumerable<IFormProvider> FormProviders { get; }
 
-        public CustomizeFieldFormProviderSelector(
-            IEnumerable<ICustomizeFieldFormProvider> blobProviders)
+        public FormProviderSelector(
+            IEnumerable<IFormProvider> blobProviders)
         {
             FormProviders = blobProviders;
         }
 
         [NotNull]
-        public virtual ICustomizeFieldFormProvider Get([NotNull] string formProviderName)
+        public virtual IFormProvider Get([NotNull] string formProviderName)
         {
             if (!FormProviders.Any())
             {

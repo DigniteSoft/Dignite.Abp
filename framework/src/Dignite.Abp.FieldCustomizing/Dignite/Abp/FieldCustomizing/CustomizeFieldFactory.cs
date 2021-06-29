@@ -5,11 +5,11 @@ namespace Dignite.Abp.FieldCustomizing
 {
     public class CustomizeFieldFactory : ICustomizeFieldFactory,ITransientDependency
     {
-        protected ICustomizeFieldFormProviderSelector FormProviderSelector { get; }
+        protected IFormProviderSelector FormProviderSelector { get; }
 
 
         public CustomizeFieldFactory(
-            ICustomizeFieldFormProviderSelector providerSelector)
+            IFormProviderSelector providerSelector)
         {
             FormProviderSelector = providerSelector;
         }

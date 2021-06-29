@@ -8,7 +8,7 @@ namespace Dignite.Abp.FieldCustomizing
     public class CustomizeFieldFormConfiguration
     {
         /// <summary>
-        /// The provider to be used to <see cref="ICustomizeFieldFormProvider.Name"/>
+        /// The provider to be used to <see cref="IFormProvider.Name"/>
         /// </summary>
         [JsonProperty]
         public string FormProviderName { get; internal set; }

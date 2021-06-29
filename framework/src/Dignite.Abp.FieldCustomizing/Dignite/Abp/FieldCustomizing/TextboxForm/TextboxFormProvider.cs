@@ -1,9 +1,8 @@
 ﻿
-using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing.TextboxForm
 {
-    public class TextboxFormProvider : CustomizeFieldFormProviderBase, ITransientDependency
+    public class TextboxFormProvider : FormProviderBase
     {
 
         public const string ProviderName = "TextboxForm";
@@ -38,7 +37,7 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
 
         }
 
-        public override CustomizeFieldFormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
+        public override FormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
         {
             return new TextboxFormProviderConfiguration(fieldConfiguration);
         }

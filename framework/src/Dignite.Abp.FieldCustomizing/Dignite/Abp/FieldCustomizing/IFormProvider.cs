@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public interface ICustomizeFieldFormProvider: ITransientDependency
+    public interface IFormProvider
     {
         /// <summary>
         /// Unique name of the field provider.
@@ -15,6 +15,6 @@ namespace Dignite.Abp.FieldCustomizing
 
         void Validate(CustomizeFieldFormValidateArgs args);
 
-        CustomizeFieldFormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldFormConfiguration);
+        FormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldFormConfiguration);
     }
 }
