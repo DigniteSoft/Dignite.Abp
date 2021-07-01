@@ -7,6 +7,8 @@ namespace Dignite.Abp.Settings
         IList<SettingNavigation> GetNavigations();
 
 
-        IReadOnlyList<Volo.Abp.Settings.SettingDefinition> GetAllOfNavigation(string navigationName);
+        SettingNavigation GetNavigation(string navigationName);
+
+        SettingNavigation GetNavigationOrNull(string navigationName);
     }
 }

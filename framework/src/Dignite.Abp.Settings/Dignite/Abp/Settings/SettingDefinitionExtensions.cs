@@ -10,14 +10,17 @@ namespace Dignite.Abp.Settings
     {
         public static SettingDefinition SetForm(
             this SettingDefinition setting,
-            Action<CustomizeFieldFormConfiguration> form,
-            ILocalizableString groupName=null
+            Action<CustomizeFieldFormConfiguration> formConfigurationAction,
+            ILocalizableString groupName =null
             )
         {
-            setting.WithProperty(SettingDefinitionPropertiesNames.FormName, form);
+            var formConfiguration = new CustomizeFieldFormConfiguration();
+            formConfigurationAction(formConfiguration);
+
+            setting.WithProperty(SettingDefinitionPropertiesNames.FormName, formConfiguration);
             if (groupName != null)
             {
-                setting.WithProperty(SettingDefinitionPropertiesNames.GroupName, groupName);
+                setting.WithProperty(SettingDefinitionPropertiesNames.FormName, groupName);
             }
 
             return setting;

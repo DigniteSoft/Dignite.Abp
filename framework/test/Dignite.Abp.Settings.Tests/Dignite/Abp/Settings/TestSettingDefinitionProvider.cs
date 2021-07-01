@@ -1,15 +1,26 @@
-﻿namespace Dignite.Abp.Settings
+﻿using Dignite.Abp.FieldCustomizing.TextboxForm;
+using Volo.Abp.DependencyInjection;
+
+namespace Dignite.Abp.Settings
 {
-    public class TestSettingDefinitionProvider : SettingDefinitionProvider
+    public class TestSettingDefinitionProvider : SettingDefinitionProvider, ITransientDependency
     {
         public override void Define(ISettingDefinitionContext context)
         {
             context.Add(
-                new SettingNavigation("test"),
+                new SettingNavigation(TestSettingNames.TestSettingNavigationName),
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),
-                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value"),
+                
+                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value")
+                    .SetForm(form =>
+                        form.UseTextbox(tb =>
+                        {
+                            tb.Required = true;
+                            tb.Placeholder = "placeholder-text";
+                        }
+                    )),
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingEncrypted, isEncrypted: true)
-            );
+            ) ;
         }
     }
 }
