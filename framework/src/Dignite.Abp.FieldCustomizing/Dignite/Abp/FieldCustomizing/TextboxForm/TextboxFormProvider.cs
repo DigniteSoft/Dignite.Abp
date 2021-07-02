@@ -15,7 +15,7 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
 
         public override void Validate(CustomizeFieldFormValidateArgs args)
         {
-            var configuration = new TextboxFormProviderConfiguration(args.FieldDefinition.FormConfiguration);
+            var configuration = new TextboxFormConfiguration(args.FieldDefinition.FormConfiguration);
 
             if (configuration.Required && (args.Value == null || args.Value.ToString().Length==0))
             {
@@ -37,9 +37,9 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
 
         }
 
-        public override FormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
+        public override FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
         {
-            return new TextboxFormProviderConfiguration(fieldConfiguration);
+            return new TextboxFormConfiguration(fieldConfiguration);
         }
 
     }

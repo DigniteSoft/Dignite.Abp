@@ -28,7 +28,7 @@ namespace Dignite.Abp.Settings
 
         public IReadOnlyList<SettingDefinition> SettingDefinitions { get; private set; }
 
-        public void AddSettingDefinitions(Dictionary<string, Volo.Abp.Settings.SettingDefinition> settings)
+        public void AddSettingDefinitions(Dictionary<string, SettingDefinition> settings)
         {
             SettingDefinitions = settings.Values.ToImmutableList();
         }

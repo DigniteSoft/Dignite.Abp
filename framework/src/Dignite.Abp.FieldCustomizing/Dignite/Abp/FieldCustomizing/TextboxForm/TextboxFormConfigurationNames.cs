@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.FieldCustomizing.TextboxForm
 {
-    public class TextboxFormProviderConfigurationNames
+    public class TextboxFormConfigurationNames
     {
         public const string Placeholder = "TextboxField.Placeholder";
         public const string Mode = "TextboxField.Mode";

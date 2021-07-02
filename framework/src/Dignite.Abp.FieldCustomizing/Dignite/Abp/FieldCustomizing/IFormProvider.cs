@@ -15,6 +15,6 @@ namespace Dignite.Abp.FieldCustomizing
 
         void Validate(CustomizeFieldFormValidateArgs args);
 
-        FormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldFormConfiguration);
+        FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldFormConfiguration);
     }
 }

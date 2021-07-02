@@ -26,13 +26,17 @@ namespace Dignite.Abp.Settings
             return setting;
         }
 
-        public static CustomizeFieldFormConfiguration GetForm(
+        public static CustomizeFieldFormConfiguration GetFormOrNull(
             this SettingDefinition setting)
         {
-            return (CustomizeFieldFormConfiguration)setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FormName);
+            var formConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FormName);
+            if (formConfiguration == null)
+                return null;
+            else
+                return (CustomizeFieldFormConfiguration)formConfiguration;
         }
 
-        public static ILocalizableString GetGroup(
+        public static ILocalizableString GetGroupOrNull(
             this SettingDefinition setting)
         {
             var group = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.GroupName);

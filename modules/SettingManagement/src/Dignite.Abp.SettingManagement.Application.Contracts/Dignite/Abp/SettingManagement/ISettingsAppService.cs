@@ -6,10 +6,8 @@ namespace Dignite.Abp.SettingManagement
 {
     public interface ISettingsAppService : IApplicationService
     {
-        Task<ListResultDto<SettingNavigationDto>> GetNavigationsAsync();
+        Task<ListResultDto<SettingNavigationDto>> GetAllAsync();
 
-        Task<ListResultDto<SettingDto>> GetListAsync(string navigationName);
-
-        Task UpdateAsync(UpdateSettingsInput input);
+        Task UpdateAsync( UpdateSettingsInput input);
     }
 }

@@ -12,7 +12,7 @@ namespace Dignite.Abp.SettingManagement
             string description, 
             string value,
             string formProviderName,
-            CustomizeFieldFormProviderConfigurationBase formProviderConfiguration)
+            FormConfigurationBase formConfiguration)
         {
             GroupName = groupName;
             Name = name;
@@ -20,7 +20,7 @@ namespace Dignite.Abp.SettingManagement
             Description = description;
             Value = value;
             FormProviderName = formProviderName;
-            FormProviderConfiguration = formProviderConfiguration;
+            FormConfiguration = formConfiguration;
         }
 
         public string GroupName { get;  }
@@ -33,6 +33,6 @@ namespace Dignite.Abp.SettingManagement
 
         public string FormProviderName { get; }
 
-        public CustomizeFieldFormProviderConfigurationBase FormProviderConfiguration { get; }
+        public FormConfigurationBase FormConfiguration { get; }
     }
 }

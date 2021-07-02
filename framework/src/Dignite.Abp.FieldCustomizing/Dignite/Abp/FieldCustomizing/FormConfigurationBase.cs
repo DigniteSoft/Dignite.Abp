@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public abstract class FormProviderConfigurationBase
+    public abstract class FormConfigurationBase
     {
         protected readonly CustomizeFieldFormConfiguration _fieldFormConfiguration;
 
@@ -11,8 +11,8 @@ namespace Dignite.Abp.FieldCustomizing
         /// </summary>
         public bool Required
         {
-            get => _fieldFormConfiguration.GetConfigurationOrDefault(FormProviderConfigurationNames.Required, false);
-            set => _fieldFormConfiguration.SetConfiguration(FormProviderConfigurationNames.Required, value);
+            get => _fieldFormConfiguration.GetConfigurationOrDefault(FormConfigurationNames.Required, false);
+            set => _fieldFormConfiguration.SetConfiguration(FormConfigurationNames.Required, value);
         }
 
         /// <summary>
@@ -20,11 +20,11 @@ namespace Dignite.Abp.FieldCustomizing
         /// </summary>
         public string Description
         {
-            get => _fieldFormConfiguration.GetConfigurationOrDefault<string>(FormProviderConfigurationNames.Description, null);
-            set => _fieldFormConfiguration.SetConfiguration(FormProviderConfigurationNames.Description, value);
+            get => _fieldFormConfiguration.GetConfigurationOrDefault<string>(FormConfigurationNames.Description, null);
+            set => _fieldFormConfiguration.SetConfiguration(FormConfigurationNames.Description, value);
         }
 
-        public FormProviderConfigurationBase(
+        public FormConfigurationBase(
             CustomizeFieldFormConfiguration fieldFormConfiguration,
             string fieldFormProviderName)
         {

@@ -4,17 +4,17 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
 {
     public static class TextboxFormConfigurationExtensions
     {
-        public static TextboxFormProviderConfiguration GetTextboxConfiguration(
+        public static TextboxFormConfiguration GetTextboxConfiguration(
             this CustomizeFieldFormConfiguration fieldConfiguration)
         {
-            return new TextboxFormProviderConfiguration(fieldConfiguration);
+            return new TextboxFormConfiguration(fieldConfiguration);
         }
 
         public static CustomizeFieldFormConfiguration UseTextbox(
             this CustomizeFieldFormConfiguration fieldConfiguration,
-            Action<TextboxFormProviderConfiguration> textboxFieldConfigureAction)
+            Action<TextboxFormConfiguration> textboxFieldConfigureAction)
         {
-            textboxFieldConfigureAction(new TextboxFormProviderConfiguration(fieldConfiguration));
+            textboxFieldConfigureAction(new TextboxFormConfiguration(fieldConfiguration));
             return fieldConfiguration;
         }
     }

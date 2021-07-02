@@ -44,7 +44,7 @@ namespace Dignite.Abp.FieldCustomizing
 
         public abstract void Validate(CustomizeFieldFormValidateArgs args);
 
-        public abstract FormProviderConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration);
+        public abstract FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration);
 
         protected virtual IStringLocalizer CreateLocalizer()
         {

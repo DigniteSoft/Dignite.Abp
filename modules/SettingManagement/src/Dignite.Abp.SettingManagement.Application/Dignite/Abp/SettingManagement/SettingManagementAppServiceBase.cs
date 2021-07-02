@@ -8,7 +8,7 @@ namespace Dignite.Abp.SettingManagement
     {
         protected SettingManagementAppServiceBase()
         {
-            ObjectMapperContext = typeof(DigniteSettingManagementApplicationModule);
+            ObjectMapperContext = typeof(DigniteAbpSettingManagementApplicationModule);
             LocalizationResource = typeof(AbpSettingManagementResource);
         }
     }

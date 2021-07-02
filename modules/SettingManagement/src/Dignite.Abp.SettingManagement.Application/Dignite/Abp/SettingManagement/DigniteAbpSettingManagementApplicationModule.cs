@@ -8,7 +8,7 @@ namespace Dignite.Abp.SettingManagement
         typeof(AbpSettingManagementDomainModule),
         typeof(DigniteAbpSettingManagementApplicationContractsModule)
     )]
-    public class DigniteSettingManagementApplicationModule : AbpModule
+    public class DigniteAbpSettingManagementApplicationModule : AbpModule
     {
     }
 }
