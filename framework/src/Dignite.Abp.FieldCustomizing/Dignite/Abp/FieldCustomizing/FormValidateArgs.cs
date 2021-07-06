@@ -4,16 +4,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldFormValidateArgs
+    public class FormValidateArgs
     {
-        public ICustomizeFieldDefinition FieldDefinition { get; }
+        public BasicCustomizeFieldDefinition FieldDefinition { get; }
 
         public object Value { get; }
 
         public List<ValidationResult> ValidationErrors { get; }
 
-        public CustomizeFieldFormValidateArgs(
-            [NotNull] ICustomizeFieldDefinition fieldDefinition,
+        public FormValidateArgs(
+            [NotNull] BasicCustomizeFieldDefinition fieldDefinition,
             object value,
             List<ValidationResult> validationErrors)
         {

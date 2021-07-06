@@ -1,16 +1,14 @@
 ﻿using Dignite.Abp.FieldCustomizing.TextboxForm;
-using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.Settings
 {
-    public class TestSettingDefinitionProvider : SettingDefinitionProvider, ITransientDependency
+    public class TestSettingDefinitionProvider : SettingDefinitionProvider
     {
         public override void Define(ISettingDefinitionContext context)
         {
             context.Add(
                 new SettingNavigation(TestSettingNames.TestSettingNavigationName),
-                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),
-                
+                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),                
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value")
                     .SetForm(form =>
                         form.UseTextbox(tb =>

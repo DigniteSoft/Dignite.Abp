@@ -5,8 +5,6 @@ using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Volo.Abp.Localization;
-using Volo.Abp.SettingManagement.Localization;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -22,11 +20,10 @@ namespace Dignite.Abp.SettingManagement
             return settingDefinitionManager.GetNavigation(NavigationName).SettingDefinitions
                 .Select(fd => new BasicCustomizeFieldDefinition(
                         fd.Name,
-                        fd.DisplayName.Localize(stringLocalizerFactory).Value,
+                        fd.DisplayName.Localize(stringLocalizerFactory),
                         fd.DefaultValue,
                         fd.GetFormOrNull()
                         )).ToList();
-
         }
     }
 }

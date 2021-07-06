@@ -9,11 +9,11 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.TextboxField"].Value;
+        public override string DisplayName => L["DisplayName:Dignite.TextboxForm"];
 
-        public override CustomizeFieldFormType FormType => CustomizeFieldFormType.Simple;
+        public override FormType FormType => FormType.Simple;
 
-        public override void Validate(CustomizeFieldFormValidateArgs args)
+        public override void Validate(FormValidateArgs args)
         {
             var configuration = new TextboxFormConfiguration(args.FieldDefinition.FormConfiguration);
 
@@ -21,7 +21,7 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
             {
                 args.ValidationErrors.Add(
                     new System.ComponentModel.DataAnnotations.ValidationResult(
-                        L["ValidateValue:Required"].Value, 
+                        L["ValidateValue:Required"], 
                         new[] { args.FieldDefinition.Name }
                         ));
             }
@@ -30,17 +30,16 @@ namespace Dignite.Abp.FieldCustomizing.TextboxForm
             {
                 args.ValidationErrors.Add(
                     new System.ComponentModel.DataAnnotations.ValidationResult(
-                        L["{0} 字符限制不超 {1} 个字符",args.FieldDefinition.DisplayName, configuration.CharLimit].Value,
+                        L["CharacterCountExceedsLimit", args.FieldDefinition.DisplayName, configuration.CharLimit],
                         new[] { args.FieldDefinition.Name }
                         ));
             }
 
         }
 
-        public override FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
+        public override FormConfigurationBase GetConfiguration(FormConfigurationData fieldConfiguration)
         {
-            return new TextboxFormConfiguration(fieldConfiguration);
+            return fieldConfiguration.GetTextboxConfiguration();
         }
-
     }
 }

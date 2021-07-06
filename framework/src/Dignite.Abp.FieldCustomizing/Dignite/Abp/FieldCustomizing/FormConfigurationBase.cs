@@ -4,7 +4,7 @@ namespace Dignite.Abp.FieldCustomizing
 {
     public abstract class FormConfigurationBase
     {
-        protected readonly CustomizeFieldFormConfiguration _fieldFormConfiguration;
+        protected readonly FormConfigurationData _fieldFormConfiguration;
 
         /// <summary>
         /// 标记字段是否为必填
@@ -25,7 +25,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         public FormConfigurationBase(
-            CustomizeFieldFormConfiguration fieldFormConfiguration,
+            FormConfigurationData fieldFormConfiguration,
             string fieldFormProviderName)
         {
             _fieldFormConfiguration = fieldFormConfiguration;

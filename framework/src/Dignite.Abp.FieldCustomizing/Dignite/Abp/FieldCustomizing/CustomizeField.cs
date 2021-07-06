@@ -6,13 +6,13 @@ namespace Dignite.Abp.FieldCustomizing
 {
     public class CustomizeField:ICustomizeField
     {
-        protected ICustomizeFieldDefinition FieldDefinition { get;  }
+        protected BasicCustomizeFieldDefinition FieldDefinition { get;  }
 
         protected IFormProvider FormProvider { get; }
 
 
         public CustomizeField(
-            ICustomizeFieldDefinition fieldDefinition,
+            BasicCustomizeFieldDefinition fieldDefinition,
             IFormProvider formProvider)
         {
             FieldDefinition = fieldDefinition;
@@ -24,7 +24,7 @@ namespace Dignite.Abp.FieldCustomizing
              List<ValidationResult> validationErrors)
         {
             FormProvider.Validate(
-                new CustomizeFieldFormValidateArgs(
+                new FormValidateArgs(
                     FieldDefinition,
                     value,
                     validationErrors

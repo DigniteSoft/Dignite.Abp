@@ -10,13 +10,13 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 {
     public static class FieldsEntityTypeBuilderExtensions
     {
-        public static void ConfigureCustomizeFieldDefinitions<T>(this EntityTypeBuilder<T> b)
+        public static void ConfigureCustomizableFieldDefinitions<T>(this EntityTypeBuilder<T> b)
             where T : class, ICustomizeFieldDefinition
         {
-            b.As<EntityTypeBuilder>().ConfigureCustomizeFieldDefinitions();
+            b.As<EntityTypeBuilder>().ConfigureCustomizableFieldDefinitions();
         }
 
-        public static void ConfigureCustomizeFieldDefinitions(this EntityTypeBuilder b)
+        public static void ConfigureCustomizableFieldDefinitions(this EntityTypeBuilder b)
         {
             if (!b.Metadata.ClrType.IsAssignableTo<ICustomizeFieldDefinition>())
             {
@@ -25,31 +25,31 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 
             b.Property<string>(nameof(ICustomizeFieldDefinition.DisplayName)).IsRequired().HasMaxLength(64);
             b.Property<string>(nameof(ICustomizeFieldDefinition.Name)).IsRequired().HasMaxLength(64);
-            b.Property<CustomizeFieldFormConfiguration>(nameof(ICustomizeFieldDefinition.FormConfiguration))
+            b.Property<FormConfigurationData>(nameof(ICustomizeFieldDefinition.FormConfiguration))
                 .HasColumnName(nameof(ICustomizeFieldDefinition.FormConfiguration))
                 .HasConversion(
                     config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                    jsonData => JsonConvert.DeserializeObject<CustomizeFieldFormConfiguration>(jsonData)
+                    jsonData => JsonConvert.DeserializeObject<FormConfigurationData>(jsonData)
                     );
         }
 
-        public static void ConfigureCustomizedFields<T>(this EntityTypeBuilder<T> b)
-            where T : class, IHasCustomizedFields
+        public static void ConfigureObjectCustomizedFields<T>(this EntityTypeBuilder<T> b)
+            where T : class, IHasCustomizableFields
         {
-            b.As<EntityTypeBuilder>().TryConfigureCustomizedFields();
+            b.As<EntityTypeBuilder>().TryConfigureObjectCustomizedFields();
         }
 
-        public static void TryConfigureCustomizedFields(this EntityTypeBuilder b)
+        public static void TryConfigureObjectCustomizedFields(this EntityTypeBuilder b)
         {
-            if (!b.Metadata.ClrType.IsAssignableTo<IHasCustomizedFields>())
+            if (!b.Metadata.ClrType.IsAssignableTo<IHasCustomizableFields>())
             {
                 return;
             }
 
-            b.Property<CustomizedFieldDictionary>(nameof(IHasCustomizedFields.CustomizedFields))
-                .HasColumnName(nameof(IHasCustomizedFields.CustomizedFields))
-                .HasConversion(new ExtraFieldsValueConverter())
-                .Metadata.SetValueComparer(new ExtraFieldDictionaryValueComparer());
+            b.Property<CustomizeFieldDictionary>(nameof(IHasCustomizableFields.CustomizedFields))
+                .HasColumnName(nameof(IHasCustomizableFields.CustomizedFields))
+                .HasConversion(new CustomizedFieldsValueConverter())
+                .Metadata.SetValueComparer(new CustomizedFieldDictionaryValueComparer());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Dignite.Abp.Identity
             CacheOrganizationUnits = cacheOrganizationUnits;
         }
 
-        [Authorize]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<OrganizationUnitDto> GetAsync(Guid id)
         {
             var dto = ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(
@@ -46,6 +46,7 @@ namespace Dignite.Abp.Identity
             return dto;
         }
 
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetChildrenAsync(Guid? parentId, bool recursive = false)
         {
             List<OrganizationUnit> organizationUnits;
@@ -91,6 +92,7 @@ namespace Dignite.Abp.Identity
         }
 
 
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> SearchAsync(string filter)
         {
             var allOrganizationUnits = await GetAllListAsync();
@@ -125,6 +127,7 @@ namespace Dignite.Abp.Identity
                 );
         }
 
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetParentsAsync(Guid id)
         {
             var allOrganizationUnits = await GetAllListAsync();
@@ -147,7 +150,7 @@ namespace Dignite.Abp.Identity
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
         {
             List<OrganizationUnit> list;
-            if (await AuthorizationService.IsGrantedAsync(IdentityPermissions.OrganizationUnits.SuperAuthorization))
+            if (await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
             {
                 list = await OrganizationUnitRepository.GetChildrenAsync(null, includeDetails: false);
             }
@@ -171,7 +174,7 @@ namespace Dignite.Abp.Identity
                 );
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Create)]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnits.Create)]
         public virtual async Task<GetOrganizationUnitForEditOutput> NewAsync(Guid? parentId)
         {
             var output = new GetOrganizationUnitForEditOutput();
@@ -182,7 +185,7 @@ namespace Dignite.Abp.Identity
             return output;
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Update)]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnits.Update)]
         public virtual async Task<GetOrganizationUnitForEditOutput> GetOrganizationUnitForEditAsync(Guid id)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, true);
@@ -194,6 +197,7 @@ namespace Dignite.Abp.Identity
             return output;
         }
 
+        [Authorize]
         public virtual async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateDto input)
         {
             var parentOrganizationUnit = input.ParentId.HasValue ?
@@ -205,7 +209,7 @@ namespace Dignite.Abp.Identity
             }
             else
             {
-                await AuthorizationService.CheckAsync(IdentityPermissions.OrganizationUnits.SuperAuthorization);
+                await AuthorizationService.CheckAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization);
             }
 
             var children = await OrganizationUnitRepository.GetChildrenAsync(input.ParentId, false);
@@ -234,6 +238,7 @@ namespace Dignite.Abp.Identity
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }
 
+        [Authorize]
         public virtual async Task<OrganizationUnitDto> UpdateAsync(Guid id, OrganizationUnitUpdateDto input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, true);
@@ -260,6 +265,7 @@ namespace Dignite.Abp.Identity
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }
 
+        [Authorize]
         public virtual async Task DeleteAsync(Guid id)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -267,6 +273,7 @@ namespace Dignite.Abp.Identity
             await OrganizationUnitManager.DeleteAsync(ou.Id);
         }
 
+        [Authorize]
         public virtual async Task MoveAsync(Guid id, OrganizationUnitMoveInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -290,7 +297,7 @@ namespace Dignite.Abp.Identity
             await UpdatePositionAsync(ou, children, input.BeforeOrganizationUnitId);
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Default)]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -301,7 +308,7 @@ namespace Dignite.Abp.Identity
                 ));
         }
 
-        [Authorize(IdentityPermissions.OrganizationUnits.Default)]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnits.Default)]
         public virtual async Task<PagedResultDto<IdentityUserDto>> GetMembersAsync(Guid id, GetOrganizationUnitMembersInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -313,6 +320,7 @@ namespace Dignite.Abp.Identity
                 );
         }
 
+        [Authorize]
         public virtual async Task AddMembersAsync(Guid id, OrganizationUnitAddMembersInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -324,6 +332,7 @@ namespace Dignite.Abp.Identity
             }
         }
 
+        [Authorize]
         public virtual async Task RemoveMembersAsync(Guid id, OrganizationUnitRemoveMembersInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
@@ -342,10 +351,10 @@ namespace Dignite.Abp.Identity
             }
         }
 
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<IdentityRoleDto>> GetMemberAssignableRolesAsync(Guid id, Guid userId)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
-            await AuthorizationService.CheckAsync(ou, CommonOperations.Update);
             var availableRoles = await GetAvailableRolesAsync(ou.ParentId);
             var userRoles = ObjectMapper.Map<List<IdentityRole>, List<IdentityRoleDto>>(
                  await UserRepository.GetRolesAsync(userId, false)
@@ -368,6 +377,7 @@ namespace Dignite.Abp.Identity
             return new ListResultDto<IdentityRoleDto>( assignableRoles);
         }
 
+        [Authorize]
         public virtual async Task UpdateMemberRolesAsync(Guid id, Guid userId, OrganizationUnitUpdateMemberRolesInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);

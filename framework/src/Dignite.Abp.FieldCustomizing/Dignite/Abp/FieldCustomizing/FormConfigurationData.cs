@@ -5,7 +5,7 @@ using Volo.Abp;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public class CustomizeFieldFormConfiguration
+    public class FormConfigurationData
     {
         /// <summary>
         /// The provider to be used to <see cref="IFormProvider.Name"/>
@@ -18,7 +18,7 @@ namespace Dignite.Abp.FieldCustomizing
         public Dictionary<string, object> Properties { get; private set; }
 
 
-        public CustomizeFieldFormConfiguration()
+        public FormConfigurationData()
         {
             Properties = new Dictionary<string, object>();
         }
@@ -37,7 +37,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         [NotNull]
-        public CustomizeFieldFormConfiguration SetConfiguration([NotNull] string name, [CanBeNull] object value)
+        public FormConfigurationData SetConfiguration([NotNull] string name, [CanBeNull] object value)
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
             Check.NotNull(value, nameof(value));
@@ -48,7 +48,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         [NotNull]
-        public CustomizeFieldFormConfiguration ClearConfiguration([NotNull] string name)
+        public FormConfigurationData ClearConfiguration([NotNull] string name)
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
 

@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.Identity
 {
-    public static class IdentityPermissions
+    public static class OrganizationUnitPermissions
     {
         public const string GroupName = "DigniteAbpIdentity";
 
@@ -16,9 +16,14 @@ namespace Dignite.Abp.Identity
             public const string SuperAuthorization = Default + ".SuperAuthorization";
         }
 
+        public static class OrganizationUnitLookup
+        {
+            public const string Default = GroupName + ".OrganizationUnitLookup";
+        }
+
         public static string[] GetAll()
         {
-            return ReflectionHelper.GetPublicConstantsRecursively(typeof(IdentityPermissions));
+            return ReflectionHelper.GetPublicConstantsRecursively(typeof(OrganizationUnitPermissions));
         }
     }
 }

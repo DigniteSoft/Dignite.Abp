@@ -15,7 +15,7 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
 
-        public virtual ICustomizeField Create(ICustomizeFieldDefinition fieldDefinition)
+        public virtual ICustomizeField Create(BasicCustomizeFieldDefinition fieldDefinition)
         {
             return new CustomizeField(
                 fieldDefinition,

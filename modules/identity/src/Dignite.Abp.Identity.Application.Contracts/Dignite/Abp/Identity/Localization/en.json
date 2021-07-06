@@ -1,0 +1,8 @@
+{
+  "culture": "en",
+  "texts": {
+    "Permission:OrganizationUnitManagement": "Organization Unit management",
+    "Permission:OrganizationUnitSuperAuthorization": "Organization Unit Super Authorization",
+    "Permission:OrganizationUnitLookup": "Organization Unit Lookup"
+  }
+}

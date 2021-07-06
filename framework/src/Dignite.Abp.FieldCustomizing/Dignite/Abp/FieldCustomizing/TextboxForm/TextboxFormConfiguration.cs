@@ -36,7 +36,7 @@
 
 
 
-        public TextboxFormConfiguration(CustomizeFieldFormConfiguration fieldConfiguration)
+        public TextboxFormConfiguration(FormConfigurationData fieldConfiguration)
             :base(fieldConfiguration, TextboxFormProvider.ProviderName)
         {
         }

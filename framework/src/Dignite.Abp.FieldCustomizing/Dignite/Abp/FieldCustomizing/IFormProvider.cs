@@ -11,10 +11,10 @@ namespace Dignite.Abp.FieldCustomizing
 
         string DisplayName { get; }
 
-        CustomizeFieldFormType FormType { get; }
+        FormType FormType { get; }
 
-        void Validate(CustomizeFieldFormValidateArgs args);
+        void Validate(FormValidateArgs args);
 
-        FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldFormConfiguration);
+        FormConfigurationBase GetConfiguration(FormConfigurationData fieldFormConfiguration);
     }
 }

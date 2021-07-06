@@ -2,7 +2,7 @@
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public enum CustomizeFieldFormType
+    public enum FormType
     {
         /// <summary>
         /// 

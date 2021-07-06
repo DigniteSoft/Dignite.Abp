@@ -6,9 +6,9 @@ using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
 {
-    public class ExtraFieldsValueConverter : ValueConverter<CustomizedFieldDictionary, string>
+    public class CustomizedFieldsValueConverter : ValueConverter<CustomizeFieldDictionary, string>
     {
-        public ExtraFieldsValueConverter()
+        public CustomizedFieldsValueConverter()
             : base(
                 d => SerializeObject(d),
                 s => DeserializeObject(s))
@@ -16,24 +16,24 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
 
         }
 
-        private static string SerializeObject(CustomizedFieldDictionary extraFields)
+        private static string SerializeObject(CustomizeFieldDictionary extraFields)
         {
             var copyDictionary = new Dictionary<string, object>(extraFields);
 
             return JsonSerializer.Serialize(copyDictionary);
         }
 
-        private static CustomizedFieldDictionary DeserializeObject(string extraFieldsAsJson)
+        private static CustomizeFieldDictionary DeserializeObject(string extraFieldsAsJson)
         {
             if (extraFieldsAsJson.IsNullOrEmpty() || extraFieldsAsJson == "{}")
             {
-                return new CustomizedFieldDictionary();
+                return new CustomizeFieldDictionary();
             }
 
             var deserializeOptions = new JsonSerializerOptions();
             deserializeOptions.Converters.Add(new ObjectToInferredTypesConverter());
-            var dictionary = JsonSerializer.Deserialize<CustomizedFieldDictionary>(extraFieldsAsJson, deserializeOptions) ??
-                             new CustomizedFieldDictionary();
+            var dictionary = JsonSerializer.Deserialize<CustomizeFieldDictionary>(extraFieldsAsJson, deserializeOptions) ??
+                             new CustomizeFieldDictionary();
 
             return dictionary;
         }

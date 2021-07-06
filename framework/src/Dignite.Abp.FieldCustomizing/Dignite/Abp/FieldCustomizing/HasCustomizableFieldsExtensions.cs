@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -8,20 +9,20 @@ using Volo.Abp.Reflection;
 
 namespace Dignite.Abp.FieldCustomizing
 {
-    public static class HasCustomizedFieldsExtensions
+    public static class HasCustomizableFieldsExtensions
     {
-        public static bool HasField(this IHasCustomizedFields source, string name)
+        public static bool HasField([NotNull] this IHasCustomizableFields source, [NotNull] string name)
         {
             return source.CustomizedFields.ContainsKey(name);
         }
 
-        public static object GetField(this IHasCustomizedFields source, string name, object defaultValue = null)
+        public static object GetField([NotNull] this IHasCustomizableFields source, [NotNull] string name, object defaultValue = null)
         {
             return source.CustomizedFields?.GetOrDefault(name)
                    ?? defaultValue;
         }
 
-        public static TField GetField<TField>(this IHasCustomizedFields source, string name, TField defaultValue = default)
+        public static TField GetField<TField>([NotNull] this IHasCustomizableFields source, [NotNull] string name, TField defaultValue = default)
         {
             var value = source.GetField(name);
             if (value == null)
@@ -52,7 +53,7 @@ namespace Dignite.Abp.FieldCustomizing
             this TSource source,
             string name,
             object value)
-            where TSource : IHasCustomizedFields
+            where TSource : IHasCustomizableFields
         {
             source.CustomizedFields[name] = value;
 
@@ -60,14 +61,14 @@ namespace Dignite.Abp.FieldCustomizing
         }
 
         public static TSource RemoveField<TSource>(this TSource source, string name)
-            where TSource : IHasCustomizedFields
+            where TSource : IHasCustomizableFields
         {
             source.CustomizedFields.Remove(name);
             return source;
         }
 
-        public static TSource SetDefaultsForExtraFields<TSource>(this TSource source, IReadOnlyList<BasicCustomizeFieldDefinition> fieldDefinitions)
-            where TSource : IHasCustomizedFields
+        public static TSource SetDefaultsForCustomizeFields<TSource>(this TSource source, IReadOnlyList<BasicCustomizeFieldDefinition> fieldDefinitions)
+            where TSource : IHasCustomizableFields
         {
             foreach (var fieldDefinition in fieldDefinitions)
             {
@@ -82,17 +83,7 @@ namespace Dignite.Abp.FieldCustomizing
             return source;
         }
 
-        public static void SetDefaultsForExtraFields(object source, IReadOnlyList<BasicCustomizeFieldDefinition> fieldDefinitions)
-        {
-            if (!(source is IHasCustomizedFields))
-            {
-                throw new ArgumentException($"Given {nameof(source)} object does not implement the {nameof(IHasCustomizedFields)} interface!", nameof(source));
-            }
-
-            ((IHasCustomizedFields)source).SetDefaultsForExtraFields(fieldDefinitions);
-        }
-
-        public static void SetCustomizableFieldsToRegularProperties(this IHasCustomizedFields source)
+        public static void SetCustomizeFieldsToRegularProperties([NotNull] this IHasCustomizableFields source)
         {
             var properties = source.GetType().GetProperties()
                 .Where(x => source.CustomizedFields.ContainsKey(x.Name)
@@ -104,6 +95,35 @@ namespace Dignite.Abp.FieldCustomizing
                 property.SetValue(source, source.CustomizedFields[property.Name]);
                 source.RemoveField(property.Name);
             }
+        }
+
+
+        /// <summary>
+        /// Copies customized fields from the <paramref name="source"/> object
+        /// to the <paramref name="destination"/> object.
+        /// </summary>
+        /// <typeparam name="TSource">Source class type</typeparam>
+        /// <typeparam name="TDestination">Destination class type</typeparam>
+        /// <param name="source">The source object</param>
+        /// <param name="destination">The destination object</param>
+        /// <param name="fields">Used to map fields;When the value is null, all fields are mapped</param>
+        /// <param name="ignoredFields">Used to ignore some fields</param>
+        public static void MapCustomizeFieldsTo<TSource, TDestination>(
+            [NotNull] this TSource source,
+            [NotNull] TDestination destination,
+            string[] fields = null,
+            string[] ignoredFields = null)
+            where TSource : IHasCustomizableFields
+            where TDestination : IHasCustomizableFields
+        {
+            CustomizableObjectMapper.MapCustomizeFieldsTo(
+                typeof(TSource),
+                typeof(TDestination),
+                source.CustomizedFields,
+                destination.CustomizedFields,
+                fields,
+                ignoredFields
+                );
         }
     }
 }

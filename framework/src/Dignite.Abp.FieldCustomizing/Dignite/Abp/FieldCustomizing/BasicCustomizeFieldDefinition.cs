@@ -4,10 +4,10 @@ using System;
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
-    public class BasicCustomizeFieldDefinition : ICustomizeFieldDefinition
+    public class BasicCustomizeFieldDefinition
     {
 
-        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, CustomizeFieldFormConfiguration configuration)
+        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, FormConfigurationData configuration)
         {
             Name = name;
             DisplayName = displayName;
@@ -29,6 +29,6 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        public CustomizeFieldFormConfiguration FormConfiguration { get; set; }
+        public FormConfigurationData FormConfiguration { get; set; }
     }
 }

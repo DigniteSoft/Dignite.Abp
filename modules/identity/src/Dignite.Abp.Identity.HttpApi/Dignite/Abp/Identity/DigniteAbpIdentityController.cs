@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Dignite.Abp.Identity.Localization;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Identity.Localization;
 
 namespace Dignite.Abp.Identity
 {
@@ -12,7 +7,7 @@ namespace Dignite.Abp.Identity
     {
         protected DigniteAbpIdentityController()
         {
-            LocalizationResource = typeof(IdentityResource);
+            LocalizationResource = typeof(IdentityOrganizationUnitResource);
         }
     }
 }

@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
-    public class CustomizedFieldDictionary : Dictionary<string, object>
+    public class CustomizeFieldDictionary : Dictionary<string, object>
     {
-        public CustomizedFieldDictionary()
+        public CustomizeFieldDictionary()
         {
 
         }
 
-        public CustomizedFieldDictionary(IDictionary<string, object> dictionary)
+        public CustomizeFieldDictionary(IDictionary<string, object> dictionary)
             : base(dictionary)
         {
         }

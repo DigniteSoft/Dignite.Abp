@@ -40,11 +40,11 @@ namespace Dignite.Abp.FieldCustomizing
 
         public abstract string DisplayName { get; }
 
-        public abstract CustomizeFieldFormType FormType { get; }
+        public abstract FormType FormType { get; }
 
-        public abstract void Validate(CustomizeFieldFormValidateArgs args);
+        public abstract void Validate(FormValidateArgs args);
 
-        public abstract FormConfigurationBase GetConfiguration(CustomizeFieldFormConfiguration fieldConfiguration);
+        public abstract FormConfigurationBase GetConfiguration(FormConfigurationData fieldConfiguration);
 
         protected virtual IStringLocalizer CreateLocalizer()
         {
