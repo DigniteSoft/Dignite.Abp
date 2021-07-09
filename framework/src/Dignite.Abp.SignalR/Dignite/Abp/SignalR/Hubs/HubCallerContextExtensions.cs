@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Dignite.Abp.RealTime;
+using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Security.Claims;
 
@@ -11,7 +9,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
 {
     public static class HubCallerContextExtensions
     {
-        public static int? GetTenantId(this HubCallerContext context)
+        public static Guid? GetTenantId(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -24,10 +22,10 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
                 return null;
             }
 
-            return Convert.ToInt32(tenantIdClaim.Value);
+            return Guid.Parse(tenantIdClaim.Value);
         }
 
-        public static long? GetUserIdOrNull(this HubCallerContext context)
+        public static Guid? GetUserIdOrNull(this HubCallerContext context)
         {
             if (context?.User == null)
             {
@@ -40,7 +38,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
                 return null;
             }
 
-            if (!long.TryParse(userIdClaim.Value, out var userId))
+            if (!Guid.TryParse(userIdClaim.Value, out var userId))
             {
                 return null;
             }
@@ -48,7 +46,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
             return userId;
         }
 
-        public static long GetUserId(this HubCallerContext context)
+        public static Guid GetUserId(this HubCallerContext context)
         {
             var userId = context.GetUserIdOrNull();
             if (userId == null)
@@ -59,7 +57,7 @@ namespace Dignite.Abp.SignalR.Dignite.Abp.SignalR.Hubs
             return userId.Value;
         }
 
-       
+
         public static UserIdentifier ToUserIdentifier(this HubCallerContext context)
         {
             var userId = context.GetUserIdOrNull();

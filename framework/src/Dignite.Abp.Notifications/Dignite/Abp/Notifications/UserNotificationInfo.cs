@@ -5,7 +5,7 @@ namespace Dignite.Abp.Notifications
     /// <summary>
     /// Used to store a user notification.
     /// </summary>
-    public class UserNotificationInfo 
+    public class UserNotificationInfo
     {
         public UserNotificationInfo(Guid userId, Guid notificationId, Guid? tenantId)
         {

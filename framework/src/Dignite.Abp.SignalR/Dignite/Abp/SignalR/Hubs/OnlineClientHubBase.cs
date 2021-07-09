@@ -1,5 +1,4 @@
-﻿using Dignite.Abp.Notifications.RealTime;
-using Dignite.Abp.SignalR.Dignite.Abp.RealTime;
+﻿using Dignite.Abp.RealTime;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
