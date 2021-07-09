@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Dignite.Abp.Notifications
         /// It's normally not set if <paramref name="userIds"/> is set.
         /// </param>
         Task PublishAsync(
-            string notificationName,
+            [NotNull] string notificationName,
             NotificationData data = null,
             NotificationEntityIdentifier entityIdentifier = null,
             NotificationSeverity severity = NotificationSeverity.Info,

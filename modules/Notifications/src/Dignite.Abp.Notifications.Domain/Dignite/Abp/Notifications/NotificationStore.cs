@@ -3,14 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Identity;
 
 namespace Dignite.Abp.Notifications
 {
-    public class NotificationStore: INotificationStore, ISingletonDependency
+    public class NotificationStore: INotificationStore, ITransientDependency
     {
         private readonly INotificationSubscriptionRepository _notificationSubscriptionRepository;
         private readonly INotificationRepository _notificationRepository;
         private readonly IUserNotificationRepository _userNotificationRepository;
+        private readonly IIdentityUserAppService _userAppService;
+
+        public NotificationStore(
+            INotificationSubscriptionRepository notificationSubscriptionRepository, 
+            INotificationRepository notificationRepository, 
+            IUserNotificationRepository userNotificationRepository,
+            IIdentityUserAppService userAppService)
+        {
+            _notificationSubscriptionRepository = notificationSubscriptionRepository;
+            _notificationRepository = notificationRepository;
+            _userNotificationRepository = userNotificationRepository;
+            _userAppService = userAppService;
+        }
 
         /// <summary>
         /// Inserts a notification subscription.
@@ -198,9 +212,14 @@ namespace Dignite.Abp.Notifications
             return await _userNotificationRepository.GetCountAsync(user, state, startDate, endDate);
         }
 
-        public Task<string[]> GetUserRoles(Guid userId)
+        /// <summary>
+        /// Get the user's role names
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<string[]> GetUserRoles(Guid userId)
         {
-            throw new NotImplementedException();
+            return (await _userAppService.GetRolesAsync(userId)).Items.Select(r=>r.Name).ToArray();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Dignite.Abp.Identity
 
         /// <summary>
         /// 获取授权给当前用户的组织，即包含当前用户的组织；
-        /// 如果当前用户拥有<see cref="IdentityPermissions.OrganizationUnits.SuperAuthorization"/>权限，则获取所有组织；
+        /// 如果当前用户拥有<see cref="OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization"/>权限，则获取所有组织；
         /// 不包括子组织；
         /// </summary>
         /// <returns></returns>

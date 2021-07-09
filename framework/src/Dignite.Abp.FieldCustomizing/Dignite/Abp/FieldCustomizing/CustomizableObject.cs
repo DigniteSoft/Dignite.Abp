@@ -7,9 +7,9 @@ using System.Linq;
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
-    public abstract class CustomizableObject : IHasCustomizedFields, IValidatableObject
+    public abstract class CustomizableObject : IHasCustomizableFields, IValidatableObject
     {
-        public CustomizedFieldDictionary CustomizedFields { get; set; }
+        public CustomizeFieldDictionary CustomizedFields { get; set; }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

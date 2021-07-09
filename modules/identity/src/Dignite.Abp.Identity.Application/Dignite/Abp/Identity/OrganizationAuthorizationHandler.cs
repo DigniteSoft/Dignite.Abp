@@ -45,9 +45,9 @@ namespace Dignite.Abp.Identity
 
         private async Task<bool> HasDeletePermission(AuthorizationHandlerContext context, OrganizationUnit resource)
         {
-            if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.Delete))
+            if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.Delete))
             {
-                if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.SuperAuthorization))
+                if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
                     return true;
                 else if (await AuthorizationCheck(context, resource))
                     return true;
@@ -58,9 +58,9 @@ namespace Dignite.Abp.Identity
 
         private async Task<bool> HasUpdatePermission(AuthorizationHandlerContext context, OrganizationUnit resource)
         {
-            if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.Update))
+            if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.Update))
             {
-                if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.SuperAuthorization))
+                if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
                     return true;
                 else if (await AuthorizationCheck(context, resource))
                     return true;
@@ -71,9 +71,9 @@ namespace Dignite.Abp.Identity
 
         private async Task<bool> HasCreatePermission(AuthorizationHandlerContext context, OrganizationUnit parent)
         {
-            if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.Create))
+            if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.Create))
             {
-                if (await _permissionChecker.IsGrantedAsync(context.User, IdentityPermissions.OrganizationUnits.SuperAuthorization))
+                if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
                     return true;
                 else if (await AuthorizationCheck(context, parent))
                     return true;

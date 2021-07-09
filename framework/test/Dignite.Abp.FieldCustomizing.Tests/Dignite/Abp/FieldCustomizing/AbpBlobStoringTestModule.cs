@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
+﻿using Volo.Abp;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 
@@ -6,6 +6,7 @@ using Volo.Abp.Modularity;
 namespace Dignite.Abp.FieldCustomizing
 {
     [DependsOn(
+        typeof(AbpTestBaseModule),
         typeof(AbpAutofacModule),
         typeof(DigniteAbpFieldCustomizingModule)
         )]

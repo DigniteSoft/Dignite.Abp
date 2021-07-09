@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using Volo.Abp;
 using Volo.Abp.Localization;
+using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
 {
@@ -11,18 +14,23 @@ namespace Dignite.Abp.Settings
         public string Name { get; }
 
 
+        private ILocalizableString _displayName;
         public ILocalizableString DisplayName
         {
             get => _displayName;
             set => _displayName = Check.NotNull(value, nameof(value));
         }
-        private ILocalizableString _displayName;
-
-
         public SettingNavigation(string name, ILocalizableString displayName=null)
         {
             Name = name;
             DisplayName = displayName ?? new FixedLocalizableString(name);
+        }
+
+        public IReadOnlyList<SettingDefinition> SettingDefinitions { get; private set; }
+
+        public void AddSettingDefinitions(Dictionary<string, SettingDefinition> settings)
+        {
+            SettingDefinitions = settings.Values.ToImmutableList();
         }
     }
 }

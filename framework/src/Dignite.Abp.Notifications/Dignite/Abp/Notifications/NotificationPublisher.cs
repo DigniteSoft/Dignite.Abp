@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundJobs;
@@ -36,18 +37,13 @@ namespace Dignite.Abp.Notifications
         }
 
         public virtual async Task PublishAsync(
-            string notificationName,
+            [NotNull]string notificationName,
             NotificationData data = null,
             NotificationEntityIdentifier entityIdentifier = null,
             NotificationSeverity severity = NotificationSeverity.Info,
             Guid[] userIds = null,
             Guid[] excludedUserIds = null)
         {
-            if (notificationName.IsNullOrEmpty())
-            {
-                throw new ArgumentException("NotificationName can not be null or whitespace!", nameof(notificationName));
-            }
-
             var notificationInfo = new NotificationInfo(
                 _guidGenerator.Create(),            
                 notificationName,

@@ -18,6 +18,6 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        CustomizeFieldFormConfiguration FormConfiguration { get; }
+        FormConfigurationData FormConfiguration { get; }
     }
 }

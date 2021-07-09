@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing
         /// <param name="fieldDefinition"></param>
         /// <returns></returns>
         ICustomizeField Create(
-            ICustomizeFieldDefinition fieldDefinition
+            BasicCustomizeFieldDefinition fieldDefinition
         );        
     }
 }
