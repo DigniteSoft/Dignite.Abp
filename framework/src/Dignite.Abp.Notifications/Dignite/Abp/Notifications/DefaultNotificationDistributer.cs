@@ -1,16 +1,14 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Volo.Abp.Settings;
-using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.MultiTenancy;
-using Microsoft.Extensions.Logging.Abstractions;
-using System.Security.Claims;
-using Volo.Abp.Security.Claims;
-using Microsoft.Extensions.Options;
+using Volo.Abp.Settings;
 using Volo.Abp.Uow;
 
 namespace Dignite.Abp.Notifications

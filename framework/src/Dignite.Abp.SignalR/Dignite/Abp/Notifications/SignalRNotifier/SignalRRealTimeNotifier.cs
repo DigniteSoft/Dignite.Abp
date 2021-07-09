@@ -8,7 +8,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
-namespace Dignite.Abp.SignalR.Dignite.Abp.Notifications
+namespace Dignite.Abp.Notification.SignalRNotifier
 {
     public class SignalRRealTimeNotifier : IRealTimeNotifier, ITransientDependency
     {
