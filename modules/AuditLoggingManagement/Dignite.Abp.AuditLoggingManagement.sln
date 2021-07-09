@@ -7,13 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{B53E0BAF-23F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7B61B589-76EC-43DA-9B84-8F087A81C0EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.AuditLoggingManagement.Application", "Src\Dignite.Abp.AuditLogging.Application\Dignite.Abp.AuditLoggingManagement.Application.csproj", "{FBD82327-A34D-4FBF-BC64-1470A9EEC5F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AuditLoggingManagement.Application", "Src\Dignite.Abp.AuditLogging.Application\Dignite.Abp.AuditLoggingManagement.Application.csproj", "{FBD82327-A34D-4FBF-BC64-1470A9EEC5F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.AuditLoggingManagement.Application.Contracts", "Src\Dignite.Abp.AuditLogging.Application.Contracts\Dignite.Abp.AuditLoggingManagement.Application.Contracts.csproj", "{30D3A607-BCC4-4614-8CFD-B4CBA498015D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.AuditLoggingManagement.HttpApi", "Src\Dignite.Abp.AuditLogging.HttpApi\Dignite.Abp.AuditLoggingManagement.HttpApi.csproj", "{1E002017-423B-4AC2-AB21-AAAE6A89ECEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dignite.Abp.AuditLoggingManagement.HttpApi.Client", "Src\Dignite.Abp.AuditLogging.HttpApi.Client\Dignite.Abp.AuditLoggingManagement.HttpApi.Client.csproj", "{981EB8F2-19A0-41CE-817A-031740C0B5F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AuditLoggingManagement.Application.Contracts", "Src\Dignite.Abp.AuditLogging.Application.Contracts\Dignite.Abp.AuditLoggingManagement.Application.Contracts.csproj", "{30D3A607-BCC4-4614-8CFD-B4CBA498015D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +25,6 @@ Global
 		{30D3A607-BCC4-4614-8CFD-B4CBA498015D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30D3A607-BCC4-4614-8CFD-B4CBA498015D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30D3A607-BCC4-4614-8CFD-B4CBA498015D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E002017-423B-4AC2-AB21-AAAE6A89ECEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E002017-423B-4AC2-AB21-AAAE6A89ECEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E002017-423B-4AC2-AB21-AAAE6A89ECEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E002017-423B-4AC2-AB21-AAAE6A89ECEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{981EB8F2-19A0-41CE-817A-031740C0B5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{981EB8F2-19A0-41CE-817A-031740C0B5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{981EB8F2-19A0-41CE-817A-031740C0B5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{981EB8F2-19A0-41CE-817A-031740C0B5F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,8 +32,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FBD82327-A34D-4FBF-BC64-1470A9EEC5F3} = {B53E0BAF-23FB-4FD9-8A5D-63A66F9570E0}
 		{30D3A607-BCC4-4614-8CFD-B4CBA498015D} = {B53E0BAF-23FB-4FD9-8A5D-63A66F9570E0}
-		{1E002017-423B-4AC2-AB21-AAAE6A89ECEA} = {B53E0BAF-23FB-4FD9-8A5D-63A66F9570E0}
-		{981EB8F2-19A0-41CE-817A-031740C0B5F6} = {B53E0BAF-23FB-4FD9-8A5D-63A66F9570E0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9FDF58C5-36AE-4AD4-B09A-2436C7247EC3}

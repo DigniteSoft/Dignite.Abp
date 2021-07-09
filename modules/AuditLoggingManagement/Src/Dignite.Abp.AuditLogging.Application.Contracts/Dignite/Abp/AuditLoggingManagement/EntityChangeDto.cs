@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Auditing;
@@ -23,7 +24,7 @@ namespace Dignite.Abp.AuditLoggingManagement.Application.Contracts.Dignite.Abp.A
 
         public string EntityTypeFullName { get; set; }
 
-        public ICollection<EntityPropertyChangeDto> PropertyChanges { get; set; }
+        public Collection<EntityPropertyChangeDto> PropertyChanges { get; set; }
 
         public ExtraPropertyDictionary ExtraProperties { get; set; }
     }
