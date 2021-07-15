@@ -1,10 +1,11 @@
 ﻿using System;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
+using Volo.Abp.Domain.Entities;
 
 namespace Dignite.Abp.Identity
 {
-    public class OrganizationUnitEditDto:ExtensibleEntityDto<Guid>
+    public class OrganizationUnitEditDto:ExtensibleEntityDto<Guid>, IHasConcurrencyStamp
     {
 
         /// <summary>
@@ -27,5 +28,7 @@ namespace Dignite.Abp.Identity
                 this.SetProperty(nameof(IsActive), value);
             }
         }
+
+        public string ConcurrencyStamp { get; set; }
     }
 }

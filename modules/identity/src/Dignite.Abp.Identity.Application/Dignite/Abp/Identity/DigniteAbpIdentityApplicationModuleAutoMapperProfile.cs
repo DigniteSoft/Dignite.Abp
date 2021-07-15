@@ -7,6 +7,8 @@ namespace Dignite.Abp.Identity
     {
         public DigniteAbpIdentityApplicationModuleAutoMapperProfile()
         {
+            CreateMap<IdentityRole, Volo.Abp.Identity.IdentityRoleDto>()
+                .MapExtraProperties(definitionChecks: Volo.Abp.ObjectExtending.MappingPropertyDefinitionChecks.None);
 
             CreateMap<IdentityRole, IdentityRoleDto>()
                 .ForMember(r => r.ParentId, r => r.Ignore())

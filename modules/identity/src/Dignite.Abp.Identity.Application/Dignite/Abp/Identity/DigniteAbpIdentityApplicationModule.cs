@@ -15,6 +15,7 @@ namespace Dignite.Abp.Identity
         public override void PreConfigureServices(ServiceConfigurationContext context)
         {
             IdentityRoleExtensions.Configure();
+            OrganizationUnitExtensions.Configure();
         }
 
         public override void ConfigureServices(ServiceConfigurationContext context)
