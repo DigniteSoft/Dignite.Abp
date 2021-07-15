@@ -10,7 +10,7 @@ namespace Dignite.Abp.Identity
 
             CreateMap<IdentityRole, IdentityRoleDto>()
                 .ForMember(r => r.ParentId, r => r.Ignore())
-                .MapExtraProperties();
+                .MapExtraProperties(definitionChecks: Volo.Abp.ObjectExtending.MappingPropertyDefinitionChecks.None);
 
             CreateMap<OrganizationUnit, OrganizationUnitDto>()
                 .ForMember(r => r.IsActive, r => r.Ignore())
