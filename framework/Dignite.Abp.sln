@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring", "src\Dignite.Abp.BlobStoring\Dignite.Abp.BlobStoring.csproj", "{2BBCE950-6408-4E4D-97E4-F2C97121036B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notification.SignalRNotifier", "Src\Dignite.Abp.SignalR\Dignite.Abp.Notification.SignalRNotifier.csproj", "{3AA740A0-6FD9-47B9-B86B-773C35152AE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notification.SignalRNotifier", "src\Dignite.Abp.SignalR\Dignite.Abp.Notification.SignalRNotifier.csproj", "{3AA740A0-6FD9-47B9-B86B-773C35152AE8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Apps", "src\Dignite.Apps\Dignite.Apps.csproj", "{E9C51E2B-EAE6-4E04-9C4A-1AB7CA3A6F41}"
 EndProject
@@ -41,7 +41,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbpTestBase", "test\AbpTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Settings.Tests", "test\Dignite.Abp.Settings.Tests\Dignite.Abp.Settings.Tests.csproj", "{2BF3EC73-331E-499F-83B4-95C8C9F76F42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notification.SignalRNotifier", "src\Dignite.Abp.SignalR\Dignite.Abp.Notification.SignalRNotifier.csproj", "{FDA98759-AD98-48E4-B274-2B20FAC7BEF8}"
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure", "src\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure\Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.csproj", "{956502A9-026B-4CCD-968E-E96F9B32A6B6}"
 EndProject
 Global
@@ -78,6 +77,10 @@ Global
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BBCE950-6408-4E4D-97E4-F2C97121036B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA740A0-6FD9-47B9-B86B-773C35152AE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9C51E2B-EAE6-4E04-9C4A-1AB7CA3A6F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9C51E2B-EAE6-4E04-9C4A-1AB7CA3A6F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9C51E2B-EAE6-4E04-9C4A-1AB7CA3A6F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -114,10 +117,6 @@ Global
 		{2BF3EC73-331E-499F-83B4-95C8C9F76F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BF3EC73-331E-499F-83B4-95C8C9F76F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BF3EC73-331E-499F-83B4-95C8C9F76F42}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FDA98759-AD98-48E4-B274-2B20FAC7BEF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FDA98759-AD98-48E4-B274-2B20FAC7BEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FDA98759-AD98-48E4-B274-2B20FAC7BEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FDA98759-AD98-48E4-B274-2B20FAC7BEF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{956502A9-026B-4CCD-968E-E96F9B32A6B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{956502A9-026B-4CCD-968E-E96F9B32A6B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{956502A9-026B-4CCD-968E-E96F9B32A6B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -143,7 +142,6 @@ Global
 		{02A0C261-0677-4A47-B3DF-4E09C243284C} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
 		{5F5852AE-E46B-4061-8E8A-6D87ED9FCA1B} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
 		{2BF3EC73-331E-499F-83B4-95C8C9F76F42} = {64061EF0-B5E7-45B6-A0C1-639B7D44E921}
-		{FDA98759-AD98-48E4-B274-2B20FAC7BEF8} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 		{956502A9-026B-4CCD-968E-E96F9B32A6B6} = {7869E1B7-6CC9-4C08-9B94-85D21A5F5968}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
