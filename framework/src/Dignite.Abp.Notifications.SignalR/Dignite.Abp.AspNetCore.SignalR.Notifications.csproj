@@ -5,8 +5,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <AssemblyName>Dignite.Abp.Notification.SignalRNotifier</AssemblyName>
-    <PackageId>Dignite.Abp.Notification.SignalRNotifier</PackageId>
+    <AssemblyName>Dignite.Abp.AspNetCore.SignalR.Notifications</AssemblyName>
+    <PackageId>Dignite.Abp.AspNetCore.SignalR.Notifications</PackageId>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
