@@ -87,7 +87,7 @@ namespace Dignite.Abp.BlobStoringManagement
 
 
         [HttpDelete]
-        [Route("{containerName}/{blobName}")]
+        [Route("{containerName}")]
         public async Task DeleteAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             await _blobAppService.DeleteAsync(containerName, blobName);
