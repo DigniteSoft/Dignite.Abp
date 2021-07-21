@@ -2,12 +2,14 @@
 using Localization.Resources.AbpUi;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AspNetCore.Mvc;
+using Volo.Abp.Identity;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 
 namespace Dignite.Abp.Identity
 {
     [DependsOn(
+          typeof(AbpIdentityHttpApiModule),
           typeof(DigniteAbpIdentityApplicationContractsModule),
           typeof(AbpAspNetCoreMvcModule))]
     public class DigniteAbpIdentityHttpApiModule : AbpModule

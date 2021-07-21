@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Volo.Abp.Http.Client;
+using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 
 namespace Dignite.Abp.Identity
 {
     [DependsOn(
+      typeof(AbpIdentityHttpApiClientModule),
       typeof(DigniteAbpIdentityApplicationContractsModule),
       typeof(AbpHttpClientModule))]
     public class DigniteAbpIdentityHttpApiClientModule : AbpModule
