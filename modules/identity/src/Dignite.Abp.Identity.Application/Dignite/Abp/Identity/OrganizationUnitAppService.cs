@@ -308,7 +308,7 @@ namespace Dignite.Abp.Identity
                 ));
         }
 
-        [Authorize(OrganizationUnitPermissions.OrganizationUnits.Default)]
+        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<PagedResultDto<IdentityUserDto>> GetMembersAsync(Guid id, GetOrganizationUnitMembersInput input)
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
