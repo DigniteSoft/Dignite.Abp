@@ -34,9 +34,10 @@ namespace Dignite.Abp.BlobStoringManagement.EntityFrameworkCore
                 b.Property(q => q.ContainerName).IsRequired().HasMaxLength(BlobConsts.MaxContainerNameLength);
                 b.Property(q => q.BlobName).IsRequired().HasMaxLength(BlobConsts.MaxBlobNameLength);
                 b.Property(q => q.Hash).HasMaxLength(BlobConsts.MaxBlobHashLength);
-                b.Property(q => q.ReferBlobName).HasMaxLength(BlobConsts.MaxBlobNameLength);                
-                
-                
+                b.Property(q => q.ReferBlobName).HasMaxLength(BlobConsts.MaxBlobNameLength);
+                b.Property(q => q.BlobFileName).HasMaxLength(BlobConsts.MaxBlobFileNameLength);
+
+
 
                 //Indexes
                 b.HasIndex(q => new {q.TenantId, q.EntityType,q.EntityId });

@@ -27,7 +27,7 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpPost]
         [Route("save-remote-file/{containerName}")]
-        public async Task<string> SaveRemoteFileAsync([NotNull] string containerName, SaveRemoteFileInput input)
+        public async Task<BlobDto> SaveRemoteFileAsync([NotNull] string containerName, SaveRemoteFileInput input)
         {
             return await _blobAppService.SaveRemoteFileAsync(containerName, input);
         }
@@ -35,7 +35,7 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpPost]
         [Route("save/{containerName}")]
-        public async Task<string> SaveAsync([NotNull] string containerName, SaveBytesInput input)
+        public async Task<BlobDto> SaveAsync([NotNull] string containerName, SaveBytesInput input)
         {
             return await _blobAppService.SaveAsync(containerName, input);
         }
@@ -43,14 +43,15 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpPost]
         [Route("upload/{containerName}")]
-        public async Task<string> UploadAsync([NotNull] string containerName, IFormFile File, string EntityType, string EntityId)
+        public async Task<BlobDto> UploadAsync([NotNull] string containerName, IFormFile File, string EntityType, string EntityId)
         {
             return await _blobAppService.SaveAsync(containerName, 
                 new SaveBytesInput
                 {
                     Bytes = File.GetAllBytes(),
                     EntityType = EntityType,
-                    EntityId = EntityId
+                    EntityId = EntityId,
+                    FileName=File.FileName
                 });
         }
 

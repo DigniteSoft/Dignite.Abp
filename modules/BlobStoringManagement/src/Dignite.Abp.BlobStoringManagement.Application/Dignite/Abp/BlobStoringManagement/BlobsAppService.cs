@@ -31,7 +31,7 @@ namespace Dignite.Abp.BlobStoringManagement
             _blobRepository = blobRepository;
         }
 
-        public async Task<string> SaveRemoteFileAsync([NotNull] string containerName, [NotNull] SaveRemoteFileInput input)
+        public async Task<BlobDto> SaveRemoteFileAsync([NotNull] string containerName, [NotNull] SaveRemoteFileInput input)
         {
             var blobContainer = _blobContainerFactory.Create(containerName);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(input.Url);
@@ -52,11 +52,14 @@ namespace Dignite.Abp.BlobStoringManagement
                 var blobName = await GeneratorNameAsync(containerName, fileExtensionName);
 
                 await blobContainer.SaveAsync(blobName, bytes, true);
-                return $"{containerName}/{blobName}";
+
+                //
+                var blob = await _blobRepository.FindAsync(containerName, blobName);
+                return ObjectMapper.Map<Blob, BlobDto>(blob);
             }
         }
 
-        public async Task<string> SaveAsync([NotNull] string containerName, [NotNull] SaveBytesInput input)
+        public async Task<BlobDto> SaveAsync([NotNull] string containerName, [NotNull] SaveBytesInput input)
         {
             using (var stream = new MemoryStream(input.Bytes))
             {
@@ -68,7 +71,13 @@ namespace Dignite.Abp.BlobStoringManagement
                     );
 
                 await blobContainer.SaveAsync(blobName, stream, true);
-                return $"{containerName}/{blobName}";
+
+                //
+                var blob = await _blobRepository.FindAsync(containerName, blobName);
+                blob.BlobFileName = input.FileName;
+                await CurrentUnitOfWork.SaveChangesAsync();
+
+                return ObjectMapper.Map<Blob, BlobDto>(blob);
             }
         }
 

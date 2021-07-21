@@ -16,5 +16,6 @@ namespace Dignite.Abp.BlobStoringManagement
         public long BinarySize { get; protected set; }
 
         public string Hash { get; protected set; }
+        public string BlobFileName { get; set; }
     }
 }

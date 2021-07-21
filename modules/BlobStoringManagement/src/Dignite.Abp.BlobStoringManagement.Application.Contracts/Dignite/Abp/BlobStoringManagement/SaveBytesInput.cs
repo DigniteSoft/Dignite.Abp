@@ -18,5 +18,10 @@ namespace Dignite.Abp.BlobStoringManagement
         [StringLength(BlobConsts.MaxEntityIdLength)]
         [NotNull]
         public string EntityId { get; set; }
+
+        [Required]
+        [StringLength(BlobConsts.MaxBlobFileNameLength)]
+        [NotNull]
+        public string FileName { get; set; }
     }
 }

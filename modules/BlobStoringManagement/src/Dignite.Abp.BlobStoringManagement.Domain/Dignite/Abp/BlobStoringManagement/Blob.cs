@@ -38,6 +38,11 @@ namespace Dignite.Abp.BlobStoringManagement
 
         public string ReferBlobName { get; protected set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BlobFileName { get; set; }
+
         public DateTime CreationTime { get; set; }
 
         public Guid? CreatorId { get; set; }

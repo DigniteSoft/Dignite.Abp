@@ -13,5 +13,7 @@ namespace Dignite.Abp.BlobStoringManagement
         public const int MaxBlobNameLength  = 256;
 
         public const int MaxBlobHashLength  = 32;
+
+        public const int MaxBlobFileNameLength = 256;
     }
 }
