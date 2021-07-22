@@ -71,11 +71,11 @@ namespace Dignite.Abp.BlobStoringManagement
                     );
 
                 await blobContainer.SaveAsync(blobName, stream, true);
+                await CurrentUnitOfWork.SaveChangesAsync();
 
                 //
                 var blob = await _blobRepository.FindAsync(containerName, blobName);
                 blob.BlobFileName = input.FileName;
-                await CurrentUnitOfWork.SaveChangesAsync();
 
                 return ObjectMapper.Map<Blob, BlobDto>(blob);
             }
