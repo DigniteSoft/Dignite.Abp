@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@proxy": ["projects/abp/src/lib/proxy/index.ts"],
+      "@proxy/*": [
+        "projects/abp/src/lib/proxy/*"
+      ],
+      "@dignite/core": [
+        "projects/core/src/public-api.ts"
+      ],
+      "@dignite/identity": [
+        "projects/identity/src/public-api.ts"
+      ],
+      "@dignite/field-customizing": [
+        "projects/field-customizing/src/public-api.ts"
+      ],
+      "@dignite/theme-mat": [
+        "projects/theme-mat/src/public-api.ts"
+      ]
+    }
+  }
+}

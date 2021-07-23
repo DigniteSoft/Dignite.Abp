@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 15px;
+  background-color: white;
+
+  ::ng-deep p {
+    margin-bottom: 0 !important;
+  }
+}

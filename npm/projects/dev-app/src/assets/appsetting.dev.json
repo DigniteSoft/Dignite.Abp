@@ -1,0 +1,37 @@
+{
+  "application": {
+    "baseUrl": "http://localhost:4200/",
+    "name": "红色e会通",
+    "logoUrl": "assets/images/logo.png"
+  },
+  "oAuthConfig": {
+    "issuer": "https://localhost:44351",
+    "redirectUri": "http://localhost:4200",
+    "clientId": "Dangjian_App",
+    "responseType": "code",
+    "scope": "Dangjian",
+    "requireHttps": false
+  },
+  "apis": {
+    "default": {
+      "url": "https://localhost:44392",
+      "rootNamespace": "Dignite.Dangjian"
+    },
+    "Dangjian": {
+      "url": "https://localhost:44392",
+      "rootNamespace": "Dignite.Dangjian"
+    },
+    "AbpIdentity": {
+      "url": "https://localhost:44351",
+      "rootNamespace": "Dignite.AbpIdentity"
+    },
+    "AbpPermissionManagement": {
+      "url": "https://localhost:44351",
+      "rootNamespace": "Dignite.AbpPermissionManagement"
+    },
+    "OrganizationUnit": {
+      "url": "https://localhost:44351",
+      "rootNamespace": "Dignite.OrganizationUnit"
+    }
+  }
+}

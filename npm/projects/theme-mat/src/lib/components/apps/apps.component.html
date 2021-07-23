@@ -1,0 +1,23 @@
+<!-- Apps -->
+<ng-container *ngFor="let route of apps;let i = index; trackBy: trackByFn">
+  <a *ngIf="i < appLimitNumber" mat-button class="dignite-app"
+    [ngClass]="{'active':route.name===(currentApp$ | async)?.name}" (click.stop)="navigationByRoute(route)">
+    <ng-container *ngIf="route.iconClass" [ngTemplateOutlet]="handleIconClass"
+      [ngTemplateOutletContext]="{ $implicit: route.iconClass }">
+    </ng-container>
+    {{route.name | abpLocalization}}
+  </a>
+</ng-container>
+<!-- 如果超过6个展示更多按钮 -->
+<a mat-button class="dignite-app" *ngIf="apps.length > appLimitNumber">
+  <i class="dignite-app-icon fas fa-ellipsis-h"></i>
+</a>
+<!-- 处理icon -->
+<ng-template #handleIconClass let-iconClass>
+  <ng-container *ngIf="iconClass.includes('assets');else icon">
+    <img class="dignite-app-icon" width="20" [src]="iconClass">
+  </ng-container>
+  <ng-template #icon>
+    <i class="dignite-app-icon {{iconClass}}"></i>
+  </ng-template>
+</ng-template>

@@ -1,0 +1,85 @@
+@mixin _navbar() {
+
+  // 头部header
+  .dignite-navbar {
+    display: flex;
+    min-height: 60px;
+    height: 60px;
+    padding: 0 16px;
+    margin: 0;
+    font-size: 16px;
+    justify-content: space-between;
+
+    dignite-logo {
+      display: flex;
+      align-items: center;
+
+      img {
+        height: 40px;
+      }
+    }
+
+    // dignite apps
+    dignite-apps {
+      .dignite-app {
+        text-decoration: none;
+        font-size: 16px;
+
+        &+.dignite-app {
+          margin-left: 0.5rem;
+        }
+
+        .dignite-app-icon {
+          margin-bottom: 0.3rem;
+        }
+
+        &:hover,
+        &.active {
+          background-color: rgba(0, 0, 0, .1) !important;
+        }
+      }
+    }
+
+    /*dignite nav items*/
+    dignite-nav-items {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      dignite-nav-item {
+        cursor: pointer;
+
+        .dignite-nav-item-label {
+          font-size: 1.5rem;
+          outline: none !important;
+          text-decoration: none;
+          outline: none;
+          border: none;
+          background: none;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, .1);
+          }
+        }
+      }
+    }
+
+    .menu-button {
+      padding-right: 3rem !important;
+      padding-left: 1rem !important;
+    }
+
+    .header-bar-button-trigger {
+      padding: 0 10px 0 0;
+      font-size: 1.2rem !important;
+    }
+
+    button:focus {
+      outline: none !important;
+    }
+
+    a {
+      color: inherit !important;
+    }
+  }
+}

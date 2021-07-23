@@ -1,0 +1,10 @@
+<!-- 主题配置 -->
+<a mat-button class="dignite-nav-item-label" *ngIf="themes.length > 0" [matMenuTriggerFor]="appLanguageMenu"
+  matTooltip="主题配置">
+  <i class="fas fa-list"></i>
+</a>
+<mat-menu #appLanguageMenu="matMenu">
+  <button *ngFor="let theme of themes" mat-menu-item class="menu-button" (click)="setTheme(theme)">
+    {{ theme?.name }}
+  </button>
+</mat-menu>

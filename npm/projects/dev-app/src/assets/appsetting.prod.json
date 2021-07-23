@@ -1,0 +1,37 @@
+{
+  "application": {
+    "baseUrl": "http://yinan-zuzhibu.dangjian.dignite.com.cn/",
+    "name": "红色e会通",
+    "logoUrl": "assets/images/logo.png"
+  },
+  "oAuthConfig": {
+    "issuer": "https://authserver.api.dignite.com.cn",
+    "redirectUri": "http://yinan-zuzhibu.dangjian.dignite.com.cn",
+    "clientId": "Dangjian_App",
+    "responseType": "code",
+    "scope": "Dangjian",
+    "requireHttps": false
+  },
+  "apis": {
+    "default": {
+      "url": "http://dangjian.api.dignite.com.cn",
+      "rootNamespace": "Dignite.Dangjian"
+    },
+    "Dangjian": {
+      "url": "http://dangjian.api.dignite.com.cn",
+      "rootNamespace": "Dignite.Dangjian"
+    },
+    "AbpIdentity": {
+      "url": "https://authserver.api.dignite.com.cn",
+      "rootNamespace": "Dignite.AbpIdentity"
+    },
+    "AbpPermissionManagement": {
+      "url": "https://authserver.api.dignite.com.cn",
+      "rootNamespace": "Dignite.AbpPermissionManagement"
+    },
+    "OrganizationUnit": {
+      "url": "https://authserver.api.dignite.com.cn",
+      "rootNamespace": "Dignite.OrganizationUnit"
+    }
+  }
+}

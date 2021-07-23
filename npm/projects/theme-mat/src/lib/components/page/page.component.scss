@@ -1,0 +1,38 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100% !important;
+  // height: calc(100% + 30px) !important;
+  // margin: -15px;
+
+  .page-header-container {
+    // background-color: red;
+    height: 50px;
+
+    ::ng-deep dignite-page-header {
+      height: 100%;
+    }
+  }
+
+  .page-content-container {
+    padding: 15px;
+    height: calc(100% - 50px - 50px);
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    &:hover {
+      overflow-y: auto;
+    }
+  }
+
+  .page-footer-container {
+    // background-color: blue;
+    // height: 60px;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+
+    ::ng-deep dignite-page-footer {
+      height: 100%;
+    }
+  }
+}
