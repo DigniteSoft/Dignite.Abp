@@ -1,5 +1,5 @@
 import { APP_INITIALIZER } from '@angular/core';
-import SIMPLE_TEXT_PROVIDERS from '../components/simple-text/simple-text.provider';
+import SIMPLE_TEXT_PROVIDERS from '../components/textbox/textbox.provider';
 import { FieldCustomizingService } from '../services';
 
 export const FIELD_CUSTOMIZING_PROVIDERS = [{

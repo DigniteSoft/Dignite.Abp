@@ -1,1 +1,1 @@
-import * from './simple-text/simple-text-view.component';
+export * from './textbox/textbox-view.component';
