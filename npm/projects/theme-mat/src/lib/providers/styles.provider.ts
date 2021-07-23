@@ -6,7 +6,7 @@ import { EmptyLayoutComponent } from '../components/empty-layout.component';
 import styles from '../constants/styles';
 import { eThemeMatComponents } from '../enums/components';
 
-export const BASIC_THEME_STYLES_PROVIDERS = [
+export const THEME_MAT_STYLES_PROVIDERS = [
   {
     provide: APP_INITIALIZER,
     useFactory: configureStyles,

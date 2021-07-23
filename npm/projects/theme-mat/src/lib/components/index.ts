@@ -1,6 +1,5 @@
 export * from './apps/apps.component';
-export * from './container/content.component';
-export * from './container/navbar.component';
+export * from './container/container.component';
 export * from './logo/logo.component';
 export * from './nav-items/nav-items.component';
 export * from './nav-items/current-user.component';

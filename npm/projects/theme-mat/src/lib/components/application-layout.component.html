@@ -8,11 +8,10 @@
   <dignite-nav-items></dignite-nav-items>
 </mat-toolbar>
 <!-- 内容区 -->
-<dignite-container>
+<dignite-container class="dignite-content">
   <mat-sidenav-container>
     <!-- 左侧导航 -->
-    <mat-sidenav class="mat-sidebar" mode="side"
-      [opened]='(routes.navigations$ | async)?.length ? true:false'>
+    <mat-sidenav class="mat-sidebar" mode="side" [opened]='(routes.navigations$ | async)?.length ? true:false'>
       <dignite-routes #routes></dignite-routes>
     </mat-sidenav>
     <!-- 左侧导航 -->

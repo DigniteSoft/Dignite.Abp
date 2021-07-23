@@ -8,12 +8,15 @@ import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { IdentitiyModule } from '@dignite/identity';
+import { ThemeMatModule } from '@dignite/theme-mat';
 import { NgxsModule } from '@ngxs/store';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
-import { ThemeMatModule } from '@dignite/theme-mat';
+import themes from './shared/themes/themes';
+
 
 @NgModule({
   imports: [
@@ -31,7 +34,8 @@ import { ThemeMatModule } from '@dignite/theme-mat';
     IdentityConfigModule.forRoot(),
     TenantManagementConfigModule.forRoot(),
     SettingManagementConfigModule.forRoot(),
-    ThemeMatModule.forRoot(),
+    IdentitiyModule.forRoot(),
+    ThemeMatModule.forRoot({ themes }),
     NgxsModule.forRoot(),
   ],
   providers: [APP_ROUTE_PROVIDER],

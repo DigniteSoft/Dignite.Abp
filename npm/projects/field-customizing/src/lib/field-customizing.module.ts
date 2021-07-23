@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
-import { FieldCustomizingComponent } from './field-customizing.component';
-
-
+import { FIELD_CUSTOMIZING_PROVIDERS } from './providers/field-customizing.provider';
 
 @NgModule({
-  declarations: [FieldCustomizingComponent],
-  imports: [
-  ],
-  exports: [FieldCustomizingComponent]
+  declarations: [],
+  imports: [],
+  exports: []
 })
-export class FieldCustomizingModule { }
+export class FieldCustomizingModule {
+  static forRoot() {
+    return {
+      ngModule: FieldCustomizingModule,
+      providers: [
+        FIELD_CUSTOMIZING_PROVIDERS
+      ],
+    };
+  }
+}

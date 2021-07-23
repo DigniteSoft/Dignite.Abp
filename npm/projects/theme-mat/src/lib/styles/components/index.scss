@@ -1,5 +1,8 @@
 @import './_navbar.scss';
 @import './_container.scss';
+@import './_page.scss';
 
 @include _navbar();
 @include _container();
+@include _page();
+

@@ -1,7 +1,6 @@
  <!-- 分页 -->
- <ng-content select="mat-paginator"></ng-content>
+ <ng-content select=".paginator"></ng-content>
  <!-- 总数 -->
- <p class="text-black-50 text-right" *ngIf="paginator">
+ <p *ngIf="!paginator">
    <ng-content></ng-content>
  </p>
- <ng-content select=".custom"></ng-content>

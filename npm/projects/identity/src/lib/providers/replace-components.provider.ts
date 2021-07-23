@@ -3,7 +3,7 @@ import { eIdentityComponents } from '@abp/ng.identity';
 import { APP_INITIALIZER } from '@angular/core';
 import { RolesComponent } from '../roles/roles.component';
 
-export const REPLACE_COMPONENTS_PROVIDER = [
+export const IDENTITY_REPLACE_COMPONENTS_PROVIDER = [
   {
     provide: APP_INITIALIZER,
     useFactory: configureRoutes,

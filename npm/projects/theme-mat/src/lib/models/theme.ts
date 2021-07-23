@@ -1,7 +1,3 @@
-import { InjectionToken } from '@angular/core';
-
-export const THEME_MAT_OPTIONS = new InjectionToken('THEME_MAT_OPTIONS');
-
 export interface ThemeMatOptions {
     themes?: ThemeMatTheme[];
 }
@@ -20,21 +16,23 @@ export interface ThemeMatTheme {
      */
     type: ThemeMatThemeType;
     /**
-     * body上的主题名字
+     * 为了防止主题冲突,addNameToBody和styleHref只能设置一个
+     * 是否将name添加到body用于主题切换
      */
     addNameToBody?: boolean;
     /**
-     * 样式表地址，仅限未有授权约束地址
+     * 为了防止主题冲突,addNameToBody和styleHref只能设置一个
+     * 用于懒加载的样式表,样式表地址
      */
     styleHref?: string;
-    /**
-     * 主要色调
-     */
-    primaryColor: string;
     /**
      * 是否是默认主题
      */
     isDefault?: boolean;
+    /**
+     * 主要色调
+     */
+    primaryColor: string;
 }
 /**
  * 白色模式 黑夜模式

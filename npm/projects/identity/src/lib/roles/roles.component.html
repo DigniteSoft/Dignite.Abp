@@ -1,3 +1,6 @@
+<dignite-page>
+  <dignite-page-header>角色管理</dignite-page-header>
+  <dignite-page-content>
     <nz-card [nzBordered]="false">
       <nz-table #expandTable [nzData]="result" [nzFrontPagination]="false">
         <thead>
@@ -47,8 +50,13 @@
         </tbody>
       </nz-table>
     </nz-card>
+  </dignite-page-content>
+  <dignite-page-footer>
+    共{{result.length}}条数据
+  </dignite-page-footer>
+</dignite-page>
 
-    <abp-permission-management #abpPermissionManagement="abpPermissionManagement" *abpReplaceableTemplate="
+<abp-permission-management #abpPermissionManagement="abpPermissionManagement" *abpReplaceableTemplate="
     {
       inputs: {
         providerName: { value: 'R' },
@@ -61,4 +69,4 @@
     };
     let init = initTemplate
   " (abpInit)="init(abpPermissionManagement)">
-    </abp-permission-management>
+</abp-permission-management>

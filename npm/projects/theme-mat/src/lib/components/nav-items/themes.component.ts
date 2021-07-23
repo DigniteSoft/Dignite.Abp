@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ThemeMatTheme } from '../../models/theme';
 import { DigniteThemeService } from '../../services/theme.service';
-import { ThemeMatTheme } from '../../tokens';
 
 @Component({
     selector: 'dignite-themes',
@@ -9,6 +9,7 @@ import { ThemeMatTheme } from '../../tokens';
 export class ThemesComponent implements OnInit {
 
     themes: ThemeMatTheme[];
+
     constructor(
         private themeService: DigniteThemeService,
     ) {
