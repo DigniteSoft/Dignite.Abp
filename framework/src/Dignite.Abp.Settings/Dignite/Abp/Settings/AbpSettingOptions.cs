@@ -7,7 +7,7 @@ namespace Dignite.Abp.Settings
     {
         public new ITypeList<ISettingDefinitionProvider> DefinitionProviders { get; }
 
-        public AbpSettingOptions()
+        public AbpSettingOptions():base()
         {
             DefinitionProviders = new TypeList<ISettingDefinitionProvider>();
         }
