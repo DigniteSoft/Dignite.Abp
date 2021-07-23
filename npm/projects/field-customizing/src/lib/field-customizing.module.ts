@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
-import { FieldCustomizingComponent } from './field-customizing.component';
-
-
 
 @NgModule({
-  declarations: [FieldCustomizingComponent],
-  imports: [
-  ],
-  exports: [FieldCustomizingComponent]
+  declarations: [],
+  imports: [],
+  exports: []
 })
 export class FieldCustomizingModule { }

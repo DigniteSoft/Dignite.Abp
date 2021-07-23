@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ThemeMatTheme, ThemeMatThemeType } from '../tokens/theme-basic.token';
+import { ThemeMatTheme, ThemeMatThemeType } from '../models/theme';
 
 @Injectable({
     providedIn: 'root'

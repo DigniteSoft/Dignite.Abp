@@ -5,7 +5,7 @@ import { LanguagesComponent } from '../components/nav-items/languages.component'
 import { ThemesComponent } from '../components/nav-items/themes.component';
 import { eThemeMatComponents } from '../enums/components';
 
-export const BASIC_THEME_NAV_ITEM_PROVIDERS = [
+export const THEME_MAT_NAV_ITEM_PROVIDERS = [
   {
     provide: APP_INITIALIZER,
     useFactory: configureNavItems,

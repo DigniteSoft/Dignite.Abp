@@ -1,1 +1,1 @@
-export * from './replaceComponents.provider';
+export * from './replace-components.provider';

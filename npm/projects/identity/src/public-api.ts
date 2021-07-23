@@ -3,4 +3,3 @@
  */
 
 export * from './lib/identity.module';
-export * from './lib/baseIdentity.module';

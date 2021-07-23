@@ -13,7 +13,34 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
-import { ThemeMatModule } from '@dignite/theme-mat';
+import { ThemeMatModule, ThemeMatTheme } from '@dignite/theme-mat';
+import { IdentitiyModule } from '@dignite/identity';
+
+const themes: ThemeMatTheme[] = [{
+  displayName: 'Angular Material Theme1',
+  name: 'deeppurple-amber',
+  primaryColor: 'deeppurple',
+  type: 'light',
+  styleHref: '/assets/themes/deeppurple-amber.css'
+}, {
+  displayName: 'Angular Material Theme2',
+  name: 'indigo-pink',
+  primaryColor: 'indigo',
+  type: 'light',
+  styleHref: '/assets/themes/indigo-pink.css',
+}, {
+  displayName: 'Angular Material Theme3',
+  name: 'pink-bluegrey',
+  primaryColor: 'pink',
+  type: 'dark',
+  styleHref: '/assets/themes/pink-bluegrey.css'
+}, {
+  displayName: 'Angular Material Theme4',
+  name: 'purple-green',
+  primaryColor: 'purple',
+  type: 'dark',
+  styleHref: '/assets/themes/purple-green.css'
+}];
 
 @NgModule({
   imports: [
@@ -31,7 +58,8 @@ import { ThemeMatModule } from '@dignite/theme-mat';
     IdentityConfigModule.forRoot(),
     TenantManagementConfigModule.forRoot(),
     SettingManagementConfigModule.forRoot(),
-    ThemeMatModule.forRoot(),
+    IdentitiyModule.forRoot(),
+    ThemeMatModule.forRoot({ themes }),
     NgxsModule.forRoot(),
   ],
   providers: [APP_ROUTE_PROVIDER],

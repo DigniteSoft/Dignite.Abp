@@ -1,7 +1,3 @@
-import { InjectionToken } from '@angular/core';
-
-export const THEME_MAT_OPTIONS = new InjectionToken('THEME_MAT_OPTIONS');
-
 export interface ThemeMatOptions {
     themes?: ThemeMatTheme[];
 }
