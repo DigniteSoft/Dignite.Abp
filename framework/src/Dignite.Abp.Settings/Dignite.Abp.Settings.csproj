@@ -15,6 +15,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Dignite\Abp\Settings\Localization\Resources\en.json" />
+    <None Remove="Dignite\Abp\Settings\Localization\Resources\zh-Hans.json" />
+    <None Remove="Dignite\Abp\Settings\Localization\Resources\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\en.json" />
+    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\zh-Hans.json" />
+    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\zh-Hant.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Dignite.Abp.FieldCustomizing\Dignite.Abp.FieldCustomizing.csproj" />
   </ItemGroup>
 
