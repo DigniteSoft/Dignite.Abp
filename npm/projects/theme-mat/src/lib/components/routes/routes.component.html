@@ -1,0 +1,38 @@
+<mat-nav-list>
+  <ng-container *ngFor="let route of navigations$ | async; trackBy: trackByFn">
+    <ng-container *ngIf="!route.invisible" [ngTemplateOutletContext]="{ $implicit: route }"
+      [ngTemplateOutlet]="route?.children?.length ? dropdownLink : defaultLink">
+    </ng-container>
+  </ng-container>
+</mat-nav-list>
+
+<ng-template #defaultLink let-route>
+  <a mat-list-option [abpPermission]="route.requiredPolicy" [routerLink]="[route.path]" routerLinkActive="active">
+    <ng-container *ngIf="route.iconClass" [ngTemplateOutlet]="handleIconClass"
+      [ngTemplateOutletContext]="{ $implicit: route.iconClass }">
+    </ng-container>
+    {{ route.name | abpLocalization }}
+  </a>
+</ng-template>
+
+<ng-template #dropdownLink let-route>
+  <h3 [abpPermission]="route.requiredPolicy" matSubheader>{{ route.name | abpLocalization }}</h3>
+  <a *ngFor="let item of route.children" mat-list-item [abpPermission]="item.requiredPolicy" [routerLink]="[item.path]"
+    routerLinkActive="active">
+    <ng-container *ngIf="item.iconClass" [ngTemplateOutlet]="handleIconClass"
+      [ngTemplateOutletContext]="{ $implicit: item.iconClass }">
+    </ng-container>
+    {{ item.name | abpLocalization }}
+  </a>
+</ng-template>
+
+<ng-template #handleIconClass let-iconClass>
+  <ng-container *ngIf="iconClass">
+    <ng-container *ngIf="iconClass.includes('assets');else icon">
+      <img width="20" [src]="iconClass" class="mr-2">
+    </ng-container>
+    <ng-template #icon>
+      <i class="{{iconClass}} mr-2"></i>
+    </ng-template>
+  </ng-container>
+</ng-template>

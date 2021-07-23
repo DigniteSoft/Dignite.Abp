@@ -1,0 +1,12 @@
+<!-- 语言管理 -->
+<a mat-button class="dignite-nav-item-label" *ngIf="(dropdownLanguages$ | async)?.length > 0" [matMenuTriggerFor]="appLanguageMenu"
+  matTooltip="语言管理">
+  <i class="fas fa-language"></i>
+</a>
+<mat-menu #appLanguageMenu="matMenu">
+  <button *ngFor="let lang of dropdownLanguages$ | async" mat-menu-item class="menu-button"
+    (click)="onChangeLang(lang.cultureName)">
+    {{ lang?.displayName }}
+    <i *ngIf="lang?.cultureName===selectedLangCulture">默认</i>
+  </button>
+</mat-menu>

@@ -1,0 +1,58 @@
+@import '../theme/theme.scss';
+
+dignite-container,
+mat-sidenav-container {
+  height: 100% !important;
+}
+
+dignite-application {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  dignite-navbar {
+    button:focus {
+      outline: none !important;
+    }
+  }
+
+  mat-sidenav-container {
+
+    z-index: 2;
+    overflow: hidden !important;
+    height: 100%;
+    background-color: #f8f8f8 !important;
+
+    .mat-sidebar {
+      width: 230px;
+      z-index: 0;
+    }
+
+    .mat-sidenav-content {
+      padding: 15px;
+    }
+
+    // .mat-list-item.active {
+    //   color: #1b9aee;
+    //   background: rgba(0, 0, 0, 0.04);
+    // }
+
+    // .mat-list-item:hover {
+    //   color: #1b9aee;
+    //   background: rgba(0, 0, 0, 0.04);
+    // }
+
+    .mat-list-item:hover .invisible {
+      visibility: visible !important;
+    }
+
+    .mat-drawer.mat-drawer-side {
+      z-index: 0;
+    }
+
+    .mat-drawbar {
+      width: 400px;
+      top: 0;
+    }
+  }
+}

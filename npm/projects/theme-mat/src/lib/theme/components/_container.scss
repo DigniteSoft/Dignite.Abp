@@ -1,0 +1,11 @@
+@mixin _container() {
+  dignite-container {
+    display: block;
+    width: 100%;
+    height: calc(100% - 60px);
+
+    .mat-sidenav-content {
+      padding: 0 !important;
+    }
+  }
+}

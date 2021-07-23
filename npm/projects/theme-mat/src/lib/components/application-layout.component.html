@@ -1,0 +1,27 @@
+<!-- 系统头部区域 -->
+<mat-toolbar class="dignite-navbar" color='primary'>
+  <!-- 系统Logo -->
+  <dignite-logo></dignite-logo>
+  <!-- Dignite Apps -->
+  <dignite-apps></dignite-apps>
+  <!-- 用户区 -->
+  <dignite-nav-items></dignite-nav-items>
+</mat-toolbar>
+<!-- 内容区 -->
+<dignite-container>
+  <mat-sidenav-container>
+    <!-- 左侧导航 -->
+    <mat-sidenav class="mat-sidebar" mode="side"
+      [opened]='(routes.navigations$ | async)?.length ? true:false'>
+      <dignite-routes #routes></dignite-routes>
+    </mat-sidenav>
+    <!-- 左侧导航 -->
+    <!-- 内容 -->
+    <!-- [@slideFromBottom]="outlet && outlet.activatedRoute && outlet.activatedRoute.routeConfig.path" -->
+    <mat-sidenav-content>
+      <router-outlet #outlet="outlet"></router-outlet>
+    </mat-sidenav-content>
+    <!-- 内容 -->
+  </mat-sidenav-container>
+  <dignite-page-alert-container></dignite-page-alert-container>
+</dignite-container>

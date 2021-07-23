@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.prod.json",
+  "compilerOptions": {
+    "paths": {
+      "@dignite/abp": [
+        "projects/abp/src/public-api.ts"
+      ],
+      "@dignite/abp/config": [
+        "projects/abp/config/src/public-api.ts"
+      ],
+      "@proxy": ["projects/abp/src/lib/proxy/index.ts"],
+      "@proxy/*": [
+        "projects/abp/src/lib/proxy/*"
+      ],
+      "core": [
+        "dist/core/core",
+        "dist/core"
+      ],
+      "field-customizing": [
+        "dist/field-customizing/field-customizing",
+        "dist/field-customizing"
+      ],
+      "identity": [
+        "dist/identity/identity",
+        "dist/identity"
+      ],
+      "setting-management": [
+        "dist/setting-management/setting-management",
+        "dist/setting-management"
+      ],
+      "theme-mat": [
+        "dist/theme-mat/theme-mat",
+        "dist/theme-mat"
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+@import './_navbar.scss';
+@import './_container.scss';
+
+@include _navbar();
+@include _container();

@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding-left: 18px;
+  padding-right: 15px;
+  padding-top: 15px;
+
+  .page-header-left {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .page-header-title {
+    color: rgba(0, 0, 0, .85);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-right: 15px;
+  }
+
+  .page-header-right {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    padding-right: 15px;
+  }
+}

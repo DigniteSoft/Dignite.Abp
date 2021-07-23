@@ -1,0 +1,36 @@
+<a class="d-block" mat-button *ngIf="(currentUser$|async)?.isAuthenticated;" [matMenuTriggerFor]="appMenu" matTooltip="个人中心">
+  <div class="d-flex align-items-center">
+    <div class="user-avatar" style="margin-right: 10px;">
+      <div class="user-avatar-overlay">
+        <i class="fas fa-cog" aria-hidden="true"></i>
+      </div>
+      <img class="user-avatar-img" src="assets/images/default-profile-picture.png">
+    </div>
+    <ng-container [ngTemplateOutletContext]="{ $implicit: (currentUser$|async) }" [ngTemplateOutlet]="currentUser">
+    </ng-container>
+  </div>
+</a>
+<mat-menu #appMenu="matMenu">
+  <div class="user-menu-header">
+    <div class="user-menu-avatar">
+      <img class="user-menu-avatar-img" src="assets/images/default-profile-picture.png">
+    </div>
+    <div class="user-menu-info">
+      <ng-container [ngTemplateOutletContext]="{ $implicit: (currentUser$|async) }" [ngTemplateOutlet]="currentUser">
+      </ng-container>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <button mat-menu-item class="pl-3 pr-5" routerLink="/account/manage">
+    <i class="fa fa-user pr-2"></i>
+    {{'AbpAccount::ManageYourProfile' | abpLocalization }}
+  </button>
+  <button mat-menu-item class="pl-3 pr-5" (click)="logout()">
+    <i class="fa fa-sign-out pr-2"></i>
+    {{'AbpUi::Logout' | abpLocalization}}
+  </button>
+</mat-menu>
+
+<ng-template #currentUser let-currentUser>
+  {{currentUser?.name}}
+</ng-template>
