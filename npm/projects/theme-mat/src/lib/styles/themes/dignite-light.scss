@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+@import '../colors/default.scss';
+
+@include mat-core();
+
+$dignite-light-theme: mat-light-theme($dignite-primary, $dignite-accent, $dignite-warn);
+
+@include mat-core-theme($dignite-light-theme);
+@include mat-toolbar-color($dignite-light-theme);
+@include mat-dialog-color($dignite-light-theme);
+@include mat-tooltip-color($dignite-light-theme);
+@include mat-menu-color($dignite-light-theme);
+@include mat-sidenav-color($dignite-light-theme);
+@include mat-list-color($dignite-light-theme);
+@include mat-divider-color($dignite-light-theme);
+@include mat-button-color($dignite-light-theme);

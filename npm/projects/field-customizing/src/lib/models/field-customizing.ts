@@ -22,10 +22,7 @@ export namespace FieldCustomizing {
     }
 
     export abstract class FormProviderComponent<T = FormConfigurationBase>{
-        entity: T;
-        constructor(entity: T) {
-            this.entity = entity;
-        }
+        formConfig: T;
     }
 
     export type FormProviderUseType = 'view' | 'form' | string;
