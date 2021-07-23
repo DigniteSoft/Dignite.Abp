@@ -1,16 +1,13 @@
 import { CoreModule } from '@abp/ng.core';
 import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavigationEnd, Router } from '@angular/router';
-import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   NgxValidateCoreModule,
   VALIDATION_ERROR_TEMPLATE,
@@ -52,18 +49,14 @@ export const LAYOUTS = [ApplicationLayoutComponent, AccountLayoutComponent, Empt
   imports: [
     CoreModule,
     ThemeSharedModule,
-    MatSidenavModule,
     NgxsModule.forFeature([AppState]),
+    MatSidenavModule,
     MatListModule,
     MatToolbarModule,
-    MatBadgeModule,
     MatButtonModule,
-    MatDividerModule,
     MatMenuModule,
     MatTooltipModule,
     NgxValidateCoreModule,
-    NgbCollapseModule,
-    NgbDropdownModule
   ],
   declarations: [
     ...LAYOUTS,

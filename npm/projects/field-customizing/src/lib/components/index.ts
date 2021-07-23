@@ -1,0 +1,1 @@
+import * from './simple-text/simple-text-view.component';

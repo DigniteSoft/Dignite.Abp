@@ -1,6 +1,5 @@
 @mixin _navbar() {
 
-  // 头部header
   .dignite-navbar {
     display: flex;
     min-height: 60px;
@@ -23,7 +22,6 @@
     dignite-apps {
       .dignite-app {
         text-decoration: none;
-        font-size: 16px;
 
         &+.dignite-app {
           margin-left: 0.5rem;
@@ -50,7 +48,6 @@
         cursor: pointer;
 
         .dignite-nav-item-label {
-          font-size: 1.5rem;
           outline: none !important;
           text-decoration: none;
           outline: none;

@@ -20,6 +20,7 @@ export function configureThemes(injector: Injector) {
         const { themes } = injector.get<ThemeMatOptions>(THEME_MAT_OPTIONS);
         if (themes && themes.length) {
             themeService.addThemes(themes);
+            themeService.setTheme();
         }
     };
 }

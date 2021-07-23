@@ -11,10 +11,16 @@ export class DigniteThemeService {
 
     private defaultThemes: Array<ThemeMatTheme> = [{
         displayName: '默认主题',
-        name: 'default',
-        primaryColor: 'red',
+        name: 'dignite-light',
+        primaryColor: 'blue',
         addNameToBody: true,
         type: 'light',
+    }, {
+        displayName: '默认主题',
+        name: 'dignite-dark',
+        primaryColor: 'blue',
+        addNameToBody: true,
+        type: 'dark',
     }];
 
     constructor(
@@ -54,20 +60,25 @@ export class DigniteThemeService {
         }
     }
 
-    getTheme(themeName: string) {
-        return this.themes.find(m => m.name === themeName);
+    getTheme(themeName?: string) {
+        const digniteTheme = this.themes.find(m => m.name === 'dignite-light');
+        return themeName ? this.themes.find(m => m.name === themeName) || digniteTheme :
+            this.themes.find(m => m.isDefault) || digniteTheme;
+
     }
 
-    setTheme(themeName: string) {
+    setTheme(themeName?: string) {
         const theme = this.getTheme(themeName);
+        const body = document.querySelector('body');
         let element = document.querySelector<HTMLLinkElement>('#dignite-theme');
         if (theme.addNameToBody) {
             if (element) {
                 element.remove();
             }
-            document.querySelector('body').setAttribute('theme', theme.name);
+            body.setAttribute('theme', theme.name);
         } else {
             if (theme.styleHref) {
+                body.removeAttribute('theme');
                 if (element) {
                     element.href = theme.styleHref;
                 } else {
