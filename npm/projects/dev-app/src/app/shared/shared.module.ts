@@ -1,7 +1,7 @@
 import { CoreModule } from '@abp/ng.core';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
-import { ThemeBasicModule } from '@abp/ng.theme.basic';
+import { ThemeMatModule } from '@dignite/theme-mat';
 import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { NgxValidateCoreModule } from '@ngx-validate/core';
 
@@ -10,14 +10,14 @@ import { NgxValidateCoreModule } from '@ngx-validate/core';
   imports: [
     CoreModule,
     ThemeSharedModule,
-    ThemeBasicModule,
+    ThemeMatModule,
     NgbDropdownModule,
     NgxValidateCoreModule,
   ],
   exports: [
     CoreModule,
     ThemeSharedModule,
-    ThemeBasicModule,
+    ThemeMatModule,
     NgbDropdownModule,
     NgxValidateCoreModule,
   ],

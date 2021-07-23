@@ -1,0 +1,24 @@
+<form #form="ngForm" nz-form (ngSubmit)="save()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="名称为必填字段">
+      <input nz-input name="name" [(ngModel)]="role.name" required maxlength="128" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>默认</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch name="isPublic" [(ngModel)]="role.isPublic"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>公开</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch name="isDefault" [(ngModel)]="role.isDefault"></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" [disabled]="saving" (click)="modalRef.close()">取消</button>
+  <button nz-button nzType="primary" (click)="save()" [disabled]="form.invalid" [nzLoading]="saving">确定</button>
+</div>

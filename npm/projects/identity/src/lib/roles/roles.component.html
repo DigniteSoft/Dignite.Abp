@@ -1,0 +1,64 @@
+    <nz-card [nzBordered]="false">
+      <nz-table #expandTable [nzData]="result" [nzFrontPagination]="false">
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>是否公开</th>
+            <th>是否默认</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- container -->
+          <ng-container *ngFor="let item of expandTable.data" [ngTemplateOutlet]="trTemplate"
+            [ngTemplateOutletContext]="{ $implicit: item,parent: null }">
+          </ng-container>
+          <!-- template -->
+          <ng-template #trTemplate let-item let-parent="parent">
+            <tr>
+              <td [nzIndentSize]="item.level * 20" [nzShowExpand]="item.children && item.children.length ? true:false"
+                [(nzExpand)]="item.expand" (nzExpandChange)="expandChange($event,item)">
+                {{ item.title }}
+              </td>
+              <td>
+                <nz-badge *ngIf="item.data.isPublic" nzStatus="success" nzText="是"></nz-badge>
+                <nz-badge *ngIf="!item.data.isPublic" nzStatus="default" nzText="否"></nz-badge>
+              </td>
+              <td>
+                <nz-badge *ngIf="item.data.isDefault" nzStatus="success" nzText="是"></nz-badge>
+                <nz-badge *ngIf="!item.data.isDefault" nzStatus="default" nzText="否"></nz-badge>
+              </td>
+              <td>
+                <a href="javascript:;" (click)="create(item)">添加下级岗位</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a href="javascript:;" (click)="openPermissionsModal(item)">权限</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a href="javascript:;" (click)="edit(item)">编辑</a>
+                <nz-divider nzType="vertical"></nz-divider>
+                <a href="javascript:;" (click)="delete(item,parent)">删除</a>
+              </td>
+            </tr>
+            <ng-container *ngFor="let child of item.children">
+              <ng-container *ngIf="item.expand" [ngTemplateOutlet]=" trTemplate"
+                [ngTemplateOutletContext]="{$implicit: child, parent: item}">
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </tbody>
+      </nz-table>
+    </nz-card>
+
+    <abp-permission-management #abpPermissionManagement="abpPermissionManagement" *abpReplaceableTemplate="
+    {
+      inputs: {
+        providerName: { value: 'R' },
+        providerKey: { value: providerKey },
+        visible: { value: visiblePermissions, twoWay: true },
+        hideBadges: { value: true }
+      },
+      outputs: { visibleChange: onVisiblePermissionChange },
+      componentKey: permissionManagementKey
+    };
+    let init = initTemplate
+  " (abpInit)="init(abpPermissionManagement)">
+    </abp-permission-management>
