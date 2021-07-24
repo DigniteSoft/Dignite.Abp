@@ -8,12 +8,12 @@ namespace Dignite.Abp.Settings
 {
     public class SettingDefinitionManager_Tests : SettingsTestBase
     {
-        private readonly ISettingDefinitionManager _settingDefinitionManager;
+        private readonly IDigniteSettingDefinitionManager _settingDefinitionManager;
         private readonly IFormProviderSelector _formProviderSelector;
 
         public SettingDefinitionManager_Tests()
         {
-            _settingDefinitionManager = GetRequiredService<ISettingDefinitionManager>();
+            _settingDefinitionManager = GetRequiredService<IDigniteSettingDefinitionManager>();
             _formProviderSelector = GetRequiredService<IFormProviderSelector>();
         }
 

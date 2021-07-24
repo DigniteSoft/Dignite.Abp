@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
 {
-    public class SettingDefinitionContext : Volo.Abp.Settings.SettingDefinitionContext, ISettingDefinitionContext
+    public class DigniteSettingDefinitionContext : SettingDefinitionContext, IDigniteSettingDefinitionContext
     {
-        public SettingDefinitionContext(Dictionary<string, Volo.Abp.Settings.SettingDefinition> settings)
+        public DigniteSettingDefinitionContext(Dictionary<string, SettingDefinition> settings)
             :base(settings)
         {
         }
@@ -19,7 +20,7 @@ namespace Dignite.Abp.Settings
         /// </summary>
         /// <param name="navigation"></param>
         /// <param name="definitions"></param>
-        public void Add(SettingNavigation navigation, params Volo.Abp.Settings.SettingDefinition[] definitions)
+        public void Add(SettingNavigation navigation, params SettingDefinition[] definitions)
         {
             base.Add(definitions);
             Navigation = navigation;

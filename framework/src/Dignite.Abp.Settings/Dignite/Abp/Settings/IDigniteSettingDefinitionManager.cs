@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
 {
-    public interface ISettingDefinitionManager:Volo.Abp.Settings.ISettingDefinitionManager
+    public interface IDigniteSettingDefinitionManager:ISettingDefinitionManager
     {
         IList<SettingNavigation> GetNavigations();
 

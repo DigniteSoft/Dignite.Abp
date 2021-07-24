@@ -2,9 +2,9 @@
 
 namespace Dignite.Abp.Settings
 {
-    public class TestSettingDefinitionProvider : SettingDefinitionProvider
+    public class TestSettingDefinitionProvider : DigniteSettingDefinitionProvider
     {
-        public override void Define(ISettingDefinitionContext context)
+        public override void Define(IDigniteSettingDefinitionContext context)
         {
             context.Add(
                 new SettingNavigation(TestSettingNames.TestSettingNavigationName),

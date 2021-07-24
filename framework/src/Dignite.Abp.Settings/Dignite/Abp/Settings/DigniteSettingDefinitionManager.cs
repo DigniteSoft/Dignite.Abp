@@ -2,23 +2,24 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Settings;
 
 namespace Dignite.Abp.Settings
 {
-    public class SettingDefinitionManager: Volo.Abp.Settings.SettingDefinitionManager, ISettingDefinitionManager, ISingletonDependency
+    public class DigniteSettingDefinitionManager: SettingDefinitionManager, IDigniteSettingDefinitionManager, ISingletonDependency
     {
         protected Lazy<IList<SettingNavigation>> Navigations { get; }
-        protected new AbpSettingOptions Options { get; }
-        public SettingDefinitionManager(
+        protected DigniteSettingOptions DigniteSettingOptions { get; }
+        public DigniteSettingDefinitionManager(
+            IOptions<DigniteSettingOptions> digniteSettingOptions,
             IOptions<AbpSettingOptions> options,
             IServiceProvider serviceProvider)
             :base(options,serviceProvider)
         {
-            Options = options.Value;
+            DigniteSettingOptions = digniteSettingOptions.Value;
             Navigations = new Lazy<IList<SettingNavigation>>(CreateSettingNavigations, true);
         }
 
@@ -52,15 +53,15 @@ namespace Dignite.Abp.Settings
             var navigations = new List<SettingNavigation>();
             using (var scope = ServiceProvider.CreateScope())
             {
-                var providers = Options
-                    .DefinitionProviders
-                    .Select(p => scope.ServiceProvider.GetRequiredService(p) as ISettingDefinitionProvider)
+                var providers = DigniteSettingOptions
+                    .DigniteDefinitionProviders
+                    .Select(p => scope.ServiceProvider.GetRequiredService(p) as IDigniteSettingDefinitionProvider)
                     .ToList();
 
                 foreach (var provider in providers)
                 {
                     var settings = new Dictionary<string, Volo.Abp.Settings.SettingDefinition>();
-                    var context = new SettingDefinitionContext(settings);
+                    var context = new DigniteSettingDefinitionContext(settings);
                     provider.Define(context);
                     context.Navigation.AddSettingDefinitions(settings);
                     navigations.Add(context.Navigation);

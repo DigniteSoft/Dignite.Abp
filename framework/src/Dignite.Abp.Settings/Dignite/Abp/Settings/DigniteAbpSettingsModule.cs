@@ -27,15 +27,15 @@ namespace Dignite.Abp.Settings
 
             services.OnRegistred(context =>
             {
-                if (typeof(ISettingDefinitionProvider).IsAssignableFrom(context.ImplementationType))
+                if (typeof(IDigniteSettingDefinitionProvider).IsAssignableFrom(context.ImplementationType))
                 {
                     definitionProviders.Add(context.ImplementationType);
                 }
             });
 
-            services.Configure<AbpSettingOptions>(options =>
+            services.Configure<DigniteSettingOptions>(options =>
             {
-                options.DefinitionProviders.AddIfNotContains(definitionProviders);
+                options.DigniteDefinitionProviders.AddIfNotContains(definitionProviders);
             });
         }
 
