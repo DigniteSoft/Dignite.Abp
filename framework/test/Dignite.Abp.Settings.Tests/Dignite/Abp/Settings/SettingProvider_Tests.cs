@@ -18,7 +18,7 @@ namespace Dignite.Abp.Settings
         [Fact]
         public async Task Should_Get_Test_Setting()
         {
-            var sdfds = await _settingProvider.GetAllAsync();
+            var allSettings = await _settingProvider.GetAllAsync();
             string setting1 = await _settingProvider.GetOrNullAsync(TestSettingNames.TestSettingWithDefaultValue);
             setting1.ShouldNotBeNull();
         }

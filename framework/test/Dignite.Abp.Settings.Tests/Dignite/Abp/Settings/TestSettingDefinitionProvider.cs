@@ -1,24 +1,41 @@
-﻿using Dignite.Abp.FieldCustomizing.TextboxForm;
+﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
+using Volo.Abp.Settings;
+using Dignite.Abp.FieldCustomizing.TextboxForm;
 
 namespace Dignite.Abp.Settings
 {
-    public class TestSettingDefinitionProvider : DigniteSettingDefinitionProvider
+    public class TestSettingDefinitionProvider : SettingDefinitionProvider
     {
-        public override void Define(IDigniteSettingDefinitionContext context)
+        public override void Define(ISettingDefinitionContext context)
         {
             context.Add(
-                new SettingNavigation(TestSettingNames.TestSettingNavigationName),
-                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),                
-                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value")
+                new SettingDefinition(TestSettingNames.TestSettingPackager,"abc")
+            );
+        }
+    }
+
+    public class TestPackageSettingDefinitionProvider : TestSettingDefinitionProvider, IDigniteSettingDefinitionProvider
+    {
+        public void Define(IDigniteSettingDefinitionContext context)
+        {
+            var settings = new Dictionary<string, SettingDefinition>();
+            Define(new SettingDefinitionContext(settings));
+
+            settings.GetValueOrDefault(TestSettingNames.TestSettingPackager)
                     .SetForm(form =>
                         form.UseTextbox(tb =>
                         {
                             tb.Required = true;
                             tb.Placeholder = "placeholder-text";
                         }
-                    )),
-                new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingEncrypted, isEncrypted: true)
-            ) ;
+                    ));                
+
+            context.Add(
+                new SettingNavigation(TestSettingNames.TestSettingNavigationName2),
+                settings.Values.ToImmutableList().ToArray()
+            );
         }
     }
 }

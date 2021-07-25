@@ -41,5 +41,16 @@ namespace Dignite.Abp.Settings
             var textboxFormConfig = (TextboxFormConfiguration)formProvider.GetConfiguration(formConfig);
             textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
         }
+
+        [Fact]
+        public void Should_Get_Test_Setting_Definition2_Form()
+        {
+            var navigation = _settingDefinitionManager.GetNavigation(TestSettingNames.TestSettingNavigationName2);
+            var setting1 = navigation.SettingDefinitions.Single(sf => sf.Name == TestSettingNames.TestSettingPackager);
+            var formConfig = setting1.GetFormOrNull();
+            var formProvider = _formProviderSelector.Get(TextboxFormProvider.ProviderName);
+            var textboxFormConfig = (TextboxFormConfiguration)formProvider.GetConfiguration(formConfig);
+            textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
+        }
     }
 }
