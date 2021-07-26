@@ -35,7 +35,7 @@ namespace Dignite.Abp.Identity
             CacheOrganizationUnits = cacheOrganizationUnits;
         }
 
-        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
+        //[Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<OrganizationUnitDto> GetAsync(Guid id)
         {
             var dto = ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(
@@ -46,7 +46,7 @@ namespace Dignite.Abp.Identity
             return dto;
         }
 
-        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
+        //[Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetChildrenAsync(Guid? parentId, bool recursive = false)
         {
             List<OrganizationUnit> organizationUnits;
@@ -92,7 +92,7 @@ namespace Dignite.Abp.Identity
         }
 
 
-        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
+        //[Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> SearchAsync(string filter)
         {
             var allOrganizationUnits = await GetAllListAsync();
@@ -127,7 +127,7 @@ namespace Dignite.Abp.Identity
                 );
         }
 
-        [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
+        //[Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
         public virtual async Task<ListResultDto<OrganizationUnitDto>> GetParentsAsync(Guid id)
         {
             var allOrganizationUnits = await GetAllListAsync();
