@@ -37,6 +37,7 @@ namespace Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Bundling
                 "/libs/abp/aspnetcore-mvc-ui-theme-shared/bootstrap/modal-manager.js",
                 "/libs/abp/aspnetcore-mvc-ui-theme-shared/sweetalert/abp-sweetalert.js",
                 "/libs/abp/aspnetcore-mvc-ui-theme-shared/toastr/abp-toastr.js",
+                "/Pages/Abp/MultiTenancy/tenant-switch.js",   // see Volo.Abp.AspNetCore.Mvc.UI.MultiTenancy\Volo\Abp\AspNetCore\Mvc\UI\MultiTenancy\AbpAspNetCoreMvcUiMultiTenancyModule.cs
                 "/themes/pure/layout.js"
             });
         }

@@ -1,7 +1,7 @@
 ﻿@using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Themes.Pure.Components.Brand
 @using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Themes.Pure.Components.Menu
 @using Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure.Themes.Pure.Components.Toolbar
-<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm flex-column flex-md-row mb-4" id="main-navbar" style="min-height: 4rem;">
+<nav class="navbar navbar-expand-md shadow-sm flex-column flex-md-row mb-4" id="main-navbar" style="min-height: 4rem;">
     <div class="container">
         @(await Component.InvokeAsync<MainNavbarBrandViewComponent>())
         <button class="navbar-toggler" type="button" data-toggle="collapse"

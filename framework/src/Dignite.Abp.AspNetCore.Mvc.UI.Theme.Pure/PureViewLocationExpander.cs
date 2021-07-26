@@ -66,13 +66,19 @@ namespace Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure
 
             if (!string.IsNullOrEmpty(tenantName))
             {
+                var tenantViewLocations = new List<string>();
                 foreach (var viewLocation in _viewLocations)
                 {
-                    ("/Tenants/" + tenantName).Concat(viewLocation);
+                    tenantViewLocations.Add(("/Tenants/" + tenantName + viewLocation));
                 }
-            }
 
-            viewLocations = _viewLocations.Concat(viewLocations);
+                tenantViewLocations = tenantViewLocations.Concat(_viewLocations).ToList();
+                viewLocations = tenantViewLocations.Concat(viewLocations);
+            }
+            else
+            {
+                viewLocations = _viewLocations.Concat(viewLocations);
+            }
             return viewLocations;
         }
 
@@ -107,7 +113,6 @@ namespace Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure
             else
             {
                 /* Parameters:
-                 * {2} - Area Name
                  * {1} - Controller Name
                  * {0} - View Name
                  */

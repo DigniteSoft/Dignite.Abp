@@ -22,7 +22,7 @@ namespace Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure
             _currentTenantLazy = currentTenantLazy;
         }
 
-        public virtual string GetLayout(string name, bool fallbackToDefault = true)
+        public virtual string GetLayout(string name, bool fallbackToDefault = false)
         {
             return fallbackToDefault ? GetLayoutFilePath(name) : null;
         }
@@ -36,10 +36,10 @@ namespace Dignite.Abp.AspNetCore.Mvc.UI.Theme.Pure
             if (currentTenant.Id.HasValue)
             {
                 var tenantLayout = $"/Tenants/{currentTenant.Name}/Themes/Pure/Layouts/{name}.cshtml";
-                var tenantLayoutPath = Path.Combine(hostingEnvironment.ContentRootPath, tenantLayout);
-                if(File.Exists(tenantLayoutPath))
+                var tenantLayoutPath = hostingEnvironment.ContentRootPath+tenantLayout;
+                if (File.Exists(tenantLayoutPath))
                 {
-                    return "~"+tenantLayout;
+                    return "~" + tenantLayout;
                 }
             }
 
