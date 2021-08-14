@@ -411,14 +411,15 @@ namespace Dignite.Abp.Identity
 
         protected async Task<List<OrganizationUnit>> GetAllListAsync()
         {
-            return await CacheOrganizationUnits.GetOrAddAsync(
-                 AllOrganizationUnitsListCacheName, //Cache key
-                async () => await OrganizationUnitRepository.GetListAsync(includeDetails: false),
-                () => new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
-                }
-            );
+            return await OrganizationUnitRepository.GetListAsync(includeDetails: false);
+            //return await CacheOrganizationUnits.GetOrAddAsync(
+            //     AllOrganizationUnitsListCacheName, //Cache key
+            //    async () => await OrganizationUnitRepository.GetListAsync(includeDetails: false),
+            //    () => new DistributedCacheEntryOptions
+            //    {
+            //        AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
+            //    }
+            //);
         }
 
         protected async Task<IReadOnlyList<IdentityRoleDto>> GetAvailableRolesAsync(Guid? parentOrganizationUnitId=null)
