@@ -394,7 +394,7 @@ namespace Dignite.Abp.Identity
 
         public virtual async Task<OrganizationUnitDto> FindByCodeAsync(string code)
         {
-            var allOrganizationUnits = await OrganizationUnitRepository.GetAllChildrenWithParentCodeAsync(code, null, false);
+            var allOrganizationUnits = await OrganizationUnitRepository.GetAllChildrenWithParentCodeAsync(code, Guid.NewGuid(), false);
             var organizationUnit = allOrganizationUnits.FirstOrDefault(ou=> ou.Code == code);
             if (organizationUnit == null)
             {
