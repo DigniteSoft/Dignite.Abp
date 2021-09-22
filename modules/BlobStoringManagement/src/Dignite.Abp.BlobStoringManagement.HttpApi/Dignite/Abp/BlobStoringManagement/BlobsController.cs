@@ -45,13 +45,13 @@ namespace Dignite.Abp.BlobStoringManagement
         [Route("upload/{containerName}")]
         public async Task<BlobDto> UploadAsync([NotNull] string containerName, IFormFile File, string EntityType, string EntityId)
         {
-            return await _blobAppService.SaveAsync(containerName, 
+            return await _blobAppService.SaveAsync(containerName,
                 new SaveBytesInput
                 {
                     Bytes = File.GetAllBytes(),
                     EntityType = EntityType,
                     EntityId = EntityId,
-                    FileName=File.FileName
+                    FileName = File.FileName
                 });
         }
 
@@ -69,6 +69,7 @@ namespace Dignite.Abp.BlobStoringManagement
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
             var stream = await GetOrNullAsync(containerName, blobName);
+            stream.Position = 0;
             var mimeType = MimeTypesMap.GetMimeType(blobName);
             return File(stream, mimeType, fileName);
         }
@@ -81,7 +82,7 @@ namespace Dignite.Abp.BlobStoringManagement
         /// <param name="entityId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ListResultDto<BlobDto>> GetListAsync( string entityType,string entityId)
+        public async Task<ListResultDto<BlobDto>> GetListAsync(string entityType, string entityId)
         {
             return await _blobAppService.GetListAsync(entityType, entityId);
         }
@@ -102,7 +103,7 @@ namespace Dignite.Abp.BlobStoringManagement
         /// <returns></returns>
         [HttpDelete]
         [Route("delete-by-entity")]
-        public async Task DeleteByEntityAsync( string entityType,string entityId)
+        public async Task DeleteByEntityAsync(string entityType, string entityId)
         {
             await _blobAppService.DeleteByEntityAsync(entityType, entityId);
         }
