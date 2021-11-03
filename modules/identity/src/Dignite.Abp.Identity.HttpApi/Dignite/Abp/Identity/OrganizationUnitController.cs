@@ -12,7 +12,7 @@ using Volo.Abp.Identity;
 namespace Dignite.Abp.Identity
 {
     [RemoteService]
-    [Route("api/identity/organizationUnit")]
+    [Route("api/identity/organization-unit")]
     public class OrganizationUnitController : DigniteAbpIdentityController, IOrganizationUnitAppService
     {
         private readonly IOrganizationUnitAppService _organizationUnitAppService;
@@ -29,7 +29,7 @@ namespace Dignite.Abp.Identity
         }
 
         [HttpGet]
-        [Route("forEdit")]
+        [Route("{id}/edit")]
         public Task<GetOrganizationUnitForEditOutput> GetOrganizationUnitForEditAsync(Guid id)
         {
             return _organizationUnitAppService.GetOrganizationUnitForEditAsync(id);
@@ -55,14 +55,14 @@ namespace Dignite.Abp.Identity
         }
 
         [HttpPut]
-        [Route("move")]
+        [Route("{id}/move")]
         public async Task MoveAsync(Guid id, OrganizationUnitMoveInput input)
         {
             await _organizationUnitAppService.MoveAsync(id, input);
         }
 
         [HttpGet]
-        [Route("roles")]
+        [Route("{id}/roles")]
         public async Task<ListResultDto<IdentityRoleDto>> GetRolesAsync(Guid id)
         {
             return await _organizationUnitAppService.GetRolesAsync(id);
@@ -82,7 +82,7 @@ namespace Dignite.Abp.Identity
         }
 
         [HttpGet]
-        [Route("parents")]
+        [Route("{id}/parents")]
         public async Task<ListResultDto<OrganizationUnitDto>> GetParentsAsync(Guid id)
         {
             return await _organizationUnitAppService.GetParentsAsync(id);
@@ -90,7 +90,7 @@ namespace Dignite.Abp.Identity
 
 
         [HttpGet]
-        [Route("find/{code}")]
+        [Route("by-code/{code}")]
         public async Task<OrganizationUnitDto> FindByCodeAsync(string code)
         {
             return await _organizationUnitAppService.FindByCodeAsync(code);
@@ -111,28 +111,28 @@ namespace Dignite.Abp.Identity
         }
 
         [HttpPost]
-        [Route("member")]
+        [Route("{id}/member")]
         public async Task AddMembersAsync(Guid id, OrganizationUnitAddMembersInput input)
         {
             await _organizationUnitAppService.AddMembersAsync(id, input);
         }
 
         [HttpPut]
-        [Route("member")]
+        [Route("{id}/member")]
         public async Task UpdateMemberRolesAsync(Guid id, Guid userId, OrganizationUnitUpdateMemberRolesInput input)
         {
             await _organizationUnitAppService.UpdateMemberRolesAsync(id, userId, input);
         }
 
         [HttpDelete]
-        [Route("member")]
+        [Route("{id}/member")]
         public async Task RemoveMembersAsync(Guid id, OrganizationUnitRemoveMembersInput input)
         {
             await _organizationUnitAppService.RemoveMembersAsync(id, input);
         }
 
         [HttpGet]
-        [Route("member")]
+        [Route("{id}/members")]
         public async Task<PagedResultDto<IdentityUserDto>> GetMembersAsync(Guid id, GetOrganizationUnitMembersInput input)
         {
             return await _organizationUnitAppService.GetMembersAsync(id, input);
@@ -140,7 +140,7 @@ namespace Dignite.Abp.Identity
 
 
         [HttpGet]
-        [Route("assignableRoles")]
+        [Route("{id}/{userId}/assignable-roles")]
         public async Task<ListResultDto<IdentityRoleDto>> GetMemberAssignableRolesAsync(Guid id, Guid userId)
         {
             return await _organizationUnitAppService.GetMemberAssignableRolesAsync(id, userId);
