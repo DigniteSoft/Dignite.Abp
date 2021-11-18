@@ -17,7 +17,8 @@
 
   .page-content-container {
     padding: 15px;
-    height: calc(100% - 50px - 50px);
+    // 50px cover will mislead user...
+    // height: calc(100% - 50px - 50px);
     overflow-x: hidden;
     overflow-y: hidden;
 

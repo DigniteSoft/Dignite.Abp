@@ -12,7 +12,7 @@ import {
   NgxValidateCoreModule,
   VALIDATION_ERROR_TEMPLATE,
   VALIDATION_INVALID_CLASSES,
-  VALIDATION_TARGET_SELECTOR
+  VALIDATION_TARGET_SELECTOR,
 } from '@ngx-validate/core';
 import { NgxsModule } from '@ngxs/store';
 import { filter } from 'rxjs/operators';
@@ -38,12 +38,16 @@ import { PageTopToolsComponent } from './components/page/page-top-tools.componen
 import { PageComponent } from './components/page/page.component';
 import { RoutesComponent } from './components/routes/routes.component';
 import { ThemeMatOptions } from './models/theme';
-import { THEME_MAT_NAV_ITEM_PROVIDERS, THEME_MAT_OPTIONS, THEME_MAT_STYLES_PROVIDERS, THEME_MAT_THEMES_PROVIDERS } from './providers';
+import {
+  THEME_MAT_NAV_ITEM_PROVIDERS,
+  THEME_MAT_OPTIONS,
+  THEME_MAT_STYLES_PROVIDERS,
+  THEME_MAT_THEMES_PROVIDERS,
+} from './providers';
 import { AppService } from './services/app.service';
 import { AppState } from './states/app.state';
 
 export const LAYOUTS = [ApplicationLayoutComponent, AccountLayoutComponent, EmptyLayoutComponent];
-
 
 @NgModule({
   imports: [
@@ -88,7 +92,6 @@ export const LAYOUTS = [ApplicationLayoutComponent, AccountLayoutComponent, Empt
     CurrentUserComponent,
     LanguagesComponent,
     LogoComponent,
-    ThemesComponent,
     AppsComponent,
     NavItemsComponent,
     NavItemComponent,
@@ -101,19 +104,16 @@ export const LAYOUTS = [ApplicationLayoutComponent, AccountLayoutComponent, Empt
     PageTableComponent,
     PageTopToolsComponent,
     PageFootComponent,
-  ]
+  ],
 })
-export class BaseThemeMatModule { }
+export class BaseThemeMatModule {}
 
 @NgModule({
   exports: [BaseThemeMatModule],
   imports: [BaseThemeMatModule],
 })
 export class ThemeMatModule {
-  constructor(
-    router: Router,
-    appService: AppService,
-  ) {
+  constructor(router: Router, appService: AppService) {
     // 监听路由变更
     router.events
       .pipe(filter(event => event instanceof NavigationEnd))
@@ -146,4 +146,3 @@ export class ThemeMatModule {
     };
   }
 }
-
