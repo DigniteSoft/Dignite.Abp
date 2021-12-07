@@ -1,0 +1,17 @@
+﻿using Volo.Abp.Bundling;
+
+namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme
+{
+    public class PureThemeBundleContributor : IBundleContributor
+    {
+        public void AddScripts(BundleContext context)
+        {
+
+        }
+
+        public void AddStyles(BundleContext context)
+        {
+            context.Add("_content/Dignite.Abp.AspNetCore.Components.Web.PureTheme/libs/abp/css/theme.css");
+        }
+    }
+}

@@ -1,4 +1,5 @@
-﻿using Dignite.Abp.FieldCustomizing.DataDictionaryForm;
+﻿
+using Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Text.Json;

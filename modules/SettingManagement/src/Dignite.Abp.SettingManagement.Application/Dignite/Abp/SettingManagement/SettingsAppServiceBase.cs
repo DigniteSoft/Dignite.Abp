@@ -1,5 +1,4 @@
 ﻿using Dignite.Abp.Settings;
-using Dignite.Abp.FieldCustomizing;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,7 +7,8 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
-using ISettingDefinitionManager = Dignite.Abp.Settings.ISettingDefinitionManager;
+using ISettingDefinitionManager = Dignite.Abp.Settings.IDigniteSettingDefinitionManager;
+using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -16,17 +16,16 @@ namespace Dignite.Abp.SettingManagement
     {
         protected ISettingDefinitionManager SettingDefinitionManager { get; }
         protected ISettingManager SettingManager { get; }
-        protected IEnumerable<IFormProvider> FormProviders { get; }
-        protected IFormProviderSelector FormProviderSelector;
+        protected IEnumerable<IFieldControlProvider> ControlProviders { get; }
 
         protected SettingsAppServiceBase(
             ISettingDefinitionManager settingDefinitionManager,
             ISettingManager settingManager,
-            IEnumerable<IFormProvider> formProviders)
+            IEnumerable<IFieldControlProvider> controlProviders)
         {
             SettingDefinitionManager = settingDefinitionManager;
             SettingManager = settingManager;
-            FormProviders = formProviders;
+            ControlProviders = controlProviders;
         }
 
 
@@ -39,7 +38,7 @@ namespace Dignite.Abp.SettingManagement
             {
                 var settingDefinitions = nav.SettingDefinitions.Where(sd => 
                     settingValues.Any(sv => sv.Name == sd.Name)
-                    && sd.GetFormOrNull()!=null
+                    && sd.GetFieldControlConfigurationOrNull()!=null
                     );
                 if (settingDefinitions.Any())
                 {
@@ -47,15 +46,14 @@ namespace Dignite.Abp.SettingManagement
                     foreach (var sd in settingDefinitions)
                     {
                         var group = sd.GetGroupOrNull();
-                        var form = sd.GetFormOrNull();
                         settings.Add(new SettingDto(
                             group == null ? null : group.Localize(StringLocalizerFactory),
                             sd.Name,
                             sd.DisplayName.Localize(StringLocalizerFactory),
                             sd.Description.Localize(StringLocalizerFactory),
                             settingValues.Single(sv => sv.Name == sd.Name).Value,
-                            form.FormProviderName,
-                            FormProviderSelector.Get(form.FormProviderName).GetConfiguration(form)
+                            sd.GetFieldControlProviderNameOrNull(),
+                            sd.GetFieldControlConfigurationOrNull()
                             ));
                     }
 

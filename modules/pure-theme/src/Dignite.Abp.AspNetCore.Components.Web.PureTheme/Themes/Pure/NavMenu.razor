@@ -1,0 +1,17 @@
+﻿@if (Menu != null)
+{
+    <ul class="navbar-nav mx-auto main-navbar-nav">
+    @foreach (var menuItem in Menu.Items)
+    {
+        <li class="nav-item">
+            <NavLink class="nav-link" href="@GetNavUrl(menuItem)" target="@menuItem.Target">
+                @if (menuItem.Icon != null)
+                {
+                    <i class="nav-link-icon @menuItem.Icon"></i>
+                }
+                @menuItem.DisplayName
+            </NavLink>
+        </li>
+    }
+    </ul>
+}

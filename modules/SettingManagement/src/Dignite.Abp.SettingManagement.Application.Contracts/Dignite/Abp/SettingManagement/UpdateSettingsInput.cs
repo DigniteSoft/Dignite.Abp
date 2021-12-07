@@ -16,13 +16,13 @@ namespace Dignite.Abp.SettingManagement
         public override IReadOnlyList<BasicCustomizeFieldDefinition> GetFieldDefinitions(ValidationContext validationContext)
         {
             var stringLocalizerFactory = validationContext.GetRequiredService<IStringLocalizerFactory>();
-            var settingDefinitionManager = validationContext.GetRequiredService<ISettingDefinitionManager>();
+            var settingDefinitionManager = validationContext.GetRequiredService<IDigniteSettingDefinitionManager>();
             return settingDefinitionManager.GetNavigation(NavigationName).SettingDefinitions
                 .Select(fd => new BasicCustomizeFieldDefinition(
                         fd.Name,
                         fd.DisplayName.Localize(stringLocalizerFactory),
                         fd.DefaultValue,
-                        fd.GetFormOrNull()
+                        fd.GetFieldControlConfigurationOrNull().GetConfiguration()
                         )).ToList();
         }
     }

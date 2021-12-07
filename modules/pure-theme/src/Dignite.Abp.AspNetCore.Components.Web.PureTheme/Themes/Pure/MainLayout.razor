@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+<SideNav></SideNav>
+<nav class="navbar navbar-expand-md  navbar-dark shadow-sm main-navbar" id="main-navbar">
+    <button class="navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <Branding />
+    <NavMenu />        
+    <NavToolbar />
+</nav>
+<div class="container-fluid page-container">
+    <PageAlert />
+    <div style="min-height:1500px">
+    @Body
+    </div>
+    <UiMessageAlert />
+    <UiNotificationAlert />
+    <UiPageProgress />
+</div>

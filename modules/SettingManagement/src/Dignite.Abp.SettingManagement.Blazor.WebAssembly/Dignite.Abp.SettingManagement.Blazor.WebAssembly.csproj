@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<Import Project="..\..\..\..\configureawait.props" />
+	<Import Project="..\..\..\..\common.props" />
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.WebAssembly.Theming" Version="4.3.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Dignite.Abp.SettingManagement.Blazor\Dignite.Abp.SettingManagement.Blazor.csproj" />
+        <ProjectReference Include="..\Dignite.Abp.SettingManagement.HttpApi.Client\Dignite.Abp.SettingManagement.HttpApi.Client.csproj" />
+    </ItemGroup>
+
+</Project>

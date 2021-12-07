@@ -1,5 +1,6 @@
 ﻿using Dignite.Abp.FieldCustomizing;
-using Dignite.Abp.FieldCustomizing.TextboxForm;
+using Dignite.Abp.FieldCustomizing.FieldControls;
+using Dignite.Abp.FieldCustomizing.FieldControls.Textbox;
 using Shouldly;
 using System.Linq;
 using Xunit;
@@ -9,12 +10,12 @@ namespace Dignite.Abp.Settings
     public class SettingDefinitionManager_Tests : SettingsTestBase
     {
         private readonly IDigniteSettingDefinitionManager _settingDefinitionManager;
-        private readonly IFormProviderSelector _formProviderSelector;
+        private readonly IFieldControlProviderSelector _formProviderSelector;
 
         public SettingDefinitionManager_Tests()
         {
             _settingDefinitionManager = GetRequiredService<IDigniteSettingDefinitionManager>();
-            _formProviderSelector = GetRequiredService<IFormProviderSelector>();
+            _formProviderSelector = GetRequiredService<IFieldControlProviderSelector>();
         }
 
         [Fact]
@@ -36,9 +37,7 @@ namespace Dignite.Abp.Settings
         {
             var navigation = _settingDefinitionManager.GetNavigation(TestSettingNames.TestSettingNavigationName);
             var setting1 = navigation.SettingDefinitions.Single(sf => sf.Name == TestSettingNames.TestSettingWithDefaultValue);
-            var formConfig = setting1.GetFormOrNull();
-            var formProvider = _formProviderSelector.Get(TextboxFormProvider.ProviderName);
-            var textboxFormConfig = (TextboxFormConfiguration)formProvider.GetConfiguration(formConfig);
+            var textboxFormConfig = (TextboxConfiguration)setting1.GetFieldControlConfigurationOrNull();
             textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
         }
 
@@ -47,9 +46,7 @@ namespace Dignite.Abp.Settings
         {
             var navigation = _settingDefinitionManager.GetNavigation(TestSettingNames.TestSettingNavigationName2);
             var setting1 = navigation.SettingDefinitions.Single(sf => sf.Name == TestSettingNames.TestSettingPackager);
-            var formConfig = setting1.GetFormOrNull();
-            var formProvider = _formProviderSelector.Get(TextboxFormProvider.ProviderName);
-            var textboxFormConfig = (TextboxFormConfiguration)formProvider.GetConfiguration(formConfig);
+            var textboxFormConfig = (TextboxConfiguration)setting1.GetFieldControlConfigurationOrNull();
             textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
         }
     }

@@ -1,5 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+using JetBrains.Annotations;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Abp.FieldCustomizing
 {
@@ -7,19 +9,31 @@ namespace Dignite.Abp.FieldCustomizing
     public class BasicCustomizeFieldDefinition
     {
 
-        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, FormConfigurationData configuration)
+        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, FieldControlConfigurationDictionary configuration)
         {
             Name = name;
             DisplayName = displayName;
             DefaultValue = defaultValue;
-            FormConfiguration = configuration;
+            Configuration = configuration;
         }
 
+        [Required]
         [NotNull]
+        [StringLength(BasicCustomizeFieldDefinitionConsts.MaxNameLength)]
         public string Name { get; set; }
 
+        [Required]
         [NotNull]
+        [StringLength(BasicCustomizeFieldDefinitionConsts.MaxDisplayNameLength)]
         public string DisplayName { get; set; }
+
+
+        /// <summary>
+        /// The provider to be used to <see cref="IFieldControlProvider.Name"/>
+        /// </summary>
+        [Required]
+        [StringLength(BasicCustomizeFieldDefinitionConsts.MaxFieldControlProviderNameLength)]
+        public string FieldControlProviderName { get; set; }
 
 
         /// <summary>
@@ -29,6 +43,6 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        public FormConfigurationData FormConfiguration { get; set; }
+        public FieldControlConfigurationDictionary Configuration { get; set; }
     }
 }

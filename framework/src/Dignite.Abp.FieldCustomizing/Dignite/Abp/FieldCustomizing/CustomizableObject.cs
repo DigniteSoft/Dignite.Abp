@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,12 +16,17 @@ namespace Dignite.Abp.FieldCustomizing
         {
             var validationErrors = new List<ValidationResult>();
             var fieldDefinitions = GetFieldDefinitions(validationContext);
-            var fieldFactory = validationContext.GetRequiredService<ICustomizeFieldFactory>();
+            var fieldControlProvider = validationContext.GetRequiredService<IFieldControlProvider>();
 
             foreach (var customField in CustomizedFields)
             {
-                var field = fieldFactory.Create(fieldDefinitions.Single(fi => fi.Name == customField.Key));
-                field.Validate(customField.Value, validationErrors);
+                fieldControlProvider.Validate(
+                    new FieldControlValidateArgs(
+                        fieldDefinitions.Single(fi => fi.Name == customField.Key),
+                        customField.Value,
+                        validationErrors
+                    )
+                );
             }
 
             return validationErrors;

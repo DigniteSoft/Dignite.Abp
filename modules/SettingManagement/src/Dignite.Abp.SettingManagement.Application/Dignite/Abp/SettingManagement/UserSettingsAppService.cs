@@ -1,12 +1,10 @@
-﻿using Dignite.Abp.FieldCustomizing;
+﻿using Dignite.Abp.FieldCustomizing.FieldControls;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
-using ISettingDefinitionManager = Dignite.Abp.Settings.ISettingDefinitionManager;
+using ISettingDefinitionManager = Dignite.Abp.Settings.IDigniteSettingDefinitionManager;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -16,8 +14,8 @@ namespace Dignite.Abp.SettingManagement
         public UserSettingsAppService(
             ISettingDefinitionManager settingDefinitionManager,
             ISettingManager settingManager,
-            IEnumerable<IFormProvider> formProviders)
-            : base(settingDefinitionManager, settingManager, formProviders)
+            IEnumerable<IFieldControlProvider> controlProviders)
+            : base(settingDefinitionManager, settingManager, controlProviders)
         {
         }
 

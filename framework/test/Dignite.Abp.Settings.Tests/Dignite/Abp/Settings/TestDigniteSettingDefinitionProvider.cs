@@ -1,4 +1,5 @@
-﻿using Dignite.Abp.FieldCustomizing.TextboxForm;
+﻿
+using Dignite.Abp.Settings.SettingItemControls;
 
 namespace Dignite.Abp.Settings
 {
@@ -10,13 +11,13 @@ namespace Dignite.Abp.Settings
                 new SettingNavigation(TestSettingNames.TestSettingNavigationName),
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),                
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value")
-                    .SetForm(form =>
-                        form.UseTextbox(tb =>
+                    .UseTextbox(tb =>
                         {
                             tb.Required = true;
                             tb.Placeholder = "placeholder-text";
+                            tb.CharLimit = 64;
                         }
-                    )),
+                    ),
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingEncrypted, isEncrypted: true)
             ) ;
         }

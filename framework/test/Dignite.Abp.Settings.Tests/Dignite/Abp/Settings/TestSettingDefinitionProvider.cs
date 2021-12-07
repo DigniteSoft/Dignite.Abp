@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Volo.Abp.Settings;
-using Dignite.Abp.FieldCustomizing.TextboxForm;
+using Dignite.Abp.Settings.SettingItemControls;
 
 namespace Dignite.Abp.Settings
 {
@@ -24,13 +24,12 @@ namespace Dignite.Abp.Settings
             Define(new SettingDefinitionContext(settings));
 
             settings.GetValueOrDefault(TestSettingNames.TestSettingPackager)
-                    .SetForm(form =>
-                        form.UseTextbox(tb =>
+                    .UseTextbox(tb =>                        
                         {
                             tb.Required = true;
                             tb.Placeholder = "placeholder-text";
                         }
-                    ));                
+                    );                
 
             context.Add(
                 new SettingNavigation(TestSettingNames.TestSettingNavigationName2),

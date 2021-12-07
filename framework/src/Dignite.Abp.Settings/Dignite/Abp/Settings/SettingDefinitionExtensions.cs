@@ -1,5 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing;
-using System;
+﻿using Dignite.Abp.FieldCustomizing.FieldControls;
 using System.Collections.Generic;
 using Volo.Abp.Localization;
 using Volo.Abp.Settings;
@@ -8,32 +7,25 @@ namespace Dignite.Abp.Settings
 {
     public static class SettingDefinitionExtensions
     {
-        public static SettingDefinition SetForm(
-            this SettingDefinition setting,
-            Action<FormConfigurationData> formConfigurationAction,
-            ILocalizableString groupName =null
-            )
-        {
-            var formConfiguration = new FormConfigurationData();
-            formConfigurationAction(formConfiguration);
-
-            setting.WithProperty(SettingDefinitionPropertiesNames.FormName, formConfiguration);
-            if (groupName != null)
-            {
-                setting.WithProperty(SettingDefinitionPropertiesNames.FormName, groupName);
-            }
-
-            return setting;
-        }
-
-        public static FormConfigurationData GetFormOrNull(
+        public static FieldControlConfigurationBase GetFieldControlConfigurationOrNull(
             this SettingDefinition setting)
         {
-            var formConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.FormName);
-            if (formConfiguration == null)
+            var controlConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ControlConfigurationName);
+            if (controlConfiguration == null)
                 return null;
             else
-                return (FormConfigurationData)formConfiguration;
+                return (FieldControlConfigurationBase)controlConfiguration;
+        }
+
+        public static string GetFieldControlProviderNameOrNull(
+            this SettingDefinition setting)
+        {
+            var providerName = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ControlProviderName);
+            if (providerName != null)
+            {
+                return (string)providerName;
+            }
+            return null;
         }
 
         public static ILocalizableString GetGroupOrNull(

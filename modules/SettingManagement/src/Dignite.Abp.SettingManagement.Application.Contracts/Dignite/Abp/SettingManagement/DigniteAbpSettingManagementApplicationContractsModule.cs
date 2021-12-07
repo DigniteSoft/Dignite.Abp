@@ -3,14 +3,15 @@ using Volo.Abp.Modularity;
 using Dignite.Abp.Settings;
 using Dignite.Abp.FieldCustomizing;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.Authorization;
 
 namespace Dignite.Abp.SettingManagement
 {
     [DependsOn(
-        typeof(AbpDddApplicationModule),
-        typeof(DigniteAbpSettingsModule),
         typeof(AbpSettingManagementDomainSharedModule),
-        typeof(DigniteAbpFieldCustomizingModule)
+        typeof(AbpDddApplicationContractsModule),
+        typeof(AbpAuthorizationAbstractionsModule),
+        typeof(DigniteAbpSettingsModule)
     )]
     public class DigniteAbpSettingManagementApplicationContractsModule : AbpModule
     {

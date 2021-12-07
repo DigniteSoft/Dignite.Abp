@@ -5,6 +5,7 @@ using System;
 using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 {
@@ -13,10 +14,10 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
         public static void ConfigureCustomizableFieldDefinitions<T>(this EntityTypeBuilder<T> b)
             where T : class, ICustomizeFieldDefinition
         {
-            b.As<EntityTypeBuilder>().ConfigureCustomizableFieldDefinitions();
+            b.As<EntityTypeBuilder>().TryConfigureCustomizableFieldDefinitions();
         }
 
-        public static void ConfigureCustomizableFieldDefinitions(this EntityTypeBuilder b)
+        public static void TryConfigureCustomizableFieldDefinitions(this EntityTypeBuilder b)
         {
             if (!b.Metadata.ClrType.IsAssignableTo<ICustomizeFieldDefinition>())
             {
@@ -25,12 +26,12 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 
             b.Property<string>(nameof(ICustomizeFieldDefinition.DisplayName)).IsRequired().HasMaxLength(64);
             b.Property<string>(nameof(ICustomizeFieldDefinition.Name)).IsRequired().HasMaxLength(64);
-            b.Property<FormConfigurationData>(nameof(ICustomizeFieldDefinition.FormConfiguration))
-                .HasColumnName(nameof(ICustomizeFieldDefinition.FormConfiguration))
+            b.Property<FieldControlConfigurationDictionary>(nameof(ICustomizeFieldDefinition.Configuration))
+                .HasColumnName(nameof(ICustomizeFieldDefinition.Configuration))
                 .HasConversion(
-                    config => JsonConvert.SerializeObject(config, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }),
-                    jsonData => JsonConvert.DeserializeObject<FormConfigurationData>(jsonData)
-                    );
+                    new CustomizedFieldControlConfigurationValueConverter()
+                    )
+                .Metadata.SetValueComparer(new CustomizedFieldControlConfigurationDictionaryValueComparer());
         }
 
         public static void ConfigureObjectCustomizedFields<T>(this EntityTypeBuilder<T> b)

@@ -1,0 +1,25 @@
+﻿
+<div class="side-navbar">
+    <div class="side-navbar-container">
+    @if(TopMenuItem!=null && !TopMenuItem.IsLeaf)
+    {
+    <nav class="nav nav-pills flex-column">
+        @foreach (var item in TopMenuItem.Items)
+        {
+            if (item.Url.IsNullOrEmpty() && !item.IsLeaf)
+            {
+                <h3 class="side-nav-group-title">@item.DisplayName</h3>
+                    @foreach (var cItem in item.Items)
+                    {
+                <NavLink class="nav-link" href="@cItem.Url.TrimStart('/', '~')" target="@cItem.Target">@cItem.DisplayName</NavLink>       
+                    }
+                }
+            else
+            {
+            <NavLink class="nav-link" href="@item.Url.TrimStart('/', '~')" target="@item.Target">@item.DisplayName</NavLink>
+            }
+       }
+    </nav>
+    }
+    </div>
+</div>

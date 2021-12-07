@@ -1,5 +1,5 @@
 ﻿
-using Dignite.Abp.FieldCustomizing;
+using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -11,16 +11,16 @@ namespace Dignite.Abp.SettingManagement
             string displayName, 
             string description, 
             string value,
-            string formProviderName,
-            FormConfigurationBase formConfiguration)
+            string fieldControlProviderName,
+            FieldControlConfigurationBase fieldControlConfiguration)
         {
             GroupName = groupName;
             Name = name;
             DisplayName = displayName;
             Description = description;
             Value = value;
-            FormProviderName = formProviderName;
-            FormConfiguration = formConfiguration;
+            FieldControlProviderName = fieldControlProviderName;
+            FieldControlConfiguration = fieldControlConfiguration;
         }
 
         public string GroupName { get;  }
@@ -31,8 +31,8 @@ namespace Dignite.Abp.SettingManagement
 
         public string Value { get;  }
 
-        public string FormProviderName { get; }
+        public string FieldControlProviderName { get; }
 
-        public FormConfigurationBase FormConfiguration { get; }
+        public FieldControlConfigurationBase FieldControlConfiguration { get; }
     }
 }

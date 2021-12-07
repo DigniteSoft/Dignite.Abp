@@ -1,0 +1,28 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Textbox
+@inherits FieldCustomizingBlazorComponentBase
+
+<TextEdit Placeholder="@Configuration.Placeholder" Text="@Value?.ToString()" />
+
+
+@code{
+
+    public override string ForFieldControlProviderName => TextboxFieldControlProvider.ProviderName;
+
+    [Parameter]
+    public FieldControlConfigurationDictionary ConfigurationDictionary { get; set; }
+
+    [Parameter]
+    public object Value { get; set; }
+
+    public TextboxConfiguration Configuration { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Configuration = new TextboxConfiguration(ConfigurationDictionary);
+    }
+}
