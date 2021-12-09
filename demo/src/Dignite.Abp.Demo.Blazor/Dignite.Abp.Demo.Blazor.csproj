@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <Import Project="..\..\common.props" />
 
@@ -28,5 +28,8 @@
     <ProjectReference Include="..\..\..\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.csproj" />
     <ProjectReference Include="..\..\src\Dignite.Abp.Demo.HttpApi.Client\Dignite.Abp.Demo.HttpApi.Client.csproj" />
   </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="abp bundle" />
+  </Target>
 
 </Project>
