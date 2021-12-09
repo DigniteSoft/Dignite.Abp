@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Dignite.Abp.Demo.Blazor.Menus;
-using Volo.Abp.AspNetCore.Components.Web.BasicTheme.Themes.Basic;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
-using Volo.Abp.AspNetCore.Components.WebAssembly.BasicTheme;
+using Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme;
+using Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure;
 using Volo.Abp.Identity.Blazor.WebAssembly;
 using Volo.Abp.SettingManagement.Blazor.WebAssembly;
 using Volo.Abp.TenantManagement.Blazor.WebAssembly;
@@ -23,10 +23,11 @@ namespace Dignite.Abp.Demo.Blazor
     [DependsOn(
         typeof(AbpAutofacWebAssemblyModule),
         typeof(DemoHttpApiClientModule),
-        typeof(AbpAspNetCoreComponentsWebAssemblyBasicThemeModule),
+        //typeof(AbpAspNetCoreComponentsWebAssemblyBasicThemeModule),
         typeof(AbpIdentityBlazorWebAssemblyModule),
         typeof(AbpTenantManagementBlazorWebAssemblyModule),
-        typeof(AbpSettingManagementBlazorWebAssemblyModule)
+        typeof(AbpSettingManagementBlazorWebAssemblyModule),
+        typeof(DigniteAbpAspNetCoreComponentsWebAssemblyPureThemeModule)
     )]
     public class DemoBlazorModule : AbpModule
     {

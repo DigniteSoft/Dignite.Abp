@@ -44,7 +44,8 @@ namespace Dignite.Abp.Demo.Blazor.Menus
                     icon: "fas fa-home"
                 )
             );
-
+            context.Menu.AddItem(new ApplicationMenuItem(DemoMenus.Prefix, displayName: "消息", "/messages", icon: "fa fa-heartbeat"));
+            context.Menu.AddItem(new ApplicationMenuItem(DemoMenus.Prefix, displayName: "我的", "/my", icon: "fa fa-user"));
             return Task.CompletedTask;
         }
 

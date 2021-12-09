@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29020.237
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Demo.Domain", "src\Dignite.Abp.Demo.Domain\Dignite.Abp.Demo.Domain.csproj", "{554AD327-6DBA-4F8F-96F8-81CE7A0C863F}"
 EndProject
@@ -36,6 +36,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Demo.HttpApi.Host", "src\Dignite.Abp.Demo.HttpApi.Host\Dignite.Abp.Demo.HttpApi.Host.csproj", "{748584B1-BA69-4F6A-81AA-F4BDE6BCE29D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Demo.Blazor", "src\Dignite.Abp.Demo.Blazor\Dignite.Abp.Demo.Blazor.csproj", "{27B2DDC7-8B75-4322-A312-25419C15D9D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "theme", "theme", "{A631187F-2B1E-4E76-8C17-F7C4BFE5E6BA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.Web.PureTheme", "..\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.Web.PureTheme\Dignite.Abp.AspNetCore.Components.Web.PureTheme.csproj", "{DD4D5110-34DC-4603-B317-F85468278FD2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme", "..\modules\pure-theme\src\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme\Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.csproj", "{E589B303-851D-4333-984A-68AB99207578}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +109,14 @@ Global
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4D5110-34DC-4603-B317-F85468278FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4D5110-34DC-4603-B317-F85468278FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4D5110-34DC-4603-B317-F85468278FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4D5110-34DC-4603-B317-F85468278FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E589B303-851D-4333-984A-68AB99207578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E589B303-851D-4333-984A-68AB99207578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E589B303-851D-4333-984A-68AB99207578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E589B303-851D-4333-984A-68AB99207578}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +137,8 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{748584B1-BA69-4F6A-81AA-F4BDE6BCE29D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 		{27B2DDC7-8B75-4322-A312-25419C15D9D8} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{DD4D5110-34DC-4603-B317-F85468278FD2} = {A631187F-2B1E-4E76-8C17-F7C4BFE5E6BA}
+		{E589B303-851D-4333-984A-68AB99207578} = {A631187F-2B1E-4E76-8C17-F7C4BFE5E6BA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
