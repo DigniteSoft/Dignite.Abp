@@ -105,12 +105,23 @@ div.dataTables_wrapper div.dataTables_length label {
     }
 }
 
-
+/* body style*/
 .abp-application-layout {
     padding-top: 64px;
     padding-left: 300px;
 }
 
+.abp-application-layout.no-child-menu {
+    padding-left: 0px;
+}
+.abp-application-layout.no-child-menu .side-navbar {
+    /*无子菜单时隐藏侧边栏*/
+    left: -300px;
+}
+.abp-application-layout.no-child-menu .main-navbar .navbar-toggler {
+    /*无子菜单时隐藏侧边栏的切换按钮*/
+    display: none;
+}
 @media (max-width: 576px) {
     .abp-application-layout {
         padding-left: 0px;
@@ -161,7 +172,9 @@ div.dataTables_wrapper div.dataTables_length label {
         border-right: 1px solid #ccc;
         width: 75vw;
         left: -75vw;
-        z-index: 1040;
+    }
+    .side-navbar.show {
+        left: 0vw;
     }
 }
 /*branding*/

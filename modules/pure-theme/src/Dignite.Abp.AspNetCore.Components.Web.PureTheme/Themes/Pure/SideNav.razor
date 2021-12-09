@@ -1,10 +1,10 @@
 ﻿
-<div class="side-navbar">
+<div class="side-navbar" id="sideNavbar">
     <div class="side-navbar-container">
-    @if(TopMenuItem!=null && !TopMenuItem.IsLeaf)
+    @if(RootMenuItem!=null && !RootMenuItem.IsLeaf)
     {
     <nav class="nav nav-pills flex-column">
-        @foreach (var item in TopMenuItem.Items)
+        @foreach (var item in RootMenuItem.Items)
         {
             if (item.Url.IsNullOrEmpty() && !item.IsLeaf)
             {

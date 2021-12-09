@@ -1,9 +1,13 @@
-﻿@inherits LayoutComponentBase
+﻿@using Volo.Abp.UI.Navigation
+@inject IJSRuntime JS
+@inherits LayoutComponentBase
 <SideNav></SideNav>
-<nav class="navbar navbar-expand-md  navbar-dark shadow-sm main-navbar" id="main-navbar">
-    <button class="navbar-toggler" type="button">
+<nav class="navbar navbar-expand-md navbar-dark shadow-sm main-navbar" id="main-navbar">
+    <div>
+        <button class="navbar-toggler" type="button" @onclick="SideNavToggle" id="navbarToggler">
         <span class="navbar-toggler-icon"></span>
-    </button>
+        </button>
+    </div>
     <Branding />
     <NavMenu />        
     <NavToolbar />
@@ -17,3 +21,9 @@
     <UiNotificationAlert />
     <UiPageProgress />
 </div>
+@code{
+    private void SideNavToggle()
+    {
+        JS.InvokeVoidAsync("sideNavToggle");
+    }    
+}

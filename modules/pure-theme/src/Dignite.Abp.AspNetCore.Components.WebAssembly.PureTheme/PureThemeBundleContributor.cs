@@ -6,7 +6,7 @@ namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme
     {
         public void AddScripts(BundleContext context)
         {
-
+            context.Add("_content/Dignite.Abp.AspNetCore.Components.Web.PureTheme/libs/abp/js/theme.js");
         }
 
         public void AddStyles(BundleContext context)

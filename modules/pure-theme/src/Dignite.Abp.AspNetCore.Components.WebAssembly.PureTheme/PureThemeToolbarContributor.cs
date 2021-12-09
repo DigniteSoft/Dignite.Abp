@@ -11,9 +11,7 @@ namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme
         public Task ConfigureToolbarAsync(IToolbarConfigurationContext context)
         {
             if (context.Toolbar.Name == StandardToolbars.Main)
-            {
-                context.Toolbar.Items.Add(new ToolbarItem(typeof(LanguageSwitch)));
-         
+            {         
                 //TODO: Can we find a different way to understand if authentication was configured or not?
                 var authenticationStateProvider = context.ServiceProvider
                     .GetService<AuthenticationStateProvider>();
