@@ -1,0 +1,8 @@
+UNHANDLED EXCEPTIONS FROM PROCESS 60500:
+=====================
+2021/12/9 10:26:24
+System.IO.IOException: 管道已中断。
+   在 System.IO.Pipes.NamedPipeServerStream.CheckConnectOperationsServer()
+   在 System.IO.Pipes.NamedPipeServerStream.BeginWaitForConnection(AsyncCallback callback, Object state)
+   在 Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.PacketPumpProc()
+===================
