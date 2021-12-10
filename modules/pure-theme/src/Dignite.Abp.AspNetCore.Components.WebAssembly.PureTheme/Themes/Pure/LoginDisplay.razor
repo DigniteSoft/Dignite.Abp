@@ -9,32 +9,38 @@
 @inject NavigationManager Navigation
 @inject IStringLocalizer<AbpUiResource> UiLocalizer
 <AuthorizeView>
-    <Authorized>
-        <Dropdown>
-            <DropdownToggle Color="Color.None">
-                @if (CurrentTenant.Name != null)
-                {
-                    <span><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</span>
-                }
-                else
-                {
-                    <span>@CurrentUser.UserName</span>
-                }
-            </DropdownToggle>
-            <DropdownMenu>
+    <Authorized>        
+      <li class="nav-item dropdown">
+        <button class="btn btn-outline-primary rounded-circle" type="button" @onclick="ToggleSubMenu" id="CurrentUserMenu" title="@(CurrentTenant.Name != null?CurrentTenant.Name +"/" + CurrentUser.UserName:CurrentUser.UserName)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right shadow-sm @(IsSubMenuOpen ? "show" : "")" aria-labelledby="CurrentUserMenu">
                 @if (Menu != null)
                 {
                     @foreach (var menuItem in Menu.Items)
                     {
-                        <DropdownItem Clicked="@(() => NavigateToAsync(menuItem.Url, menuItem.Target))">@menuItem.DisplayName</DropdownItem>
+                    <button class="dropdown-item" type="button" @onclick="@(() => NavigateToAsync(menuItem.Url, menuItem.Target))">@menuItem.DisplayName</button>
                     }
                 }
-                <DropdownDivider />
-                <DropdownItem Clicked="BeginSignOut">@UiLocalizer["Logout"]</DropdownItem>
-            </DropdownMenu>
-        </Dropdown>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item" type="button" @onclick="BeginSignOut">@UiLocalizer["Logout"]</button>
+        </div>
+      </li>
+      
+        <li class="nav-item">            
+            <a class="btn rounded-circle btn-outline-primary border-0" href="#" role="button">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+        </li>
+        <li class="nav-item">            
+            <a class="" href="#" >
+                文本
+            </a>
+        </li>
     </Authorized>
     <NotAuthorized>
-        <a class="nav-link" href="authentication/login">@UiLocalizer["Login"]</a>
+        <li class="nav-item">
+            <a class="nav-link" href="authentication/login">@UiLocalizer["Login"]</a>
+        </li>
     </NotAuthorized>
 </AuthorizeView>
