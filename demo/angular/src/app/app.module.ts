@@ -14,6 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_ROUTE_PROVIDER } from './route.provider';
 
+import { PureThemeModule } from '@dignite/pure-theme';
+
 @NgModule({
   imports: [
     BrowserModule,
