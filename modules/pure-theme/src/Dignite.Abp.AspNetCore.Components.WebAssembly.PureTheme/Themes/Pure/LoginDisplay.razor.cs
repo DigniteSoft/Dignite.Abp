@@ -22,7 +22,8 @@ namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.Themes.Pure
         protected SignOutSessionStateManager SignOutManager;
 
         protected ApplicationMenu Menu { get; set; }
-        
+        protected bool IsSubMenuOpen { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             Menu = await MenuManager.GetAsync(StandardMenus.User);
@@ -44,6 +45,7 @@ namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.Themes.Pure
 
         protected virtual void OnLocationChanged(object sender, LocationChangedEventArgs e)
         {
+            IsSubMenuOpen = false;
             InvokeAsync(StateHasChanged);
         }
 
@@ -71,6 +73,11 @@ namespace Dignite.Abp.AspNetCore.Components.WebAssembly.PureTheme.Themes.Pure
                 await SignOutManager.SetSignOutState();
                 await NavigateToAsync("authentication/logout");
             }
+        }
+
+        private void ToggleSubMenu()
+        {
+            IsSubMenuOpen = !IsSubMenuOpen;
         }
     }
 }

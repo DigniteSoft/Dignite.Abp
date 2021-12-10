@@ -178,12 +178,48 @@ div.dataTables_wrapper div.dataTables_length label {
     }
 }
 /*branding*/
+.navbar-brand {
+    margin-right:0rem;
+    padding:0rem;
+}
 .navbar-brand > img {
     max-height: 40px;
 }
 
 .navbar-brand-title {
     color: #fff;
+}
+.navbar-brand,
+.nav-toolbar {
+    /*品牌和导航工具栏宽度设定为300，确保主导航位于屏幕中间*/
+    width: 256px;
+}
+
+.nav-toolbar > .nav-item {
+    margin-left: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav-toolbar > .nav-item > .btn {
+    padding: 0rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+
+
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        width:auto;
+    }
+    .nav-toolbar {
+        width:56px;
+        flex-direction:row;
+    }
 }
 /*主导航*/
 .main-navbar {
@@ -270,6 +306,7 @@ div.dataTables_wrapper div.dataTables_length label {
     position: sticky;
     top: 84px;
     left: 0px;
+    background-color: #f8f9fa;
 }
 
 .page-footer {
