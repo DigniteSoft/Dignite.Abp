@@ -2,6 +2,8 @@
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.Application;
+using Volo.Abp.BlobStoring;
+using Dignite.Abp.BlobStoring;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -20,6 +22,16 @@ namespace Dignite.Abp.BlobStoringManagement
             {
                 options.AddMaps<BlobStoringManagementApplicationModule>(validate: true);
             });
+
+
+            Configure<AbpBlobStoringOptions>(options =>
+            {
+                options.Containers.ConfigureDefault(container =>
+                {
+                    container.SetBlobInfoStore<BlobStore>();
+                });
+            });
         }
+
     }
 }

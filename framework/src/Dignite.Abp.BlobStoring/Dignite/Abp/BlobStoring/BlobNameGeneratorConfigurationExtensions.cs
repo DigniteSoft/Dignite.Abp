@@ -2,11 +2,11 @@ using Volo.Abp.BlobStoring;
 
 namespace Dignite.Abp.BlobStoring
 {
-    public static class NameGeneratorConfigurationExtensions
+    public static class BlobNameGeneratorConfigurationExtensions
     {
         public static void SetNameGenerator<TNameGenerator>(
             this BlobContainerConfiguration containerConfiguration)
-            where TNameGenerator:INameGenerator
+            where TNameGenerator:IBlobNameGenerator
         {
             containerConfiguration.SetConfiguration(
                 DigniteAbpBlobContainerConfigurationNames.NamingGenerator,

@@ -5,11 +5,11 @@ namespace Dignite.Abp.BlobStoring
     /// <summary>
     /// Generate new blob names.
     /// </summary>
-    public interface INameGenerator
+    public interface IBlobNameGenerator
     {
         /// <summary>
         /// Create a new blob name.
         /// </summary>
-        Task<string> Create(string extensionName);
+        Task<string> Create();
     }
 }

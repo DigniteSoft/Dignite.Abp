@@ -124,7 +124,7 @@ namespace Dignite.Abp.BlobStoring
             await BlobProcessHandlers(name, stream);
 
             // save blob
-            await HashAndSaveAsync(name, stream, overrideExisting, cancellationToken);
+            await PersistentAsync(name, stream, overrideExisting, cancellationToken);
 
             // TODO:考虑使用Event Bus技术实现回调
         }
@@ -205,7 +205,7 @@ namespace Dignite.Abp.BlobStoring
             }
         }
 
-        private async Task HashAndSaveAsync(
+        private async Task PersistentAsync(
             string name,
             Stream stream,
             bool overrideExisting = false,

@@ -1,7 +1,5 @@
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Processing;
-using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
@@ -11,7 +9,7 @@ namespace Dignite.Abp.BlobStoring
     /// <summary>
     /// Resize uploaded images to fit predefined values
     /// </summary>
-    public class ImageResizeHandler : IBlobProcessHandler,ITransientDependency
+    public class ImageProcessHandler : IBlobProcessHandler,ITransientDependency
     {
         public Task ProcessAsync(BlobProcessHandlerContext context)
         {

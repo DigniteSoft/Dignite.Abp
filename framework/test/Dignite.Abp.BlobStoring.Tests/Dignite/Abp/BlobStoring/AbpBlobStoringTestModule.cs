@@ -34,8 +34,8 @@ namespace Dignite.Abp.BlobStoring
                      })
                     .Configure<TestContainer2>(container =>
                      {
-                         container.AddFileSizeLimitHandler(config =>
-                            config.MaximumFileSize = 1/1024
+                         container.AddBlobSizeLimitHandler(config =>
+                            config.MaximumBlobSize = 1/1024
                          );
                      })
                     .Configure<TestContainer3>(container =>

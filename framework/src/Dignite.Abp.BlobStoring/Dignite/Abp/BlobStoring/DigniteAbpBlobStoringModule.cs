@@ -1,3 +1,4 @@
+using Dignite.Abp.BlobStoring.Abstractions;
 using Dignite.Abp.BlobStoring.Localization;
 using Volo.Abp.Authorization;
 using Volo.Abp.BlobStoring;
@@ -8,6 +9,7 @@ using Volo.Abp.VirtualFileSystem;
 namespace Dignite.Abp.BlobStoring
 {
     [DependsOn(
+        typeof(DigniteAbpBlobStoringAbstractionsModule),
         typeof(AbpAuthorizationModule),
         typeof(AbpBlobStoringModule),
         typeof(AbpLocalizationModule)

@@ -4,25 +4,26 @@ using Volo.Abp.Collections;
 
 namespace Dignite.Abp.BlobStoring
 {
-    public static class ImageResizeHandlerConfigurationExtensions
+    public static class BlobSizeLimitHandlerConfigurationExtensions
     {
-        public static ImageResizeHandlerConfiguration GetImageResizeConfiguration(
+        public static BlobSizeLimitHandlerConfiguration GetBlobSizeLimitConfiguration(
             this BlobContainerConfiguration containerConfiguration)
         {
-            return new ImageResizeHandlerConfiguration(containerConfiguration);
+            return new BlobSizeLimitHandlerConfiguration(containerConfiguration);
         }
 
-        public static void AddImageResizeHandler(
+        public static void AddBlobSizeLimitHandler(
             this BlobContainerConfiguration containerConfiguration,
-            Action<ImageResizeHandlerConfiguration> configureAction)
+            Action<BlobSizeLimitHandlerConfiguration> configureAction)
         {
             var blobProcessHandlers = containerConfiguration.GetConfigurationOrDefault(
                 DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
                 new TypeList<IBlobProcessHandler>());
 
-            if (blobProcessHandlers.TryAdd<ImageResizeHandler>())
+
+            if (blobProcessHandlers.TryAdd<BlobSizeLimitHandler>())
             {
-                configureAction(new ImageResizeHandlerConfiguration(containerConfiguration));
+                configureAction(new BlobSizeLimitHandlerConfiguration(containerConfiguration));
 
                 containerConfiguration.SetConfiguration(
                     DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers,
