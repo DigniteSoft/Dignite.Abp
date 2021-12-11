@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoringMana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoringManagement.Domain", "src\Dignite.Abp.BlobStoringManagement.Domain\Dignite.Abp.BlobStoringManagement.Domain.csproj", "{5ED05811-0062-4A04-8ECA-64C1A47DDAE5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{2518807D-B8F9-4472-826C-8C54CC0A1EEC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.BlobStoring.Abstractions", "..\..\framework\src\Dignite.Abp.BlobStoring.Abstractions\Dignite.Abp.BlobStoring.Abstractions.csproj", "{9DC0C109-7D5B-48BB-B707-F1CB3AF84734}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +101,10 @@ Global
 		{5ED05811-0062-4A04-8ECA-64C1A47DDAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ED05811-0062-4A04-8ECA-64C1A47DDAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ED05811-0062-4A04-8ECA-64C1A47DDAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DC0C109-7D5B-48BB-B707-F1CB3AF84734}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DC0C109-7D5B-48BB-B707-F1CB3AF84734}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DC0C109-7D5B-48BB-B707-F1CB3AF84734}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DC0C109-7D5B-48BB-B707-F1CB3AF84734}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,6 +124,7 @@ Global
 		{90CB5DC4-C040-45C7-8900-9688B26405BC} = {CCD2960C-23CC-4AB4-B84D-60C7AAA52F4D}
 		{1EDCD6D4-DF3A-4E3B-ABB6-C0D0B373EAB8} = {CCD2960C-23CC-4AB4-B84D-60C7AAA52F4D}
 		{5ED05811-0062-4A04-8ECA-64C1A47DDAE5} = {649A3FFA-182F-4E56-9717-E6A9A2BEC545}
+		{9DC0C109-7D5B-48BB-B707-F1CB3AF84734} = {2518807D-B8F9-4472-826C-8C54CC0A1EEC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4324B3B4-B60B-4E3C-91D8-59576B4E26DD}
