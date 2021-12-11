@@ -50,5 +50,12 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [RemoteService(IsEnabled = false)]
         Task<Stream> GetOrNullAsync([NotNull] string containerName, [NotNull] string blobName);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="containerName"></param>
+        /// <returns></returns>
+        Task<BlobContainerConfigurationDto> GetBlobContainerConfigurationAsync([NotNull] string containerName);
     }
 }

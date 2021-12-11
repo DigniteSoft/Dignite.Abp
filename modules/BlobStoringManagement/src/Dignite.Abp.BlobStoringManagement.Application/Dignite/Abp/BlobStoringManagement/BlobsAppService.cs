@@ -94,7 +94,7 @@ namespace Dignite.Abp.BlobStoringManagement
 
             return new ListResultDto<BlobDto>(
                 ObjectMapper.Map<List<Blob>, List<BlobDto>>(result)
-                ); 
+                );
         }
 
         public async Task DeleteAsync([NotNull] string containerName, [NotNull] string blobName)
@@ -127,18 +127,38 @@ namespace Dignite.Abp.BlobStoringManagement
             return await blobContainer.GetOrNullAsync(blobName);
         }
 
+
+        public virtual Task<BlobContainerConfigurationDto> GetBlobContainerConfigurationAsync([NotNull] string containerName)
+        {
+            var configuration = _configurationProvider.Get(containerName);
+            var authorizationHandlerConfiguration = new AuthorizationHandlerConfiguration(configuration);
+            var blobSizeLimitHandlerConfiguration = new BlobSizeLimitHandlerConfiguration(configuration);
+            var fileTypeCheckHandlerConfiguration = new FileTypeCheckHandlerConfiguration(configuration);
+            var imageProcessHandlerConfiguration = new ImageProcessHandlerConfiguration(configuration);
+
+            return Task.FromResult(
+                new BlobContainerConfigurationDto(
+                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy,authorizationHandlerConfiguration.SavingRoles,authorizationHandlerConfiguration.GettingPolicy,authorizationHandlerConfiguration.GettingRoles,authorizationHandlerConfiguration.DeletingPolicy,authorizationHandlerConfiguration.DeletingRoles),
+                    new BlobSizeLimitHandlerConfigurationDto(blobSizeLimitHandlerConfiguration.MaximumBlobSize),
+                    new FileTypeCheckHandlerConfigurationDto(fileTypeCheckHandlerConfiguration.AllowedFileTypeNames),
+                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth,imageProcessHandlerConfiguration.ImageHeight,imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
+                    )
+                ) ;
+        }
+
         private async Task<string> GeneratorNameAsync(string containerName, string extensionName = null)
         {
             var configuration = _configurationProvider.Get(containerName);
             var namingGeneratorType = configuration.GetConfigurationOrDefault(
                 DigniteAbpBlobContainerConfigurationNames.NamingGenerator,
-                typeof(SimpleNameGenerator)
+                typeof(SimpleBlobNameGenerator)
                 );
 
             var generator = LazyServiceProvider.LazyGetRequiredService(namingGeneratorType)
-                .As<INameGenerator>();
+                .As<IBlobNameGenerator>();
 
-            return await generator.Create(extensionName);
+            var blobName= await generator.Create();
+            return blobName+extensionName ?? string.Empty;
         }
 
         private static string GetFileExtensionName(Stream stream)

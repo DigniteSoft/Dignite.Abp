@@ -56,6 +56,13 @@ namespace Dignite.Abp.BlobStoringManagement
         }
 
         [HttpGet]
+        [Route("{containerName}/configuration")]
+        public Task<BlobContainerConfigurationDto> GetBlobContainerConfigurationAsync([NotNull] string containerName)
+        {
+            return _blobAppService.GetBlobContainerConfigurationAsync(containerName);
+        }
+
+        [HttpGet]
         [Route("{containerName}/{blobName}")]
         public async Task<FileResult> LoadAsync([NotNull] string containerName, [NotNull] string blobName)
         {
@@ -114,7 +121,5 @@ namespace Dignite.Abp.BlobStoringManagement
         {
             return await _blobAppService.GetOrNullAsync(containerName, blobName);
         }
-
-
     }
 }
