@@ -12,23 +12,19 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+	  <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <RootNamespace />
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
-    <PackageReference Include="Volo.Abp.BlobStoring" Version="4.3.2" />
-    <PackageReference Include="Volo.Abp.Authorization" Version="4.3.2" />
-    <PackageReference Include="Volo.Abp.Localization" Version="4.3.2" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
+		<PackageReference Include="Volo.Abp.Authorization" Version="4.3.2" />
+		<PackageReference Include="Volo.Abp.Localization" Version="4.3.2" />
+		<PackageReference Include="Volo.Abp.BlobStoring" Version="4.3.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-
-  <ItemGroup>
-    <content Remove="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
-    <EmbeddedResource Include="Dignite\Abp\BlobStoring\Localization\Resources\*.json" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Dignite.Abp.BlobStoring.Abstractions\Dignite.Abp.BlobStoring.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>
