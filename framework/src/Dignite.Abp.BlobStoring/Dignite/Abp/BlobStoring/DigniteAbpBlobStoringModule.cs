@@ -1,4 +1,3 @@
-using Dignite.Abp.BlobStoring.Abstractions;
 using Dignite.Abp.BlobStoring.Localization;
 using Volo.Abp.Authorization;
 using Volo.Abp.BlobStoring;
