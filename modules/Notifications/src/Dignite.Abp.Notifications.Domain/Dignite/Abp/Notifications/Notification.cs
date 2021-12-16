@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 using Volo.Abp.Auditing;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
@@ -25,7 +26,8 @@ namespace Dignite.Abp.Notifications
         public Notification(string notificationName, NotificationData data, string entityTypeName, string entityId, NotificationSeverity severity, DateTime creationTime, Guid? tenantId)
         {
             NotificationName = notificationName;
-            Data = data;
+            Data = JsonSerializer.Serialize(data);
+            DataTypeName = Data?.GetType().AssemblyQualifiedName;
             EntityTypeName = entityTypeName;
             EntityId = entityId;
             Severity = severity;
@@ -40,9 +42,15 @@ namespace Dignite.Abp.Notifications
 
 
         /// <summary>
-        /// Can be used to add custom properties to this notification.
+        /// Notification data  as JSON string.
         /// </summary>
-        public NotificationData Data { get; set; }
+        public string Data { get; set; }
+
+        /// <summary>
+        /// Type of the JSON serialized <see cref="Data"/>.
+        /// It's FullName of the entity type.
+        /// </summary>
+        public string DataTypeName { get; set; }
 
         /// <summary>
         /// Gets/sets entity type name, if this is an entity level notification.

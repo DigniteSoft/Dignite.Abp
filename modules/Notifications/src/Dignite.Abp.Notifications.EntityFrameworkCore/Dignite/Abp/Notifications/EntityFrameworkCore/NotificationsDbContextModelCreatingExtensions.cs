@@ -52,10 +52,8 @@ namespace Dignite.Abp.Notifications.EntityFrameworkCore
                 b.Property(n => n.NotificationName).IsRequired().HasMaxLength(NotificationConsts.MaxNotificationNameLength);
                 b.Property(n => n.EntityTypeName).HasMaxLength(NotificationConsts.MaxEntityTypeNameLength);
                 b.Property(n => n.EntityId).HasMaxLength(NotificationConsts.MaxEntityIdLength);
-                b.Property(n => n.Data).IsRequired().HasConversion(
-                    config => JsonConvert.SerializeObject(config),
-                    jsonData => JsonConvert.DeserializeObject<NotificationData>(jsonData)
-                    );
+                b.Property(n => n.Data).IsRequired().HasMaxLength(NotificationConsts.MaxDataLength);
+                b.Property(n => n.DataTypeName).IsRequired().HasMaxLength(NotificationConsts.MaxDataTypeNameLength);
 
                 //Indexes
                 b.HasIndex(n => new object[] {

@@ -108,7 +108,7 @@ namespace Dignite.Abp.Notifications.Samples
                     NotificationId=un.UserNotification.NotificationId,
                     NotificationName=un.Notification.NotificationName,
                     NotificationDisplayName= _notificationDefinitionManager.Get(un.Notification.NotificationName).DisplayName.Localize(StringLocalizerFactory),
-                    Data=un.Notification.Data,
+                    Data= un.Notification.Data,
                     EntityTypeName=un.Notification.EntityTypeName,
                     EntityId=un.Notification.EntityId,
                     Severity=un.Notification.Severity,

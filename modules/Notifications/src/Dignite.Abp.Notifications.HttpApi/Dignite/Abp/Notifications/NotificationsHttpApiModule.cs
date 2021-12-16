@@ -25,7 +25,7 @@ namespace Dignite.Abp.Notifications
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Get<DigniteAbpNotificationsResource>()
+                    .Get<NotificationResource>()
                     .AddBaseTypes(typeof(AbpUiResource));
             });
         }

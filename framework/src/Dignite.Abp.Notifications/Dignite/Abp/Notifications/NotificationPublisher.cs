@@ -20,16 +20,14 @@ namespace Dignite.Abp.Notifications
         public const int MaxUserCountToDirectlyDistributeANotification = 5;
 
         private readonly ICurrentTenant _currentTenant;
-        private readonly INotificationStore _store;
         private readonly IBackgroundJobManager _backgroundJobManager;
         private readonly INotificationDistributer _notificationDistributer;
         private readonly IGuidGenerator _guidGenerator;
         private readonly IClock _clock;
 
-        public NotificationPublisher(ICurrentTenant currentTenant, INotificationStore store, IBackgroundJobManager backgroundJobManager, INotificationDistributer notificationDistributer, IGuidGenerator guidGenerator, IClock clock)
+        public NotificationPublisher(ICurrentTenant currentTenant, IBackgroundJobManager backgroundJobManager, INotificationDistributer notificationDistributer, IGuidGenerator guidGenerator, IClock clock)
         {
             _currentTenant = currentTenant;
-            _store = store;
             _backgroundJobManager = backgroundJobManager;
             _notificationDistributer = notificationDistributer;
             _guidGenerator = guidGenerator;

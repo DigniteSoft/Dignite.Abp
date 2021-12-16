@@ -1,6 +1,4 @@
-﻿using Volo.Abp.DependencyInjection;
-
-namespace Dignite.Abp.FieldCustomizing.FieldControls
+﻿namespace Dignite.Abp.FieldCustomizing.FieldControls
 {
     public interface IFieldControlProvider
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -191,7 +192,7 @@ namespace Dignite.Abp.Notifications
                 new NotificationInfo(
                     un.Notification.Id,
                     un.Notification.NotificationName,
-                    un.Notification.Data,
+                    un.Notification.Data.IsNullOrEmpty()?null: JsonConvert.DeserializeObject(un.Notification.Data,Type.GetType(un.Notification.DataTypeName)) as NotificationData,
                     un.Notification.EntityTypeName,
                     un.Notification.EntityId,
                     un.Notification.Severity,

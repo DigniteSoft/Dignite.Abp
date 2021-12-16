@@ -7,7 +7,7 @@ namespace Dignite.Abp.Notifications
     {
         protected NotificationsAppService()
         {
-            LocalizationResource = typeof(DigniteAbpNotificationsResource);
+            LocalizationResource = typeof(NotificationResource);
             ObjectMapperContext = typeof(NotificationsApplicationModule);
         }
     }

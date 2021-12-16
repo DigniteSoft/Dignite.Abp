@@ -84,7 +84,6 @@ namespace Dignite.Abp.Notifications
                     foreach (var subscription in subscriptions)
                     {
                         if (
-                            !await SettingProvider.GetAsync<bool>(NotificationSettingNames.ReceiveNotifications) ||
                             !await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, subscription.UserId)
                            )
                         {
