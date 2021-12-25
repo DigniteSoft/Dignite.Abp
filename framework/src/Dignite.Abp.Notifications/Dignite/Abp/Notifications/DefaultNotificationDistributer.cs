@@ -53,12 +53,16 @@ namespace Dignite.Abp.Notifications
             Guid[] userIds = null,
             Guid[] excludedUserIds = null)
         {
-            var users = await GetUsersAsync(notification, userIds,excludedUserIds);            
-            var userNotifications = await SaveUserNotificationsAsync(users, notification);
-            await NotifyAsync(userNotifications.ToArray());
+            var users = await GetUsersAsync(notification, userIds,excludedUserIds);
+            if (users != null && users.Any())
+            {
+                var userNotifications = await SaveUserNotificationsAsync(users, notification);
+                await NotifyAsync(userNotifications.ToArray());
+            }
         }
 
-        protected virtual async Task<Guid[]> GetUsersAsync(NotificationInfo notificationInfo,
+        protected virtual async Task<Guid[]> GetUsersAsync(
+            NotificationInfo notificationInfo,
             Guid[] userIds = null,
             Guid[] excludedUserIds = null)
         {
@@ -113,6 +117,8 @@ namespace Dignite.Abp.Notifications
         protected virtual async Task<List<UserNotificationInfo>> SaveUserNotificationsAsync(Guid[] users, NotificationInfo notificationInfo)
         {
             await NotificationStore.InsertNotificationAsync(notificationInfo);
+            await UnitOfWorkManager.Current.SaveChangesAsync();
+
             var userNotifications = new List<UserNotificationInfo>();
             foreach (var user in users)
             {
@@ -120,8 +126,6 @@ namespace Dignite.Abp.Notifications
                 await NotificationStore.InsertUserNotificationAsync(userNotification);
                 userNotifications.Add(userNotification);
             }
-
-            await UnitOfWorkManager.Current.SaveChangesAsync();
 
             return userNotifications;
         }

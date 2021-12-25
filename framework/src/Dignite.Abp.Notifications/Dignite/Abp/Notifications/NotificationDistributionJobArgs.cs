@@ -3,7 +3,7 @@
 namespace Dignite.Abp.Notifications
 {
     /// <summary>
-    /// Arguments for <see cref="NotificationDistributionJob"/>.
+    /// Arguments for <see cref="NotificationDistributionJob"/>
     /// </summary>
     [Serializable]
     public class NotificationDistributionJobArgs

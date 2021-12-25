@@ -9,16 +9,13 @@ namespace Dignite.Abp.AspNetCore.SignalR.Notifications
 {
     public class SignalRRealTimeNotifier : IRealTimeNotifier, ITransientDependency
     {
-        public ILogger Logger { get; set; }
 
         private readonly IHubContext<NotificationHub,INotificationClient> _hubContext;
 
         public SignalRRealTimeNotifier(
-        IHubContext<NotificationHub, INotificationClient> hubContext,
-        Logger<SignalRRealTimeNotifier> logger)
+        IHubContext<NotificationHub, INotificationClient> hubContext)
         {
             _hubContext = hubContext;
-            Logger = logger;
         }
 
 
@@ -26,7 +23,8 @@ namespace Dignite.Abp.AspNetCore.SignalR.Notifications
         {
             await _hubContext.Clients.Users(
                 userNotifications.Select(un => un.UserId.ToString())
-                ).ReceiveNotifications();            
+                ).ReceiveNotifications();
+            //await _hubContext.Clients.All.ReceiveNotifications();
         }
     }
 }
