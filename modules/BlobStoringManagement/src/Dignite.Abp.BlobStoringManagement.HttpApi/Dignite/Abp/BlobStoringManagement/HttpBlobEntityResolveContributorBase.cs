@@ -32,13 +32,14 @@ namespace Dignite.Abp.BlobStoringManagement
 
         protected virtual async Task ResolveFromHttpContextAsync(IBlobEntityResolveContext context, HttpContext httpContext)
         {
+
             var result = await GetBlobEntityFromHttpContextOrNullAsync(context, httpContext);
-            if (result!=null)
+            if (result != null)
             {
                 context.EntityType = result.EntityType;
                 context.EntityId = result.EntityId;
             }
-        }
+        }  
 
         protected abstract Task<BlobEntityResolveResult> GetBlobEntityFromHttpContextOrNullAsync([NotNull] IBlobEntityResolveContext context, [NotNull] HttpContext httpContext);
     }

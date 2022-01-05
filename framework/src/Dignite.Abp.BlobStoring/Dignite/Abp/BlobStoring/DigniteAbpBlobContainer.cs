@@ -231,7 +231,9 @@ namespace Dignite.Abp.BlobStoring
                 {
                     // 计算stream hash
                     var hash = stream.ToMd5();
-                    var blobInfo = new BasicBlobInfo(ContainerName, name);
+                    var blobInfo = new BasicBlobInfo(ContainerName, name) { 
+                        
+                    };
                     if (await blobInfoStore.HashExistsAsync(ContainerName, hash, cancellationToken))
                     {
                         // 如果存在相同hash的blob，则创建其副本

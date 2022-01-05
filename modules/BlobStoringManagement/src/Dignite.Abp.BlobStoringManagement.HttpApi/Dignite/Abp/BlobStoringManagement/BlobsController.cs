@@ -37,6 +37,12 @@ namespace Dignite.Abp.BlobStoringManagement
         [Route("save/{containerName}")]
         public async Task<BlobDto> SaveAsync([NotNull] string containerName, SaveBytesInput input)
         {
+            //Request.EnableBuffering();
+            //using (var reader = new StreamReader(Request.Body, System.Text.Encoding.UTF8))
+            //{
+            //    reader.BaseStream.Seek(0, SeekOrigin.Begin);  //大概是== Request.Body.Position = 0;的意思
+            //    var readerStr = reader.ReadToEndAsync().Result;
+            //}
             return await _blobAppService.SaveAsync(containerName, input);
         }
 

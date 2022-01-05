@@ -12,18 +12,18 @@ namespace Dignite.Abp.BlobStoringManagement
 
         protected override Task<BlobEntityResolveResult> GetBlobEntityFromHttpContextOrNullAsync([NotNull] IBlobEntityResolveContext context, [NotNull] HttpContext httpContext)
         {
-            if(httpContext.Request.QueryString.HasValue 
+            var result = new BlobEntityResolveResult();
+            if (httpContext.Request.QueryString.HasValue
                 && httpContext.Request.Query.ContainsKey(BlobEntityResolverConsts.EntityTypeKey)
                 && httpContext.Request.Query.ContainsKey(BlobEntityResolverConsts.EntityIdKey))
             {
-                var result = new BlobEntityResolveResult();
                 result.EntityType = httpContext.Request.Query[BlobEntityResolverConsts.EntityTypeKey].ToString();
                 result.EntityId = httpContext.Request.Query[BlobEntityResolverConsts.EntityIdKey].ToString();
 
                 return Task.FromResult(result);
             }
 
-            return null;
+            return Task.FromResult(result);
         }
     }
 }

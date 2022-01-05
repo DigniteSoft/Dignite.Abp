@@ -32,6 +32,7 @@ namespace Dignite.Abp.BlobStoringManagement
             Configure<DigniteBlobEntityResolveOptions>(options =>
             {
                 options.BlobEntityResolvers.Add(new QueryStringBlobEntityResolveContributor());
+                options.BlobEntityResolvers.Add(new BodyStringBlobEntityResolveContributor());
             });
         }
     }

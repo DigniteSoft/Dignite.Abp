@@ -16,7 +16,11 @@ namespace Dignite.Abp.BlobStoring
 
         [NotNull]
         public string ContainerName { get; private set; }
+        [NotNull]
+        public string EntityType { get; set; }
 
+        [NotNull]
+        public string EntityId { get; set; }
 
         [NotNull]
         public string BlobName { get; private set; }
