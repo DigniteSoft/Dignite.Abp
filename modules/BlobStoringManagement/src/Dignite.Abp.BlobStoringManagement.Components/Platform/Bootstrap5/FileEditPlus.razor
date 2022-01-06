@@ -1,0 +1,23 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@inherits Components.Core.FileEditPlus
+<Control Role="ControlRole.File">
+    <div style="position:relative;display:inline-block;" class="@Class">
+        <input style="position: absolute;width: 100%;height: 100%;opacity: 0;top: 0;left: 0;z-index:2;"
+               @ref="@ElementRef" id="@ElementId" type="file" class="@ClassNames" disabled="@Disabled" readonly="@ReadOnly" multiple="@Multiple" accept="@Filter" tabindex="@TabIndex" @onkeydown="@OnKeyDownHandler" @onkeypress="@OnKeyPressHandler" @onkeyup="@OnKeyUpHandler" @onblur="@OnBlurHandler" @onfocus="@OnFocusHandler" @onfocusin="@OnFocusInHandler" @onfocusout="@OnFocusOutHandler" @attributes="@Attributes" />
+        @if (Content == null)
+        {
+            <span>
+                <span>Click to Upload</span>
+            </span>
+        }
+        else
+        {
+            @Content
+        }
+    </div>
+    @Feedback
+</Control>
+@code {
+    string SelectedFilenamesString => string.Join(", ", SelectedFileNames);
+    bool HasSelectedFileNames => SelectedFileNames.Any();
+}
