@@ -257,3 +257,5 @@ host/Dignite.Abp.NotificationCenter.HttpApi.Host/Logs/logs.txt
 host/Dignite.Abp.NotificationCenter.Web.Host/Logs/logs.txt
 host/Dignite.Abp.NotificationCenter.Web.Unified/Logs/logs.txt
 host/Dignite.Abp.NotificationCenter.Blazor.Server.Host/Logs/logs.txt
+host/Dignite.Abp.NotificationCenter.Web.Host/wwwroot/libs/*
+host/Dignite.Abp.NotificationCenter.IdentityServer/wwwroot/libs/*
