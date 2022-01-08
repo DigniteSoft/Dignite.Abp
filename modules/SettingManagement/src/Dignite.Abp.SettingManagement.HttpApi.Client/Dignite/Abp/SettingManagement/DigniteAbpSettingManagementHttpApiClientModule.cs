@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Http.Client;
 using Volo.Abp.Modularity;
+using Volo.Abp.VirtualFileSystem;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -15,6 +16,11 @@ namespace Dignite.Abp.SettingManagement
                 typeof(DigniteAbpSettingManagementApplicationContractsModule).Assembly,
                 SettingManagementRemoteServiceConsts.RemoteServiceName
             );
+
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.AddEmbedded<DigniteAbpSettingManagementHttpApiClientModule>();
+            });
         }
     }
 }

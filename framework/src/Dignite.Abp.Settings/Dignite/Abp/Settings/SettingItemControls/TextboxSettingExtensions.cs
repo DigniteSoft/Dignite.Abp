@@ -14,7 +14,7 @@ namespace Dignite.Abp.Settings.SettingItemControls
             var textboxConfiguration = new TextboxConfiguration(new FieldControlConfigurationDictionary());
             textboxConfigureAction(textboxConfiguration);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, textboxConfiguration);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, textboxConfiguration.GetConfiguration());
             settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, TextboxFieldControlProvider.ProviderName);
 
             return settingDefinition;

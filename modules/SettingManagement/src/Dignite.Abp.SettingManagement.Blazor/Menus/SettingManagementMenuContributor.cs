@@ -16,7 +16,11 @@ namespace Dignite.Abp.SettingManagement.Blazor.Menus
         private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
         {
             //Add main menu items.
-            context.Menu.AddItem(new ApplicationMenuItem(SettingManagementMenus.Prefix, displayName: "SettingManagement", "/SettingManagement", icon: "fa fa-globe"));
+            context.Menu.AddItem(new ApplicationMenuItem(
+                SettingManagementMenus.Prefix, 
+                displayName: "SettingManagement", 
+                "/SettingManagement/global", 
+                icon: "fa fa-cog"));
             
             return Task.CompletedTask;
         }

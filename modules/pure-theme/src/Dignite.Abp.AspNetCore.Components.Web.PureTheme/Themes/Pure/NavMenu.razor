@@ -2,9 +2,12 @@
 {
     <ul class="navbar-nav mx-auto main-navbar-nav">
     @foreach (var menuItem in Menu.Items)
-    {
-        <li class="nav-item">
-            <NavLink class="nav-link" href="@GetNavUrl(menuItem)" target="@menuItem.Target">
+    {        
+        var elementId = menuItem.ElementId ?? "MenuItem_" + menuItem.Name.Replace(".", "_");
+        var cssClass = string.IsNullOrEmpty(menuItem.CssClass) ? string.Empty : menuItem.CssClass;
+        var disabled = menuItem.IsDisabled ? "disabled" : string.Empty;
+        <li class="nav-item @cssClass @disabled" id="@elementId">
+            <NavLink class="nav-link" href="@GetNavUrl(menuItem)" target="@menuItem.Target" Match="NavLinkMatch.All">
                 @if (menuItem.Icon != null)
                 {
                     <i class="nav-link-icon @menuItem.Icon"></i>

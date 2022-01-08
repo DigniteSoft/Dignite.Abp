@@ -9,10 +9,11 @@ namespace Dignite.Abp.FieldCustomizing
     public class BasicCustomizeFieldDefinition
     {
 
-        public BasicCustomizeFieldDefinition(string name, string displayName, string defaultValue, FieldControlConfigurationDictionary configuration)
+        public BasicCustomizeFieldDefinition(string name, string displayName, string fieldControlProviderName, string defaultValue, FieldControlConfigurationDictionary configuration)
         {
             Name = name;
             DisplayName = displayName;
+            FieldControlProviderName=fieldControlProviderName;
             DefaultValue = defaultValue;
             Configuration = configuration;
         }

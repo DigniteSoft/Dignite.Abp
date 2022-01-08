@@ -19,7 +19,6 @@ namespace Dignite.Abp.SettingManagement
         {
         }
 
-
         protected override async Task UpdateAsync(string name, string value)
         {
             await SettingManager.SetGlobalAsync(name, value);
@@ -28,6 +27,11 @@ namespace Dignite.Abp.SettingManagement
         protected override async Task<List<SettingValue>> GetSettingValues()
         {
             return await SettingManager.GetAllGlobalAsync();
+        }
+
+        public async Task UpdateAsync(UpdateGlobalSettingsInput input)
+        {
+            await base.UpdateAsync(input);
         }
     }
 }

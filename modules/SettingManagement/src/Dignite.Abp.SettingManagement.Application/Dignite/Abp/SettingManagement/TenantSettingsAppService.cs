@@ -9,7 +9,7 @@ using ISettingDefinitionManager = Dignite.Abp.Settings.IDigniteSettingDefinition
 namespace Dignite.Abp.SettingManagement
 {
     [Authorize(SettingManagementPermissions.Tenant)]
-    public class TenantSettingsAppService : SettingsAppServiceBase, IGlobalSettingsAppService
+    public class TenantSettingsAppService : SettingsAppServiceBase, ITenantSettingsAppService
     {
         public TenantSettingsAppService(
             ISettingDefinitionManager settingDefinitionManager,
@@ -19,6 +19,11 @@ namespace Dignite.Abp.SettingManagement
         {
         }
 
+
+        public async Task UpdateAsync(UpdateTenantSettingsInput input)
+        {
+            await base.UpdateAsync(input);
+        }
 
         protected override async Task UpdateAsync(string name, string value)
         {

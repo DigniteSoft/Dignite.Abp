@@ -12,7 +12,7 @@ namespace Dignite.Abp.SettingManagement
             string description, 
             string value,
             string fieldControlProviderName,
-            FieldControlConfigurationBase fieldControlConfiguration)
+            FieldControlConfigurationDictionary fieldControlConfiguration)
         {
             GroupName = groupName;
             Name = name;
@@ -33,6 +33,6 @@ namespace Dignite.Abp.SettingManagement
 
         public string FieldControlProviderName { get; }
 
-        public FieldControlConfigurationBase FieldControlConfiguration { get; }
+        public FieldControlConfigurationDictionary FieldControlConfiguration { get; }
     }
 }

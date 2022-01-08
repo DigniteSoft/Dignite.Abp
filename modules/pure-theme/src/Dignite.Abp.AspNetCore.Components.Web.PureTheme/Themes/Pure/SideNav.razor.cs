@@ -49,15 +49,17 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 
         private void OnLocationChanged(object sender, LocationChangedEventArgs e)
         {
+            /*
             if (RootMenuItem != null && RootMenuItem.Items != null)
             {
-                var location = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
+                var location = e.Location.Replace(NavigationManager.BaseUri, "");
                 //如果当前的导航菜单包含当前URL，则不需要重新
                 if (RootMenuItem.Items.Any(i => i != null && i.Url != null && location.StartsWith(i.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)))
                 {
                     return;
                 }
             }
+            */
 
             //根据新页面url查询根菜单
             FindRootMenuItem(e.Location);
@@ -70,26 +72,23 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 
         private void FindRootMenuItem(string location)
         {
-            location = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
-
+            location = location.Replace(NavigationManager.BaseUri, "");
             var mainMenu = (MenuManager.GetMainMenuAsync()).Result;
-            RootMenuItem = mainMenu.Items?.FirstOrDefault(i => i != null && i.Url != null && location.StartsWith(i.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase));
+            RootMenuItem = mainMenu.Items.FirstOrDefault(menu =>
+                menu.Url!=null && !menu.Url.TrimStart('/', '~').IsNullOrEmpty() && location.StartsWith(menu.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)
+                );
             if (RootMenuItem == null)
             {
                 foreach (var topMenuItem in mainMenu.Items)
                 {
-                    if (RootMenuItem == null)
-                    {
-                        FindRootMenuItemFromChildren(topMenuItem, topMenuItem.Items, location);
-                    }
+                    FindRootMenuItemWithChildren(topMenuItem, topMenuItem.Items, location);
                 }
             }
-
         }
 
-        private void FindRootMenuItemFromChildren(ApplicationMenuItem topMenuItem, ApplicationMenuItemList menuItems, string location)
+        private void FindRootMenuItemWithChildren(ApplicationMenuItem topMenuItem, ApplicationMenuItemList menuItems, string location)
         {
-            var menu = menuItems?.FirstOrDefault(i => i != null && i.Url != null && location.StartsWith(i.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase));
+            var menu = menuItems.FirstOrDefault(menu => menu.Url != null && location.StartsWith(menu.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase));
             if (menu != null)
             {
                 RootMenuItem = topMenuItem;
@@ -99,7 +98,7 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
             {
                 foreach (var menuItem in menuItems)
                 {
-                    FindRootMenuItemFromChildren(topMenuItem, menuItem.Items, location);
+                    FindRootMenuItemWithChildren(topMenuItem, menuItem.Items, location);
                 }
             }
         }

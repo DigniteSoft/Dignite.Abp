@@ -1,0 +1,31 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Textbox
+@inherits FieldControlComponentBase
+
+<TextEdit Placeholder="@Configuration.Placeholder" Text="@Parameter.Value?.ToString()" TextChanged="@OnValueChanged" />
+
+
+@code{
+
+    public override Type FieldControlProviderType => typeof(TextboxFieldControlProvider);
+
+
+
+    public TextboxConfiguration Configuration { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Configuration = new TextboxConfiguration(Parameter.Configuration);
+    }
+
+    Task OnValueChanged( string value )
+    {
+        Parameter.Value = value;
+
+        return Task.CompletedTask;
+    }
+}

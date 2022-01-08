@@ -1,0 +1,23 @@
+@page "/SettingManagement/global"
+@using Dignite.Abp.FieldCustomizing.Blazor
+
+@if(SettingNavigations!=null)
+{
+@foreach(var settingNav in SettingNavigations)
+{
+    <h1>
+        @settingNav.DisplayName
+    </h1>
+    @foreach (var setting in settingNav.Settings)
+    {
+        var component = fieldControlComponentSelector.Get(setting.FieldControlProviderName);
+        var parameters = new Dictionary<string, object>();
+        parameters.Add("Parameter", fieldControlComponentParameters.First(fc => fc.Name == setting.Name));
+        <div>
+            <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
+        </div>
+    }
+
+    <button type="button" class="btn" @onclick="SaveAsync">±£´æ</button>
+}
+}

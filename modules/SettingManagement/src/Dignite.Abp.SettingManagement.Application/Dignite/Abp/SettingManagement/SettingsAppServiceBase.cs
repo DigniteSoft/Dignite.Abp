@@ -12,7 +12,7 @@ using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.SettingManagement
 {
-    public abstract class SettingsAppServiceBase : SettingManagementAppServiceBase, ISettingsAppService
+    public abstract class SettingsAppServiceBase : SettingManagementAppServiceBase
     {
         protected ISettingDefinitionManager SettingDefinitionManager { get; }
         protected ISettingManager SettingManager { get; }
@@ -39,7 +39,7 @@ namespace Dignite.Abp.SettingManagement
                 var settingDefinitions = nav.SettingDefinitions.Where(sd => 
                     settingValues.Any(sv => sv.Name == sd.Name)
                     && sd.GetFieldControlConfigurationOrNull()!=null
-                    );
+                    ).ToList();
                 if (settingDefinitions.Any())
                 {
                     var settings = new List<SettingDto>();
@@ -50,7 +50,7 @@ namespace Dignite.Abp.SettingManagement
                             group == null ? null : group.Localize(StringLocalizerFactory),
                             sd.Name,
                             sd.DisplayName.Localize(StringLocalizerFactory),
-                            sd.Description.Localize(StringLocalizerFactory),
+                            sd.Description==null?null:sd.Description.Localize(StringLocalizerFactory),
                             settingValues.Single(sv => sv.Name == sd.Name).Value,
                             sd.GetFieldControlProviderNameOrNull(),
                             sd.GetFieldControlConfigurationOrNull()
@@ -69,7 +69,7 @@ namespace Dignite.Abp.SettingManagement
                 new ListResultDto<SettingNavigationDto>(navigationList);
         }
 
-        public async Task UpdateAsync( UpdateSettingsInput input)
+        protected async Task UpdateAsync(UpdateSettingsInput input)
         {
             var navigation = SettingDefinitionManager.GetNavigation(input.NavigationName);
             var settingDefinitions = navigation.SettingDefinitions;

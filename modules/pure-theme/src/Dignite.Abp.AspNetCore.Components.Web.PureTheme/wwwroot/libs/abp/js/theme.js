@@ -2,10 +2,10 @@
 //主菜单的切换
 window.mainMenuToggle = (isHaveChildMenus) => {
     if (isHaveChildMenus === false) {
-        document.body.classList.add("no-child-menu");
+        document.body.classList.add("no-side-navbar");
     }
     else {
-        document.body.classList.remove("no-child-menu");
+        document.body.classList.remove("no-side-navbar");
     }
 };
 

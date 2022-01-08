@@ -21,6 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dignite.Abp.SettingManagement.Application.Contracts\Dignite.Abp.SettingManagement.Application.Contracts.csproj" />
+		<ProjectReference Include="..\..\..\..\framework\src\Dignite.Abp.Settings\Dignite.Abp.Settings.csproj" />
   </ItemGroup>
-
 </Project>

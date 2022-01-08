@@ -4,7 +4,7 @@ namespace Dignite.Abp.SettingManagement
 {
     public class SettingManagementPermissions
     {
-        public const string GroupName = "SettingManagement";
+        public const string GroupName = "DigniteSettingManagement";
 
         public const string Global = GroupName + ".Global";
 

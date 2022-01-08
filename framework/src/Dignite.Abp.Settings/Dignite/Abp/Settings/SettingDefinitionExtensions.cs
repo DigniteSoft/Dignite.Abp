@@ -7,14 +7,14 @@ namespace Dignite.Abp.Settings
 {
     public static class SettingDefinitionExtensions
     {
-        public static FieldControlConfigurationBase GetFieldControlConfigurationOrNull(
+        public static FieldControlConfigurationDictionary GetFieldControlConfigurationOrNull(
             this SettingDefinition setting)
         {
             var controlConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ControlConfigurationName);
             if (controlConfiguration == null)
                 return null;
             else
-                return (FieldControlConfigurationBase)controlConfiguration;
+                return (FieldControlConfigurationDictionary)controlConfiguration;
         }
 
         public static string GetFieldControlProviderNameOrNull(
