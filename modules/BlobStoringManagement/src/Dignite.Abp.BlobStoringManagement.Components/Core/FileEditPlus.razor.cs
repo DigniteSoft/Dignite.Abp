@@ -17,7 +17,7 @@ namespace Dignite.Abp.BlobStoringManagement.Components.Core
         /// 按钮样式
         /// </summary>
         [Parameter]
-        public RenderFragment? Content { get; set; }
+        public RenderFragment Content { get; set; }
 
         public string FileName { get; set; }
         public double Percentage { get; set; }
