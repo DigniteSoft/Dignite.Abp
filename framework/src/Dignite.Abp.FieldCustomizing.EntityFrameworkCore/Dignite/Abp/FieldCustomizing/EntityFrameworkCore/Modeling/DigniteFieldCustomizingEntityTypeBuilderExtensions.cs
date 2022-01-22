@@ -3,14 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 {
     public static class FieldsEntityTypeBuilderExtensions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="b"></param>
         public static void ConfigureCustomizableFieldDefinitions<T>(this EntityTypeBuilder<T> b)
             where T : class, ICustomizeFieldDefinition
         {
@@ -34,6 +37,11 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
                 .Metadata.SetValueComparer(new CustomizedFieldControlConfigurationDictionaryValueComparer());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="b"></param>
         public static void ConfigureObjectCustomizedFields<T>(this EntityTypeBuilder<T> b)
             where T : class, IHasCustomizableFields
         {
