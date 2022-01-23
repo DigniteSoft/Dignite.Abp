@@ -319,10 +319,8 @@ ul.page-toolbar {
 }
 
 ul.page-toolbar > li{
+    margin-left:0.5rem;
 }
-    ul.page-toolbar > li >.btn {
-        margin-left:0.5rem;
-    }
 
 .page-footer {
     position: sticky;
