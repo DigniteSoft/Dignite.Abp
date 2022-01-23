@@ -173,6 +173,10 @@ div.dataTables_wrapper div.dataTables_length label {
         width: 75vw;
         left: -75vw;
     }
+    .abp-application-layout.no-side-navbar .side-navbar {
+        /*无子菜单时隐藏侧边栏*/
+        left: -75vw;
+    }
     .side-navbar.show {
         left: 0vw;
     }
@@ -297,15 +301,34 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .page-header {
     position: sticky;
-    top: 84px;
+    top: 64px;
     left: 0px;
     background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-between !important;
+    padding:20px 0px;
+    margin-top:-20px;
+    z-index:1020;
 }
+
+ul.page-toolbar {
+    list-style:none;
+    padding:0px;
+    margin:0px;
+    display:flex;
+}
+
+ul.page-toolbar > li{
+}
+    ul.page-toolbar > li >.btn {
+        margin-left:0.5rem;
+    }
 
 .page-footer {
     position: sticky;
     bottom: 0px;
     left: 0px;
+    background-color: #f8f9fa;
 }
 
 @media (max-width: 576px) {
