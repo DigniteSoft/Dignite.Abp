@@ -1,0 +1,16 @@
+
+
+.ant-page-header {
+    position: sticky !important;
+    top: 64px;
+    left: 0px;
+    padding:0px !important;
+    z-index:1020;
+}
+
+
+@media (max-width: 576px) {
+    .ant-page-header {
+        top: 0px;
+    }
+}

@@ -143,9 +143,13 @@ div.dataTables_wrapper div.dataTables_length label {
     overflow: auto;
 }
 
+.side-navbar-container >.nav {
+    padding-top:15px;
+}
+
 .side-nav-group-title {
     font-size: 0.9rem;
-    padding: 30px 15px 0px 15px;
+    padding: 15px 15px 0px 15px;
     color: rgba(0,0,0,.54);
 }
 
@@ -156,7 +160,12 @@ div.dataTables_wrapper div.dataTables_length label {
 
 .side-navbar .nav-pills .nav-link {
     color: #000;
-    margin-bottom: 3px;
+    margin-bottom:0.25rem;
+}
+.side-navbar .nav-pills .nav-link .nav-link-icon {
+    display:inline-block;
+    width:30px;
+    text-align:center;
 }
 
     .side-navbar .nav-pills .nav-link:hover,
@@ -295,38 +304,18 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 /*page container*/
 .page-container {
-    padding-top: 20px;
-    padding-bottom: 64px;
+    padding-top: 15px;
+    padding-bottom: 0px;
+    position:relative;
 }
 
 .page-header {
-    position: sticky;
+    position: sticky !important;
     top: 64px;
     left: 0px;
     background-color: #f8f9fa;
-    display: flex;
-    justify-content: space-between !important;
-    padding:20px 0px;
-    margin-top:-20px;
+    padding:15px 0px !important;
     z-index:1020;
-}
-
-ul.page-toolbar {
-    list-style:none;
-    padding:0px;
-    margin:0px;
-    display:flex;
-}
-
-ul.page-toolbar > li{
-    margin-left:0.5rem;
-}
-
-.page-footer {
-    position: sticky;
-    bottom: 0px;
-    left: 0px;
-    background-color: #f8f9fa;
 }
 
 @media (max-width: 576px) {

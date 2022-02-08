@@ -11,12 +11,24 @@
                 <h3 class="side-nav-group-title">@item.DisplayName</h3>
                     @foreach (var cItem in item.Items)
                     {
-                <NavLink class="nav-link" href="@cItem.Url.TrimStart('/', '~')" target="@cItem.Target">@cItem.DisplayName</NavLink>       
+                <NavLink class="nav-link" href="@cItem.Url.TrimStart('/', '~')" target="@cItem.Target">
+                    @if (cItem.Icon != null)
+                    {
+                        <i class="nav-link-icon @cItem.Icon"></i> 
+                    }
+                 @cItem.DisplayName
+                 </NavLink>       
                     }
                 }
             else
             {
-            <NavLink class="nav-link" href="@item.Url.TrimStart('/', '~')" target="@item.Target">@item.DisplayName</NavLink>
+            <NavLink class="nav-link" href="@item.Url.TrimStart('/', '~')" target="@item.Target">
+                @if (item.Icon != null)
+                    {
+                        <i class="nav-link-icon @item.Icon"></i> 
+                    }
+                 @item.DisplayName
+                 </NavLink>
             }
        }
     </nav>
