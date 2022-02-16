@@ -1,4 +1,6 @@
-
+body {
+    font-size:1rem;
+}
 
 .ant-page-header {
     position: sticky !important;

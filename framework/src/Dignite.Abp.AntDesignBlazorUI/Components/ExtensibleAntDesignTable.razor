@@ -61,18 +61,32 @@
                     {
                         if (!ExtensionPropertiesRegex.IsMatch(column.Data))
                         {
+                            var propertyInfo = context.GetType().GetProperties().First(p => p.Name == column.Data);
+                            var dataType = propertyInfo.PropertyType;
+                            var data = propertyInfo.GetValue(context);
                             @if (column.ValueConverter == null)
                             {
+                                if (dataType==typeof(DateTime?))
+                                {
+                                var sdf = (DateTime?)data;
                                 <Column 
-                                        Field="@column.Data" 
+                                        Field="@sdf" 
                                         Title="@column.Title" 
                                         Sortable="@column.Sortable"
                                         Format="@column.DisplayFormat" />
+                                }
+                                else{
+                                <Column 
+                                        Field="data" 
+                                        Title="@column.Title" 
+                                        Sortable="@column.Sortable"
+                                        Format="@column.DisplayFormat" />
+                                }
                             }
                             else
                             {
                                 <Column 
-                                        Field="@column.Data" 
+                                        Field="@(context.GetType().GetProperties().First(p=>p.Name==column.Data).GetValue(context))" 
                                         Title="@column.Title" 
                                         Sortable="@column.Sortable">
                                         @(GetConvertedFieldValue(context, column))
