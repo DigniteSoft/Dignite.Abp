@@ -5,9 +5,9 @@ using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing.Blazor
 {
-    public abstract class FieldControlComponentBase:AbpComponentBase, IFieldControlComponent, ITransientDependency
+    public abstract class FieldControlConfigurationComponentBase : AbpComponentBase, IFieldControlConfigurationComponent, ITransientDependency
     {
-        protected FieldControlComponentBase()
+        protected FieldControlConfigurationComponentBase()
         {
             LocalizationResource = typeof(DigniteAbpFieldCustomizingModule);
         }
@@ -15,6 +15,6 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
         public abstract Type FieldControlProviderType { get; }
 
         [Parameter]
-        public CustomizeField CustomizeField { get; set; }
+        public ICustomizeFieldDefinition Definition { get; set; }
     }
 }

@@ -1,13 +1,17 @@
-﻿namespace Dignite.Abp.FieldCustomizing.FieldControls.Textbox
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Dignite.Abp.FieldCustomizing.FieldControls.Textbox
 {
     public class TextboxConfiguration:FieldControlConfigurationBase
     {
+        [StringLength(256)]
         public string Placeholder
         {
             get => _fieldControlConfiguration.GetConfigurationOrDefault<string>(TextboxConfigurationNames.Placeholder, null);
             set => _fieldControlConfiguration.SetConfiguration(TextboxConfigurationNames.Placeholder, value);
         }
 
+        [Required]
         public TextboxMode Mode
         {
             get => _fieldControlConfiguration.GetConfigurationOrDefault(TextboxConfigurationNames.Mode, TextboxMode.SingleLine);

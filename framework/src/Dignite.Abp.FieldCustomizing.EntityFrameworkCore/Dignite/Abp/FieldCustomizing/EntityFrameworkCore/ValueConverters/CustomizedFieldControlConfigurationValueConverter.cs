@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
@@ -22,12 +24,8 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
         {
             var serializeOptions = new JsonSerializerOptions
             {
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-                Converters =
-                    {
-                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-                    }
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
             };
             return JsonSerializer.Serialize(extraProperties, serializeOptions);
         }

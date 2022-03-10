@@ -1,5 +1,7 @@
 ﻿
 
+using System.ComponentModel.DataAnnotations;
+
 namespace Dignite.Abp.FieldCustomizing.FieldControls
 {
     public abstract class FieldControlConfigurationBase
@@ -12,6 +14,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls
             set => _fieldControlConfiguration.SetConfiguration(FieldControlConfigurationNames.Required, value);
         }
 
+        [StringLength(256)]
         public string Description
         {
             get => _fieldControlConfiguration.GetConfigurationOrDefault<string>(FieldControlConfigurationNames.Description, null);

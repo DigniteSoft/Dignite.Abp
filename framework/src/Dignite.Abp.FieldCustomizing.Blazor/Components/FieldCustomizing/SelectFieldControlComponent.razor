@@ -1,0 +1,68 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Select
+@using Dignite.Abp.FieldCustomizing
+@inherits FieldControlComponentBase
+
+<Validation Validator="@ValidateIsRequired">
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Select TValue="string" SelectedValue="@(CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString())" SelectedValueChanged="@OnSelectedValueChanged" Multiple="@Configuration.Multiple">
+                @if (!Configuration.NullText.IsNullOrEmpty() && !Configuration.Multiple)
+                {
+                    <SelectItem Value="@Configuration.NullText">@Configuration.NullText</SelectItem>
+                }
+                @foreach(var option in Configuration.Options)
+                {
+                    <SelectItem Value="@option.Value">@option.Text</SelectItem>
+                }
+            </Select>
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+</Validation>
+
+
+@code{
+    public override Type FieldControlProviderType => typeof(SelectFieldControlProvider);
+
+    public SelectConfiguration Configuration { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new SelectConfiguration(CustomizeField.Definition.Configuration);
+
+        //
+        if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name) == null)
+        {
+            if (Configuration.Options.Any(o => o.Selected))
+            {
+                CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Configuration.Options.First(o=>o.Selected).Value);
+            }
+            else
+            {
+                if (Configuration.NullText.IsNullOrEmpty() && Configuration.Options.Any())
+                {
+                    CustomizeField.Entity.SetField (CustomizeField.Definition.Name, Configuration.Options.First().Value);                    
+                }
+            }
+        }
+    }
+
+    void ValidateIsRequired( ValidatorEventArgs e )
+    {
+        if(Configuration.Required)
+        {
+            e.Status = (e.Value == null || e.Value.ToString()==Configuration.NullText) ? ValidationStatus.Error : ValidationStatus.Success;
+        }
+    }
+
+    Task OnSelectedValueChanged( string value )
+    {
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, value);
+
+        return Task.CompletedTask;
+    }
+
+}
