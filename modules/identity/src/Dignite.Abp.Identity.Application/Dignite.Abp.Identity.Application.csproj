@@ -1,24 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\..\..\configureawait.props" />
-  <Import Project="..\..\..\..\common.props" />
+	<Import Project="..\..\..\..\configureawait.props" />
+	<Import Project="..\..\..\..\common.props" />
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>Dignite.Abp.Identity.Application</AssemblyName>
-    <PackageId>Dignite.Abp.Identity.Application</PackageId>
-    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <RootNamespace />
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Volo.Abp.Identity.Application" Version="5.0.0" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<AssemblyName>Dignite.Abp.Identity.Application</AssemblyName>
+		<PackageId>Dignite.Abp.Identity.Application</PackageId>
+		<AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+		<GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+		<GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<RootNamespace />
+	</PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Volo.Abp.Identity.Application" Version="5.1.4" />
     <ProjectReference Include="..\Dignite.Abp.Identity.Application.Contracts\Dignite.Abp.Identity.Application.Contracts.csproj" />
   </ItemGroup>
 

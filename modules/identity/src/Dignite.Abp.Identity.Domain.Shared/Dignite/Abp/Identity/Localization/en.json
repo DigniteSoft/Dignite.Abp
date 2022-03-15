@@ -1,0 +1,10 @@
+{
+  "culture": "en",
+  "texts": {
+    "New": "New",
+    "AddUnit": "Add Unit",
+    "AddUser": "Add User",
+    "AddRoles": "Add Roles",
+    "OrganizationUnits": "Organization Units"
+  }
+}

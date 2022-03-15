@@ -2,6 +2,7 @@
 using Volo.Abp.Http.Client;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
+using Volo.Abp.VirtualFileSystem;
 
 namespace Dignite.Abp.Identity
 {
@@ -11,14 +12,17 @@ namespace Dignite.Abp.Identity
       typeof(AbpHttpClientModule))]
     public class DigniteAbpIdentityHttpApiClientModule : AbpModule
     {
-        public const string RemoteServiceName = "DigniteAbpIdentity";
-
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
-            context.Services.AddHttpClientProxies(
+            context.Services.AddStaticHttpClientProxies(
                 typeof(DigniteAbpIdentityApplicationContractsModule).Assembly,
-                RemoteServiceName
+                Volo.Abp.Identity.IdentityRemoteServiceConsts.RemoteServiceName
             );
+
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.AddEmbedded<DigniteAbpIdentityHttpApiClientModule>();
+            });
         }
     }
 }

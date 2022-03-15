@@ -1,0 +1,85 @@
+﻿@using Dignite.Abp.Identity
+@using AntDesign
+@inherits AbpComponentBase
+@code {
+    [Parameter]public EventCallback<TreeEventArgs<OrganizationUnitDto>> OnNodeClickCallback { get; set; }
+
+    [Inject] IOrganizationUnitAppService OrganizationUnitAppService { get; set; }
+
+    private IReadOnlyList<OrganizationUnitDto> OrganizationUnits = new List<OrganizationUnitDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        OrganizationUnits= (await OrganizationUnitAppService.GetChildrenAsync(null,false)).Items;
+    }
+
+    void onDrop(TreeEventArgs<OrganizationUnitDto> e)
+    {
+        TreeNode<OrganizationUnitDto> parentNode = GetParentNode(e.Node, e.TargetNode);
+
+        e.Node.DataItem.ParentId = parentNode == null ? null : parentNode.DataItem.Id;
+
+        OrganizationUnitAppService.MoveAsync(e.Node.DataItem.Id, new OrganizationUnitMoveInput
+        {
+            ParentId=e.Node.DataItem.ParentId,
+            BeforeOrganizationUnitId=null
+        });
+
+    }
+
+    async Task OnNodeLoadDelayAsync(TreeEventArgs<OrganizationUnitDto> args)
+    {
+        var dataItem = args.Node.DataItem;
+        dataItem.Children = (await OrganizationUnitAppService.GetChildrenAsync(dataItem.Id, false)).Items.ToList();
+    }
+
+
+    /// <summary>
+    /// 获取拖拽后父级节点
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="targetNode"></param>
+    /// <returns></returns>
+    TreeNode<OrganizationUnitDto> GetParentNode(TreeNode<OrganizationUnitDto> node, TreeNode<OrganizationUnitDto> targetNode)
+    {
+        TreeNode<OrganizationUnitDto> parentNode = null; //
+        var targetParentNode = targetNode.ParentNode;
+
+        /*
+            如果目标节点的父级为null，判断目标节点中是否含有移动的节点，如果包含，移动节点的新父级节点为目标节点；
+            如果目标节点父级不为null，判断目标节点父级的子节点中是否含有移动的节点，如果包含，移动节点的新父级节点为目标节点的父级节点，如果不包含，移动节点的新父级节点为目标节点；
+            */
+        if (targetParentNode == null)
+        {
+            if (targetNode.DataItem.Children.Any(p => p.Id == node.DataItem.Id))
+            {
+                parentNode = targetNode;
+            }
+        }
+        else
+        {
+            if (targetParentNode.DataItem.Children.Any(p => p.Id == node.DataItem.Id))
+            {
+                parentNode = targetParentNode;
+            }
+            else
+            {
+                parentNode = targetNode;
+            }
+        }
+
+        return parentNode;
+    }
+}
+
+<AntDesign.Tree DefaultExpandAll Draggable BlockNode
+        ShowIcon DataSource="OrganizationUnits"
+        TitleExpression="x => x.DataItem.DisplayName"
+        ChildrenExpression="x => x.DataItem.Children"
+        IsLeafExpression="x => x.DataItem.ChildrenCount == 0"
+        KeyExpression="x => x.DataItem.Id.ToString()"
+        OnNodeLoadDelayAsync="OnNodeLoadDelayAsync"
+        TItem="OrganizationUnitDto" OnDragEnd="e=> { }" OnDrop="onDrop"  OnClick="OnNodeClickCallback">
+</AntDesign.Tree>

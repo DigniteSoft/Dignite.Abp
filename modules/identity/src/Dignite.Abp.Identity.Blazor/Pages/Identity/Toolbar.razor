@@ -1,0 +1,20 @@
+﻿@using Microsoft.Extensions.Localization
+@using global::Dignite.Abp.Identity.Localization
+
+@inject IStringLocalizer<DigniteAbpIdentityResource> L
+@inherits AbpComponentBase
+
+<Dropdown RightAligned="true">
+    <DropdownToggle Color="Color.Primary">
+        <Icon Name="IconName.PlusCircle" /> @L["New"]
+    </DropdownToggle>
+    <DropdownMenu>
+        <DropdownItem>@L["AddUnit"]</DropdownItem>
+        <DropdownItem>@L["AddUser"]</DropdownItem>
+        <DropdownItem>@L["AddRoles"]</DropdownItem>
+    </DropdownMenu>
+</Dropdown>
+
+@code {
+
+}

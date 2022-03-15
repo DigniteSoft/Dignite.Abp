@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
@@ -7,6 +8,12 @@ namespace Dignite.Abp.Identity
 {
     public class OrganizationUnitDto:ExtensibleEntityDto<Guid>
     {
+        public OrganizationUnitDto()
+        {
+            Children = new List<OrganizationUnitDto>();
+        }
+
+
         /// <summary>
         /// Parent <see cref="OrganizationUnitDto"/> Id.
         /// Null, if this OU is a root.
@@ -25,6 +32,9 @@ namespace Dignite.Abp.Identity
         /// Display name of this OrganizationUnit.
         /// </summary>
         public virtual string DisplayName { get; set; }
+
+
+        public IList<OrganizationUnitDto> Children { get; set; }
 
         /// <summary>
         /// 

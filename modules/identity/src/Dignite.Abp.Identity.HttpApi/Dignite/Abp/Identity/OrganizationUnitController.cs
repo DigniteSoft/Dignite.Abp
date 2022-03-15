@@ -7,7 +7,9 @@ using Volo.Abp.Identity;
 
 namespace Dignite.Abp.Identity
 {
-    [RemoteService]
+    [RemoteService(Name = Volo.Abp.Identity.IdentityRemoteServiceConsts.RemoteServiceName)]
+    [Area(IdentityRemoteServiceConsts.ModuleName)]
+    [ControllerName("OrganizationUnit")]
     [Route("api/identity/organization-units")]
     public class OrganizationUnitController : DigniteAbpIdentityController, IOrganizationUnitAppService
     {

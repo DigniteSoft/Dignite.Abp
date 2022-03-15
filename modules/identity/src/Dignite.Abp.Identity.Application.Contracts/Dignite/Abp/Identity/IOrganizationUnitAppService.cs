@@ -19,7 +19,7 @@ namespace Dignite.Abp.Identity
         /// <summary>
         /// 获取授权给当前用户的组织，即包含当前用户的组织；
         /// 如果当前用户拥有<see cref="OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization"/>权限，则获取所有组织；
-        /// 不包括子组织；
+        /// 返回的结果中不包括授权组织单元下的子组织机构；
         /// </summary>
         /// <returns></returns>
         Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync();

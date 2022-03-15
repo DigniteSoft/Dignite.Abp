@@ -7,7 +7,7 @@ namespace Dignite.Abp.Identity
     {
         protected DigniteAbpIdentityController()
         {
-            LocalizationResource = typeof(IdentityOrganizationUnitResource);
+            LocalizationResource = typeof(DigniteAbpIdentityResource);
         }
     }
 }

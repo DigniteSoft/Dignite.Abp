@@ -31,7 +31,7 @@ namespace Dignite.Abp.Identity
 
         private static LocalizableString L(string name)
         {
-            return LocalizableString.Create<IdentityOrganizationUnitResource>(name);
+            return LocalizableString.Create<DigniteAbpIdentityResource>(name);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Dignite.Abp.Identity
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources
-                    .Get<IdentityOrganizationUnitResource>()
+                    .Get<DigniteAbpIdentityResource>()
                     .AddBaseTypes(typeof(AbpUiResource));
             });
         }
