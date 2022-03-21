@@ -5,8 +5,8 @@ namespace Dignite.Abp.Identity
     public class OrganizationUnitMoveInput
     {
 
-        public Guid? ParentId { get; set; }
+        public Guid? TargetParentId { get; set; }
 
-        public Guid? BeforeOrganizationUnitId  { get;set; }
+        public Guid? TargetBeforeId  { get;set; }
     }
 }

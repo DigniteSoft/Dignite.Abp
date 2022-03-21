@@ -1,0 +1,46 @@
+﻿@using Dignite.Abp.Identity
+@using Dignite.Abp.Identity.Localization
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@using Microsoft.Extensions.Localization
+@inherits ComponentBase
+@code {
+    [Parameter] public OrganizationUnitCreateOrUpdateDtoBase Data { get; set; }
+    [Parameter] public IReadOnlyList<IdentityRoleDto> AvailableRoles { get; set; }
+    [Parameter] public AbpBlazorMessageLocalizerHelper<DigniteAbpIdentityResource> LH { get; set; }
+    [Parameter] public IStringLocalizer L { get; set; }
+
+    void OnRoleChanged( bool value,Guid id )
+    {
+        if (value)
+        {
+            Data.RoleIds.Add(id);
+        }
+        else
+        {
+            Data.RoleIds.RemoveAll(d => d == id);            
+        }
+    }
+}
+
+<Blazorise.Validation MessageLocalizer="@LH.Localize">
+    <Blazorise.Field>
+        <Blazorise.FieldLabel>@L["DisplayName"]</Blazorise.FieldLabel>
+        <Blazorise.TextEdit @bind-Text="@Data.DisplayName" Autofocus="true">
+            <Feedback>
+                <Blazorise.ValidationError/>
+            </Feedback>
+        </Blazorise.TextEdit>
+    </Blazorise.Field>
+</Blazorise.Validation>
+<Blazorise.Field>
+    <Blazorise.Check TValue="bool" @bind-Checked="Data.IsActive">@L["IsActive"]</Blazorise.Check>
+</Blazorise.Field>
+
+<Blazorise.Field>
+    <Blazorise.FieldLabel>@L["Roles"]</Blazorise.FieldLabel>
+    @foreach(var role in AvailableRoles)
+    {        
+    <Blazorise.Check TValue="bool" CheckedChanged="@(e=>OnRoleChanged(e,role.Id ))">@role.Name</Blazorise.Check>
+    }
+</Blazorise.Field>
+

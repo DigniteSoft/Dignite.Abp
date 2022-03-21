@@ -1,0 +1,119 @@
+﻿@using Dignite.Abp.Identity.Localization
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Identity
+@using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
+@using Volo.Abp.Identity.Localization;
+@using Volo.Abp.ObjectExtending
+@attribute [Authorize(IdentityPermissions.Users.Default)]
+@inherits AbpCrudPageBase<IIdentityUserAppService, IdentityUserDto, Guid, GetIdentityUsersInput, IdentityUserCreateDto, IdentityUserUpdateDto>
+
+@code {
+    private List<TableColumn> UserManagementTableColumns => TableColumns.Get<SelectUsersComponent>();
+    string filter = null;
+
+    /// <summary>
+    /// selected users
+    /// </summary>
+    public List<IdentityUserDto> SelectedUsers = new List<IdentityUserDto>();
+
+    public SelectUsersComponent()
+    {        
+        LocalizationResource = typeof(DigniteAbpIdentityResource);
+    }
+
+    protected override ValueTask SetTableColumnsAsync()
+    {
+        UserManagementTableColumns
+            .AddRange(new TableColumn[]
+            {
+                new TableColumn
+                {
+                    Data = nameof(IdentityUserDto.Id),
+                    Component = typeof(AddSelectUserComponent)
+                },
+                new TableColumn
+                {
+                    Title = L["UserName"],
+                    Data = nameof(IdentityUserDto.UserName),
+                },
+                new TableColumn
+                {
+                    Title = L["Email"],
+                    Data = nameof(IdentityUserDto.Email),
+                },
+                new TableColumn
+                {
+                    Title = L["PhoneNumber"],
+                    Data = nameof(IdentityUserDto.PhoneNumber),
+                }
+            });
+
+        UserManagementTableColumns.AddRange(
+            GetExtensionTableColumns(
+            IdentityModuleExtensionConsts.ModuleName,
+            IdentityModuleExtensionConsts.EntityNames.User
+            ));
+        return base.SetTableColumnsAsync();
+    }
+
+    protected override async Task UpdateGetListInputAsync()
+    {
+        this.GetListInput.Filter = filter;
+        await base.UpdateGetListInputAsync();
+    }
+
+    async Task OnSearchClick()
+    {
+        if (!filter.IsNullOrWhiteSpace())
+        {
+            filter = filter.Trim();
+            await SearchEntitiesAsync();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void StateChanged()
+    {
+        StateHasChanged();
+    }
+}
+
+
+<Addons Size="Size.Small">
+    <Addon AddonType="AddonType.Body">
+        <TextEdit Placeholder="@L["UsernameOrEmailOrNameOrPhoneNumber"]" @bind-Text="filter" />
+    </Addon>
+    <Addon AddonType="AddonType.End">
+        <Button Color="Color.Secondary" Clicked="OnSearchClick">
+            <Icon Name="IconName.Search" />
+        </Button>
+    </Addon>
+</Addons>
+
+<CascadingValue Value="this">
+@* ************************* DATA GRID ************************* *@
+<AbpExtensibleDataGrid TItem="IdentityUserDto"
+                        Data="Entities"
+                        ReadData="OnDataGridReadAsync"
+                        TotalItems="TotalCount"
+                        ShowPager="true"
+                        PageSize="PageSize"
+                        CurrentPage="@CurrentPage"
+                        Columns="@UserManagementTableColumns">
+</AbpExtensibleDataGrid>
+</CascadingValue>
+
+
+@if (SelectedUsers.Any())
+{
+<h6>@L["SelectedMembers"]</h6>
+    @foreach(var user in SelectedUsers)
+    {
+    <Badge Color="Color.Primary" CloseClicked="@(()=>SelectedUsers.RemoveAll(u=>u.Id==user.Id))">@user.UserName</Badge>
+    }
+}
+else
+{
+}

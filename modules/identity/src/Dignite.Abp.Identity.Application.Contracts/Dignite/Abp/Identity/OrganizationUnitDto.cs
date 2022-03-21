@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Data;
+using Volo.Abp.Domain.Entities;
 
 namespace Dignite.Abp.Identity
 {
-    public class OrganizationUnitDto:ExtensibleEntityDto<Guid>
+    public class OrganizationUnitDto:ExtensibleEntityDto<Guid>, IEquatable<OrganizationUnitDto>, IHasConcurrencyStamp
     {
-        public OrganizationUnitDto()
+        public OrganizationUnitDto():base()
         {
             Children = new List<OrganizationUnitDto>();
         }
-
 
         /// <summary>
         /// Parent <see cref="OrganizationUnitDto"/> Id.
@@ -33,13 +34,21 @@ namespace Dignite.Abp.Identity
         /// </summary>
         public virtual string DisplayName { get; set; }
 
-
-        public IList<OrganizationUnitDto> Children { get; set; }
+        public string ConcurrencyStamp { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public int ChildrenCount { get; set; }
+        [JsonInclude] 
+        public IList<OrganizationUnitDto> Children { get; protected set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonInclude]
+        public bool HasChild {
+            get; private set;
+        }
 
         /// <summary>
         /// 是否激活状态
@@ -67,6 +76,29 @@ namespace Dignite.Abp.Identity
             {
                 this.SetProperty(OrganizationUnitExtraPropertyNames.PositionName, value);
             }
+        }
+
+        public bool Equals(OrganizationUnitDto other)
+        {
+            return this.Id == other.Id;
+        }
+
+        public void AddChild(OrganizationUnitDto ou)
+        {
+            this.HaveChildren(true);
+            this.Children.Add(ou);
+        }
+
+        public void Remove(OrganizationUnitDto ou)
+        {
+            this.Children.RemoveAll(c => ou.Id == c.Id);
+            if(!Children.Any())
+                this.HaveChildren(false);
+        }
+
+        public void HaveChildren(bool isHasChild)
+        {
+            this.HasChild = isHasChild;
         }
     }
 }

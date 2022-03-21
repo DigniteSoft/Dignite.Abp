@@ -19,19 +19,6 @@ namespace Dignite.Abp.Identity
             _organizationUnitAppService = organizationUnitAppService;
         }
 
-        [HttpGet]
-        [Route("new")]
-        public async Task<GetOrganizationUnitForEditOutput> NewAsync(Guid? parentId)
-        {
-            return await _organizationUnitAppService.NewAsync(parentId);
-        }
-
-        [HttpGet]
-        [Route("{id}/edit")]
-        public Task<GetOrganizationUnitForEditOutput> GetOrganizationUnitForEditAsync(Guid id)
-        {
-            return _organizationUnitAppService.GetOrganizationUnitForEditAsync(id);
-        }
 
         [HttpPost]
         public async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateDto input)
@@ -54,9 +41,9 @@ namespace Dignite.Abp.Identity
 
         [HttpPut]
         [Route("{id}/move")]
-        public async Task MoveAsync(Guid id, OrganizationUnitMoveInput input)
+        public async Task<OrganizationUnitDto> MoveAsync(Guid id, OrganizationUnitMoveInput input)
         {
-            await _organizationUnitAppService.MoveAsync(id, input);
+            return await _organizationUnitAppService.MoveAsync(id, input);
         }
 
         [HttpGet]
@@ -67,9 +54,10 @@ namespace Dignite.Abp.Identity
         }
 
         [HttpGet]
-        public async Task<ListResultDto<OrganizationUnitDto>> SearchAsync(string filter)
+        [Route("available-roles")]
+        public async Task<ListResultDto<IdentityRoleDto>> GetAvailableRolesAsync(Guid? parentId)
         {
-            return await _organizationUnitAppService.SearchAsync(filter);
+            return await _organizationUnitAppService.GetAvailableRolesAsync(parentId);
         }
 
         [HttpGet]
@@ -77,13 +65,6 @@ namespace Dignite.Abp.Identity
         public async Task<OrganizationUnitDto> GetAsync(Guid id)
         {
             return await _organizationUnitAppService.GetAsync(id);
-        }
-
-        [HttpGet]
-        [Route("{id}/parents")]
-        public async Task<ListResultDto<OrganizationUnitDto>> GetParentsAsync(Guid id)
-        {
-            return await _organizationUnitAppService.GetParentsAsync(id);
         }
 
 
@@ -96,37 +77,30 @@ namespace Dignite.Abp.Identity
 
         [HttpGet]
         [Route("authorized")]
-        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
+        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree = false)
         {
-            return await _organizationUnitAppService.GetAuthorizedAsync();
+            return await _organizationUnitAppService.GetAuthorizedAsync(buildOrganizationUnitsTree);
         }
 
         [HttpGet]
-        [Route("children")]
-        public async Task<ListResultDto<OrganizationUnitDto>> GetChildrenAsync(Guid? parentId, bool recursive = false)
+        public async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(GetOrganizationUnitsInput input)
         {
-            return await _organizationUnitAppService.GetChildrenAsync(parentId, recursive);
+            return await _organizationUnitAppService.GetListAsync(input);
         }
 
         [HttpPost]
-        [Route("{id}/member")]
-        public async Task AddMembersAsync(Guid id, OrganizationUnitAddMembersInput input)
+        [Route("{id}/members")]
+        public async Task AddMembersAsync(Guid id, Guid[] userIds)
         {
-            await _organizationUnitAppService.AddMembersAsync(id, input);
+            await _organizationUnitAppService.AddMembersAsync(id, userIds);
         }
 
-        [HttpPut]
-        [Route("{id}/member")]
-        public async Task UpdateMemberRolesAsync(Guid id, Guid userId, OrganizationUnitUpdateMemberRolesInput input)
-        {
-            await _organizationUnitAppService.UpdateMemberRolesAsync(id, userId, input);
-        }
 
         [HttpDelete]
-        [Route("{id}/member")]
-        public async Task RemoveMembersAsync(Guid id, OrganizationUnitRemoveMembersInput input)
+        [Route("{id}/members")]
+        public async Task RemoveMembersAsync(Guid id, Guid[] userIds)
         {
-            await _organizationUnitAppService.RemoveMembersAsync(id, input);
+            await _organizationUnitAppService.RemoveMembersAsync(id, userIds);
         }
 
         [HttpGet]
@@ -136,12 +110,5 @@ namespace Dignite.Abp.Identity
             return await _organizationUnitAppService.GetMembersAsync(id, input);
         }
 
-
-        [HttpGet]
-        [Route("{id}/{userId}/assignable-roles")]
-        public async Task<ListResultDto<IdentityRoleDto>> GetMemberAssignableRolesAsync(Guid id, Guid userId)
-        {
-            return await _organizationUnitAppService.GetMemberAssignableRolesAsync(id, userId);
-        }
     }
 }

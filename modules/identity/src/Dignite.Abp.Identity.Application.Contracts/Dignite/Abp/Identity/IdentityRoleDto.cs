@@ -1,13 +1,25 @@
 ﻿using System;
-using Volo.Abp.Application.Dtos;
-using Volo.Abp.Domain.Entities;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Volo.Abp.Data;
 
 namespace Dignite.Abp.Identity
 {
-    public class IdentityRoleDto : ExtensibleEntityDto<Guid>, IHasConcurrencyStamp
+    public class IdentityRoleDto : Volo.Abp.Identity.IdentityRoleDto
     {
-        public string Name { get; set; }
+        public IdentityRoleDto()
+        {
+        }
+
+        public IdentityRoleDto(Volo.Abp.Identity.IdentityRoleDto dto)
+        {
+            Name = dto.Name;
+            IsDefault = dto.IsDefault;
+            IsStatic = dto.IsStatic;
+            IsPublic = dto.IsPublic;
+            ConcurrencyStamp= dto.ConcurrencyStamp;
+            ExtraProperties = dto.ExtraProperties;
+        }
 
         /// <summary>
         /// 上级角色ID
@@ -24,13 +36,10 @@ namespace Dignite.Abp.Identity
             }
         }
 
-
-        public bool IsDefault { get; set; }
-        
-        public bool IsStatic { get; set; }
-
-        public bool IsPublic { get; set; }
-
-        public string ConcurrencyStamp { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
+        public IList<IdentityRoleDto> Children { get; set; }
     }
 }

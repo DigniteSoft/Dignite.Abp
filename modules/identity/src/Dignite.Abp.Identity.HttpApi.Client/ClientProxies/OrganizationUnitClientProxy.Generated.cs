@@ -16,22 +16,6 @@ namespace Dignite.Abp.Identity.ClientProxies;
 [ExposeServices(typeof(IOrganizationUnitAppService), typeof(OrganizationUnitClientProxy))]
 public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganizationUnitAppService>, IOrganizationUnitAppService
 {
-    public virtual async Task<GetOrganizationUnitForEditOutput> NewAsync(Guid? parentId)
-    {
-        return await RequestAsync<GetOrganizationUnitForEditOutput>(nameof(NewAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid?), parentId }
-        });
-    }
-
-    public virtual async Task<GetOrganizationUnitForEditOutput> GetOrganizationUnitForEditAsync(Guid id)
-    {
-        return await RequestAsync<GetOrganizationUnitForEditOutput>(nameof(GetOrganizationUnitForEditAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), id }
-        });
-    }
-
     public virtual async Task<OrganizationUnitDto> CreateAsync(OrganizationUnitCreateDto input)
     {
         return await RequestAsync<OrganizationUnitDto>(nameof(CreateAsync), new ClientProxyRequestTypeValue
@@ -57,9 +41,9 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         });
     }
 
-    public virtual async Task MoveAsync(Guid id, OrganizationUnitMoveInput input)
+    public virtual async Task<OrganizationUnitDto> MoveAsync(Guid id, OrganizationUnitMoveInput input)
     {
-        await RequestAsync(nameof(MoveAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<OrganizationUnitDto>(nameof(MoveAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), id },
             { typeof(OrganizationUnitMoveInput), input }
@@ -74,25 +58,17 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         });
     }
 
-    public virtual async Task<ListResultDto<OrganizationUnitDto>> SearchAsync(string filter)
+    public virtual async Task<ListResultDto<IdentityRoleDto>> GetAvailableRolesAsync(Guid? parentId)
     {
-        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(SearchAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<ListResultDto<IdentityRoleDto>>(nameof(GetAvailableRolesAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(string), filter }
+            { typeof(Guid?), parentId }
         });
     }
 
     public virtual async Task<OrganizationUnitDto> GetAsync(Guid id)
     {
         return await RequestAsync<OrganizationUnitDto>(nameof(GetAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), id }
-        });
-    }
-
-    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetParentsAsync(Guid id)
-    {
-        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetParentsAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), id }
         });
@@ -106,45 +82,37 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         });
     }
 
-    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
+    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree)
     {
-        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetAuthorizedAsync));
-    }
-
-    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetChildrenAsync(Guid? parentId, bool recursive)
-    {
-        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetChildrenAsync), new ClientProxyRequestTypeValue
+        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetAuthorizedAsync), new ClientProxyRequestTypeValue
         {
-            { typeof(Guid?), parentId },
-            { typeof(bool), recursive }
+            { typeof(bool), buildOrganizationUnitsTree }
         });
     }
 
-    public virtual async Task AddMembersAsync(Guid id, OrganizationUnitAddMembersInput input)
+    public virtual async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(GetOrganizationUnitsInput input)
+    {
+        return await RequestAsync<PagedResultDto<OrganizationUnitDto>>(nameof(GetListAsync), new ClientProxyRequestTypeValue
+        {
+            { typeof(GetOrganizationUnitsInput), input }
+        });
+    }
+
+    public virtual async Task AddMembersAsync(Guid id, Guid[] userIds)
     {
         await RequestAsync(nameof(AddMembersAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), id },
-            { typeof(OrganizationUnitAddMembersInput), input }
+            { typeof(Guid[]), userIds }
         });
     }
 
-    public virtual async Task UpdateMemberRolesAsync(Guid id, Guid userId, OrganizationUnitUpdateMemberRolesInput input)
-    {
-        await RequestAsync(nameof(UpdateMemberRolesAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), id },
-            { typeof(Guid), userId },
-            { typeof(OrganizationUnitUpdateMemberRolesInput), input }
-        });
-    }
-
-    public virtual async Task RemoveMembersAsync(Guid id, OrganizationUnitRemoveMembersInput input)
+    public virtual async Task RemoveMembersAsync(Guid id, Guid[] userIds)
     {
         await RequestAsync(nameof(RemoveMembersAsync), new ClientProxyRequestTypeValue
         {
             { typeof(Guid), id },
-            { typeof(OrganizationUnitRemoveMembersInput), input }
+            { typeof(Guid[]), userIds }
         });
     }
 
@@ -154,15 +122,6 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         {
             { typeof(Guid), id },
             { typeof(GetOrganizationUnitMembersInput), input }
-        });
-    }
-
-    public virtual async Task<ListResultDto<IdentityRoleDto>> GetMemberAssignableRolesAsync(Guid id, Guid userId)
-    {
-        return await RequestAsync<ListResultDto<IdentityRoleDto>>(nameof(GetMemberAssignableRolesAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(Guid), id },
-            { typeof(Guid), userId }
         });
     }
 }

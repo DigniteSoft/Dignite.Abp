@@ -25,7 +25,7 @@ namespace Dignite.Abp.Identity
             {
                 options.Resources
                     .Add<DigniteAbpIdentityResource>("en")
-                    .AddBaseTypes(typeof(AbpValidationResource))
+                    .AddBaseTypes(typeof(Volo.Abp.Identity.Localization.IdentityResource))
                     .AddVirtualJson("/Dignite/Abp/Identity/Localization");
             });
 

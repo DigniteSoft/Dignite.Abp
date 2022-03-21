@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Identity;
 using Volo.Abp.Validation;
@@ -10,6 +11,7 @@ namespace Dignite.Abp.Identity
         public OrganizationUnitCreateOrUpdateDtoBase()
         {
             IsActive = true;
+            RoleIds = new List<Guid>();
         }
 
 
@@ -31,6 +33,6 @@ namespace Dignite.Abp.Identity
         /// <remarks>
         /// 组织单元下的用户自动拥有组织单元的角色
         /// </remarks>
-        public Guid[] RoleIds { get; set; }
+        public List<Guid> RoleIds { get; set; }
     }
 }
