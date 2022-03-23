@@ -7,24 +7,8 @@
   </PropertyGroup>
 
 
-
   <ItemGroup>
-	  <PackageReference Include="AntDesign" Version="0.10.3.1" />
 	  <PackageReference Include="Volo.Abp.BlazoriseUI" Version="5.1.3" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlazoriseUI\Dignite.Abp.BlazoriseUI.csproj" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
-    <Content Update="wwwroot\libs\abp\js\ant-design.js">
-      <SubType>Code</SubType>
-    </Content>
   </ItemGroup>
 
 </Project>
