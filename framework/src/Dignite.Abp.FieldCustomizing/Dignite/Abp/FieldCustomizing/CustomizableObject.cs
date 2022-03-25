@@ -19,10 +19,13 @@ namespace Dignite.Abp.FieldCustomizing
             var validationErrors = new List<ValidationResult>();
             var fieldDefinitions = GetFieldDefinitions(validationContext);
             var fieldControlProviderSelector = validationContext.GetRequiredService<IFieldControlProviderSelector>();
-
+            try
+            {
                 foreach (var customField in CustomizedFields)
                 {
-                    var fieldDefinition = fieldDefinitions.Single(fi => fi.Name == customField.Key);
+                    var fieldDefinition = fieldDefinitions.FirstOrDefault(fi => fi.Name == customField.Key);
+                    if (fieldDefinition == null)
+                        continue;
                     var fieldControlProvider = fieldControlProviderSelector.Get(fieldDefinition.FieldControlProviderName);
                     fieldControlProvider.Validate(
                         new FieldControlValidateArgs(
@@ -32,6 +35,10 @@ namespace Dignite.Abp.FieldCustomizing
                         )
                     );
                 }
+            }
+            catch (Exception ex)
+            { 
+            }
 
             return validationErrors;
         }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Volo.Abp.Localization;
 using Volo.Abp.Settings;
+using JetBrains.Annotations;
 
 namespace Dignite.Abp.Settings
 {
@@ -15,15 +17,27 @@ namespace Dignite.Abp.Settings
         /// </summary>
         public SettingNavigation Navigation { get; private set; }
 
+        public void SetNavigation(string name, ILocalizableString displayName = null)
+        {
+            this.Navigation = new SettingNavigation(name,displayName);
+        }
+
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="navigation"></param>
+        /// <param name="group"></param>
         /// <param name="definitions"></param>
-        public void Add(SettingNavigation navigation, params SettingDefinition[] definitions)
+        public void Add([CanBeNull]ILocalizableString group=null, params SettingDefinition[] definitions)
         {
+            if (group != null)
+            {
+                foreach (var definition in definitions)
+                {
+                    definition.SetGroup(group);
+                }
+            }
+
             base.Add(definitions);
-            Navigation = navigation;
         }
     }
 }
