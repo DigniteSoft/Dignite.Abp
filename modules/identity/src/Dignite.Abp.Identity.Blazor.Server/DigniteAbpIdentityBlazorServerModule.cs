@@ -1,13 +1,13 @@
 ﻿using Volo.Abp.AspNetCore.Components.Server.Theming;
-using Volo.Abp.Identity.Blazor.Server;
 using Volo.Abp.Modularity;
+using Volo.Abp.PermissionManagement.Blazor.Server;
 
 namespace Dignite.Abp.Identity.Blazor.Server;
 
 [DependsOn(
     typeof(AbpAspNetCoreComponentsServerThemingModule),
-    typeof(AbpIdentityBlazorServerModule),
-    typeof(DigniteAbpIdentityBlazorModule)
+    typeof(DigniteAbpIdentityBlazorModule),
+    typeof(AbpPermissionManagementBlazorServerModule)
     )]
 public class DigniteAbpIdentityBlazorServerModule : AbpModule
 {

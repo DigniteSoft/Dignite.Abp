@@ -6,7 +6,7 @@ namespace Dignite.Abp.Identity
 {
     public static class IdentityRoleListExtensions
     {
-        public static List<IdentityRoleDto> BuildIdentityRolesTree([NotNull] this IList<Volo.Abp.Identity.IdentityRoleDto> source)
+        public static IReadOnlyList<IdentityRoleDto> BuildIdentityRolesTree([NotNull] this IReadOnlyList<Volo.Abp.Identity.IdentityRoleDto> source)
         {
             var list = new List<IdentityRoleDto>();
             foreach (var item in source)
@@ -14,10 +14,10 @@ namespace Dignite.Abp.Identity
                 list.Add(new IdentityRoleDto(item));
             }
 
-            return BuildIdentityRolesTree(list);
+            return BuildIdentityRolesTree(list).AsReadOnly();
         }
 
-        public static List<IdentityRoleDto> BuildIdentityRolesTree([NotNull] this IList<IdentityRoleDto> source)
+        public static List<IdentityRoleDto> BuildIdentityRolesTree([NotNull] this IReadOnlyList<IdentityRoleDto> source)
         {
             //构建机构树
             var tree = new List<IdentityRoleDto>();
@@ -31,7 +31,7 @@ namespace Dignite.Abp.Identity
         }
 
 
-        static void AddChildren(IdentityRoleDto parent, IList<IdentityRoleDto> list)
+        static void AddChildren(IdentityRoleDto parent, IReadOnlyList<IdentityRoleDto> list)
         {
             var children = list.Where(p => p.ParentId == parent.Id).ToList();
             if (children.Any())

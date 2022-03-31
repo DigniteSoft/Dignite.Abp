@@ -1,4 +1,5 @@
 ﻿using System;
+using Volo.Abp.BackgroundJobs;
 
 namespace Dignite.Abp.Notifications
 {
@@ -6,6 +7,7 @@ namespace Dignite.Abp.Notifications
     /// Arguments for <see cref="NotificationDistributionJob"/>
     /// </summary>
     [Serializable]
+    [BackgroundJobName("notifications")]
     public class NotificationDistributionJobArgs
     {
         /// <summary>
