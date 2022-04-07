@@ -1,7 +1,7 @@
 ﻿using Dignite.Abp.Identity.Localization;
 using System.Threading.Tasks;
 using Volo.Abp.Authorization.Permissions;
-using Volo.Abp.Identity.Blazor;
+using Volo.Abp.Identity;
 using Volo.Abp.UI.Navigation;
 
 namespace Dignite.Abp.Identity.Blazor.Menus;
@@ -22,12 +22,26 @@ public class IdentityMenuContributor : IMenuContributor
 
         var l = context.GetLocalizer<DigniteAbpIdentityResource>();
 
-        var identityMenuItem= administrationMenu.FindMenuItem(IdentityMenuNames.GroupName);
+
+        var identityMenuItem = new ApplicationMenuItem(IdentityMenuNames.GroupName, l["Menu:IdentityManagement"],
+            icon: "far fa-id-card");
+        administrationMenu.AddItem(identityMenuItem);
 
         identityMenuItem.AddItem(new ApplicationMenuItem(
-                DigniteAbpIdentityMenuNames.OrganizationUnits,
+                IdentityMenuNames.Roles,
+                l["Roles"],
+                url: "~/identity/roles").RequirePermissions(IdentityPermissions.Roles.Default));
+
+        identityMenuItem.AddItem(new ApplicationMenuItem(
+            IdentityMenuNames.Users,
+            l["Users"],
+            url: "~/identity/users").RequirePermissions(IdentityPermissions.Users.Default));
+
+        identityMenuItem.AddItem(new ApplicationMenuItem(
+                IdentityMenuNames.OrganizationUnits,
                 l["OrganizationUnits"],
                 url: "~/identity/organization-units").RequirePermissions(OrganizationUnitPermissions.OrganizationUnits.Default));
+
 
         return Task.CompletedTask;
     }

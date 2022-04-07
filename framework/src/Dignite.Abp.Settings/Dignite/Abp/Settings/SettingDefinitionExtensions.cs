@@ -38,5 +38,12 @@ namespace Dignite.Abp.Settings
             }
             return null;
         }
+
+        public static void SetGroup(
+            this SettingDefinition setting,
+            ILocalizableString group)
+        {
+            setting.Properties.Add(SettingDefinitionPropertiesNames.GroupName, group);
+        }
     }
 }

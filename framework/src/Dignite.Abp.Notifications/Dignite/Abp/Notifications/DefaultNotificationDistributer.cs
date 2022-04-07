@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -7,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.EventBus.Distributed;
 using Volo.Abp.MultiTenancy;
-using Volo.Abp.Settings;
 using Volo.Abp.Uow;
 
 namespace Dignite.Abp.Notifications
@@ -22,10 +21,9 @@ namespace Dignite.Abp.Notifications
         protected INotificationDefinitionManager NotificationDefinitionManager { get; }
         protected INotificationStore NotificationStore { get; }
         protected ILogger Logger { get; }
-        protected ISettingProvider SettingProvider { get; }
-        protected IServiceProvider ServiceProvider { get; }
         protected ICurrentTenant CurrentTenant { get; }
         protected IUnitOfWorkManager UnitOfWorkManager { get; }
+        protected IDistributedEventBus DistributedEventBus { get; }
 
 
         public DefaultNotificationDistributer(
@@ -33,19 +31,17 @@ namespace Dignite.Abp.Notifications
             INotificationDefinitionManager notificationDefinitionManager, 
             INotificationStore notificationStore,
             ILoggerFactory loggerFactory, 
-            ISettingProvider settingProvider, 
-            IServiceProvider serviceProvider, 
             ICurrentTenant currentTenant,
-            IUnitOfWorkManager unitOfWorkManager)
+            IUnitOfWorkManager unitOfWorkManager,
+            IDistributedEventBus distributedEventBus)
         {
             Options = notificationOptions.Value;
             NotificationDefinitionManager = notificationDefinitionManager;
             NotificationStore = notificationStore;
             Logger = loggerFactory?.CreateLogger(GetType().FullName) ?? NullLogger.Instance;
-            SettingProvider = settingProvider;
-            ServiceProvider = serviceProvider;
             CurrentTenant = currentTenant;
             UnitOfWorkManager = unitOfWorkManager;
+            DistributedEventBus = distributedEventBus;
         }
 
         public async Task DistributeAsync(
@@ -57,7 +53,7 @@ namespace Dignite.Abp.Notifications
             if (users != null && users.Any())
             {
                 var userNotifications = await SaveUserNotificationsAsync(users, notification);
-                await NotifyAsync(userNotifications.ToArray());
+                await NotifyAsync(userNotifications.ToArray(),notification);
             }
         }
 
@@ -131,21 +127,15 @@ namespace Dignite.Abp.Notifications
         }
 
 
-
-        protected virtual async Task NotifyAsync(UserNotificationInfo[] userNotifications)
+        /// <summary>
+        /// Publish notify event
+        /// </summary>
+        /// <param name="userNotifications"></param>
+        /// <param name="notificationInfo"></param>
+        /// <returns></returns>
+        protected virtual async Task NotifyAsync(UserNotificationInfo[] userNotifications, NotificationInfo notificationInfo)
         {
-            foreach (var notifierType in Options.Notifiers)
-            {
-                try
-                {
-                    var notifier = ServiceProvider.GetRequiredService(notifierType) as IRealTimeNotifier;
-                    await notifier.SendNotificationsAsync(userNotifications);
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogWarning(ex.ToString(), ex);
-                }
-            }
+            await DistributedEventBus.PublishAsync(new RealTimeNotifyEto(notificationInfo,userNotifications));
         }
 
     }

@@ -10,12 +10,5 @@ namespace Dignite.Abp.AspNetCore.SignalR.Notifications
         )]
     public class DigniteAbpAspNetCoreSignalRNotificationsModule : AbpModule
     {
-        public override void ConfigureServices(ServiceConfigurationContext context)
-        {
-            Configure<NotificationOptions>(options =>
-            {
-                options.Notifiers.Add<SignalRRealTimeNotifier>();
-            });
-        }
     }
 }

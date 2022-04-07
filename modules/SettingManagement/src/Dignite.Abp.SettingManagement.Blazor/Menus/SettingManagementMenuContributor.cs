@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using Dignite.Abp.SettingManagement.Localization;
+using System.Threading.Tasks;
+using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.UI.Navigation;
 
 namespace Dignite.Abp.SettingManagement.Blazor.Menus
@@ -15,13 +17,23 @@ namespace Dignite.Abp.SettingManagement.Blazor.Menus
 
         private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
         {
-            //Add main menu items.
-            context.Menu.AddItem(new ApplicationMenuItem(
-                SettingManagementMenus.Prefix, 
-                displayName: "SettingManagement", 
-                "/SettingManagement/global", 
-                icon: "fa fa-cog"));
-            
+            var administrationMenu = context.Menu.GetAdministration();
+            var l = context.GetLocalizer<DigniteAbpSettingManagementResource>();
+
+            administrationMenu.AddItem(new ApplicationMenuItem(
+                    SettingManagementMenus.Prefix,
+                    l["SettingManagement"],
+                    url: "~/setting-management/global-settings",
+                    icon: "fa fa-cog")
+                .RequirePermissions(SettingManagementPermissions.Global));
+
+            administrationMenu.AddItem(new ApplicationMenuItem(
+                    SettingManagementMenus.Prefix,
+                    l["SettingManagement"],
+                    url: "~/setting-management/tenant-settings",
+                    icon: "fa fa-cog")
+                .RequirePermissions(SettingManagementPermissions.Tenant));
+
             return Task.CompletedTask;
         }
     }

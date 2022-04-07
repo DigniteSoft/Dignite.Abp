@@ -1,12 +1,11 @@
-﻿
-using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.FieldControls;
 
 namespace Dignite.Abp.SettingManagement
 {
     public class SettingDto
     {
         public SettingDto(
-            string groupName, 
+            string group, 
             string name, 
             string displayName, 
             string description, 
@@ -14,7 +13,7 @@ namespace Dignite.Abp.SettingManagement
             string fieldControlProviderName,
             FieldControlConfigurationDictionary fieldControlConfiguration)
         {
-            GroupName = groupName;
+            Group = group;
             Name = name;
             DisplayName = displayName;
             Description = description;
@@ -23,7 +22,7 @@ namespace Dignite.Abp.SettingManagement
             FieldControlConfiguration = fieldControlConfiguration;
         }
 
-        public string GroupName { get;  }
+        public string Group { get;  }
 
         public string Name { get; }
         public string DisplayName { get; }

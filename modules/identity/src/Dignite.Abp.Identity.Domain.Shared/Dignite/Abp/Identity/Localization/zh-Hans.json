@@ -11,6 +11,8 @@
     "SelectMembers": "选择用户",
     "SelectedMembers": "已选用户",
     "NoUserSelected": "尚未选择用户。",
-    "UsernameOrEmailOrNameOrPhoneNumber": "用户名/Email/姓名/手机号"
+    "UsernameOrEmailOrNameOrPhoneNumber": "用户名/Email/姓名/手机号",
+    "Permission:OrganizationUnitManagement": "组织机构管理",
+    "Permission:OrganizationUnitSuperAuthorization": "超级管理"
   }
 }
