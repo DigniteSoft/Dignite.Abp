@@ -37,7 +37,7 @@ namespace Dignite.Abp.BlobStoring
         }
 
 
-        public Task CreateAsync(BasicBlobInfo blobInfo, CancellationToken cancellationToken = default)
+        public Task CreateAsync(IBlobInfo blobInfo, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
