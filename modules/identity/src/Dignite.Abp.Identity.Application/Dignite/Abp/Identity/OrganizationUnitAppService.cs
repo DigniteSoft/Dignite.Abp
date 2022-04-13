@@ -52,7 +52,7 @@ namespace Dignite.Abp.Identity
             var list = await OrganizationUnitRepository.GetAllChildrenWithParentCodeAsync(code, null, false);
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(
                 list.FirstOrDefault(ou => ou.Code == code)
-                ); 
+                );
         }
 
         [Authorize(OrganizationUnitPermissions.OrganizationUnitLookup.Default)]
@@ -126,7 +126,7 @@ namespace Dignite.Abp.Identity
             else
             {
                 list = await UserRepository.GetOrganizationUnitsAsync(CurrentUser.Id.Value, false);
-                list = list.Where(ou => !list.Any(y => ou.Code.StartsWith(y.Code) && y.Id!=ou.Id))
+                list = list.Where(ou => !list.Any(y => ou.Code.StartsWith(y.Code) && y.Id != ou.Id))
                     .ToList();
             }
 
@@ -177,9 +177,9 @@ namespace Dignite.Abp.Identity
                 input.ParentId,
                 CurrentTenant.Id);
             ou.SetProperty(OrganizationUnitExtraPropertyNames.IsActiveName, input.IsActive);
-            ou.SetProperty(OrganizationUnitExtraPropertyNames.PositionName, 
+            ou.SetProperty(OrganizationUnitExtraPropertyNames.PositionName,
                 children.Select(c => c.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName))
-                        .DefaultIfEmpty(0).Max()+1);
+                        .DefaultIfEmpty(0).Max() + 1);
 
             //todo 这里需要根据父级机构的解难判断添加的角色是否符合逻辑
             //add roles
@@ -206,7 +206,7 @@ namespace Dignite.Abp.Identity
             ou.ConcurrencyStamp = input.ConcurrencyStamp;
             ou.SetProperty(OrganizationUnitExtraPropertyNames.IsActiveName, input.IsActive);
 
-            
+
             //todo 这里需要根据父级机构的解难判断添加的角色是否符合逻辑
             foreach (var roleId in ou.Roles.Select(our => our.RoleId).Except(input.RoleIds))
             {
@@ -320,7 +320,7 @@ namespace Dignite.Abp.Identity
         {
             var ou = await OrganizationUnitRepository.GetAsync(id, false);
             var count = await OrganizationUnitRepository.GetMembersCountAsync(ou, input.Filter);
-            var members = await OrganizationUnitRepository.GetMembersAsync(ou, input.Sorting,input.MaxResultCount,input.SkipCount,input.Filter);
+            var members = await OrganizationUnitRepository.GetMembersAsync(ou, input.Sorting, input.MaxResultCount, input.SkipCount, input.Filter);
 
             return new PagedResultDto<IdentityUserDto>(count,
                 ObjectMapper.Map<List<IdentityUser>, List<IdentityUserDto>>(members)
@@ -351,18 +351,11 @@ namespace Dignite.Abp.Identity
             }
         }
 
-        
+
 
         protected async Task<List<OrganizationUnit>> GetAllListAsync()
         {
-            return await CacheOrganizationUnits.GetOrAddAsync(
-                 AllOrganizationUnitsListCacheName, //Cache key
-                async () => await OrganizationUnitRepository.GetListAsync(includeDetails: false),
-                () => new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(10)
-                }
-            );
+            return await OrganizationUnitRepository.GetListAsync(includeDetails: false);
         }
 
 
@@ -481,7 +474,7 @@ namespace Dignite.Abp.Identity
         /// </returns>
         protected async Task<List<OrganizationUnit>> GetParentsAsync(OrganizationUnit ou)
         {
-            var result=new List<OrganizationUnit>();
+            var result = new List<OrganizationUnit>();
             string rootCode;
             if (!ou.Code.Contains('.'))
             {
@@ -512,7 +505,7 @@ namespace Dignite.Abp.Identity
             }
 
             return tree.OrderBy(ou => ou.Position)
-                .ThenBy(ou=>ou.Code)
+                .ThenBy(ou => ou.Code)
                 .ToList();
         }
     }

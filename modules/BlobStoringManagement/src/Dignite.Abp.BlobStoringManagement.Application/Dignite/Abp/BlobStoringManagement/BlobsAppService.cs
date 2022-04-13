@@ -189,7 +189,7 @@ namespace Dignite.Abp.BlobStoringManagement
                 }
             }
             else {
-                return fileExtensionName;            
+                return fileExtensionName.EnsureStartsWith('.');            
             }
         }
     }
