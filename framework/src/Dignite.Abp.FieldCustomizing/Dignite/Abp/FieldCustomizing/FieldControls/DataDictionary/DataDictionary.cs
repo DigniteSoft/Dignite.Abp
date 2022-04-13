@@ -15,23 +15,21 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
             IsStatic = false;
         }
 
-        public DataDictionary(string code, string displayName, bool isActive=true, bool isStatic=false)
+        public DataDictionary(Guid id, string displayName, bool isActive=true, bool isStatic=false)
         {
-            Code = code;
+            Id = id;
             DisplayName = displayName;
             IsActive = isActive;
             IsStatic = isStatic;
         }
 
         /// <summary>
-        /// Hierarchical Code of this data dictionary.
-        /// Example: "00001.00042.00005".
-        /// This is a unique code for an DataDictionary.
+        /// Id of this Data
         /// </summary>
-        public string Code { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
-        /// Display name of this DataDictionary.
+        /// Display name of this Data.
         /// </summary>
         public string DisplayName { get; set; }
 

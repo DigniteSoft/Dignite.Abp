@@ -39,7 +39,7 @@ namespace Dignite.Abp.Identity
         public virtual async Task<OrganizationUnitDto> GetAsync(Guid id)
         {
             var dto = ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(
-                await OrganizationUnitRepository.GetAsync(id,false)
+                await OrganizationUnitRepository.GetAsync(id,true)
                 );
 
             return dto;

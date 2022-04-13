@@ -16,12 +16,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Dignite.Abp.BlazoriseUI\Dignite.Abp.BlazoriseUI.csproj" />
-  </ItemGroup>
-
-
-
-  <ItemGroup>
     <Content Update="wwwroot\libs\abp\js\ant-design.js">
       <SubType>Code</SubType>
     </Content>

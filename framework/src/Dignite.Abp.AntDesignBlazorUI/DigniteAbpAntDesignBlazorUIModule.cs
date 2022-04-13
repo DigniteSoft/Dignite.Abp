@@ -1,13 +1,11 @@
-﻿using Dignite.Abp.BlazoriseUI;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.BlazoriseUI;
 using Volo.Abp.Modularity;
 
 namespace Dignite.Abp.AntDesignBlazorUI
 {
     [DependsOn(
-        typeof(AbpBlazoriseUIModule),
-        typeof(DigniteAbpBlazoriseUIModule)
+        typeof(AbpBlazoriseUIModule)
         )]
     public class DigniteAbpAntDesignBlazorUIModule: AbpModule
     {

@@ -37,7 +37,8 @@ namespace Dignite.Abp.Settings
         {
             var navigation = _settingDefinitionManager.GetNavigation(TestSettingNames.TestSettingNavigationName);
             var setting1 = navigation.SettingDefinitions.Single(sf => sf.Name == TestSettingNames.TestSettingWithDefaultValue);
-            var textboxFormConfig = (TextboxConfiguration)setting1.GetFieldControlConfigurationOrNull();
+            var fieldConfig = setting1.GetFieldControlConfigurationOrNull();
+            var textboxFormConfig = new TextboxConfiguration(fieldConfig);
             textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
         }
 
@@ -46,7 +47,8 @@ namespace Dignite.Abp.Settings
         {
             var navigation = _settingDefinitionManager.GetNavigation(TestSettingNames.TestSettingNavigationName2);
             var setting1 = navigation.SettingDefinitions.Single(sf => sf.Name == TestSettingNames.TestSettingPackager);
-            var textboxFormConfig = (TextboxConfiguration)setting1.GetFieldControlConfigurationOrNull();
+            var fieldConfig = setting1.GetFieldControlConfigurationOrNull();
+            var textboxFormConfig = new TextboxConfiguration(fieldConfig);
             textboxFormConfig.Placeholder.ShouldNotBeNullOrEmpty();
         }
     }

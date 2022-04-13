@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Linq;
 using Volo.Abp.Settings;
 using Dignite.Abp.Settings.SettingItemControls;
+using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.Settings
 {
@@ -16,10 +16,12 @@ namespace Dignite.Abp.Settings
         }
     }
 
-    public class TestPackageSettingDefinitionProvider : TestSettingDefinitionProvider, IDigniteSettingDefinitionProvider
+    public class TestPackageSettingDefinitionProvider : TestSettingDefinitionProvider, IDigniteSettingDefinitionProvider, ITransientDependency
     {
         public void Define(IDigniteSettingDefinitionContext context)
         {
+            context.SetNavigation(TestSettingNames.TestSettingNavigationName2);
+
             var settings = new Dictionary<string, SettingDefinition>();
             Define(new SettingDefinitionContext(settings));
 
@@ -30,11 +32,6 @@ namespace Dignite.Abp.Settings
                             tb.Placeholder = "placeholder-text";
                         }
                     );                
-
-            context.Add(
-                new SettingNavigation(TestSettingNames.TestSettingNavigationName2),
-                settings.Values.ToImmutableList().ToArray()
-            );
         }
     }
 }

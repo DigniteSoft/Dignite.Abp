@@ -192,7 +192,7 @@
     protected override async Task OpenEditModalAsync(OrganizationUnitDto entity)
     {
         await base.OpenEditModalAsync(entity);
-        AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(entity.Id)).Items;
+        AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(entity.ParentId)).Items;
 
     }
 
@@ -242,8 +242,15 @@
     protected override Task OnDeletedEntityAsync()
     {
         SelectedNode.Remove();
-        
+
         return Task.CompletedTask;
+    }
+
+    protected override OrganizationUnitUpdateDto MapToEditingEntity(OrganizationUnitDto entityDto)
+    {
+        EditingEntity = base.MapToEditingEntity(entityDto);
+        EditingEntity.RoleIds = entityDto.Roles.Select(r => r.RoleId).ToList();
+        return EditingEntity;
     }
 }
 
@@ -327,6 +334,5 @@
     </Blazorise.ModalContent>
 </Blazorise.Modal>
 }
-
 @* ********未来正式版，需要将此放在主题全局页面中 ***************** *@
 <MessageAlert />
