@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Services;
 
-namespace Dignite.Abp.BlobStoringManagement
+namespace Dignite.Abp.FileManagement
 {
     public class BlobStore: DomainService, IBlobInfoStore
     {
@@ -50,7 +50,7 @@ namespace Dignite.Abp.BlobStoringManagement
                 GuidGenerator.Create(),
                 blobEntityResult.EntityType,
                 blobEntityResult.EntityId,
-                new BasicBlobInfo(blobInfo.ContainerName, blobInfo.BlobName, blobInfo.BinarySize, blobInfo.Hash, blobInfo.ReferBlobName),
+                new BasicBlobInfo(blobInfo.ContainerName,blobInfo.BlobName,blobInfo.BinarySize,blobInfo.Hash,blobInfo.ReferBlobName),
                 CurrentTenant.Id);
 
             await _blobRepository.InsertAsync(blob, cancellationToken: cancellationToken);

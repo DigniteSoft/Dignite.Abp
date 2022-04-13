@@ -22,7 +22,7 @@ namespace Dignite.Abp.BlobStoring
         /// <returns></returns>
         Task<bool> ReferenceExistsAsync(string containerName, string blobName, CancellationToken cancellationToken = default);
 
-        Task CreateAsync(BasicBlobInfo blobInfo, CancellationToken cancellationToken = default);
+        Task CreateAsync(IBlobInfo blobInfo, CancellationToken cancellationToken = default);
 
         Task DeleteAsync(string containerName, string blobName, CancellationToken cancellationToken = default);
     }
