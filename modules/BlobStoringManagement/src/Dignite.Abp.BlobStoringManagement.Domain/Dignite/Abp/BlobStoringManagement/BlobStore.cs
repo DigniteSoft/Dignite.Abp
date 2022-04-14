@@ -34,7 +34,7 @@ namespace Dignite.Abp.BlobStoringManagement
             return result;
         }
 
-        public async Task CreateAsync(BasicBlobInfo blobInfo, CancellationToken cancellationToken = default)
+        public async Task CreateAsync(IBlobInfo blobInfo, CancellationToken cancellationToken = default)
         {
             var blobEntityResult = await _blobEntityResolver.ResolveBlobEntityAsync();
 
@@ -52,7 +52,7 @@ namespace Dignite.Abp.BlobStoringManagement
                 GuidGenerator.Create(),
                 blobEntityResult.EntityType,
                 blobEntityResult.EntityId,
-                blobInfo,
+                new BasicBlobInfo(blobInfo.ContainerName, blobInfo.BlobName, blobInfo.BinarySize, blobInfo.Hash, blobInfo.ReferBlobName),
                 CurrentTenant.Id);
 
             await _blobRepository.InsertAsync(blob, cancellationToken: cancellationToken);

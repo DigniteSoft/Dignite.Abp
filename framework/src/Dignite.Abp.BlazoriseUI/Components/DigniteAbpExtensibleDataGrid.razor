@@ -5,13 +5,17 @@
 @using Volo.Abp.BlazoriseUI.Components.ObjectExtending
 @using Volo.Abp.BlazoriseUI.Components
 
-<DataGrid TItem="TItem"
+<DataGrid ElementId="@ElementId" TItem="TItem"
           Data="@Data"
           ReadData="@ReadData"
           TotalItems="@TotalItems"
           ShowPager="@ShowPager"
           CurrentPage="@CurrentPage"
-          PageSize="@PageSize">
+          PageSize="@PageSize"
+          Responsive
+          FixedHeader
+          FixedHeaderDataGridHeight="@DataGridHeight"
+          FixedHeaderDataGridMaxHeight="@DataGridHeight">
     <LoadingTemplate>
         <Row Class="w-100 align-items-center" Style="height: 150px;">
             <Column>
@@ -33,9 +37,9 @@
             {
                 if (column.Actions.Any())
                 {
-                    <DataGridEntityActionsColumn TItem="TItem" @ref="ActionColumns[column.Title]" Caption="@column.Title">
+                    <DataGridEntityActionsColumn Width="100px" TItem="TItem" @ref="ActionColumns[column.Title]" Caption="@column.Title">
                         <DisplayTemplate>
-                            <EntityActions TItem="TItem" EntityActionsColumn="ActionColumns[column.Title]">
+                            <EntityActions TItem="TItem" ToggleColor="Color.None" EntityActionsColumn="ActionColumns[column.Title]">
                                 @foreach (var action in column.Actions)
                                 {
                                     if (action.ConfirmationMessage != null)

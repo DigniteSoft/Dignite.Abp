@@ -41,7 +41,18 @@
     <Blazorise.FieldLabel>@L["Roles"]</Blazorise.FieldLabel>
     @foreach(var role in AvailableRoles)
     {        
-    <Blazorise.Check TValue="bool" CheckedChanged="@(e=>OnRoleChanged(e,role.Id ))">@role.Name</Blazorise.Check>
+        var isChecked=Data.RoleIds.Any(rid=>rid==role.Id);
+        <Blazorise.Check TValue="bool" Checked="@isChecked" CheckedChanged="@(e=>OnRoleChanged(e,role.Id ))">@role.Name</Blazorise.Check>
+        if (role.Children != null && role.Children.Any())
+        {
+            @foreach(var subRole in role.Children)
+            {
+            isChecked=Data.RoleIds.Any(rid=>rid==subRole.Id);
+            <div style="padding-left:20px;">
+            <Blazorise.Check TValue="bool" Checked="@isChecked" CheckedChanged="@(e=>OnRoleChanged(e,subRole.Id ))">@subRole.Name</Blazorise.Check>  
+            </div>
+            }
+        }
     }
 </Blazorise.Field>
 

@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using Microsoft.Extensions.Localization;
 using Volo.Abp.AspNetCore.Components.Web.Extensibility.TableColumns;
 using Volo.Abp.BlazoriseUI.Components;
+using System.Threading.Tasks;
+using Microsoft.JSInterop;
+using Blazorise;
 
 namespace Dignite.Abp.BlazoriseUI.Components
 {
@@ -19,6 +22,12 @@ namespace Dignite.Abp.BlazoriseUI.Components
 
         protected Regex ExtensionPropertiesRegex = new Regex(@"ExtraProperties\[(.*?)\]");
 
+        string DataGridHeight { get; set; }
+
+        string ElementId { get; set; }
+        public TItem SelectedItem { get;  set; }
+        public List<TItem> SelectedItems{ get;  set; }
+
         [Parameter] public IEnumerable<TItem> Data { get; set; }
 
         [Parameter] public EventCallback<DataGridReadDataEventArgs<TItem>> ReadData { get; set; }
@@ -30,11 +39,19 @@ namespace Dignite.Abp.BlazoriseUI.Components
         [Parameter] public int PageSize { get; set; }
 
         [Parameter] public IEnumerable<TableColumn> Columns { get; set; }
+        [Parameter] public DataGridSelectionMode SelectionMode { get; set; }
 
         [Parameter] public int CurrentPage { get; set; } = 1;
 
         [Inject]
         public IStringLocalizerFactory StringLocalizerFactory { get; set; }
+
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
+
+        [Inject] public IIdGenerator IdGenerator { get; set; }
+
+
         protected virtual RenderFragment RenderCustomTableColumnComponent(Type type, object data)
         {
             return (builder) =>
@@ -55,6 +72,21 @@ namespace Dignite.Abp.BlazoriseUI.Components
             }
 
             return convertedValue;
+        }
+
+        protected override Task OnInitializedAsync()
+        {
+            ElementId = IdGenerator.Generate;
+            return base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender == true)
+            {
+                DataGridHeight = await JsRuntime.InvokeAsync<string>("abp.getDataGridHeight", ElementId);
+                StateHasChanged();
+            }
         }
     }
 }

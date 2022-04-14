@@ -7,8 +7,10 @@ namespace Dignite.Abp.Settings
     {
         public override void Define(IDigniteSettingDefinitionContext context)
         {
+            context.SetNavigation(TestSettingNames.TestSettingNavigationName);
+
             context.Add(
-                new SettingNavigation(TestSettingNames.TestSettingNavigationName),
+                null,
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithoutDefaultValue),                
                 new Volo.Abp.Settings.SettingDefinition(TestSettingNames.TestSettingWithDefaultValue, "default-value")
                     .UseTextbox(tb =>

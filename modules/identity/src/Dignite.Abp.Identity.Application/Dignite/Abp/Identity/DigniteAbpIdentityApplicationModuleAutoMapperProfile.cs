@@ -21,6 +21,8 @@ namespace Dignite.Abp.Identity
                 .ForMember(r => r.Children, r => r.Ignore())
                 .ForMember(r => r.HasChild, r => r.Ignore())
                 .MapExtraProperties();
+
+            CreateMap<OrganizationUnitRole, OrganizationUnitRoleDto>();
         }
     }
 }
