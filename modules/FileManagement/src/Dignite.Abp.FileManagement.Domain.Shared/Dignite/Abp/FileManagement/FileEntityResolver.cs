@@ -29,7 +29,7 @@ namespace Dignite.Abp.FileManagement
                 {
                     await tenantResolver.ResolveAsync(context);
 
-                    if (context.HasResolvedTenantOrHost())
+                    if (context.HasResolvedFileEntity())
                     {
                         result.EntityType = context.EntityType;
                         result.EntityId = context.EntityId;

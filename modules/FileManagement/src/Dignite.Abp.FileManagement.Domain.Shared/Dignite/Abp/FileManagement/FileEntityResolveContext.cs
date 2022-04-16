@@ -10,7 +10,7 @@ namespace Dignite.Abp.FileManagement
 
         public string EntityId { get; set; }
 
-        public bool HasResolvedTenantOrHost()
+        public bool HasResolvedFileEntity()
         {
             return (EntityType != null && EntityId!=null);
         }

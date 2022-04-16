@@ -34,6 +34,12 @@ namespace Dignite.Abp.FileManagement
                 options.BlobEntityResolvers.Add(new QueryStringFileEntityResolveContributor());
                 options.BlobEntityResolvers.Add(new BodyStringFileEntityResolveContributor());
             });
+
+
+            Configure<AbpAspNetCoreMvcOptions>(options =>
+            {
+                options.ConventionalControllers.FormBodyBindingIgnoredTypes.Add(typeof(SaveStreamInput));
+            });
         }
     }
 }
