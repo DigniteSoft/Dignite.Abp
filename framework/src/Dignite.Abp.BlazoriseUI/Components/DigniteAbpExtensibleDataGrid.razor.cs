@@ -88,5 +88,6 @@ namespace Dignite.Abp.BlazoriseUI.Components
                 StateHasChanged();
             }
         }
+
     }
 }

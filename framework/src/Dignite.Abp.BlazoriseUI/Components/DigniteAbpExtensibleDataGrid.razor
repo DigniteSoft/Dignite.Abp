@@ -12,6 +12,9 @@
           ShowPager="@ShowPager"
           CurrentPage="@CurrentPage"
           PageSize="@PageSize"
+          SelectionMode="@SelectionMode"
+          @bind-SelectedRow="@SelectedItem"
+          @bind-SelectedRows="@SelectedItems"
           Responsive
           FixedHeader
           FixedHeaderDataGridHeight="@DataGridHeight"
@@ -31,6 +34,10 @@
         </Row>
     </EmptyTemplate>
     <DataGridColumns>
+        @if (SelectionMode == DataGridSelectionMode.Multiple)
+        {
+            <DataGridMultiSelectColumn TItem="TItem" Width="30px"></DataGridMultiSelectColumn>
+        }
         @if (Columns != null)
         {
             @foreach (var column in Columns)
@@ -39,13 +46,13 @@
                 {
                     <DataGridEntityActionsColumn Width="100px" TItem="TItem" @ref="ActionColumns[column.Title]" Caption="@column.Title">
                         <DisplayTemplate>
-                            <EntityActions TItem="TItem" ToggleColor="Color.None" EntityActionsColumn="ActionColumns[column.Title]">
+                            <EntityActions Type="column.Actions.Count>1? ActionType.Dropdown : ActionType.Button" TItem="TItem" ToggleColor="Color.None" EntityActionsColumn="ActionColumns[column.Title]">
                                 @foreach (var action in column.Actions)
                                 {
                                     if (action.ConfirmationMessage != null)
                                     {
                                         <EntityAction TItem="TItem"
-                                                      Color="@(action.Color != null ? (Blazorise.Color) action.Color : Blazorise.Color.Primary)"
+                                                      Color="@(action.Color != null ? (Blazorise.Color) action.Color : Blazorise.Color.None)"
                                                       Icon="@action.Icon"
                                                       Clicked="async () => await action.Clicked(context)"
                                                       ConfirmationMessage="() => action.ConfirmationMessage.Invoke(context)"
@@ -152,3 +159,4 @@
         }
     </DataGridColumns>
 </DataGrid>
+

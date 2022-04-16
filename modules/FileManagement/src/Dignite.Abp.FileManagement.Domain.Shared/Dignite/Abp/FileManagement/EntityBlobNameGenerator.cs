@@ -9,9 +9,9 @@ namespace Dignite.Abp.FileManagement
     /// </summary>
     public class EntityBlobNameGenerator : IBlobNameGenerator,ITransientDependency
     {
-        private readonly IBlobEntityResolver _blobEntityResolver;
+        private readonly IFileEntityResolver _blobEntityResolver;
 
-        public EntityBlobNameGenerator(IBlobEntityResolver blobEntityResolver)
+        public EntityBlobNameGenerator(IFileEntityResolver blobEntityResolver)
         {
             _blobEntityResolver = blobEntityResolver;
         }
@@ -20,7 +20,7 @@ namespace Dignite.Abp.FileManagement
         {
             var blobEntityResult = await _blobEntityResolver.ResolveBlobEntityAsync();
 
-            Check.NotNullOrWhiteSpace(blobEntityResult.EntityId, nameof(blobEntityResult.EntityId), BlobConsts.MaxEntityIdLength);
+            Check.NotNullOrWhiteSpace(blobEntityResult.EntityId, nameof(blobEntityResult.EntityId), FileConsts.MaxEntityIdLength);
 
             return blobEntityResult.EntityId;
         }

@@ -9,11 +9,11 @@ namespace Dignite.Abp.FileManagement
         public IRemoteStreamContent File { get; set; }
 
         [Required]
-        [StringLength(BlobConsts.MaxEntityTypeLength)]
+        [StringLength(FileConsts.MaxEntityTypeLength)]
         public string EntityType { get; set; }
 
         [Required]
-        [StringLength(BlobConsts.MaxEntityIdLength)]
+        [StringLength(FileConsts.MaxEntityIdLength)]
         public string EntityId { get; set; }
     }
 }

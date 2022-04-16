@@ -10,12 +10,12 @@ namespace Dignite.Abp.FileManagement
         public string Url { get; set; }
 
         [Required]
-        [StringLength(BlobConsts.MaxEntityTypeLength)]
+        [StringLength(FileConsts.MaxEntityTypeLength)]
         [NotNull]
         public string EntityType { get; set; }
 
         [Required]
-        [StringLength(BlobConsts.MaxEntityIdLength)]
+        [StringLength(FileConsts.MaxEntityIdLength)]
         [NotNull]
         public string EntityId { get; set; }
     }
