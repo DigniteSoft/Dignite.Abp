@@ -88,6 +88,7 @@ namespace Dignite.Abp.FileManagement
                 );
 
             await blobContainer.SaveAsync(blobName, stream, true);
+
             await CurrentUnitOfWork.SaveChangesAsync();
 
             //
@@ -207,7 +208,7 @@ namespace Dignite.Abp.FileManagement
                 }
             }
             else {
-                return fileExtensionName;            
+                return fileExtensionName.EnsureStartsWith('.');
             }
         }
 

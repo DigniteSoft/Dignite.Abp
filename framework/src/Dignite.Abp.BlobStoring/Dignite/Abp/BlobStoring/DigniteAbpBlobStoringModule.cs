@@ -13,7 +13,7 @@ namespace Dignite.Abp.BlobStoring
         typeof(AbpBlobStoringModule),
         typeof(AbpLocalizationModule)
         )]
-    public class DigniteAbpBlobStoringModule: AbpModule
+    public class DigniteAbpBlobStoringModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
