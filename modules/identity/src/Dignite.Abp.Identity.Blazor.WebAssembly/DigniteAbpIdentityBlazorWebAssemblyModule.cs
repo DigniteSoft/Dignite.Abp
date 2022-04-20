@@ -12,7 +12,7 @@ namespace Dignite.Abp.Identity.Blazor.WebAssembly;
         typeof(DigniteAbpAntDesignBlazorUIWebAssemblyModule),
     typeof(AbpPermissionManagementBlazorWebAssemblyModule)
     )]
-public class IdentityBlazorWebAssemblyModule : AbpModule
+public class DigniteAbpIdentityBlazorWebAssemblyModule : AbpModule
 {
 
 }
