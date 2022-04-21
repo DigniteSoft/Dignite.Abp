@@ -29,12 +29,6 @@ namespace Dignite.Abp.FileManagement
                     .AddBaseTypes(typeof(AbpUiResource));
             });
 
-            Configure<DigniteFileEntityResolveOptions>(options =>
-            {
-                options.BlobEntityResolvers.Add(new QueryStringFileEntityResolveContributor());
-                options.BlobEntityResolvers.Add(new BodyStringFileEntityResolveContributor());
-            });
-
 
             Configure<AbpAspNetCoreMvcOptions>(options =>
             {

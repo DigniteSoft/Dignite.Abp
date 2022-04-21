@@ -54,8 +54,7 @@ namespace Dignite.Abp.FileManagement
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
             var file= await _blobAppService.GetFileAsync(containerName, blobName);
-            var mimeType = MimeTypesMap.GetMimeType(fileName);
-            return File(file.GetStream(), mimeType, fileName);
+            return File(file.GetStream(), file.ContentType, fileName);
         }
 
         [HttpGet]

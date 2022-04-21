@@ -14,6 +14,7 @@ using Volo.Abp.AspNetCore.ExceptionHandling;
 namespace Dignite.Abp.FileManagement
 {
     [DependsOn(
+        typeof(DigniteAbpBlobStoringModule),
         typeof(FileManagementDomainModule),
         typeof(FileManagementApplicationContractsModule),
         typeof(AbpDddApplicationModule),

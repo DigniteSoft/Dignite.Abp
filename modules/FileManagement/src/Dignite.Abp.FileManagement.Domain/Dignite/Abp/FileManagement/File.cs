@@ -11,7 +11,7 @@ namespace Dignite.Abp.FileManagement
         protected File()
         { }
 
-        public File(Guid id,string entityType,string entityId, BasicBlobInfo blobInfo, Guid? tenantId)
+        public File(Guid id,string entityType,string entityId, BasicBlobInfo blobInfo,string fileName, Guid? tenantId)
         {
             Id = id;
             EntityType = entityType;
@@ -21,22 +21,25 @@ namespace Dignite.Abp.FileManagement
             BinarySize = blobInfo.BinarySize;
             Hash = blobInfo.Hash;
             ReferBlobName = blobInfo.ReferBlobName;
+            FileName = fileName;
             TenantId = tenantId;
         }
 
-        public virtual string EntityType { get; protected set; }
+        #region blob info
+        public string ContainerName { get; set; }
 
-        public virtual string EntityId { get; protected set; }
+        public string BlobName { get; set; }
 
-        public string ContainerName { get; protected set; }
+        public long BinarySize { get; set; }
 
-        public string BlobName { get; protected set; }
+        public string Hash { get; set; }
 
-        public long BinarySize { get; protected set; }
+        public string ReferBlobName { get; set; }
+        #endregion
 
-        public string Hash { get; protected set; }
+        public virtual string EntityType { get; set; }
 
-        public string ReferBlobName { get; protected set; }
+        public virtual string EntityId { get; set; }
 
         /// <summary>
         /// 
@@ -53,5 +56,13 @@ namespace Dignite.Abp.FileManagement
 
         public Guid? TenantId { get; protected set; }
 
+        public virtual void SetBlobInfo(IBlobInfo blobInfo)
+        {
+            ContainerName = blobInfo.ContainerName;
+            BlobName = blobInfo.BlobName;
+            BinarySize = blobInfo.BinarySize;
+            Hash = blobInfo.Hash;
+            ReferBlobName = blobInfo.ReferBlobName;
+        }
     }
 }

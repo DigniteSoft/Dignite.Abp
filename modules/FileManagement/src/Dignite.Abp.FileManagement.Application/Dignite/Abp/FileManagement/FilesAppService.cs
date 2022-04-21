@@ -5,11 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
@@ -23,21 +20,23 @@ namespace Dignite.Abp.FileManagement
         private readonly IBlobContainerFactory _blobContainerFactory;
         private readonly IBlobContainerConfigurationProvider _configurationProvider;
         private readonly IFileRepository _blobRepository;
+        private readonly ICurrentBlobInfo _currentFile;
 
         public FilesAppService(
             IBlobContainerFactory blobContainerFactory,
             IBlobContainerConfigurationProvider configurationProvider,
-            IFileRepository blobRepository
+            IFileRepository blobRepository,
+            ICurrentBlobInfo currentFile
             )
         {
             _blobContainerFactory = blobContainerFactory;
             _configurationProvider = configurationProvider;
             _blobRepository = blobRepository;
+            _currentFile= currentFile;
         }
 
         public async Task<FileDto> SaveAsync([NotNull] string containerName, [NotNull] SaveRemoteFileInput input)
         {
-            var blobContainer = _blobContainerFactory.Create(containerName);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(input.Url);
             request.Method = "GET";
             request.Credentials = CredentialCache.DefaultCredentials;
@@ -51,14 +50,21 @@ namespace Dignite.Abp.FileManagement
                 //
                 MemoryStream ms = new MemoryStream();
                 response.GetResponseStream().CopyTo(ms);
-                string fileExtensionName = GetFileExtensionName(ms);
-                var blobName = await GeneratorNameAsync(containerName, fileExtensionName);
 
-                await blobContainer.SaveAsync(blobName, ms, true);
 
-                //
-                var blob = await _blobRepository.FindAsync(containerName, blobName);
-                return ObjectMapper.Map<File, FileDto>(blob);
+                string fileExtensionName = MimeGuesser.GuessExtension(ms);
+                var fileName = await GeneratorBlobNameAsync(containerName, fileExtensionName);
+
+                return await SaveAsync(containerName, new SaveStreamInput()
+                {
+                    File = new RemoteStreamContent(
+                        ms,
+                        fileName
+                        ,HeyRed.Mime.MimeTypesMap.GetMimeType(fileName)
+                        ),
+                    EntityType =input.EntityType,
+                    EntityId=input.EntityId,
+                });
             }
         }
 
@@ -78,30 +84,37 @@ namespace Dignite.Abp.FileManagement
             {
                 ThrowValidationException("Bytes of file can not be null or empty!", nameof(input.File));
             }
-
-            var stream = input.File.GetStream();
-            var blobContainer = _blobContainerFactory.Create(containerName);
-            string fileExtensionName = GetFileExtensionName(stream);
-            var blobName = await GeneratorNameAsync(
-                containerName,
-                fileExtensionName
-                );
-
-            await blobContainer.SaveAsync(blobName, stream, true);
-            await CurrentUnitOfWork.SaveChangesAsync();
+            var file = new File(
+                        GuidGenerator.Create(),
+                        input.EntityType,
+                        input.EntityId,
+                        new BasicBlobInfo(),
+                        input.File.FileName,
+                        CurrentTenant.Id);
 
             //
-            var blob = await _blobRepository.FindAsync(containerName, blobName);
-            blob.FileName = input.File.FileName;
+            using (_currentFile.Current(file))
+            {
+                file.ContainerName = containerName;
+                file.BlobName = await GeneratorBlobNameAsync(
+                    containerName,
+                    input.File.FileName.Substring(input.File.FileName.LastIndexOf('.'))
+                    );
 
-            return ObjectMapper.Map<File, FileDto>(blob);
+                var stream = input.File.GetStream();
+                var blobContainer = _blobContainerFactory.Create(containerName);
+                await blobContainer.SaveAsync(file.BlobName, stream, true);
+            }
+
+            return ObjectMapper.Map<File, FileDto>(file);
         }
 
         public virtual async Task<IRemoteStreamContent> GetFileAsync([NotNull] string containerName, [NotNull] string blobName)
         {
+            var fileInfo = await _blobRepository.FindAsync(containerName,blobName);
             var blobContainer = _blobContainerFactory.Create(containerName);
             var fileStream = await blobContainer.GetAsync(blobName);
-            var mimeType = MimeTypesMap.GetMimeType(blobName);
+            var mimeType = MimeTypesMap.GetMimeType(fileInfo.FileName);
 
             return new RemoteStreamContent(fileStream, blobName, mimeType, disposeStream: true);
         }
@@ -164,7 +177,7 @@ namespace Dignite.Abp.FileManagement
                 ) ;
         }
 
-        private async Task<string> GeneratorNameAsync(string containerName, string extensionName = null)
+        private async Task<string> GeneratorBlobNameAsync(string containerName, string extensionName)
         {
             var configuration = _configurationProvider.Get(containerName);
             var namingGeneratorType = configuration.GetConfigurationOrDefault(
@@ -176,40 +189,9 @@ namespace Dignite.Abp.FileManagement
                 .As<IBlobNameGenerator>();
 
             var blobName= await generator.Create();
-            return blobName+extensionName ?? string.Empty;
+            return blobName+(extensionName.EnsureStartsWith('.'));
         }
 
-        private static string GetFileExtensionName(Stream stream)
-        {
-            string fileExtensionName = HeyRed.Mime.MimeGuesser.GuessExtension(stream);
-
-            if (fileExtensionName.EnsureStartsWith('.').ToLower() == ".zip")
-            {
-                try
-                {
-                    using (var zipFile = new ZipArchive(stream, ZipArchiveMode.Read, true))
-                    {
-                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("word/")))
-                            return ".docx";
-
-                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("xl/")))
-                            return ".xlsx";
-
-                        if (zipFile.Entries.Any(e => e.FullName.StartsWith("ppt/")))
-                            return ".pptx";
-                    }
-
-                    return ".zip";
-                }
-                catch (InvalidDataException)
-                {
-                    return null;  //ZIP archive can be corrupted
-                }
-            }
-            else {
-                return fileExtensionName;            
-            }
-        }
 
         private static void ThrowValidationException(string message, string memberName)
         {
