@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<Import Project="..\..\..\..\configureawait.props" />
 	<Import Project="..\..\..\..\common.props" />
@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" Version="5.1.4" />
-		<PackageReference Include="Volo.Abp.PermissionManagement.Blazor.Server" Version="5.1.4" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Blazor.Server" Version="5.2.1" />
     </ItemGroup>
 
     <ItemGroup>

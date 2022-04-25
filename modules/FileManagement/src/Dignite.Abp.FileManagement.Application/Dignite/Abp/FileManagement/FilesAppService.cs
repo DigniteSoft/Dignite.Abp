@@ -35,7 +35,7 @@ namespace Dignite.Abp.FileManagement
             _currentFile= currentFile;
         }
 
-        public async Task<FileDto> SaveAsync([NotNull] string containerName, [NotNull] SaveRemoteFileInput input)
+        public async Task<FileDto> SaveUrlAsync([NotNull] string containerName, [NotNull] SaveRemoteFileInput input)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(input.Url);
             request.Method = "GET";

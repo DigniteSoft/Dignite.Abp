@@ -26,9 +26,9 @@ namespace Dignite.Abp.FileManagement
 
         [HttpPost]
         [Route("save/{containerName}/remote-file")]
-        public async Task<FileDto> SaveAsync([NotNull] string containerName, SaveRemoteFileInput input)
+        public async Task<FileDto> SaveUrlAsync([NotNull] string containerName, SaveRemoteFileInput input)
         {
-            return await _blobAppService.SaveAsync(containerName, input);
+            return await _blobAppService.SaveUrlAsync(containerName, input);
         }
 
         [HttpPost]

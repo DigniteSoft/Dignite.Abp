@@ -54,9 +54,8 @@ namespace Dignite.Abp.BlobStoring
                     }
                 }
             }
-            catch (SixLabors.ImageSharp.InvalidImageContentException exception)
+            catch (SixLabors.ImageSharp.UnknownImageFormatException exception)
             {
-               
             }
             return Task.CompletedTask;
             

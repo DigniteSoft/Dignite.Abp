@@ -77,9 +77,9 @@ namespace Dignite.Abp.Identity
 
         [HttpGet]
         [Route("authorized")]
-        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree = false)
+        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
         {
-            return await _organizationUnitAppService.GetAuthorizedAsync(buildOrganizationUnitsTree);
+            return await _organizationUnitAppService.GetAuthorizedAsync();
         }
 
         [HttpGet]

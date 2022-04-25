@@ -82,12 +82,9 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         });
     }
 
-    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree)
+    public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
     {
-        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetAuthorizedAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(bool), buildOrganizationUnitsTree }
-        });
+        return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetAuthorizedAsync));
     }
 
     public virtual async Task<PagedResultDto<OrganizationUnitDto>> GetListAsync(GetOrganizationUnitsInput input)

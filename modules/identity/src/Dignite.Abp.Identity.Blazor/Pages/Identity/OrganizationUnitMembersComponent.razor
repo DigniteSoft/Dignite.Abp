@@ -101,7 +101,7 @@
     protected virtual async Task OnDataGridReadAsync(DataGridReadDataEventArgs<Volo.Abp.Identity.IdentityUserDto> e)
     {
         CurrentSorting = e.Columns
-            .Where(c => c.SortDirection != Blazorise.SortDirection.None)
+            .Where(c => c.SortDirection != Blazorise.SortDirection.Default)
             .Select(c => c.Field + (c.SortDirection == Blazorise.SortDirection.Descending ? " DESC" : ""))
             .JoinAsString(",");
         CurrentPage = e.Page;

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.1.4" />
-    <PackageReference Include="Volo.Abp.Autofac" Version="5.1.4" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel" Version="5.2.1" />
+    <PackageReference Include="Volo.Abp.Autofac" Version="5.2.1" />
     <ProjectReference Include="..\..\src\Dignite.Abp.Identity.HttpApi.Client\Dignite.Abp.Identity.HttpApi.Client.csproj" />
   </ItemGroup>
 

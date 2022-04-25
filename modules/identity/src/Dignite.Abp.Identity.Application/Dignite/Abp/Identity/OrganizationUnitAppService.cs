@@ -116,7 +116,7 @@ namespace Dignite.Abp.Identity
 
 
         [Authorize]
-        public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree = false)
+        public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
         {
             List<OrganizationUnit> list;
             if (await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
@@ -130,26 +130,9 @@ namespace Dignite.Abp.Identity
                     .ToList();
             }
 
-            if (buildOrganizationUnitsTree)
-            {
-                var result = new List<OrganizationUnit>();
-                foreach (var ou in list)
-                {
-                    result = result.Union(
-                        await GetParentsAsync(ou)
-                        ).ToList();
-                }
-
-                return new ListResultDto<OrganizationUnitDto>(
-                    BuildOrganizationUnitsTree(result)
-                    );
-            }
-            else
-            {
                 return new ListResultDto<OrganizationUnitDto>(
                     ObjectMapper.Map<List<OrganizationUnit>, List<OrganizationUnitDto>>(list)
                     );
-            }
         }
 
 
@@ -492,6 +475,11 @@ namespace Dignite.Abp.Identity
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
         protected List<OrganizationUnitDto> BuildOrganizationUnitsTree(List<OrganizationUnit> list)
         {
             var dto = ObjectMapper.Map<List<OrganizationUnit>, List<OrganizationUnitDto>>(list);
