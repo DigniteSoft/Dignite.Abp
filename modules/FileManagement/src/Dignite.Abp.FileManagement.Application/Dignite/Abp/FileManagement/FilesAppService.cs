@@ -78,10 +78,14 @@ namespace Dignite.Abp.FileManagement
             {
                 ThrowValidationException("Bytes of file can not be null or empty!", nameof(input.File));
             }
-
             var stream = input.File.GetStream();
             var blobContainer = _blobContainerFactory.Create(containerName);
             string fileExtensionName = GetFileExtensionName(stream);
+            Console.WriteLine($"fileExtensionName:{fileExtensionName.ToLower()}");
+            if (fileExtensionName.ToLower() == ".bin")
+            {
+                fileExtensionName = $".{input.File.FileName.Split(".").LastOrDefault()}";
+            }
             var blobName = await GeneratorNameAsync(
                 containerName,
                 fileExtensionName
@@ -157,12 +161,12 @@ namespace Dignite.Abp.FileManagement
 
             return Task.FromResult(
                 new BlobContainerConfigurationDto(
-                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy,authorizationHandlerConfiguration.SavingRoles,authorizationHandlerConfiguration.GettingPolicy,authorizationHandlerConfiguration.GettingRoles,authorizationHandlerConfiguration.DeletingPolicy,authorizationHandlerConfiguration.DeletingRoles),
+                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy, authorizationHandlerConfiguration.SavingRoles, authorizationHandlerConfiguration.GettingPolicy, authorizationHandlerConfiguration.GettingRoles, authorizationHandlerConfiguration.DeletingPolicy, authorizationHandlerConfiguration.DeletingRoles),
                     new BlobSizeLimitHandlerConfigurationDto(blobSizeLimitHandlerConfiguration.MaximumBlobSize),
                     new FileTypeCheckHandlerConfigurationDto(fileTypeCheckHandlerConfiguration.AllowedFileTypeNames),
-                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth,imageProcessHandlerConfiguration.ImageHeight,imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
+                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth, imageProcessHandlerConfiguration.ImageHeight, imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
                     )
-                ) ;
+                );
         }
 
         private async Task<string> GeneratorNameAsync(string containerName, string extensionName = null)
@@ -176,14 +180,13 @@ namespace Dignite.Abp.FileManagement
             var generator = LazyServiceProvider.LazyGetRequiredService(namingGeneratorType)
                 .As<IBlobNameGenerator>();
 
-            var blobName= await generator.Create();
-            return blobName+extensionName ?? string.Empty;
+            var blobName = await generator.Create();
+            return blobName + extensionName ?? string.Empty;
         }
 
         private static string GetFileExtensionName(Stream stream)
         {
             string fileExtensionName = HeyRed.Mime.MimeGuesser.GuessExtension(stream);
-
             if (fileExtensionName.EnsureStartsWith('.').ToLower() == ".zip")
             {
                 try
@@ -207,7 +210,8 @@ namespace Dignite.Abp.FileManagement
                     return null;  //ZIP archive can be corrupted
                 }
             }
-            else {
+            else
+            {
                 return fileExtensionName.EnsureStartsWith('.');
             }
         }

@@ -44,7 +44,7 @@
             {
                 if (column.Actions.Any())
                 {
-                    <DataGridEntityActionsColumn Width="100px" TItem="TItem" @ref="ActionColumns[column.Title]" Caption="@column.Title">
+                    <DataGridEntityActionsColumn TItem="TItem" @ref="ActionColumns[column.Title]" Caption="@column.Title">
                         <DisplayTemplate>
                             <EntityActions Type="column.Actions.Count>1? ActionType.Dropdown : ActionType.Button" TItem="TItem" ToggleColor="Color.None" EntityActionsColumn="ActionColumns[column.Title]">
                                 @foreach (var action in column.Actions)
