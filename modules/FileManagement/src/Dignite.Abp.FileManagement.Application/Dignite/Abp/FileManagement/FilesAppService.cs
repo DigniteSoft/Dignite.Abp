@@ -84,23 +84,13 @@ namespace Dignite.Abp.FileManagement
             {
                 ThrowValidationException("Bytes of file can not be null or empty!", nameof(input.File));
             }
-            var stream = input.File.GetStream();
-            var blobContainer = _blobContainerFactory.Create(containerName);
-            string fileExtensionName = GetFileExtensionName(stream);
-            Console.WriteLine($"fileExtensionName:{fileExtensionName.ToLower()}");
-            if (fileExtensionName.ToLower() == ".bin")
-            {
-                fileExtensionName = $".{input.File.FileName.Split(".").LastOrDefault()}";
-            }
-            var blobName = await GeneratorNameAsync(
-                containerName,
-                fileExtensionName
-                );
-
-            await blobContainer.SaveAsync(blobName, stream, true);
-
-            await CurrentUnitOfWork.SaveChangesAsync();
-
+            var file = new File(
+                        GuidGenerator.Create(),
+                        input.EntityType,
+                        input.EntityId,
+                        new BasicBlobInfo(),
+                        input.File.FileName,
+                        CurrentTenant.Id);
             //
             using (_currentFile.Current(file))
             {
