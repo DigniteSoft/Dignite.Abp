@@ -26,9 +26,9 @@ namespace Dignite.Abp.FileManagement
 
         [HttpPost]
         [Route("save/{containerName}/remote-file")]
-        public async Task<FileDto> SaveAsync([NotNull] string containerName, SaveRemoteFileInput input)
+        public async Task<FileDto> SaveUrlAsync([NotNull] string containerName, SaveRemoteFileInput input)
         {
-            return await _blobAppService.SaveAsync(containerName, input);
+            return await _blobAppService.SaveUrlAsync(containerName, input);
         }
 
         [HttpPost]
@@ -54,12 +54,11 @@ namespace Dignite.Abp.FileManagement
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
             var file= await _blobAppService.GetFileAsync(containerName, blobName);
-            var mimeType = MimeTypesMap.GetMimeType(fileName);
-            return File(file.GetStream(), mimeType, fileName);
+            return File(file.GetStream(), file.ContentType, fileName);
         }
 
         [HttpGet]
-        [Route("{containerName}/{blobName}")]
+        [Route("{containerName}/{*blobName}")]
         public async Task<IRemoteStreamContent> GetFileAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             return await _blobAppService.GetFileAsync(containerName, blobName);
@@ -79,7 +78,7 @@ namespace Dignite.Abp.FileManagement
 
 
         [HttpDelete]
-        [Route("{containerName}/{blobName}")]
+        [Route("{containerName}/{*blobName}")]
         public async Task DeleteAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             await _blobAppService.DeleteAsync(containerName, blobName);

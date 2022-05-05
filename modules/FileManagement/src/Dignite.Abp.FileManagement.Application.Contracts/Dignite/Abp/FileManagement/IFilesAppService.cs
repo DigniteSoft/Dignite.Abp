@@ -19,7 +19,7 @@ namespace Dignite.Abp.FileManagement
         /// <returns>
         /// Return blob url after successful saving
         /// </returns>
-        Task<FileDto> SaveAsync([NotNull] string containerName, SaveRemoteFileInput input);
+        Task<FileDto> SaveUrlAsync([NotNull] string containerName, SaveRemoteFileInput input);
 
 
         /// <summary>

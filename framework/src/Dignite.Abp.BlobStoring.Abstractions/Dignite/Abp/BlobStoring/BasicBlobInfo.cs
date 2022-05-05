@@ -4,6 +4,10 @@ namespace Dignite.Abp.BlobStoring
 {
     public class BasicBlobInfo : IBlobInfo
     {
+        public BasicBlobInfo()
+        {
+        }
+
         public BasicBlobInfo(
             [NotNull] string containerName,
             [NotNull] string blobName

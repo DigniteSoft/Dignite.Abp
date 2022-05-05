@@ -33,5 +33,32 @@ namespace Dignite.Abp.Identity
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static IReadOnlyList<OrganizationUnitDto> ToLevelList([NotNull] this IReadOnlyList<OrganizationUnitDto> source)
+        {
+            var result = new List<OrganizationUnitDto>();
+            foreach (var ou in source)
+            {
+                result.Add(ou);
+                AddChildren(result, ou);
+            }
+            return result;
+        }
+
+        private static void AddChildren(List<OrganizationUnitDto> list, OrganizationUnitDto ou)
+        {
+            if (ou.Children != null && ou.Children.Any())
+            {
+                foreach (var c in ou.Children)
+                {
+                    list.Add(c);
+                    AddChildren(list, ou);
+                }
+            }
+        }
     }
 }

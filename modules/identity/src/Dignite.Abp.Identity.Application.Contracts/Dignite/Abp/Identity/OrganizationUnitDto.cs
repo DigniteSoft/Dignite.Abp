@@ -42,9 +42,6 @@ namespace Dignite.Abp.Identity
         [JsonInclude] 
         public IList<OrganizationUnitDto> Children { get; protected set; }
 
-
-        public IList<OrganizationUnitRoleDto> Roles { get; set; }
-
         /// <summary>
         /// 
         /// </summary>

@@ -69,17 +69,10 @@ namespace Dignite.Abp.Identity
 
 
         [HttpGet]
-        [Route("by-code/{code}")]
-        public async Task<OrganizationUnitDto> FindByCodeAsync(string code)
-        {
-            return await _organizationUnitAppService.FindByCodeAsync(code);
-        }
-
-        [HttpGet]
         [Route("authorized")]
-        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync(bool buildOrganizationUnitsTree = false)
+        public async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
         {
-            return await _organizationUnitAppService.GetAuthorizedAsync(buildOrganizationUnitsTree);
+            return await _organizationUnitAppService.GetAuthorizedAsync();
         }
 
         [HttpGet]

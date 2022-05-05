@@ -10,8 +10,6 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 {
     public partial class SideNav
     {
-        [Inject]
-        private IJSRuntime JS { get; set; }
 
         [Inject]
         protected IMenuManager MenuManager { get; set; }
@@ -31,10 +29,8 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
             NavigationManager.LocationChanged += OnLocationChanged;
 
             //根据当前页url查询根菜单
-            FindRootMenuItem(NavigationManager.Uri);
+            FindRootMenuItemAsync(NavigationManager.Uri);
 
-            //调用JS方法，设置是否显示侧边栏
-            await JS.InvokeVoidAsync("mainMenuToggle", (RootMenuItem == null || RootMenuItem.IsLeaf) ? false : true);
 
             await base.OnInitializedAsync();
 
@@ -62,18 +58,15 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
             */
 
             //根据新页面url查询根菜单
-            FindRootMenuItem(e.Location);
-
-            //调用JS方法，设置是否显示侧边栏
-            JS.InvokeVoidAsync("mainMenuToggle", (RootMenuItem == null || RootMenuItem.IsLeaf) ? false : true);
+            FindRootMenuItemAsync(e.Location);
 
             InvokeAsync(StateHasChanged);
         }
 
-        private void FindRootMenuItem(string location)
+        private async void FindRootMenuItemAsync(string location)
         {
             location = location.Replace(NavigationManager.BaseUri, "");
-            var mainMenu = (MenuManager.GetMainMenuAsync()).Result;
+            var mainMenu = await MenuManager.GetMainMenuAsync();
             RootMenuItem = mainMenu.Items.FirstOrDefault(menu =>
                 menu.Url!=null && !menu.Url.TrimStart('/', '~').IsNullOrEmpty() && location.StartsWith(menu.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)
                 );

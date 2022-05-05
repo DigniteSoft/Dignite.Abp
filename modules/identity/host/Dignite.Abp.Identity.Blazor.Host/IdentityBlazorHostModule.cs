@@ -23,7 +23,7 @@ namespace Dignite.Abp.Identity.Blazor.Host;
     typeof(AbpAutofacWebAssemblyModule),
     typeof(AbpAspNetCoreComponentsWebAssemblyBasicThemeModule),
     typeof(AbpAccountApplicationContractsModule),
-    typeof(IdentityBlazorWebAssemblyModule),
+    typeof(DigniteAbpIdentityBlazorWebAssemblyModule),
     typeof(AbpTenantManagementBlazorWebAssemblyModule),
     typeof(AbpSettingManagementBlazorWebAssemblyModule)
 )]

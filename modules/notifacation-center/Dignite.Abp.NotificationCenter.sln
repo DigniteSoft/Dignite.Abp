@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.NotificationCen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.Notifications", "..\..\framework\src\Dignite.Abp.Notifications\Dignite.Abp.Notifications.csproj", "{44409F64-47A3-4129-A2DF-62AC7BE35E6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.SignalR.Notifications", "..\..\framework\src\Dignite.Abp.Notifications.SignalR\Dignite.Abp.AspNetCore.SignalR.Notifications.csproj", "{25109398-4DD7-42D1-B8BC-E502D06F2685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dignite.Abp.AspNetCore.SignalR.Notifications", "..\..\framework\src\Dignite.Abp.AspNetCore.SignalR.Notifications\Dignite.Abp.AspNetCore.SignalR.Notifications.csproj", "{00E03138-4BBF-455B-9D90-B0159E079033}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -149,10 +149,10 @@ Global
 		{44409F64-47A3-4129-A2DF-62AC7BE35E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44409F64-47A3-4129-A2DF-62AC7BE35E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44409F64-47A3-4129-A2DF-62AC7BE35E6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{25109398-4DD7-42D1-B8BC-E502D06F2685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{25109398-4DD7-42D1-B8BC-E502D06F2685}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{25109398-4DD7-42D1-B8BC-E502D06F2685}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{25109398-4DD7-42D1-B8BC-E502D06F2685}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E03138-4BBF-455B-9D90-B0159E079033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E03138-4BBF-455B-9D90-B0159E079033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E03138-4BBF-455B-9D90-B0159E079033}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E03138-4BBF-455B-9D90-B0159E079033}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

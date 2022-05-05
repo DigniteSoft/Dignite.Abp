@@ -5,7 +5,6 @@ using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 using Volo.Abp.UI.Navigation;
-using Dignite.Abp.AntDesignBlazorUI;
 using Volo.Abp.Threading;
 using Volo.Abp.PermissionManagement.Blazor;
 using Volo.Abp.ObjectExtending.Modularity;
@@ -17,7 +16,6 @@ namespace Dignite.Abp.Identity.Blazor;
 [DependsOn(
     typeof(DigniteAbpIdentityApplicationContractsModule),
     typeof(AbpAspNetCoreComponentsWebThemingModule),
-    typeof(DigniteAbpAntDesignBlazorUIModule),
     typeof(AbpAutoMapperModule),
     typeof(AbpPermissionManagementBlazorModule)
     )]
@@ -42,6 +40,7 @@ public class DigniteAbpIdentityBlazorModule : AbpModule
         {
             options.AdditionalAssemblies.Add(typeof(DigniteAbpIdentityBlazorModule).Assembly);
         });
+        context.Services.AddAntDesign();
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)

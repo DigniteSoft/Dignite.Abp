@@ -3,7 +3,6 @@ using Microsoft.Extensions.Options;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Domain.Services;
 
 namespace Dignite.Abp.FileManagement
@@ -11,15 +10,17 @@ namespace Dignite.Abp.FileManagement
     public class FileInfoStore: DomainService, IBlobInfoStore
     {
         private readonly IFileRepository _blobRepository;
-        private readonly IFileEntityResolver _blobEntityResolver;
         private readonly IOptions<FileOptions> _options;
+        private readonly ICurrentBlobInfo _currentFile;
 
-        public FileInfoStore(IFileRepository blobRepository, IFileEntityResolver blobEntityResolver,
-            IOptions<FileOptions> options)
+        public FileInfoStore(
+            IFileRepository blobRepository, 
+            IOptions<FileOptions> options,
+            ICurrentBlobInfo currentFile)
         {
             _blobRepository = blobRepository;
-            _blobEntityResolver = blobEntityResolver;
             _options = options;
+            _currentFile= currentFile;
         }
 
         public async Task<bool> ExistsAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
@@ -34,26 +35,14 @@ namespace Dignite.Abp.FileManagement
 
         public async Task CreateAsync(IBlobInfo blobInfo, CancellationToken cancellationToken = default)
         {
-            var blobEntityResult = await _blobEntityResolver.ResolveBlobEntityAsync();
-
-            Check.NotNullOrWhiteSpace(blobEntityResult.EntityType, nameof(blobEntityResult.EntityType), FileConsts.MaxEntityTypeLength);
-            Check.NotNullOrWhiteSpace(blobEntityResult.EntityId, nameof(blobEntityResult.EntityId), FileConsts.MaxEntityIdLength);
-            Check.NotNullOrWhiteSpace(blobInfo.ContainerName, nameof(blobInfo.ContainerName), FileConsts.MaxContainerNameLength);
-            Check.NotNullOrWhiteSpace(blobInfo.BlobName, nameof(blobInfo.BlobName), FileConsts.MaxBlobNameLength);
-
-            if (!_options.Value.EntityTypes.Any(x => x.EntityType == blobEntityResult.EntityType))
+            var file = (File)_currentFile.BlobInfo;
+            if (!_options.Value.EntityTypes.Any(x => x.EntityType == file.EntityType))
             {
-                throw new EntityFileNotAddableException(blobEntityResult.EntityType);
+                throw new EntityFileNotAddableException(file.EntityType);
             }
+            file.SetBlobInfo(blobInfo);
 
-            var blob = new File(
-                GuidGenerator.Create(),
-                blobEntityResult.EntityType,
-                blobEntityResult.EntityId,
-                new BasicBlobInfo(blobInfo.ContainerName,blobInfo.BlobName,blobInfo.BinarySize,blobInfo.Hash,blobInfo.ReferBlobName),
-                CurrentTenant.Id);
-
-            await _blobRepository.InsertAsync(blob, cancellationToken: cancellationToken);
+            await _blobRepository.InsertAsync(file, cancellationToken: cancellationToken);
         }
 
         public async Task DeleteAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
