@@ -11,10 +11,10 @@ namespace Dignite.Abp.BlobStoring
     {
         public static SimpleBlobNameGenerator Instance { get; } = new SimpleBlobNameGenerator();
 
-        public virtual Task<string> Create()
+        public virtual Task<string> Create(string extensionName = null)
         {
             return Task.FromResult(
-                Guid.NewGuid().ToString("N")
+                Guid.NewGuid().ToString("N") + extensionName.EnsureStartsWith('.')
                 );
         }
     }

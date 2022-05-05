@@ -58,7 +58,7 @@ namespace Dignite.Abp.FileManagement
         }
 
         [HttpGet]
-        [Route("{containerName}/{blobName}")]
+        [Route("{containerName}/{*blobName}")]
         public async Task<IRemoteStreamContent> GetFileAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             return await _blobAppService.GetFileAsync(containerName, blobName);
@@ -78,7 +78,7 @@ namespace Dignite.Abp.FileManagement
 
 
         [HttpDelete]
-        [Route("{containerName}/{blobName}")]
+        [Route("{containerName}/{*blobName}")]
         public async Task DeleteAsync([NotNull] string containerName, [NotNull] string blobName)
         {
             await _blobAppService.DeleteAsync(containerName, blobName);

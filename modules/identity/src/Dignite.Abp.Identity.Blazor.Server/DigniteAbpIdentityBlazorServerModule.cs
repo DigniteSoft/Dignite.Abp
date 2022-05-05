@@ -22,7 +22,6 @@ public class DigniteAbpIdentityBlazorServerModule : AbpModule
                 .Add(BlazorDigniteAbpIdentityBundles.Styles.Global, bundle =>
                 {
                     bundle
-                        .AddBaseBundles(BlazorDigniteAbpIdentityBundles.Styles.Global)
                         .AddContributors(typeof(BlazorDigniteAbpIdentityStyleContributor));
                 });
 
@@ -31,7 +30,6 @@ public class DigniteAbpIdentityBlazorServerModule : AbpModule
                 .Add(BlazorDigniteAbpIdentityBundles.Scripts.Global, bundle =>
                 {
                     bundle
-                        .AddBaseBundles(BlazorDigniteAbpIdentityBundles.Scripts.Global)
                         .AddContributors(typeof(BlazorDigniteAbpIdentityScriptContributor));
                 });
         });

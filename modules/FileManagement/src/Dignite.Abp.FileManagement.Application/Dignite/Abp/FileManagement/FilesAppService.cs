@@ -100,10 +100,12 @@ namespace Dignite.Abp.FileManagement
                     containerName,
                     input.File.FileName.Substring(input.File.FileName.LastIndexOf('.'))
                     );
-
-                var stream = input.File.GetStream();
-                var blobContainer = _blobContainerFactory.Create(containerName);
-                await blobContainer.SaveAsync(file.BlobName, stream, true);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    await input.File.GetStream().CopyToAsync(ms);
+                    var blobContainer = _blobContainerFactory.Create(containerName);
+                    await blobContainer.SaveAsync(file.BlobName, ms, true);
+                }
             }
 
             return ObjectMapper.Map<File, FileDto>(file);
@@ -188,8 +190,8 @@ namespace Dignite.Abp.FileManagement
             var generator = LazyServiceProvider.LazyGetRequiredService(namingGeneratorType)
                 .As<IBlobNameGenerator>();
 
-            var blobName= await generator.Create();
-            return blobName+(extensionName.EnsureStartsWith('.'));
+            var blobName= await generator.Create(extensionName);
+            return blobName;
         }
 
 

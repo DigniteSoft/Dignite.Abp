@@ -30,17 +30,20 @@ public class IdentityMenuContributor : IMenuContributor
         identityMenuItem.AddItem(new ApplicationMenuItem(
                 IdentityMenuNames.Roles,
                 l["Roles"],
+                icon: "fa fa-users",
                 url: "~/identity/roles").RequirePermissions(IdentityPermissions.Roles.Default));
 
         identityMenuItem.AddItem(new ApplicationMenuItem(
             IdentityMenuNames.Users,
             l["Users"],
+            icon: "fa fa-user",
             url: "~/identity/users").RequirePermissions(IdentityPermissions.Users.Default));
 
         identityMenuItem.AddItem(new ApplicationMenuItem(
-                IdentityMenuNames.OrganizationUnits,
-                l["OrganizationUnits"],
-                url: "~/identity/organization-units").RequirePermissions(OrganizationUnitPermissions.OrganizationUnits.Default));
+            IdentityMenuNames.OrganizationUnits,
+            l["OrganizationUnits"],
+            icon: "fa fa-sitemap",
+            url: "~/identity/organization-units").RequirePermissions(OrganizationUnitPermissions.OrganizationUnits.Default));
 
 
         return Task.CompletedTask;

@@ -10,6 +10,6 @@ namespace Dignite.Abp.BlobStoring
         /// <summary>
         /// Create a new blob name.
         /// </summary>
-        Task<string> Create();
+        Task<string> Create(string extensionName=null);
     }
 }

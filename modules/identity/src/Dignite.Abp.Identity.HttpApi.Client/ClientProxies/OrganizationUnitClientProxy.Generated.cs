@@ -74,14 +74,6 @@ public partial class OrganizationUnitClientProxy : ClientProxyBase<IOrganization
         });
     }
 
-    public virtual async Task<OrganizationUnitDto> FindByCodeAsync(string code)
-    {
-        return await RequestAsync<OrganizationUnitDto>(nameof(FindByCodeAsync), new ClientProxyRequestTypeValue
-        {
-            { typeof(string), code }
-        });
-    }
-
     public virtual async Task<ListResultDto<OrganizationUnitDto>> GetAuthorizedAsync()
     {
         return await RequestAsync<ListResultDto<OrganizationUnitDto>>(nameof(GetAuthorizedAsync));

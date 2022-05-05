@@ -31,7 +31,7 @@ namespace Dignite.Abp.Identity.Blazor.Pages.Identity
             Toolbar.AddButton(L["AddMembers"],
                 OpenCreateModalAsync,
                 IconName.Add,
-                requiredPolicyName: OrganizationUnitPermissions.OrganizationUnits.Update);
+                requiredPolicyName: OrganizationUnitPermissions.OrganizationUnits.MembersManage);
 
             return ValueTask.CompletedTask;
         }

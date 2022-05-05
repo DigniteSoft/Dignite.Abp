@@ -16,7 +16,7 @@ namespace Dignite.Abp.FileManagement
             _currentFile = currentFile;
         }
 
-        public virtual Task<string> Create()
+        public virtual Task<string> Create(string extensionName = null)
         {
             var file = (File)_currentFile.BlobInfo;
             Check.NotNullOrWhiteSpace(file.EntityId, nameof(file.EntityId), FileConsts.MaxEntityIdLength);

@@ -14,7 +14,6 @@ namespace Dignite.Abp.Identity
         OrganizationUnitCreateDto,
         OrganizationUnitUpdateDto>
     {
-        Task<OrganizationUnitDto> FindByCodeAsync(string code);
 
         /// <summary>
         /// 获取授权给当前用户的机构；

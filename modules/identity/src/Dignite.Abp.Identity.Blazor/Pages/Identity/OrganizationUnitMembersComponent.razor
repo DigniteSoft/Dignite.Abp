@@ -50,7 +50,7 @@
 
     protected virtual async Task SetPermissionsAsync()
     {
-        HasCreatePermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.Create);  
+        HasCreatePermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.MembersManage);  
     }
 
 
@@ -143,6 +143,12 @@
                 {
                     Title = L["UserName"],
                     Data = nameof(IdentityUserDto.UserName)
+                },
+                new TableColumn
+                {
+                    Title = L["DisplayName:Surname"]+L["DisplayName:Name"],
+                    Data = nameof(IdentityUserDto.Name),
+                    ValueConverter=(val)=>val.As<IdentityUserDto>().Surname+val.As<IdentityUserDto>().Name
                 },
                 new TableColumn
                 {

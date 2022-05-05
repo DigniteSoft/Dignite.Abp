@@ -48,7 +48,7 @@ namespace Dignite.Abp.BlobStoring
                 var blobInfo = await blobInfoStore.FindAsync(ContainerName, name, cancellationToken);
 
                 // authorization handlers
-                await CheckGettingPermissionAsync(blobInfo);
+                await CheckDeletingPermissionAsync(blobInfo);
 
                 if (blobInfo != null)
                 {
@@ -56,14 +56,14 @@ namespace Dignite.Abp.BlobStoring
                     {
                         if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, name,  cancellationToken))
                         {
-                            return await base.DeleteAsync(name, cancellationToken);
+                            await base.DeleteAsync(name, cancellationToken);
                         }
                     }
                     else
                     {
                         if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, blobInfo.ReferBlobName,  cancellationToken))
                         {
-                            return await base.DeleteAsync(blobInfo.ReferBlobName, cancellationToken);
+                            await base.DeleteAsync(blobInfo.ReferBlobName, cancellationToken);
                         }
                     }
 
@@ -95,7 +95,7 @@ namespace Dignite.Abp.BlobStoring
 
                 var blobInfo = await blobInfoStore.FindAsync(ContainerName, name, cancellationToken);
                 // authorization handlers
-                await CheckDeletingPermissionAsync(blobInfo);
+                await CheckGettingPermissionAsync(blobInfo);
 
                 //
                 if (blobInfo != null)

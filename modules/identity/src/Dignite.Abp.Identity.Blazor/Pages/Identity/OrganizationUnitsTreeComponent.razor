@@ -15,6 +15,7 @@
 
     private IReadOnlyList<IdentityRoleDto> AvailableRoles;
     private TreeNode<OrganizationUnitDto> SelectedNode;
+    private bool HasSuperAuthorizationPermission = false;
 
     public OrganizationUnitsTreeComponent()
     {
@@ -24,10 +25,12 @@
         CreatePolicyName = OrganizationUnitPermissions.OrganizationUnits.Create;
         UpdatePolicyName = OrganizationUnitPermissions.OrganizationUnits.Update;
         DeletePolicyName = OrganizationUnitPermissions.OrganizationUnits.Delete;
+
     }
 
     protected override async Task OnInitializedAsync()
     {
+        HasSuperAuthorizationPermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization);
         await GetEntitiesAsync();
         await base.OnInitializedAsync();
     }
@@ -193,7 +196,9 @@
     {
         await base.OpenEditModalAsync(entity);
         AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(entity.ParentId)).Items;
-
+        
+        var ouRoles = await OrganizationUnitAppService.GetRolesAsync(entity.Id);
+        EditingEntity.RoleIds = ouRoles.Items.Select(r=>r.Id).ToList();
     }
 
     protected override async Task OnCreatedEntityAsync()
@@ -245,17 +250,12 @@
 
         return Task.CompletedTask;
     }
-
-    protected override OrganizationUnitUpdateDto MapToEditingEntity(OrganizationUnitDto entityDto)
-    {
-        EditingEntity = base.MapToEditingEntity(entityDto);
-        EditingEntity.RoleIds = entityDto.Roles.Select(r => r.RoleId).ToList();
-        return EditingEntity;
-    }
 }
 
-<Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@OnAddRootUnitClicked">@L["NewRootUnit"]</Blazorise.Button>
-
+@if (HasCreatePermission && HasSuperAuthorizationPermission)
+{
+    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@OnAddRootUnitClicked">@L["NewRootUnit"]</Blazorise.Button>
+}
 <AntDesign.Tree Draggable BlockNode
         ShowIcon DataSource="Entities"
         TitleExpression="x => x.DataItem.DisplayName"
@@ -271,9 +271,18 @@
             <AntDesign.Dropdown Trigger="new Trigger[] { Trigger.ContextMenu }">
                 <Overlay>
                     <Menu>
+                        @if (HasCreatePermission)
+                        {
                         <MenuItem OnClick="(e=>OnAddSubUnitClicked(e,node))">@L["NewSubUnit"]</MenuItem>
+                        }
+                        @if (HasUpdatePermission)
+                        {
                         <MenuItem OnClick="(e=>OnEditUnitClicked(e,node))">@L["Edit"]</MenuItem>
+                        }
+                        @if (HasDeletePermission)
+                        {
                         <MenuItem OnClick="(e=>OnDeleteUnitClicked(e,node))">@L["Delete"]</MenuItem>
+                        }
                         <MenuItem>@L["UnitProperties"]</MenuItem>
                     </Menu>
                 </Overlay>
