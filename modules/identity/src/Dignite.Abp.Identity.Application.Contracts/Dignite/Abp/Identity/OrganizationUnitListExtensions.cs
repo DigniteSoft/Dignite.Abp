@@ -56,7 +56,7 @@ namespace Dignite.Abp.Identity
                 foreach (var c in ou.Children)
                 {
                     list.Add(c);
-                    AddChildren(list, ou);
+                    AddChildren(list, c);
                 }
             }
         }
