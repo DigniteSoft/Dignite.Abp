@@ -38,8 +38,9 @@
                 },
                 new TableColumn
                 {
-                    Title = L["Email"],
-                    Data = nameof(IdentityUserDto.Email),
+                    Title = L["DisplayName:Surname"]+L["DisplayName:Name"],
+                    Data = nameof(IdentityUserDto.Name),
+                    ValueConverter=(val)=>val.As<IdentityUserDto>().Surname+val.As<IdentityUserDto>().Name
                 },
                 new TableColumn
                 {

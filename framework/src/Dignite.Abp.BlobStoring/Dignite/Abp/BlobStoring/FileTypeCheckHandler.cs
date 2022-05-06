@@ -21,7 +21,7 @@ namespace Dignite.Abp.BlobStoring
             _currentFile = currentFile;
         }
 
-        public Task ProcessAsync(BlobProcessHandlerContext context)
+        public async Task<Stream> ProcessAsync(BlobProcessHandlerContext context)
         {
             var fileTypeCheckHandlerConfiguration = context.ContainerConfiguration.GetFileTypeCheckConfiguration();
 
@@ -50,8 +50,7 @@ namespace Dignite.Abp.BlobStoring
                     );
                 }
             }
-            return Task.CompletedTask;
+            return context.BlobStream;
         }
-
     }
 }

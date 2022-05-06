@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
@@ -9,7 +10,7 @@ namespace Dignite.Abp.BlobStoring
     /// </summary>
     public class BlobSizeLimitHandler : IBlobProcessHandler, ITransientDependency
     {
-        public Task ProcessAsync(BlobProcessHandlerContext context)
+        public async Task<Stream> ProcessAsync(BlobProcessHandlerContext context)
         {
             var configuration = context.ContainerConfiguration.GetBlobSizeLimitConfiguration();
             if (configuration.MaximumBlobSize*1024*1024 < context.BlobStream.Length)
@@ -21,7 +22,7 @@ namespace Dignite.Abp.BlobStoring
                 );
             }
 
-            return Task.CompletedTask;
+            return context.BlobStream;
         }
     }
 }

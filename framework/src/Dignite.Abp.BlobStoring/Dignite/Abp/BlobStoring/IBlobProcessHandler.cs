@@ -6,6 +6,6 @@ namespace Dignite.Abp.BlobStoring
 {
     public interface IBlobProcessHandler
     {
-        Task ProcessAsync(BlobProcessHandlerContext context);
+        Task<Stream> ProcessAsync(BlobProcessHandlerContext context);
     }
 }

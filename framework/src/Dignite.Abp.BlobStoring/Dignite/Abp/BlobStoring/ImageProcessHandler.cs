@@ -1,5 +1,6 @@
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
+using System.IO;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.DependencyInjection;
@@ -11,13 +12,13 @@ namespace Dignite.Abp.BlobStoring
     /// </summary>
     public class ImageProcessHandler : IBlobProcessHandler,ITransientDependency
     {
-        public Task ProcessAsync(BlobProcessHandlerContext context)
+        public async Task<Stream> ProcessAsync(BlobProcessHandlerContext context)
         {
             var configuration = context.ContainerConfiguration.GetImageResizeConfiguration();
 
             try
             {
-                using (Image image = Image.Load(context.BlobStream))
+                using (Image image =  await Image.LoadAsync(context.BlobStream))
                 {
                     if (configuration.ImageSizeMustBeLargerThanPreset)
                     {
@@ -47,18 +48,18 @@ namespace Dignite.Abp.BlobStoring
                         {
                             Quality = 40
                         };
-                        context.BlobStream.Position = 0;
-                        image.Save(context.BlobStream, encoder);
-                        context.BlobStream.SetLength(context.BlobStream.Position);
-                        context.BlobStream.Position = 0;
+
+                        MemoryStream ms = new MemoryStream();
+                        image.Save(ms, encoder);
+
+                        return ms;
                     }
                 }
             }
             catch (SixLabors.ImageSharp.UnknownImageFormatException exception)
             {
             }
-            return Task.CompletedTask;
-            
+            return context.BlobStream;
         }
     }
 }

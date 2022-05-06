@@ -20,12 +20,12 @@ namespace Dignite.Abp.BlobStoring
             ICurrentTenant currentTenant,
             ICancellationTokenProvider cancellationTokenProvider,
             IBlobNormalizeNamingService blobNormalizeNamingService,
-            IServiceProvider serviceProvider) :base(
+            IServiceProvider serviceProvider) : base(
                 containerName,
                 configuration,
                 provider,
                 currentTenant,
-                cancellationTokenProvider, 
+                cancellationTokenProvider,
                 blobNormalizeNamingService,
                 serviceProvider
                 )
@@ -54,14 +54,14 @@ namespace Dignite.Abp.BlobStoring
                 {
                     if (blobInfo.ReferBlobName.IsNullOrEmpty())
                     {
-                        if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, name,  cancellationToken))
+                        if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, name, cancellationToken))
                         {
                             await base.DeleteAsync(name, cancellationToken);
                         }
                     }
                     else
                     {
-                        if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, blobInfo.ReferBlobName,  cancellationToken))
+                        if (!await blobInfoStore.ReferenceExistsAsync(ContainerName, blobInfo.ReferBlobName, cancellationToken))
                         {
                             await base.DeleteAsync(blobInfo.ReferBlobName, cancellationToken);
                         }
@@ -120,11 +120,9 @@ namespace Dignite.Abp.BlobStoring
             // authorization handlers
             await CheckSavingPermissionAsync();
 
-            // blob process handlers
-            await BlobProcessHandlers( stream);
 
             // save blob
-            await PersistentAsync(name, stream, overrideExisting, cancellationToken);
+            await PersistentAsync(name, await BlobProcessHandlers(stream), overrideExisting, cancellationToken);
 
             // TODO:考虑使用Event Bus技术实现回调
         }
@@ -141,8 +139,8 @@ namespace Dignite.Abp.BlobStoring
                             .GetRequiredService(authorizationHandlerType)
                             .As<IAuthorizationHandler>();
 
-                        await handler.CheckSavingPermissionAsync(authorizationConfiguration);
-                    
+                    await handler.CheckSavingPermissionAsync(authorizationConfiguration);
+
                 }
             }
         }
@@ -159,7 +157,7 @@ namespace Dignite.Abp.BlobStoring
                             .GetRequiredService(authorizationHandlerType)
                             .As<IAuthorizationHandler>();
 
-                    await handler.CheckGettingPermissionAsync(authorizationConfiguration,blobInfo);
+                    await handler.CheckGettingPermissionAsync(authorizationConfiguration, blobInfo);
 
                 }
             }
@@ -184,13 +182,13 @@ namespace Dignite.Abp.BlobStoring
             }
         }
 
-        private async Task BlobProcessHandlers(Stream stream)
+        private async Task<Stream> BlobProcessHandlers(Stream stream)
         {
             // blob process handlers
             var processHandlers = Configuration.GetConfigurationOrDefault<ITypeList<IBlobProcessHandler>>(DigniteAbpBlobContainerConfigurationNames.BlobProcessHandlers, null);
             if (processHandlers != null && processHandlers.Any())
             {
-                var context = new BlobProcessHandlerContext(stream, Configuration, CurrentTenant, ServiceProvider);
+                var context = new BlobProcessHandlerContext(stream, Configuration, ServiceProvider);
                 using (var scope = ServiceProvider.CreateScope())
                 {
                     foreach (var handlerType in processHandlers)
@@ -199,10 +197,11 @@ namespace Dignite.Abp.BlobStoring
                             .GetRequiredService(handlerType)
                             .As<IBlobProcessHandler>();
 
-                        await handler.ProcessAsync(context);
+                        stream = await handler.ProcessAsync(context);
                     }
                 }
             }
+            return stream;
         }
 
         private async Task PersistentAsync(
@@ -247,7 +246,7 @@ namespace Dignite.Abp.BlobStoring
                         blobInfo.Hash = hash;
 
                         // 记录Blob信息；
-	                    //这里是在保存blob stream 前创建数据库记录，当后续发生异常时，希望能自动回滚本次操作；
+                        //这里是在保存blob stream 前创建数据库记录，当后续发生异常时，希望能自动回滚本次操作；
                         await blobInfoStore.CreateAsync(blobInfo, cancellationToken);
 
                         // 保存到容器中
