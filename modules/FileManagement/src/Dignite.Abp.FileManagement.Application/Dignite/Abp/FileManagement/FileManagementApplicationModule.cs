@@ -18,7 +18,8 @@ namespace Dignite.Abp.FileManagement
         typeof(FileManagementDomainModule),
         typeof(FileManagementApplicationContractsModule),
         typeof(AbpDddApplicationModule),
-        typeof(AbpAutoMapperModule)
+        typeof(AbpAutoMapperModule),
+        typeof(DigniteAbpBlobStoringModule)
         )]
     public class FileManagementApplicationModule : AbpModule
     {

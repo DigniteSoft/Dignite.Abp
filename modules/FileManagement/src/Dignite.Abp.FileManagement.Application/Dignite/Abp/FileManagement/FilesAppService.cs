@@ -91,7 +91,6 @@ namespace Dignite.Abp.FileManagement
                         new BasicBlobInfo(),
                         input.File.FileName,
                         CurrentTenant.Id);
-
             //
             using (_currentFile.Current(file))
             {
@@ -173,12 +172,12 @@ namespace Dignite.Abp.FileManagement
 
             return Task.FromResult(
                 new BlobContainerConfigurationDto(
-                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy,authorizationHandlerConfiguration.SavingRoles,authorizationHandlerConfiguration.GettingPolicy,authorizationHandlerConfiguration.GettingRoles,authorizationHandlerConfiguration.DeletingPolicy,authorizationHandlerConfiguration.DeletingRoles),
+                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy, authorizationHandlerConfiguration.SavingRoles, authorizationHandlerConfiguration.GettingPolicy, authorizationHandlerConfiguration.GettingRoles, authorizationHandlerConfiguration.DeletingPolicy, authorizationHandlerConfiguration.DeletingRoles),
                     new BlobSizeLimitHandlerConfigurationDto(blobSizeLimitHandlerConfiguration.MaximumBlobSize),
                     new FileTypeCheckHandlerConfigurationDto(fileTypeCheckHandlerConfiguration.AllowedFileTypeNames),
-                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth,imageProcessHandlerConfiguration.ImageHeight,imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
+                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth, imageProcessHandlerConfiguration.ImageHeight, imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
                     )
-                ) ;
+                );
         }
 
         private async Task<string> GeneratorBlobNameAsync(string containerName, string extensionName)

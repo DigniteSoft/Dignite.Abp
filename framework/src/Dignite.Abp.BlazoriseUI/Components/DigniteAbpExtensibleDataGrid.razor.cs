@@ -25,8 +25,8 @@ namespace Dignite.Abp.BlazoriseUI.Components
         string DataGridHeight { get; set; }
 
         string ElementId { get; set; }
-        public TItem SelectedItem { get;  set; }
-        public List<TItem> SelectedItems{ get;  set; }
+        public TItem SelectedItem { get; set; }
+        public List<TItem> SelectedItems { get; set; }
 
         [Parameter] public IEnumerable<TItem> Data { get; set; }
 
