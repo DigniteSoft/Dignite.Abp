@@ -14,11 +14,17 @@ namespace Dignite.Abp.BlobStoring
     {
         public async Task<Stream> ProcessAsync(BlobProcessHandlerContext context)
         {
+            //Ensure that the starting position of the data flow is 0
+            if (context.BlobStream.Position > 0)
+            {
+                context.BlobStream.Position = 0;
+            }
             var configuration = context.ContainerConfiguration.GetImageResizeConfiguration();
+
 
             try
             {
-                using (Image image =  await Image.LoadAsync(context.BlobStream))
+                using (Image image = await Image.LoadAsync(context.BlobStream))
                 {
                     if (configuration.ImageSizeMustBeLargerThanPreset)
                     {
@@ -49,17 +55,21 @@ namespace Dignite.Abp.BlobStoring
                             Quality = 40
                         };
 
-                        MemoryStream ms = new MemoryStream();
-                        image.Save(ms, encoder);
-
-                        return ms;
+                        context.BlobStream.Position = 0;
+                        image.Save(context.BlobStream, encoder);
                     }
+
+                    //Reset the data stream position to 0
+                    context.BlobStream.Position = 0;
+                    return context.BlobStream;
                 }
             }
             catch (SixLabors.ImageSharp.UnknownImageFormatException exception)
             {
+                //Reset the data stream position to 0
+                context.BlobStream.Position = 0;
+                return context.BlobStream;
             }
-            return context.BlobStream;
         }
     }
 }

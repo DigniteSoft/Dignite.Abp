@@ -99,14 +99,13 @@ namespace Dignite.Abp.FileManagement
                     containerName,
                     input.File.FileName.Substring(input.File.FileName.LastIndexOf('.'))
                     );
-                //using (MemoryStream ms = new MemoryStream())
-                //{
-                //    await input.File.GetStream().CopyToAsync(ms);
-                //    var blobContainer = _blobContainerFactory.Create(containerName);
-                //    await blobContainer.SaveAsync(file.BlobName, ms, true);
-                //}
-                var blobContainer = _blobContainerFactory.Create(containerName);
-                await blobContainer.SaveAsync(file.BlobName, input.File.GetStream(), true);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    await input.File.GetStream().CopyToAsync(ms);
+                    ms.Position = 0;
+                    var blobContainer = _blobContainerFactory.Create(containerName);
+                    await blobContainer.SaveAsync(file.BlobName, ms, true);
+                }
             }
 
             return ObjectMapper.Map<File, FileDto>(file);
