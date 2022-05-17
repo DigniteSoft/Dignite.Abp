@@ -23,6 +23,6 @@ namespace Dignite.Abp.Settings
         /// </summary>
         /// <param name="group"></param>
         /// <param name="definitions"></param>
-        void Add(ILocalizableString group, params SettingDefinition[] definitions);
+        void Add(ILocalizableString group=null, params SettingDefinition[] definitions);
     }
 }

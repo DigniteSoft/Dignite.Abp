@@ -12,7 +12,7 @@ namespace Dignite.Abp.FileManagement
         public string ContainerName { get; protected set; }
 
         public string BlobName { get; protected set; }
-        public string ReferBlobName { get; set; }
+
         public long BinarySize { get; protected set; }
 
         public string Hash { get; protected set; }
