@@ -14,7 +14,7 @@ namespace Dignite.Abp.Settings.SettingItemControls
             var dataDictionaryConfiguration = new DataDictionaryConfiguration(new FieldControlConfigurationDictionary());
             dataDictionaryConfigureAction(dataDictionaryConfiguration);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, dataDictionaryConfiguration);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, dataDictionaryConfiguration.GetConfiguration());
             settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, DataDictionaryFieldControlProvider.ProviderName);
 
             return settingDefinition;

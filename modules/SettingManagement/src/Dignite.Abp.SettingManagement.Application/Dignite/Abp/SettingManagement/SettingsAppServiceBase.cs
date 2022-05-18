@@ -37,21 +37,21 @@ namespace Dignite.Abp.SettingManagement
             foreach (var nav in navigations)
             {
                 var settingDefinitions = nav.SettingDefinitions.Where(sd => 
-                    settingValues.Any(sv => sv.Name == sd.Name)
-                    && sd.GetFieldControlConfigurationOrNull()!=null
+                    sd.GetFieldControlConfigurationOrNull()!=null
                     ).ToList();
                 if (settingDefinitions.Any())
                 {
                     var settings = new List<SettingDto>();
                     foreach (var sd in settingDefinitions)
                     {
+                        var value = settingValues.Any(sv => sv.Name == sd.Name) ? settingValues.Single(sv => sv.Name == sd.Name).Value : null;
                         var group = sd.GetGroupOrNull();
                         settings.Add(new SettingDto(
                             group == null ? null : group.Localize(StringLocalizerFactory),
                             sd.Name,
                             sd.DisplayName.Localize(StringLocalizerFactory),
                             sd.Description==null?null:sd.Description.Localize(StringLocalizerFactory),
-                            settingValues.Single(sv => sv.Name == sd.Name).Value,
+                            value,
                             sd.GetFieldControlProviderNameOrNull(),
                             sd.GetFieldControlConfigurationOrNull()
                             ));

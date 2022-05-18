@@ -50,7 +50,7 @@ namespace Dignite.Abp.FileManagement
         
 
         [HttpPost]
-        [Route("{containerName}/{*blobName}/download")]
+        [Route("download/{containerName}/{*blobName}")]
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
             var file= await _blobAppService.GetFileAsync(containerName, blobName);

@@ -14,7 +14,7 @@ namespace Dignite.Abp.Settings.SettingItemControls
             var config = new SelectConfiguration(new FieldControlConfigurationDictionary());
             configureAction(config);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, config);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, config.GetConfiguration());
             settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, SelectFieldControlProvider.ProviderName);
 
             return settingDefinition;
