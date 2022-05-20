@@ -8,12 +8,20 @@
 
 <TableRow>
     <TableRowCell>@Item.Id.ToString()</TableRowCell>
-    <TableRowCell><TextEdit @bind-Text="@Item.DisplayName" /></TableRowCell>
-    <TableRowCell><Check TValue="bool" @bind-Checked="@Item.IsActive"></Check></TableRowCell>
+    <TableRowCell><TextEdit Text="@Item.DisplayName" TextChanged="@OnItemDisplayNameChanged" /></TableRowCell>
+    <TableRowCell><Check TValue="bool" Checked="@Item.IsActive" CheckedChanged="@OnItemIsActiveChanged" ></Check></TableRowCell>
     <TableRowCell>
-        <Button @onclick="@Remove"><Icon Name="IconName.Remove" /></Button>
+        <Button @onclick="@RemoveAsync"><Icon Name="IconName.Remove" /></Button>
+        <Button @onclick="@(e => AddDataDictionary())"><Icon Name="IconName.PlusCircle" /></Button>
     </TableRowCell>
 </TableRow>
+@if (Item.Children != null)
+{
+    @foreach (var item in Item.Children)
+    {
+        <DataDictionaryTableRowComponent DataDictionaries="@Item.Children" Item="@item" OnChanageCallback="DataDictionaryChanage"></DataDictionaryTableRowComponent>
+    }
+}
 
 
 @code{
@@ -23,9 +31,41 @@
     [Parameter]
     public List<DataDictionary> DataDictionaries { get; set; }
 
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnChanageCallback { get; set; }
 
-    private void Remove()
+
+    private async Task OnItemDisplayNameChanged( string value )
+    {
+        Item.DisplayName = value;        
+        await OnChanageCallback.InvokeAsync();
+    }
+    
+    private async Task OnItemIsActiveChanged( bool value )
+    {
+        Item.IsActive = value;        
+        await OnChanageCallback.InvokeAsync();
+    }
+
+    private async Task RemoveAsync()
     {
         DataDictionaries.RemoveAll(dd => dd.Id == Item.Id);
+        await OnChanageCallback.InvokeAsync();
+    }
+    
+
+    private async Task AddDataDictionary()
+    {
+        if (Item.Children == null)
+        {
+            Item.Children = new List<DataDictionary>();
+        }
+        Item.Children.Add(new DataDictionary(Guid.NewGuid(), ""));
+        await OnChanageCallback.InvokeAsync();
+    }
+
+    private async Task DataDictionaryChanage(MouseEventArgs e)
+    {
+        await OnChanageCallback.InvokeAsync();
     }
 }

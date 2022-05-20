@@ -4,7 +4,6 @@
 @using Dignite.Abp.FieldCustomizing
 @inherits FieldControlComponentBase
 
-<Validation>
     <Field Horizontal="true">
         <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">
@@ -15,20 +14,19 @@
                         <TableHeaderCell>名称</TableHeaderCell>
                         <TableHeaderCell>是否激活</TableHeaderCell>
                         <TableHeaderCell>
-                            <Button @onclick="@(e => AddDataDictionary(null))"><Icon Name="IconName.PlusCircle" /></Button>
+                            <Button @onclick="@(e => AddDataDictionary())"><Icon Name="IconName.PlusCircle" /></Button>
                         </TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     @foreach(var item in dataDictionaries)
                     {
-                        <DataDictionaryTableRowComponent DataDictionaries="@dataDictionaries" Item="@item"></DataDictionaryTableRowComponent>
+                        <DataDictionaryTableRowComponent DataDictionaries="@dataDictionaries" Item="@item" OnChanageCallback="DataDictionaryChanage"></DataDictionaryTableRowComponent>
                     }
                 </TableBody>
             </Table>
         </FieldBody>
     </Field>
-</Validation>
 
 @Newtonsoft.Json.JsonConvert.SerializeObject(dataDictionaries)
 
@@ -50,25 +48,22 @@
         }
         else
         {
-            dataDictionaries = (List<DataDictionary>)value;
+            dataDictionaries = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DataDictionary>>(value.ToString());
         }
     }
 
-    private void AddDataDictionary(DataDictionary parent=null)
+    private void AddDataDictionary()
     {
-        if (parent == null)
+        if (dataDictionaries == null)
         {
             dataDictionaries = new List<DataDictionary>();
-            dataDictionaries.Add(new DataDictionary(Guid.NewGuid(), ""));
         }
-        else
-        {
-            if (parent.Children == null)
-            {
-                parent.Children = new List<DataDictionary>();
-            }
-            parent.Children.Add(new DataDictionary(Guid.NewGuid(), ""));            
-        }
-        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, dataDictionaries);
+        dataDictionaries.Add(new DataDictionary(Guid.NewGuid(), ""));
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Newtonsoft.Json.JsonConvert.SerializeObject(dataDictionaries) );
+    }
+
+    private void DataDictionaryChanage(MouseEventArgs e)
+    {
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Newtonsoft.Json.JsonConvert.SerializeObject(dataDictionaries) );
     }
 }

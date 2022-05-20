@@ -32,8 +32,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
 
             try
             {
-                //var dataDictionaries = JsonSerializer.Deserialize<List<DataDictionary>>(args.Value.ToString());
-                var dataDictionaries = (List<DataDictionary>)args.Value;
+                var dataDictionaries = JsonSerializer.Deserialize<List<DataDictionary>>(args.Value.ToString());                
                 if (configuration.Required && !dataDictionaries.Any())
                 {
                     args.ValidationErrors.Add(
