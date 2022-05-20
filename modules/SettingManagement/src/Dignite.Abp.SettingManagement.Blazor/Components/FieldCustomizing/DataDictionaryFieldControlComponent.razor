@@ -1,0 +1,74 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+@using Dignite.Abp.FieldCustomizing
+@inherits FieldControlComponentBase
+
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHeaderCell>Id</TableHeaderCell>
+                        <TableHeaderCell>名称</TableHeaderCell>
+                        <TableHeaderCell>是否激活</TableHeaderCell>
+                        <TableHeaderCell>
+                            <Button @onclick="@(e => AddDataDictionary(null))"><Icon Name="IconName.PlusCircle" /></Button>
+                        </TableHeaderCell>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    @foreach(var item in dataDictionaries)
+                    {
+                        <DataDictionaryTableRowComponent DataDictionaries="@dataDictionaries" Item="@item"></DataDictionaryTableRowComponent>
+                    }
+                </TableBody>
+            </Table>
+        </FieldBody>
+    </Field>
+</Validation>
+
+@Newtonsoft.Json.JsonConvert.SerializeObject(dataDictionaries)
+
+@code{
+    public override Type FieldControlProviderType => typeof(DataDictionaryFieldControlProvider);
+    public DataDictionaryConfiguration Configuration { get; set; }
+
+    private List<DataDictionary> dataDictionaries;
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new DataDictionaryConfiguration(CustomizeField.Definition.Configuration);
+
+        //
+        var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name);
+        if (value == null)
+        {
+            AddDataDictionary();
+        }
+        else
+        {
+            dataDictionaries = (List<DataDictionary>)value;
+        }
+    }
+
+    private void AddDataDictionary(DataDictionary parent=null)
+    {
+        if (parent == null)
+        {
+            dataDictionaries = new List<DataDictionary>();
+            dataDictionaries.Add(new DataDictionary(Guid.NewGuid(), ""));
+        }
+        else
+        {
+            if (parent.Children == null)
+            {
+                parent.Children = new List<DataDictionary>();
+            }
+            parent.Children.Add(new DataDictionary(Guid.NewGuid(), ""));            
+        }
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, dataDictionaries);
+    }
+}

@@ -1,0 +1,31 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+@using Dignite.Abp.FieldCustomizing
+@using Volo.Abp.AspNetCore.Components
+@inherits AbpComponentBase
+
+
+<TableRow>
+    <TableRowCell>@Item.Id.ToString()</TableRowCell>
+    <TableRowCell><TextEdit @bind-Text="@Item.DisplayName" /></TableRowCell>
+    <TableRowCell><Check TValue="bool" @bind-Checked="@Item.IsActive"></Check></TableRowCell>
+    <TableRowCell>
+        <Button @onclick="@Remove"><Icon Name="IconName.Remove" /></Button>
+    </TableRowCell>
+</TableRow>
+
+
+@code{
+    [Parameter]
+    public DataDictionary Item { get; set; }
+
+    [Parameter]
+    public List<DataDictionary> DataDictionaries { get; set; }
+
+
+    private void Remove()
+    {
+        DataDictionaries.RemoveAll(dd => dd.Id == Item.Id);
+    }
+}

@@ -7,6 +7,7 @@ using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.Localization;
 using Dignite.Abp.SettingManagement.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
+using Dignite.Abp.Settings;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -14,7 +15,8 @@ namespace Dignite.Abp.SettingManagement
         typeof(AbpSettingManagementDomainSharedModule),
         typeof(AbpDddApplicationContractsModule),
         typeof(AbpAuthorizationAbstractionsModule),
-        typeof(DigniteAbpFieldCustomizingModule)
+        typeof(DigniteAbpFieldCustomizingModule),
+        typeof(DigniteAbpSettingsModule)
     )]
     public class DigniteAbpSettingManagementApplicationContractsModule : AbpModule
     {

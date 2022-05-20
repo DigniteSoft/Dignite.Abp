@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
 {
@@ -20,7 +21,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
         {
             var configuration = new DataDictionaryConfiguration(args.FieldDefinition.Configuration);
 
-            if (configuration.Required && (args.Value == null || args.Value.ToString().Length==0))
+            if (configuration.Required && (args.Value == null))
             {
                 args.ValidationErrors.Add(
                     new System.ComponentModel.DataAnnotations.ValidationResult(
@@ -31,7 +32,8 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
 
             try
             {
-                var dataDictionaries = JsonSerializer.Deserialize<List<DataDictionary>>(args.Value.ToString());
+                //var dataDictionaries = JsonSerializer.Deserialize<List<DataDictionary>>(args.Value.ToString());
+                var dataDictionaries = (List<DataDictionary>)args.Value;
                 if (configuration.Required && !dataDictionaries.Any())
                 {
                     args.ValidationErrors.Add(
@@ -41,7 +43,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
                             ));
                 }
             }
-            catch
+            catch(Exception e)
             {
                 args.ValidationErrors.Add(
                     new System.ComponentModel.DataAnnotations.ValidationResult(
