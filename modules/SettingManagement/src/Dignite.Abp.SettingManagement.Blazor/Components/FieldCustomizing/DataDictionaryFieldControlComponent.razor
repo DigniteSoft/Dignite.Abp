@@ -10,7 +10,6 @@
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell>Id</TableHeaderCell>
                         <TableHeaderCell>名称</TableHeaderCell>
                         <TableHeaderCell>是否激活</TableHeaderCell>
                         <TableHeaderCell>
@@ -21,14 +20,13 @@
                 <TableBody>
                     @foreach(var item in dataDictionaries)
                     {
-                        <DataDictionaryTableRowComponent DataDictionaries="@dataDictionaries" Item="@item" OnChanageCallback="DataDictionaryChanage"></DataDictionaryTableRowComponent>
+                        <DataDictionaryTableRowComponent DataDictionaries="@dataDictionaries" Item="@item" OnChanageCallback="DataDictionaryChanage" Level="1"></DataDictionaryTableRowComponent>
                     }
                 </TableBody>
             </Table>
         </FieldBody>
     </Field>
 
-@Newtonsoft.Json.JsonConvert.SerializeObject(dataDictionaries)
 
 @code{
     public override Type FieldControlProviderType => typeof(DataDictionaryFieldControlProvider);
