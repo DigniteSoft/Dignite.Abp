@@ -66,15 +66,15 @@ namespace Dignite.Abp.Identity
         }
 
         [JsonIgnore]
-        public int Position
+        public int Sort
         {
             get
             {
-                return this.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName, 1);
+                return this.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName, 1);
             }
             set
             {
-                this.SetProperty(OrganizationUnitExtraPropertyNames.PositionName, value);
+                this.SetProperty(OrganizationUnitExtraPropertyNames.SortName, value);
             }
         }
 

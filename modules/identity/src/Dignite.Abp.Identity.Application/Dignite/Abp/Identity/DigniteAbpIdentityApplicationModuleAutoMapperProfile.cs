@@ -17,7 +17,7 @@ namespace Dignite.Abp.Identity
 
             CreateMap<OrganizationUnit, OrganizationUnitDto>()
                 .ForMember(r => r.IsActive, r => r.Ignore())
-                .ForMember(r => r.Position, r => r.Ignore())
+                .ForMember(r => r.Sort, r => r.Ignore())
                 .ForMember(r => r.Children, r => r.Ignore())
                 .ForMember(r => r.HasChild, r => r.Ignore())
                 .MapExtraProperties();

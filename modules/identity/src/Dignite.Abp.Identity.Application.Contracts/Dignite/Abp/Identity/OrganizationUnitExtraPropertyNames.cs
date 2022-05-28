@@ -6,6 +6,6 @@ namespace Dignite.Abp.Identity
     {
         public const string IsActiveName = "IsActive";
 
-        public const string PositionName = "Position";
+        public const string SortName = "Sort";
     }
 }

@@ -86,7 +86,7 @@ namespace Dignite.Abp.Identity
 
                 return new PagedResultDto<OrganizationUnitDto>(
                     list.Count,
-                    list.OrderBy(ou => ou.Position)
+                    list.OrderBy(ou => ou.Sort)
                     .ThenBy(ou => ou.Code)
                     .ToList()
                     );
@@ -103,7 +103,7 @@ namespace Dignite.Abp.Identity
 
                 return new PagedResultDto<OrganizationUnitDto>(
                     dto.Count,
-                    dto.OrderBy(ou => ou.Position)
+                    dto.OrderBy(ou => ou.Sort)
                     .ThenBy(ou => ou.Code)
                     .ToList()
                     );
@@ -146,7 +146,7 @@ namespace Dignite.Abp.Identity
 
         protected void AddChildren(OrganizationUnitDto parent, List<OrganizationUnitDto> list)
         {
-            var children = list.Where(p => p.ParentId == parent.Id).ToList();
+            var children = list.Where(p => p.ParentId == parent.Id).OrderBy(ou=>ou.Sort).ThenBy(ou=>ou.Code).ToList();
             if (children.Any())
             {
                 foreach (var ou in children)
@@ -171,7 +171,7 @@ namespace Dignite.Abp.Identity
                 AddChildren(ou, list);
             }
 
-            return tree.OrderBy(ou => ou.Position)
+            return tree.OrderBy(ou => ou.Sort)
                 .ThenBy(ou => ou.Code)
                 .ToList();
         }

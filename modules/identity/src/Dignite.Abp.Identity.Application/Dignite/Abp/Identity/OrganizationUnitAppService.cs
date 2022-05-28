@@ -77,7 +77,7 @@ namespace Dignite.Abp.Identity
 
                 return new PagedResultDto<OrganizationUnitDto>(
                     list.Count,
-                    list.OrderBy(ou => ou.Position)
+                    list.OrderBy(ou => ou.Sort)
                     .ThenBy(ou => ou.Code)
                     .ToList()
                     );
@@ -94,7 +94,7 @@ namespace Dignite.Abp.Identity
 
                 return new PagedResultDto<OrganizationUnitDto>(
                     dto.Count,
-                    dto.OrderBy(ou => ou.Position)
+                    dto.OrderBy(ou => ou.Sort)
                     .ThenBy(ou => ou.Code)
                     .ToList()
                     );
@@ -140,7 +140,7 @@ namespace Dignite.Abp.Identity
             }
 
             var children = await OrganizationUnitRepository.GetChildrenAsync(input.ParentId, false);
-            await RepairPosition(children);//
+            await RepairSort(children);//
 
             var ou = new OrganizationUnit(
                 GuidGenerator.Create(),
@@ -148,8 +148,8 @@ namespace Dignite.Abp.Identity
                 input.ParentId,
                 CurrentTenant.Id);
             ou.SetProperty(OrganizationUnitExtraPropertyNames.IsActiveName, input.IsActive);
-            ou.SetProperty(OrganizationUnitExtraPropertyNames.PositionName,
-                children.Select(c => c.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName))
+            ou.SetProperty(OrganizationUnitExtraPropertyNames.SortName,
+                children.Select(c => c.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName))
                         .DefaultIfEmpty(0).Max() + 1);
 
             //todo 这里需要根据父级机构的解难判断添加的角色是否符合逻辑
@@ -220,7 +220,7 @@ namespace Dignite.Abp.Identity
 
             //更新位置
             var children = await OrganizationUnitRepository.GetChildrenAsync(input.TargetParentId, false);
-            await UpdatePositionAsync(ou, children, input.TargetBeforeId);
+            await UpdateSortAsync(ou, children, input.TargetBeforeId);
 
             //
             return await GetAsync(id);
@@ -369,30 +369,30 @@ namespace Dignite.Abp.Identity
             }
         }
 
-        private async Task UpdatePositionAsync(OrganizationUnit organizationUnit, List<OrganizationUnit> children, Guid? beforeOrganizationUnitId)
+        private async Task UpdateSortAsync(OrganizationUnit organizationUnit, List<OrganizationUnit> children, Guid? beforeOrganizationUnitId)
         {
-            await RepairPosition(children);
+            await RepairSort(children);
 
-            int newPosition = 1;
+            int newSort = 1;
             if (beforeOrganizationUnitId.HasValue)
             {
                 var beforeOrganizationUnit = children.Single(ou => ou.Id == beforeOrganizationUnitId.Value);
-                newPosition = beforeOrganizationUnit.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName) + 1;
+                newSort = beforeOrganizationUnit.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName) + 1;
             }
 
             foreach (var ou in children)
             {
-                if (ou.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName) >= newPosition
+                if (ou.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName) >= newSort
                     && ou.Id != organizationUnit.Id
                     )
                 {
-                    ou.SetProperty(OrganizationUnitExtraPropertyNames.PositionName,
-                        ou.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName) + 1);
+                    ou.SetProperty(OrganizationUnitExtraPropertyNames.SortName,
+                        ou.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName) + 1);
                     await OrganizationUnitManager.UpdateAsync(ou);
                 }
             }
 
-            organizationUnit.SetProperty(OrganizationUnitExtraPropertyNames.PositionName, newPosition);
+            organizationUnit.SetProperty(OrganizationUnitExtraPropertyNames.SortName, newSort);
             await OrganizationUnitManager.UpdateAsync(organizationUnit);
         }
 
@@ -401,16 +401,16 @@ namespace Dignite.Abp.Identity
         /// </summary>
         /// <param name="children"></param>
         /// <returns></returns>
-        private async Task RepairPosition(List<OrganizationUnit> children)
+        private async Task RepairSort(List<OrganizationUnit> children)
         {
             foreach (var ou in children)
             {
-                if (!ou.HasProperty(OrganizationUnitExtraPropertyNames.PositionName))
+                if (!ou.HasProperty(OrganizationUnitExtraPropertyNames.SortName))
                 {
-                    var maxPosition = children.Where(c => c.HasProperty(OrganizationUnitExtraPropertyNames.PositionName))
-                        .Select(c => c.GetProperty<int>(OrganizationUnitExtraPropertyNames.PositionName))
+                    var maxSort = children.Where(c => c.HasProperty(OrganizationUnitExtraPropertyNames.SortName))
+                        .Select(c => c.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName))
                         .DefaultIfEmpty(0).Max();
-                    ou.SetProperty(OrganizationUnitExtraPropertyNames.PositionName, maxPosition + 1);
+                    ou.SetProperty(OrganizationUnitExtraPropertyNames.SortName, maxSort + 1);
                     await OrganizationUnitManager.UpdateAsync(ou);
                 }
             }
