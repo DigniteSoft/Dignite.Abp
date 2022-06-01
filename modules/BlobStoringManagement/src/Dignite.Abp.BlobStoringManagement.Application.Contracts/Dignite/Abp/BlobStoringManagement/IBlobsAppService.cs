@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.Content;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -27,7 +28,7 @@ namespace Dignite.Abp.BlobStoringManagement
         /// <returns>
         /// Return blob url after successful saving
         /// </returns>
-        Task<BlobDto> SaveAsync([NotNull] string containerName, SaveBytesInput input);
+        Task<BlobDto> SaveAsync([NotNull] string containerName, SaveStreamInput input);
 
         /// <summary>
         /// 

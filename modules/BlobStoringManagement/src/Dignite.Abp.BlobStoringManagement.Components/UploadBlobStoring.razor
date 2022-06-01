@@ -1,0 +1,41 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@using Blazorise
+@using Dignite.Abp.BlobStoringManagement.Components
+@using Dignite.Abp.BlobStoringManagement
+@using System.Net.Http
+@inject IHttpClientFactory httpClientFactory
+
+@inherits Blazorise.FileEdit
+<Control Role="ControlRole.File">
+    <div style="position:relative;display:inline-block;" class="@Class">
+        <input style="position: absolute;width: 100%;height: 100%;opacity: 0;top: 0;left: 0;z-index:2;"
+               @ref="@ElementRef" id="@ElementId" type="file" class="@ClassNames" disabled="@Disabled" readonly="@ReadOnly" multiple="@Multiple" accept="@Filter" tabindex="@TabIndex" @attributes="@Attributes" />
+        @if (Content == null)
+        {
+            <button class="ant-btn ant-btn-default" id="ant-blazor-773b1c19-6cd4-4839-a51b-2a0fea6a554a" type="button" ant-click-animating-without-extra-node="false" _bl_403="">
+                <span role="img" class=" anticon anticon-upload" id="ant-blazor-2df48895-64f0-4dd5-93df-476891133f66" _bl_409="">
+                    <svg focusable="false" width="1em" height="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 1024 1024">  <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 0 0-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path></svg>
+                </span>
+                <span>
+                    <span>Click to Upload</span>
+                </span>
+            </button>
+        }
+        else
+        {
+            @Content
+        }
+    </div>
+    @if (Feedback == null)
+    {
+        <div>
+            上传进度：@Percentage
+            预览结果:@FileName
+            <Button onclick="OnClick">开始上传</Button>
+        </div>
+    }
+    else
+    {
+      @Feedback
+    }
+</Control>

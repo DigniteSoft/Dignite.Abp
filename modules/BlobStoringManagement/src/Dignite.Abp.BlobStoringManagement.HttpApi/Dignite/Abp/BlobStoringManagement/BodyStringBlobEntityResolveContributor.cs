@@ -26,7 +26,7 @@ namespace Dignite.Abp.BlobStoringManagement
                 {
                     reader.BaseStream.Seek(0, SeekOrigin.Begin);  //大概是== Request.Body.Position = 0;的意思
                     var readerStr = reader.ReadToEndAsync().Result;
-                    var input = Newtonsoft.Json.JsonConvert.DeserializeObject<SaveBytesInput>(readerStr);
+                    var input = Newtonsoft.Json.JsonConvert.DeserializeObject<SaveStreamInput>(readerStr);
                     result.EntityType = input?.EntityType;
                     result.EntityId = input?.EntityId;
                 }

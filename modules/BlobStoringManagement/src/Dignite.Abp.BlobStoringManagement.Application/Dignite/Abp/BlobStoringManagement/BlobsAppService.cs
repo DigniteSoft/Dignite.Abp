@@ -11,6 +11,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
+using Volo.Abp.Content;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -59,9 +60,9 @@ namespace Dignite.Abp.BlobStoringManagement
             }
         }
 
-        public async Task<BlobDto> SaveAsync([NotNull] string containerName, [NotNull] SaveBytesInput input)
+        public async Task<BlobDto> SaveAsync([NotNull] string containerName, [NotNull] SaveStreamInput input)
         {
-            using (var stream = new MemoryStream(input.Bytes))
+            using (var stream = new MemoryStream(input.FileStream.GetStream().GetAllBytes()))
             {
                 var blobContainer = _blobContainerFactory.Create(containerName);
                 string fileExtensionName = GetFileExtensionName(stream);
@@ -138,12 +139,12 @@ namespace Dignite.Abp.BlobStoringManagement
 
             return Task.FromResult(
                 new BlobContainerConfigurationDto(
-                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy,authorizationHandlerConfiguration.SavingRoles,authorizationHandlerConfiguration.GettingPolicy,authorizationHandlerConfiguration.GettingRoles,authorizationHandlerConfiguration.DeletingPolicy,authorizationHandlerConfiguration.DeletingRoles),
+                    new AuthorizationHandlerConfigurationDto(authorizationHandlerConfiguration.SavingPolicy, authorizationHandlerConfiguration.SavingRoles, authorizationHandlerConfiguration.GettingPolicy, authorizationHandlerConfiguration.GettingRoles, authorizationHandlerConfiguration.DeletingPolicy, authorizationHandlerConfiguration.DeletingRoles),
                     new BlobSizeLimitHandlerConfigurationDto(blobSizeLimitHandlerConfiguration.MaximumBlobSize),
                     new FileTypeCheckHandlerConfigurationDto(fileTypeCheckHandlerConfiguration.AllowedFileTypeNames),
-                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth,imageProcessHandlerConfiguration.ImageHeight,imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
+                    new ImageProcessHandlerConfigurationDto(imageProcessHandlerConfiguration.ImageWidth, imageProcessHandlerConfiguration.ImageHeight, imageProcessHandlerConfiguration.ImageSizeMustBeLargerThanPreset)
                     )
-                ) ;
+                );
         }
 
         private async Task<string> GeneratorNameAsync(string containerName, string extensionName = null)
@@ -157,8 +158,8 @@ namespace Dignite.Abp.BlobStoringManagement
             var generator = LazyServiceProvider.LazyGetRequiredService(namingGeneratorType)
                 .As<IBlobNameGenerator>();
 
-            var blobName= await generator.Create();
-            return blobName+extensionName ?? string.Empty;
+            var blobName = await generator.Create();
+            return blobName + extensionName ?? string.Empty;
         }
 
         private static string GetFileExtensionName(Stream stream)
@@ -188,9 +189,15 @@ namespace Dignite.Abp.BlobStoringManagement
                     return null;  //ZIP archive can be corrupted
                 }
             }
-            else {
-                return fileExtensionName;            
+            else
+            {
+                return fileExtensionName;
             }
+        }
+
+        public Task<BlobDto> UploadFileAsync([NotNull] string containerName, IRemoteStreamContent file, string EntityType, string EntityId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

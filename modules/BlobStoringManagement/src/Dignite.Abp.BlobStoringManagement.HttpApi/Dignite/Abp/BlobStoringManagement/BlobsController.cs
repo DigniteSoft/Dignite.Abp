@@ -7,6 +7,7 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.AspNetCore.Mvc;
 using HeyRed.Mime;
+using Volo.Abp.Content;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
@@ -35,26 +36,19 @@ namespace Dignite.Abp.BlobStoringManagement
 
         [HttpPost]
         [Route("save/{containerName}")]
-        public async Task<BlobDto> SaveAsync([NotNull] string containerName, SaveBytesInput input)
+        public async Task<BlobDto> SaveAsync([NotNull] string containerName, SaveStreamInput input)
         {
-            //Request.EnableBuffering();
-            //using (var reader = new StreamReader(Request.Body, System.Text.Encoding.UTF8))
-            //{
-            //    reader.BaseStream.Seek(0, SeekOrigin.Begin);  //大概是== Request.Body.Position = 0;的意思
-            //    var readerStr = reader.ReadToEndAsync().Result;
-            //}
             return await _blobAppService.SaveAsync(containerName, input);
         }
-
 
         [HttpPost]
         [Route("upload/{containerName}")]
         public async Task<BlobDto> UploadAsync([NotNull] string containerName, IFormFile File, string EntityType, string EntityId)
         {
             return await _blobAppService.SaveAsync(containerName,
-                new SaveBytesInput
+                new SaveStreamInput
                 {
-                    Bytes = File.GetAllBytes(),
+                    FileStream = new RemoteStreamContent(File.OpenReadStream(), File.FileName, File.ContentType),
                     EntityType = EntityType,
                     EntityId = EntityId,
                     FileName = File.FileName

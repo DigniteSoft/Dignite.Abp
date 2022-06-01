@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
-    public class SaveBytesInput
+    public class SaveStreamInput1
     {
         [Required]
         [NotNull] 
