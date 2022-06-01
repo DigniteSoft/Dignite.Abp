@@ -55,6 +55,20 @@ namespace Dignite.Abp.BlobStoringManagement
                 });
         }
 
+        [HttpPost]
+        [Route("uploadfile/{containerName}")]
+        public async Task<BlobDto> UploadFileAsync([FromForm] string containerName, [FromForm] IFormFile File, [FromForm] string EntityType, [FromForm] string EntityId)
+        {
+            return await _blobAppService.SaveAsync(containerName,
+                new SaveBytesInput
+                {
+                    Bytes = File.GetAllBytes(),
+                    EntityType = EntityType,
+                    EntityId = EntityId,
+                    FileName = File.FileName
+                });
+        }
+
         [HttpGet]
         [Route("{containerName}/configuration")]
         public Task<BlobContainerConfigurationDto> GetBlobContainerConfigurationAsync([NotNull] string containerName)

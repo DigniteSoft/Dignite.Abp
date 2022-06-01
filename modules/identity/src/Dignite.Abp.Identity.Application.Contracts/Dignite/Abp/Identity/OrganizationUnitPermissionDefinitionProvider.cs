@@ -21,6 +21,7 @@ namespace Dignite.Abp.Identity
             rolesPermission.AddChild(OrganizationUnitPermissions.OrganizationUnits.Create, L("Permission:Create"));
             rolesPermission.AddChild(OrganizationUnitPermissions.OrganizationUnits.Update, L("Permission:Edit"));
             rolesPermission.AddChild(OrganizationUnitPermissions.OrganizationUnits.Delete, L("Permission:Delete"));
+            rolesPermission.AddChild(OrganizationUnitPermissions.OrganizationUnits.MembersManage, L("Permission:MembersManage"));
             rolesPermission.AddChild(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization, L("Permission:OrganizationUnitSuperAuthorization"));
 
 
@@ -31,7 +32,7 @@ namespace Dignite.Abp.Identity
 
         private static LocalizableString L(string name)
         {
-            return LocalizableString.Create<IdentityOrganizationUnitResource>(name);
+            return LocalizableString.Create<DigniteAbpIdentityResource>(name);
         }
     }
 }

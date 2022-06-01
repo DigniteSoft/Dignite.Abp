@@ -1,8 +1,7 @@
 ﻿using Dignite.Abp.AspNetCore.Components.Server.PureTheme.Bundling;
+using Dignite.Abp.AspNetCore.Components.Web.PureTheme;
 using Volo.Abp.AspNetCore.Components.Server.Theming;
 using Volo.Abp.AspNetCore.Components.Server.Theming.Bundling;
-using Dignite.Abp.AspNetCore.Components.Web.PureTheme;
-using Volo.Abp.AspNetCore.Components.Web.Theming.Routing;
 using Volo.Abp.AspNetCore.Components.Web.Theming.Toolbars;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.Modularity;

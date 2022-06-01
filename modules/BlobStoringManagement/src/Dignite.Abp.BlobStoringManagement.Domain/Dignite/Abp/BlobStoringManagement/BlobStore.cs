@@ -8,7 +8,7 @@ using Volo.Abp.Domain.Services;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
-    public class BlobStore: DomainService, IBlobInfoStore
+    public class BlobStore : DomainService, IBlobInfoStore
     {
         private readonly IBlobRepository _blobRepository;
         private readonly IBlobEntityResolver _blobEntityResolver;
@@ -24,15 +24,17 @@ namespace Dignite.Abp.BlobStoringManagement
 
         public async Task<bool> ExistsAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
         {
-            return await _blobRepository.ExistsAsync(containerName, blobName, cancellationToken);
+            var result = await _blobRepository.ExistsAsync(containerName, blobName, cancellationToken);
+            return result;
         }
 
         public async Task<bool> HashExistsAsync(string containerName, string hash, CancellationToken cancellationToken = default)
         {
-            return await _blobRepository.HashExistsAsync(containerName, hash, cancellationToken);
+            var result = await _blobRepository.HashExistsAsync(containerName, hash, cancellationToken);
+            return result;
         }
 
-        public async Task CreateAsync(BasicBlobInfo blobInfo, CancellationToken cancellationToken = default)
+        public async Task CreateAsync(IBlobInfo blobInfo, CancellationToken cancellationToken = default)
         {
             var blobEntityResult = await _blobEntityResolver.ResolveBlobEntityAsync();
 
@@ -50,7 +52,7 @@ namespace Dignite.Abp.BlobStoringManagement
                 GuidGenerator.Create(),
                 blobEntityResult.EntityType,
                 blobEntityResult.EntityId,
-                blobInfo,
+                new BasicBlobInfo(blobInfo.ContainerName, blobInfo.BlobName, blobInfo.BinarySize, blobInfo.Hash, blobInfo.ReferBlobName),
                 CurrentTenant.Id);
 
             await _blobRepository.InsertAsync(blob, cancellationToken: cancellationToken);
@@ -60,7 +62,7 @@ namespace Dignite.Abp.BlobStoringManagement
         {
             var blob = await _blobRepository.FindAsync(containerName, blobName, cancellationToken);
             if (blob != null)
-                await _blobRepository.DeleteAsync(blob.Id, cancellationToken:cancellationToken);
+                await _blobRepository.DeleteAsync(blob.Id, cancellationToken: cancellationToken);
         }
 
         public async Task<IBlobInfo> FindAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
@@ -71,9 +73,9 @@ namespace Dignite.Abp.BlobStoringManagement
         public async Task<IBlobInfo> FindByHashAsync(string containerName, string hash, CancellationToken cancellationToken = default)
         {
             return await _blobRepository.FindByBlobHashAsync(containerName, hash, cancellationToken);
-        }        
+        }
 
-        public async Task<bool> ReferenceExistsAsync(string containerName, string blobName,  CancellationToken cancellationToken = default)
+        public async Task<bool> ReferenceExistsAsync(string containerName, string blobName, CancellationToken cancellationToken = default)
         {
             return await _blobRepository.ReferenceExistsAsync(containerName, blobName, cancellationToken);
         }

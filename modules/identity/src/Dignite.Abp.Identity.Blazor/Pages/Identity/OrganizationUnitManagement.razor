@@ -1,0 +1,24 @@
+@page "/identity/organization-units"
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web.Theming.Layout
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(OrganizationUnitPermissions.OrganizationUnits.Default)]
+@inherits AbpComponentBase
+@{
+}
+
+<PageTitle>@L["OrganizationUnits"]</PageTitle>
+
+      
+@* ************************* PAGE HEADER ************************* *@
+<PageHeader Title="@L["OrganizationUnits"]" Toolbar="@Toolbar"></PageHeader>
+<Row>
+    <Column ColumnSize="ColumnSize.Is3">        
+        @* ************************* PAGE TREE ************************* *@
+        <OrganizationUnitsTreeComponent OnNodeClickCallback="TreeNodeClick"></OrganizationUnitsTreeComponent>
+    </Column>
+    <Column ColumnSize="ColumnSize.Is9">    
+        <OrganizationUnitMembersComponent OrganizationUnit="selectedOrganizationUnit" @ref="MembersComponent"></OrganizationUnitMembersComponent>
+    </Column>
+</Row>

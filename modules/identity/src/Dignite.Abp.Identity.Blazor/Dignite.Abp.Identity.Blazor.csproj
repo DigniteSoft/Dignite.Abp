@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<Import Project="..\..\..\..\configureawait.props" />
+	<Import Project="..\..\..\..\common.props" />
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+		<PackageReference Include="AntDesign" Version="0.10.3.1" />
+        <PackageReference Include="Volo.Abp.AspNetCore.Components.Web.Theming" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.AutoMapper" Version="5.2.1" />
+		<PackageReference Include="Volo.Abp.PermissionManagement.Blazor" Version="5.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Dignite.Abp.Identity.Application.Contracts\Dignite.Abp.Identity.Application.Contracts.csproj" />
+    </ItemGroup>
+</Project>

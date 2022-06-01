@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace Dignite.Abp.BlobStoringManagement
 {
-    public class BlobDto: CreationAuditedEntityDto<Guid>
+    public class BlobDto : CreationAuditedEntityDto<Guid>
     {
         public virtual string EntityType { get; protected set; }
 
@@ -13,6 +13,7 @@ namespace Dignite.Abp.BlobStoringManagement
 
         public string BlobName { get; protected set; }
 
+        public string ReferBlobName { get; set; }
         public long BinarySize { get; protected set; }
 
         public string Hash { get; protected set; }

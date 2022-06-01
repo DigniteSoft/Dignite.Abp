@@ -1,7 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Text.Unicode;
 
 namespace Dignite.Abp.FieldCustomizing.FieldControls
 {
@@ -19,8 +18,9 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls
                 return defaultValue;
             }
             var configurationAsJson = source[name];
-
-            return JsonSerializer.Deserialize<TConfiguration>(configurationAsJson);
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new JsonStringEnumConverter());
+            return JsonSerializer.Deserialize<TConfiguration>(configurationAsJson,options);
         }
 
         public static void SetConfiguration<TConfiguration>(
@@ -30,13 +30,8 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls
         {
             JsonSerializerOptions options = new JsonSerializerOptions
             {
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-                DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
-                WriteIndented = true,
-                Converters =
-                    {
-                        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-                    }
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
             };
             var configurationAsJson=JsonSerializer.Serialize(value, options);
             source[name]=configurationAsJson;

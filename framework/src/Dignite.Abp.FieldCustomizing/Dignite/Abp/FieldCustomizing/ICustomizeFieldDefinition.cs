@@ -6,7 +6,7 @@ namespace Dignite.Abp.FieldCustomizing
     public interface ICustomizeFieldDefinition
     {
         [NotNull]
-        string Name { get; }
+        string Name { get; set; }
 
         [NotNull]
         string DisplayName { get; set; }
@@ -19,6 +19,9 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        FieldControlConfigurationDictionary Configuration { get; }
+        public string FieldControlProviderName { get; set; }
+
+        [NotNull]
+        FieldControlConfigurationDictionary Configuration { get; set; }
     }
 }

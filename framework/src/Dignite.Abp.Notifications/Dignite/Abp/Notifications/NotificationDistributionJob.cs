@@ -7,7 +7,7 @@ namespace Dignite.Abp.Notifications
     /// <summary>
     /// This background job distributes notifications to users.
     /// </summary>
-    public class NotificationDistributionJob : IAsyncBackgroundJob<NotificationDistributionJobArgs>, ITransientDependency
+    public class NotificationDistributionJob : AsyncBackgroundJob<NotificationDistributionJobArgs>, ITransientDependency
     {
         private readonly INotificationDistributer _notificationDistributer;
 
@@ -20,7 +20,7 @@ namespace Dignite.Abp.Notifications
             _notificationDistributer = notificationDistributer;
         }
 
-        public async Task ExecuteAsync(NotificationDistributionJobArgs args)
+        public override async Task ExecuteAsync(NotificationDistributionJobArgs args)
         {
             await _notificationDistributer.DistributeAsync(args.Notification,args.UserIds,args.ExcludedUserIds);
         }

@@ -1,0 +1,139 @@
+﻿@typeparam TItem
+@using Volo.Abp.Data
+@using AntDesign
+@using Volo.Abp.BlazoriseUI.Components.ObjectExtending
+@using Volo.Abp.BlazoriseUI.Components
+
+
+<Table TItem="TItem" 
+    DataSource="@Data" 
+    PageIndex="@CurrentPage" 
+    PageSize="@PageSize" 
+    Total="@(TotalItems.HasValue?TotalItems.Value:0)" 
+    Loading="@Loading" 
+    OnChange="@ReadData"
+    RemoteDataSource>
+    
+        @if (Columns != null)
+        {
+            @foreach (var column in Columns)
+            {
+                if (column.Actions.Any())
+                {
+                    <ActionColumn>
+                        <EntityActions TItem="TItem">
+                            @foreach (var action in column.Actions)
+                            {
+                                if (action.ConfirmationMessage != null)
+                                {
+                                    <EntityAction TItem="TItem"
+                                                    Color="@(action.Color != null ? (Blazorise.Color) action.Color : Blazorise.Color.Primary)"
+                                                    Icon="@action.Icon"
+                                                    Clicked="async () => await action.Clicked(context)"
+                                                    ConfirmationMessage="() => action.ConfirmationMessage.Invoke(context)"
+                                                    Visible="@(action.Visible != null ? action.Visible(context) : true)"
+                                                    Text="@action.Text">
+                                    </EntityAction>
+                                }
+                                else
+                                {
+                                    <EntityAction TItem="TItem"
+                                                    Clicked="async () => await action.Clicked(context)"
+                                                    Color="@(action.Color != null ? (Blazorise.Color) action.Color : Blazorise.Color.None)"
+                                                    Icon="@action.Icon"
+                                                    Visible="@(action.Visible != null ? action.Visible(context) : true)"
+                                                    Text="@action.Text">
+                                    </EntityAction>
+                                }
+                            }
+                        </EntityActions>
+                    </ActionColumn>
+                }
+                else
+                {
+                    @if (column.Component != null)
+                    {
+                        <Column Field="@typeof(TItem).GetProperties().First().Name" Title="@column.Title">                            
+                            @RenderCustomTableColumnComponent(column.Component, context)
+                        </Column>
+                    }
+                    else
+                    {
+                        if (!ExtensionPropertiesRegex.IsMatch(column.Data))
+                        {
+                            var propertyInfo = context.GetType().GetProperties().First(p => p.Name == column.Data);
+                            var dataType = propertyInfo.PropertyType;
+                            var data = propertyInfo.GetValue(context);
+                            @if (column.ValueConverter == null)
+                            {
+                                if (dataType==typeof(DateTime?))
+                                {
+                                var sdf = (DateTime?)data;
+                                <Column 
+                                        Field="@sdf" 
+                                        Title="@column.Title" 
+                                        Sortable="@column.Sortable"
+                                        Format="@column.DisplayFormat" />
+                                }
+                                else{
+                                <Column 
+                                        Field="data" 
+                                        Title="@column.Title" 
+                                        Sortable="@column.Sortable"
+                                        Format="@column.DisplayFormat" />
+                                }
+                            }
+                            else
+                            {
+                                <Column 
+                                        Field="@(context.GetType().GetProperties().First(p=>p.Name==column.Data).GetValue(context))" 
+                                        Title="@column.Title" 
+                                        Sortable="@column.Sortable">
+                                        @(GetConvertedFieldValue(context, column))
+                                </Column>
+                            }
+                        }
+                        else
+                        {
+                            <Column Field="@nameof(IHasExtraProperties.ExtraProperties)" Title="@column.Title">
+                                    @{
+                                        var entity = context as IHasExtraProperties;
+                                        var propertyName = ExtensionPropertiesRegex.Match(column.Data).Groups[1].Value;
+                                        var propertyValue = entity.GetProperty(propertyName);
+                                        if (propertyValue != null && propertyValue.GetType() == typeof(bool))
+                                        {
+                                            if ((bool) propertyValue)
+                                            {
+                                                <Icon Type="check" Theme="outline"/>
+                                            }
+                                            else
+                                            {
+                                                <Icon Type="close" Theme="outline"/>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (column.ValueConverter != null)
+                                            {
+                                                @(GetConvertedFieldValue(context, column))
+                                            }
+                                            else
+                                            {
+                                                if (column.DisplayFormat == null)
+                                                {
+                                                    @(propertyValue)
+                                                }
+                                                else
+                                                {
+                                                    @(string.Format(column.DisplayFormatProvider, column.DisplayFormat, propertyValue))
+                                                }
+                                            }
+                                        }
+                                    }
+                            </Column >
+                        }
+                    }
+                }
+            }
+        }
+</Table>

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.Unicode;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
@@ -18,9 +21,15 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
 
         private static string SerializeObject(CustomizeFieldDictionary extraFields)
         {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
             var copyDictionary = new Dictionary<string, object>(extraFields);
 
-            return JsonSerializer.Serialize(copyDictionary);
+            var serializeValue = JsonSerializer.Serialize(copyDictionary, options);
+            return serializeValue;
         }
 
         private static CustomizeFieldDictionary DeserializeObject(string extraFieldsAsJson)

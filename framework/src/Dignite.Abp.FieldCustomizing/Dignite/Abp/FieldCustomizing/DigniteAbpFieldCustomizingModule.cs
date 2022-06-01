@@ -1,5 +1,6 @@
 ﻿
 using Dignite.Abp.FieldCustomizing.Localization;
+using Volo.Abp.Json;
 using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
@@ -9,7 +10,8 @@ namespace Dignite.Abp.FieldCustomizing
 {
     [DependsOn(
         typeof(AbpLocalizationModule),
-        typeof(AbpThreadingModule)
+        typeof(AbpThreadingModule),
+        typeof(AbpJsonModule)
         )]
     public class DigniteAbpFieldCustomizingModule:AbpModule
     {

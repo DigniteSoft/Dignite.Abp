@@ -1,0 +1,113 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Select
+@inherits FieldControlConfigurationComponentBase
+
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:Name"]</FieldLabel>
+        <TextEdit MaxLength="64" @bind-Text="@Definition.Name" />
+    </Field>
+</Validation>
+
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:DisplayName"]</FieldLabel>
+        <TextEdit @bind-Text="@Definition.DisplayName" />
+    </Field>
+</Validation>
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:Description"]</FieldLabel>
+        <TextEdit @bind-Text="@Configuration.Description" />
+    </Field>
+</Validation>
+<Field>
+    <Check TValue="bool" @bind-Checked="@Configuration.Required">@L["DisplayName:IsRequired"]</Check>
+</Field>
+
+<Field>
+    <FieldLabel>@L["DisplayName:SelectListItem"]</FieldLabel>
+    <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>@L["SelectListItemText"]</TableHeaderCell>
+                <TableHeaderCell>@L["SelectListItemValue"]</TableHeaderCell>
+                <TableHeaderCell>@L["IsSelected"]</TableHeaderCell>
+                <TableHeaderCell>
+                    <Button @onclick="@AddSelectListItem"><Icon Name="IconName.PlusCircle" /></Button>
+                </TableHeaderCell>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach(var item in Options)
+            {
+                <TableRow>
+                    <TableRowCell><TextEdit Text="@item.Text" TextChanged="@(text=>OnSelectListItemTextChanged(text,item))" /></TableRowCell>
+                    <TableRowCell><TextEdit Text="@item.Value" TextChanged="@(value=>OnSelectListItemValueChanged(value,item))" /></TableRowCell>
+                    <TableRowCell><Check TValue="bool" Checked="@item.Selected" CheckedChanged="@(selected=>OnSelectListItemSelectedChanged(selected,item))"></Check></TableRowCell>
+                    <TableRowCell>
+                        <Button @onclick="@(e => RemoveSelectListItem(e, item))"><Icon Name="IconName.Remove" /></Button>
+                    </TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+</Field>
+
+<Validation>
+<Field>
+    <FieldLabel>@L["DisplayName:NullText"]</FieldLabel>
+    <TextEdit @bind-Text="@Configuration.NullText" />
+</Field>
+</Validation>
+<Field>
+    <Check TValue="bool" @bind-Checked="@Configuration.Multiple">@L["DisplayName:Multiple"]</Check>
+</Field>
+
+@code{
+
+    public override Type FieldControlProviderType => typeof(SelectFieldControlProvider);
+
+    SelectConfiguration Configuration;
+    List<SelectListItem> Options;
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new SelectConfiguration(Definition.Configuration);
+        Options = Configuration.Options;
+    }
+
+    private void RemoveSelectListItem(MouseEventArgs e,SelectListItem item)
+    {
+        Options.Remove(item);
+        Configuration.Options=Options;
+    }
+    private void AddSelectListItem()
+    {
+        Options.Add(new SelectListItem());
+        Configuration.Options=Options;
+    }
+
+    Task OnSelectListItemTextChanged( string text ,SelectListItem item)
+    {
+        item.Text = text;
+        Configuration.Options=Options;
+
+        return Task.CompletedTask;
+    }
+    Task OnSelectListItemValueChanged( string value,SelectListItem item )
+    {
+        item.Value = value;
+        Configuration.Options=Options;
+
+        return Task.CompletedTask;
+    }
+    Task OnSelectListItemSelectedChanged( bool selected,SelectListItem item )
+    {
+        item.Selected = selected;
+        Configuration.Options=Options;
+
+        return Task.CompletedTask;
+    }
+}

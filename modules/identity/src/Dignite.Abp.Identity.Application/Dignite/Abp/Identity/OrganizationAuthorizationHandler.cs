@@ -41,6 +41,12 @@ namespace Dignite.Abp.Identity
                 context.Succeed(requirement);
                 return;
             }
+
+            if (requirement.Name == CommonOperations.Get.Name && await HasGetPermission(context, resource))
+            {
+                context.Succeed(requirement);
+                return;
+            }
         }
 
         private async Task<bool> HasDeletePermission(AuthorizationHandlerContext context, OrganizationUnit resource)
@@ -78,6 +84,16 @@ namespace Dignite.Abp.Identity
                 else if (await AuthorizationCheck(context, parent))
                     return true;
             }
+
+            return false;
+        }
+
+        private async Task<bool> HasGetPermission(AuthorizationHandlerContext context, OrganizationUnit parent)
+        {
+            if (await _permissionChecker.IsGrantedAsync(context.User, OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization))
+                return true;
+            else if (await AuthorizationCheck(context, parent))
+                return true;
 
             return false;
         }

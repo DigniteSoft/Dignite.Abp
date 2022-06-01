@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
-    public class BasicCustomizeFieldDefinition
+    public class BasicCustomizeFieldDefinition: ICustomizeFieldDefinition
     {
 
         public BasicCustomizeFieldDefinition(string name, string displayName, string fieldControlProviderName, string defaultValue, FieldControlConfigurationDictionary configuration)

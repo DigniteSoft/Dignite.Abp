@@ -1,5 +1,5 @@
-﻿using Volo.Abp.Application.Services;
-using Volo.Abp.Identity.Localization;
+﻿using Dignite.Abp.Identity.Localization;
+using Volo.Abp.Application.Services;
 
 namespace Dignite.Abp.Identity
 {
@@ -8,7 +8,7 @@ namespace Dignite.Abp.Identity
         protected IdentityAppServiceBase()
         {
             ObjectMapperContext = typeof(DigniteAbpIdentityApplicationModule);
-            LocalizationResource = typeof(IdentityResource);
+            LocalizationResource = typeof(DigniteAbpIdentityResource);
         }
     }
 }

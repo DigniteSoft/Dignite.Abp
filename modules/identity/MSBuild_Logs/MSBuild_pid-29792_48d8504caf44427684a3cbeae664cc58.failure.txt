@@ -1,8 +1,0 @@
-UNHANDLED EXCEPTIONS FROM PROCESS 29792:
-=====================
-2021/9/7 18:04:35
-System.IO.IOException: 管道已中断。
-   在 System.IO.Pipes.NamedPipeServerStream.CheckConnectOperationsServer()
-   在 System.IO.Pipes.NamedPipeServerStream.BeginWaitForConnection(AsyncCallback callback, Object state)
-   在 Microsoft.Build.BackEnd.NodeEndpointOutOfProcBase.PacketPumpProc()
-===================

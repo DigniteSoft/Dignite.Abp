@@ -1,12 +1,19 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Dignite.Abp.FieldCustomizing.FieldControls.Select
 {
     public class SelectConfiguration : FieldControlConfigurationBase
     {
-        public string Placeholder
+        public string NullText
         {
-            get => _fieldControlConfiguration.GetConfigurationOrDefault<string>(SelectConfigurationNames.Placeholder, null);
-            set => _fieldControlConfiguration.SetConfiguration(SelectConfigurationNames.Placeholder, value);
+            get => _fieldControlConfiguration.GetConfigurationOrDefault<string>(SelectConfigurationNames.NullText, null);
+            set => _fieldControlConfiguration.SetConfiguration(SelectConfigurationNames.NullText, value);
+        }
+        public List<SelectListItem> Options
+        {
+            get => _fieldControlConfiguration.GetConfigurationOrDefault(SelectConfigurationNames.Options, new List<SelectListItem>());
+            set => _fieldControlConfiguration.SetConfiguration(SelectConfigurationNames.Options, value);
         }
 
         public bool Multiple

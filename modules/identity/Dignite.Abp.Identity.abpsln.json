@@ -1,0 +1,7 @@
+{
+  "modules": {
+    "Dignite.Abp.Identity": {
+      "path": "Dignite.Abp.Identity.abpmdl.json"
+    }
+  }
+}

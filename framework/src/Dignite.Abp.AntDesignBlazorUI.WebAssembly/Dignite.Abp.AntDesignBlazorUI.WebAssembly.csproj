@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<Import Project="..\..\..\configureawait.props" />
+	<Import Project="..\..\..\common.props" />
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dignite.Abp.AntDesignBlazorUI\Dignite.Abp.AntDesignBlazorUI.csproj" />
+  </ItemGroup>
+
+</Project>

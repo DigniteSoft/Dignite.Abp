@@ -13,7 +13,7 @@ namespace Dignite.Abp.Settings
         public override void Define(ISettingDefinitionContext context)
         {
             var settings = new Dictionary<string, SettingDefinition>();
-            Define(new DigniteSettingDefinitionContext(settings));
+            this.Define(new DigniteSettingDefinitionContext(settings));
 
 
             context.Add(

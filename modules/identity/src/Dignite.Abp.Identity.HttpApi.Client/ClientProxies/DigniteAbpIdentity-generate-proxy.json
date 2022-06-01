@@ -1,0 +1,769 @@
+{
+  "modules": {
+    "DigniteAbpIdentity": {
+      "rootPath": "DigniteAbpIdentity",
+      "remoteServiceName": "AbpIdentity",
+      "controllers": {
+        "Dignite.Abp.Identity.OrganizationUnitController": {
+          "controllerName": "OrganizationUnit",
+          "controllerGroupName": "OrganizationUnit",
+          "isRemoteService": true,
+          "apiVersion": null,
+          "type": "Dignite.Abp.Identity.OrganizationUnitController",
+          "interfaces": [
+            {
+              "type": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            }
+          ],
+          "actions": {
+            "CreateAsyncByInput": {
+              "uniqueName": "CreateAsyncByInput",
+              "name": "CreateAsync",
+              "httpMethod": "POST",
+              "url": "api/identity/organization-units",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.OrganizationUnitCreateDto, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.OrganizationUnitCreateDto",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitCreateDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Dignite.Abp.Identity.OrganizationUnitCreateDto",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitCreateDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<Dignite.Abp.Identity.OrganizationUnitDto,Dignite.Abp.Identity.OrganizationUnitCreateDto>"
+            },
+            "UpdateAsyncByIdAndInput": {
+              "uniqueName": "UpdateAsyncByIdAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/identity/organization-units",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.OrganizationUnitUpdateDto, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.OrganizationUnitUpdateDto",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitUpdateDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Dignite.Abp.Identity.OrganizationUnitUpdateDto",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitUpdateDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<Dignite.Abp.Identity.OrganizationUnitDto,System.Guid,Dignite.Abp.Identity.OrganizationUnitUpdateDto>"
+            },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/identity/organization-units",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
+            "MoveAsyncByIdAndInput": {
+              "uniqueName": "MoveAsyncByIdAndInput",
+              "name": "MoveAsync",
+              "httpMethod": "PUT",
+              "url": "api/identity/organization-units/{id}/move",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.OrganizationUnitMoveInput, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.OrganizationUnitMoveInput",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitMoveInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "Dignite.Abp.Identity.OrganizationUnitMoveInput",
+                  "typeSimple": "Dignite.Abp.Identity.OrganizationUnitMoveInput",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "GetRolesAsyncById": {
+              "uniqueName": "GetRolesAsyncById",
+              "name": "GetRolesAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/{id}/roles",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.IdentityRoleDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.IdentityRoleDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "GetAvailableRolesAsyncByParentId": {
+              "uniqueName": "GetAvailableRolesAsyncByParentId",
+              "name": "GetAvailableRolesAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/available-roles",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "parentId",
+                  "typeAsString": "System.Nullable`1[[System.Guid, System.Private.CoreLib, Version=6.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "parentId",
+                  "name": "parentId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.IdentityRoleDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.IdentityRoleDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Abp.Identity.OrganizationUnitDto,Dignite.Abp.Identity.OrganizationUnitDto,System.Guid,Dignite.Abp.Identity.GetOrganizationUnitsInput>"
+            },
+            "GetAuthorizedAsync": {
+              "uniqueName": "GetAuthorizedAsync",
+              "name": "GetAuthorizedAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/authorized",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.GetOrganizationUnitsInput, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.GetOrganizationUnitsInput",
+                  "typeSimple": "Dignite.Abp.Identity.GetOrganizationUnitsInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "ParentId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Recursive",
+                  "jsonName": null,
+                  "type": "System.Boolean",
+                  "typeSimple": "boolean",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Abp.Identity.OrganizationUnitDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Dignite.Abp.Identity.OrganizationUnitDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<Dignite.Abp.Identity.OrganizationUnitDto,Dignite.Abp.Identity.OrganizationUnitDto,System.Guid,Dignite.Abp.Identity.GetOrganizationUnitsInput>"
+            },
+            "AddMembersAsyncByIdAndUserIds": {
+              "uniqueName": "AddMembersAsyncByIdAndUserIds",
+              "name": "AddMembersAsync",
+              "httpMethod": "POST",
+              "url": "api/identity/organization-units/{id}/members",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "userIds",
+                  "typeAsString": "System.Guid[], System.Private.CoreLib",
+                  "type": "System.Guid[]",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "userIds",
+                  "name": "userIds",
+                  "jsonName": null,
+                  "type": "System.Guid[]",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "RemoveMembersAsyncByIdAndUserIds": {
+              "uniqueName": "RemoveMembersAsyncByIdAndUserIds",
+              "name": "RemoveMembersAsync",
+              "httpMethod": "DELETE",
+              "url": "api/identity/organization-units/{id}/members",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "userIds",
+                  "typeAsString": "System.Guid[], System.Private.CoreLib",
+                  "type": "System.Guid[]",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "userIds",
+                  "name": "userIds",
+                  "jsonName": null,
+                  "type": "System.Guid[]",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            },
+            "GetMembersAsyncByIdAndInput": {
+              "uniqueName": "GetMembersAsyncByIdAndInput",
+              "name": "GetMembersAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/{id}/members",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.GetOrganizationUnitMembersInput, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.GetOrganizationUnitMembersInput",
+                  "typeSimple": "Dignite.Abp.Identity.GetOrganizationUnitMembersInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Filter",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<Volo.Abp.Identity.IdentityUserDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<Volo.Abp.Identity.IdentityUserDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitAppService"
+            }
+          }
+        },
+        "Dignite.Abp.Identity.OrganizationUnitLookupController": {
+          "controllerName": "OrganizationUnitLookup",
+          "controllerGroupName": "OrganizationUnitLookup",
+          "isRemoteService": true,
+          "apiVersion": null,
+          "type": "Dignite.Abp.Identity.OrganizationUnitLookupController",
+          "interfaces": [
+            {
+              "type": "Dignite.Abp.Identity.IOrganizationUnitLookupAppService"
+            }
+          ],
+          "actions": {
+            "FindByCodeAsyncByCode": {
+              "uniqueName": "FindByCodeAsyncByCode",
+              "name": "FindByCodeAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/lookup/by-code/{code}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "code",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "code",
+                  "name": "code",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitLookupAppService"
+            },
+            "FindByIdAsyncById": {
+              "uniqueName": "FindByIdAsyncById",
+              "name": "FindByIdAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/lookup/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Dignite.Abp.Identity.OrganizationUnitDto",
+                "typeSimple": "Dignite.Abp.Identity.OrganizationUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitLookupAppService"
+            },
+            "GetChildrenAsyncByInput": {
+              "uniqueName": "GetChildrenAsyncByInput",
+              "name": "GetChildrenAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/lookup/children",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "Dignite.Abp.Identity.GetOrganizationUnitsInput, Dignite.Abp.Identity.Application.Contracts",
+                  "type": "Dignite.Abp.Identity.GetOrganizationUnitsInput",
+                  "typeSimple": "Dignite.Abp.Identity.GetOrganizationUnitsInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "ParentId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Recursive",
+                  "jsonName": null,
+                  "type": "System.Boolean",
+                  "typeSimple": "boolean",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitLookupAppService"
+            },
+            "GetParentsAsyncById": {
+              "uniqueName": "GetParentsAsyncById",
+              "name": "GetParentsAsync",
+              "httpMethod": "GET",
+              "url": "api/identity/organization-units/lookup/{id}/parents",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.ListResultDto<Dignite.Abp.Identity.OrganizationUnitDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Dignite.Abp.Identity.IOrganizationUnitLookupAppService"
+            }
+          }
+        }
+      }
+    }
+  },
+  "types": {}
+}

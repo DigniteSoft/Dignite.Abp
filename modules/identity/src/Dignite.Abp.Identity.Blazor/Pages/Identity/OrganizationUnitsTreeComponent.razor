@@ -1,0 +1,347 @@
+﻿@using Dignite.Abp.Identity
+@using AntDesign
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.Application.Dtos
+@using Dignite.Abp.Identity.Localization
+@using IdentityRoleDto=Dignite.Abp.Identity.IdentityRoleDto
+@inject AbpBlazorMessageLocalizerHelper<DigniteAbpIdentityResource> LH
+@inject IOrganizationUnitAppService OrganizationUnitAppService
+@inject IMessageService MessageService
+@inherits AbpCrudPageBase<IOrganizationUnitAppService, OrganizationUnitDto, Guid, GetOrganizationUnitsInput, OrganizationUnitCreateDto, OrganizationUnitUpdateDto>
+
+@code {
+    [Parameter]public EventCallback<TreeEventArgs<OrganizationUnitDto>> OnNodeClickCallback { get; set; }
+
+    private IReadOnlyList<IdentityRoleDto> AvailableRoles;
+    private TreeNode<OrganizationUnitDto> SelectedNode;
+    private bool HasSuperAuthorizationPermission = false;
+
+    public OrganizationUnitsTreeComponent()
+    {
+        LocalizationResource = typeof(DigniteAbpIdentityResource);
+        AvailableRoles = new List<IdentityRoleDto>();
+
+        CreatePolicyName = OrganizationUnitPermissions.OrganizationUnits.Create;
+        UpdatePolicyName = OrganizationUnitPermissions.OrganizationUnits.Update;
+        DeletePolicyName = OrganizationUnitPermissions.OrganizationUnits.Delete;
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        HasSuperAuthorizationPermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization);
+        await GetEntitiesAsync();
+        await base.OnInitializedAsync();
+    }
+
+    async Task OnDrop(TreeEventArgs<OrganizationUnitDto> e)
+    {
+        //检查原节点的父节点是否还有子节点
+        if (!e.Node.ParentNode.DataItem.Children.Any())
+        {
+            e.Node.ParentNode.DataItem.HaveChildren(false);
+        }
+
+        //
+        TreeNode<OrganizationUnitDto> targetNode = GetTargetNode(e.Node, e.TargetNode);
+        e.Node.DataItem.ParentId = targetNode == null ? null : targetNode.DataItem.Id;
+
+        await OrganizationUnitAppService.MoveAsync(e.Node.DataItem.Id, new OrganizationUnitMoveInput
+                {
+                TargetParentId=e.Node.DataItem.ParentId,
+                TargetBeforeId=e.TargetNode.DataItem.Id ==targetNode.DataItem.Id?null:e.TargetNode.DataItem.Id
+            });
+
+        //检查目标节点下是否有子节点
+        if (!e.TargetNode.DataItem.Children.Any())
+        {
+            e.TargetNode.DataItem.HaveChildren(false);
+        }
+    }
+
+    async Task OnDragEnter(TreeEventArgs<OrganizationUnitDto> e)
+    {
+        if (e.Node.DataItem.HasChild && !e.Node.DataItem.Children.Any())
+        {
+            var ous = (await OrganizationUnitAppService.GetListAsync(
+                new GetOrganizationUnitsInput
+                    {
+                        ParentId=e.Node.DataItem.Id,
+                        Recursive=false
+                    })).Items.ToList();
+            foreach (var ou in ous)
+            {
+                e.Node.DataItem.AddChild(ou);
+            }
+        }
+
+        if (!e.Node.DataItem.HasChild)
+        {
+            e.Node.DataItem.HaveChildren(true);
+        }
+    }
+
+    void OnDragLeave(TreeEventArgs<OrganizationUnitDto> e)
+    {
+        if (!e.Node.DataItem.Children.Any())
+        {
+            e.Node.DataItem.HaveChildren( false);
+        }
+    }
+
+    void OnDragEnd(TreeEventArgs<OrganizationUnitDto> e)
+    {
+    }
+
+
+    async Task OnExpandChanged(TreeEventArgs<OrganizationUnitDto> args)
+    {
+        var dataItem = args.Node.DataItem;
+        if (!dataItem.Children.Any() && dataItem.HasChild)
+        {
+            var children = (await OrganizationUnitAppService.GetListAsync(new GetOrganizationUnitsInput
+            {
+                ParentId=dataItem.Id
+            })).Items;
+            if (children.Any())
+            {
+                foreach (var ou in children)
+                {
+                    dataItem.AddChild(ou);
+                }
+            }
+            else
+            {
+                dataItem.HaveChildren(false);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 获取拖拽后父级节点
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="targetNode"></param>
+    /// <returns></returns>
+    TreeNode<OrganizationUnitDto> GetTargetNode(TreeNode<OrganizationUnitDto> node, TreeNode<OrganizationUnitDto> targetNode)
+    {
+        TreeNode<OrganizationUnitDto> parentNode = null; //
+        var targetParentNode = targetNode.ParentNode;
+
+        /*
+        如果目标节点的父级为null，判断目标节点中是否含有移动的节点，如果包含，移动节点的新父级节点为目标节点；
+        如果目标节点父级不为null，判断目标节点父级的子节点中是否含有移动的节点，如果包含，移动节点的新父级节点为目标节点的父级节点，如果不包含，移动节点的新父级节点为目标节点；
+        */
+        if (targetParentNode == null)
+        {
+            if (targetNode.DataItem.Children.Any(p => p.Id == node.DataItem.Id))
+            {
+                parentNode = targetNode;
+            }
+        }
+        else
+        {
+            if (targetParentNode.DataItem.Children.Any(p => p.Id == node.DataItem.Id))
+            {
+                parentNode = targetParentNode;
+            }
+            else
+            {
+                parentNode = targetNode;
+            }
+        }
+
+        return parentNode;
+    }
+
+    async Task OnAddRootUnitClicked()
+    {
+        SelectedNode = null;
+        await OpenCreateModalAsync();
+    }
+
+    async Task OnAddSubUnitClicked(MouseEventArgs e, TreeNode<OrganizationUnitDto> node)
+    {
+        SelectedNode = node;
+        await OpenCreateModalAsync();        
+    }
+
+    async Task OnEditUnitClicked(MouseEventArgs e, TreeNode<OrganizationUnitDto> node)
+    {
+        SelectedNode = node;
+        await OpenEditModalAsync(node.DataItem);
+    }
+
+    async Task OnDeleteUnitClicked(MouseEventArgs e, TreeNode<OrganizationUnitDto> node)
+    {
+        if (await MessageService.Confirm("Are you sure you want to confirm?", "Confirmation"))
+        {
+            SelectedNode = node;
+            await DeleteEntityAsync(SelectedNode.DataItem);
+        }
+    }
+
+    protected override async Task OpenCreateModalAsync()
+    {
+        await base.OpenCreateModalAsync();
+
+        NewEntity.ParentId = SelectedNode ==null?null:SelectedNode.DataItem.Id;
+        AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(NewEntity.ParentId)).Items;
+    }
+
+
+    protected override async Task OpenEditModalAsync(OrganizationUnitDto entity)
+    {
+        await base.OpenEditModalAsync(entity);
+        AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(entity.ParentId)).Items;
+        
+        var ouRoles = await OrganizationUnitAppService.GetRolesAsync(entity.Id);
+        EditingEntity.RoleIds = ouRoles.Items.Select(r=>r.Id).ToList();
+    }
+
+    protected override async Task OnCreatedEntityAsync()
+    {
+        if (SelectedNode == null) //add root unit
+        {
+            await GetEntitiesAsync();
+        }
+        else
+        {                        
+            var children = (await OrganizationUnitAppService.GetListAsync(new GetOrganizationUnitsInput
+            {
+                ParentId=SelectedNode.DataItem.Id
+            })).Items;
+
+            SelectedNode.DataItem.Children.Clear();
+            foreach (var ou in children)
+            {
+                SelectedNode.DataItem.AddChild(ou);
+            }
+
+            //expand node
+            if (!SelectedNode.Expanded)
+            {
+                SelectedNode.Expand(true);
+            }
+        }
+
+        await InvokeAsync(CreateModal.Hide);
+    }
+
+    protected override async Task OnUpdatedEntityAsync()
+    {
+        SelectedNode.DataItem.DisplayName =EditingEntity.DisplayName;
+        SelectedNode.DataItem.IsActive = EditingEntity.IsActive;
+
+        await InvokeAsync(EditModal.Hide);
+    }
+
+    protected override async Task UpdateGetListInputAsync()
+    {
+        GetListInput.ParentId = SelectedNode == null ? null : SelectedNode.DataItem.Id;
+        await base.UpdateGetListInputAsync();
+    }
+
+    protected override Task OnDeletedEntityAsync()
+    {
+        SelectedNode.Remove();
+
+        return Task.CompletedTask;
+    }
+}
+
+@if (HasCreatePermission && HasSuperAuthorizationPermission)
+{
+    <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@OnAddRootUnitClicked">@L["NewRootUnit"]</Blazorise.Button>
+}
+<AntDesign.Tree Draggable BlockNode
+        ShowIcon DataSource="Entities"
+        TitleExpression="x => x.DataItem.DisplayName"
+        ChildrenExpression="x => x.DataItem.Children"
+        IsLeafExpression="x => !x.DataItem.HasChild"
+        KeyExpression="x => x.DataItem.Id.ToString()"
+        OnExpandChanged="OnExpandChanged"
+        OnDragEnter="OnDragEnter"
+        OnDragLeave="OnDragLeave"
+        OnDragEnd="OnDragEnd"
+        TItem="OrganizationUnitDto" OnDrop="OnDrop"  OnClick="OnNodeClickCallback">
+        <TitleTemplate Context="node">
+            <AntDesign.Dropdown Trigger="new Trigger[] { Trigger.ContextMenu }">
+                <Overlay>
+                    <Menu>
+                        @if (HasCreatePermission)
+                        {
+                        <MenuItem OnClick="(e=>OnAddSubUnitClicked(e,node))">@L["NewSubUnit"]</MenuItem>
+                        }
+                        @if (HasUpdatePermission)
+                        {
+                        <MenuItem OnClick="(e=>OnEditUnitClicked(e,node))">@L["Edit"]</MenuItem>
+                        }
+                        @if (HasDeletePermission)
+                        {
+                        <MenuItem OnClick="(e=>OnDeleteUnitClicked(e,node))">@L["Delete"]</MenuItem>
+                        }
+                        <MenuItem>@L["UnitProperties"]</MenuItem>
+                    </Menu>
+                </Overlay>
+                <ChildContent>
+                    @node.DataItem.DisplayName
+                </ChildContent>
+            </AntDesign.Dropdown>
+        </TitleTemplate>
+</AntDesign.Tree>
+
+
+
+@* ************************* CREATE MODAL ************************* *@
+@if (HasCreatePermission)
+{
+    <Blazorise.Modal @ref="CreateModal" Closing="@ClosingCreateModal">
+    <Blazorise.ModalContent Centered="true">
+        <Blazorise.Form>
+            <Blazorise.ModalHeader>
+                <Blazorise.ModalTitle>@L["NewUnit"]</Blazorise.ModalTitle>
+                <Blazorise.CloseButton Clicked="CloseCreateModalAsync"/>
+            </Blazorise.ModalHeader>
+            <Blazorise.ModalBody>
+                <Blazorise.Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <CreateOrUpdateOrganizationUnitFormShared Data="@NewEntity" AvailableRoles="@AvailableRoles" LH="@LH" L="@L"></CreateOrUpdateOrganizationUnitFormShared>
+                </Blazorise.Validations>
+            </Blazorise.ModalBody>
+            <Blazorise.ModalFooter>
+                <Blazorise.Button Color="@Blazorise.Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Blazorise.Button>
+                <SubmitButton Clicked="@CreateEntityAsync"/>
+            </Blazorise.ModalFooter>
+        </Blazorise.Form>
+    </Blazorise.ModalContent>
+    </Blazorise.Modal>
+}
+
+@* ************************* EDIT MODAL ************************* *@
+@if (HasUpdatePermission)
+{
+    <Blazorise.Modal @ref="EditModal" Closing="@ClosingEditModal">
+    <Blazorise.ModalContent Centered="true">
+        <Blazorise.Form>
+            <Blazorise.ModalHeader>
+                <Blazorise.ModalTitle>@L["Edit"]</Blazorise.ModalTitle>
+                <Blazorise.CloseButton Clicked="CloseEditModalAsync"/>
+            </Blazorise.ModalHeader>
+            <Blazorise.ModalBody>
+                <Blazorise.Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+                    <input type="hidden" name="ConcurrencyStamp" @bind-value="EditingEntity.ConcurrencyStamp"/>
+                    <CreateOrUpdateOrganizationUnitFormShared Data="@EditingEntity"  AvailableRoles="@AvailableRoles" LH="@LH" L="@L"></CreateOrUpdateOrganizationUnitFormShared>
+                </Blazorise.Validations>
+            </Blazorise.ModalBody>
+            <Blazorise.ModalFooter>
+                <Blazorise.Button Color="Blazorise.Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Blazorise.Button>
+                <SubmitButton Clicked="@UpdateEntityAsync"/>
+            </Blazorise.ModalFooter>
+        </Blazorise.Form>
+    </Blazorise.ModalContent>
+</Blazorise.Modal>
+}
+@* ********未来正式版，需要将此放在主题全局页面中 ***************** *@
+<MessageAlert />

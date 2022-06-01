@@ -8,8 +8,7 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 {
     public partial class NavMenu
     {
-        [Inject]
-        protected IMenuManager MenuManager { get; set; }
+        public IMenuManager MenuManager { get; set; }
 
         protected ApplicationMenu Menu { get; set; }
 

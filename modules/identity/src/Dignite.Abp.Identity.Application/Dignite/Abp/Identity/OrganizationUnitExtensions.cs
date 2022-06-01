@@ -18,7 +18,7 @@ namespace Dignite.Abp.Identity
                   .AddOrUpdate<OrganizationUnit>(options =>
                     {
                         options.AddOrUpdateProperty<bool>(OrganizationUnitExtraPropertyNames.IsActiveName);
-                        options.AddOrUpdateProperty<int>(OrganizationUnitExtraPropertyNames.PositionName);
+                        options.AddOrUpdateProperty<int>(OrganizationUnitExtraPropertyNames.SortName);
                     }
                 );
             });

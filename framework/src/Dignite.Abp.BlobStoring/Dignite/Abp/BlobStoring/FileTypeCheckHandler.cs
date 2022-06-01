@@ -13,14 +13,22 @@ namespace Dignite.Abp.BlobStoring
     /// </summary>
     public class FileTypeCheckHandler : IBlobProcessHandler,ITransientDependency
     {
-        public Task ProcessAsync(BlobProcessHandlerContext context)
+
+        private readonly ICurrentBlobInfo _currentFile;
+
+        public FileTypeCheckHandler(ICurrentBlobInfo currentFile)
+        {
+            _currentFile = currentFile;
+        }
+
+        public async Task<Stream> ProcessAsync(BlobProcessHandlerContext context)
         {
             var fileTypeCheckHandlerConfiguration = context.ContainerConfiguration.GetFileTypeCheckConfiguration();
 
-            // TODO: case sensitivity
             if (fileTypeCheckHandlerConfiguration.AllowedFileTypeNames != null && fileTypeCheckHandlerConfiguration.AllowedFileTypeNames.Length > 0)
             {
-                string fileExtensionName = Path.GetExtension(context.BlobName);
+                //TODO : 需要注意：_currentFile.BlobInfo.BlobName 可能没有扩展名
+                string fileExtensionName = Path.GetExtension(_currentFile.BlobInfo.BlobName);
 
                 if (!fileExtensionName.IsNullOrEmpty())
                 {
@@ -42,8 +50,7 @@ namespace Dignite.Abp.BlobStoring
                     );
                 }
             }
-            return Task.CompletedTask;
+            return context.BlobStream;
         }
-
     }
 }

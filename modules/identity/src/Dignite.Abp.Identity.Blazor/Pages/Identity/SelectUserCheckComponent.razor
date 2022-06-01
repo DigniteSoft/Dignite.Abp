@@ -1,0 +1,33 @@
+﻿@using System;
+@using Volo.Abp.Identity
+@code{
+
+    [Parameter] public object Data { get; set; }
+
+    [CascadingParameter]
+    private SelectUsersComponent ParentComponent { get; set; }
+
+    IdentityUserDto user;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        user = Data.As<IdentityUserDto>();
+    }
+
+    private void OnCheckedChanged(bool value)
+    {
+        if (value)
+        {
+            ParentComponent.SelectedUsers.Add(user);
+        }
+        else
+        {
+            ParentComponent.SelectedUsers.RemoveAll(u => u.Id == user.Id);
+        }
+        ParentComponent.StateChanged();
+    }
+}
+
+<Check TValue="bool" Checked="ParentComponent.SelectedUsers.Any(u=>u.Id==user.Id)" CheckedChanged="OnCheckedChanged"></Check>
