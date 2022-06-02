@@ -118,8 +118,11 @@ namespace Dignite.Abp.Identity
                     .ToList();
             }
 
-                return new ListResultDto<OrganizationUnitDto>(
-                    ObjectMapper.Map<List<OrganizationUnit>, List<OrganizationUnitDto>>(list)
+            var dto = ObjectMapper.Map<List<OrganizationUnit>, List<OrganizationUnitDto>>(list);
+            return new ListResultDto<OrganizationUnitDto>(
+                    dto.OrderBy(ou => ou.Sort)
+                    .ThenBy(ou => ou.Code)
+                    .ToList()
                     );
         }
 
