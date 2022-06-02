@@ -40,6 +40,15 @@
         try
         {
             var result = await AppService.GetAuthorizedAsync();
+            foreach (var ou in result.Items)
+            {
+                var children = await AppService.GetListAsync(new GetOrganizationUnitsInput()
+                    {
+                        ParentId = ou.Id,
+                        Recursive = false
+                    });
+                ou.HaveChildren(children.Items.Any());
+                }
             Entities = result.Items;
             TotalCount = (int?)result.Items.Count;
         }
