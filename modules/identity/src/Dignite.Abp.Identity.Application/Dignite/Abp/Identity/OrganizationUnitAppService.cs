@@ -161,6 +161,7 @@ namespace Dignite.Abp.Identity
 
             await OrganizationUnitManager.CreateAsync(ou);
 
+            await CurrentUnitOfWork.SaveChangesAsync();
 
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }
@@ -188,6 +189,7 @@ namespace Dignite.Abp.Identity
 
             await OrganizationUnitManager.UpdateAsync(ou);
 
+            await CurrentUnitOfWork.SaveChangesAsync();
 
             return ObjectMapper.Map<OrganizationUnit, OrganizationUnitDto>(ou);
         }

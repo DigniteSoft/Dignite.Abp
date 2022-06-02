@@ -35,6 +35,20 @@
         await base.OnInitializedAsync();
     }
 
+    protected override async Task GetEntitiesAsync()
+    {
+        try
+        {
+            var result = await AppService.GetAuthorizedAsync();
+            Entities = result.Items;
+            TotalCount = (int?)result.Items.Count;
+        }
+        catch (Exception ex)
+        {
+            await HandleErrorAsync(ex);
+        }
+    }
+
     async Task OnDrop(TreeEventArgs<OrganizationUnitDto> e)
     {
         //检查原节点的父节点是否还有子节点

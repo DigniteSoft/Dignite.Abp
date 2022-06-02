@@ -24,8 +24,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="Dignite\Abp\FieldCustomizing\Localization\*.json" />
-		<Content Remove="Dignite\Abp\FieldCustomizing\Localization\*.json" />
+		<EmbeddedResource Include="Dignite\Abp\FieldCustomizing\Localization\Resources\*.json" />
 	</ItemGroup>
 
 </Project>

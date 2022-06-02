@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Dignite.Abp.FieldCustomizing.Localization;
+using Microsoft.AspNetCore.Components;
 using System;
 using Volo.Abp.AspNetCore.Components;
 using Volo.Abp.DependencyInjection;
@@ -9,7 +10,7 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
     {
         protected FieldControlConfigurationComponentBase()
         {
-            LocalizationResource = typeof(DigniteAbpFieldCustomizingModule);
+            LocalizationResource = typeof(DigniteAbpFieldCustomizingResource);
         }
 
         public abstract Type FieldControlProviderType { get; }

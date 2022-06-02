@@ -31,6 +31,12 @@
     <TextEdit @bind-Text="@Configuration.Placeholder" />
 </Field>
 </Validation>
+<Validation>
+<Field>
+    <FieldLabel>@L["DisplayName:DefaultValue"]</FieldLabel>
+    <TextEdit @bind-Text="@Definition.DefaultValue" />
+</Field>
+</Validation>
 <Field>
     <FieldLabel>@L["DisplayName:TextboxMode"]</FieldLabel>
     <RadioGroup TValue="TextboxMode" Name="textboxMode" @bind-CheckedValue="@Configuration.Mode">

@@ -8,7 +8,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.Select
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.Select"];
+        public override string DisplayName => L["DisplayName:Dignite.SelectControl"];
 
         public override FieldControlType ControlType => FieldControlType.Simple;
 

@@ -1,6 +1,23 @@
 {
   "culture": "zh-Hans",
   "texts": {
-    "DisplayName:Placeholder": "点位符"
+    "DisplayName:Dignite.TextboxControl": "文本框",
+    "DisplayName:Dignite.SelectControl": "选择框",
+    "DisplayName:Placeholder": "占位符",
+    "DisplayName:Name": "字段名称",
+    "DisplayName:DisplayName": "字段标签",
+    "DisplayName:Description": "表单说明",
+    "DisplayName:SelectListItem": "可选项",
+    "DisplayName:SelectListItemText": "选项文本",
+    "DisplayName:SelectListItemValue": "选项值",
+    "DisplayName:IsSelected": "默认选中",
+    "DisplayName:NullText": "空值文本",
+    "DisplayName:Multiple": "多选",
+    "DisplayName:TextboxMode": "文本框模式",
+    "DisplayName:CharLimit": "字数限制",
+    "DisplayName:TextboxMode.SingleLine": "单行文本框",
+    "DisplayName:TextboxMode.MultipleLine": "多行文本框",
+    "DisplayName:IsRequired": "是否必填",
+    "DisplayName:DefaultValue": "默认值"
   }
 }

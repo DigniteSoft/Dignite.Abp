@@ -44,19 +44,19 @@ namespace Dignite.Abp.Identity
             foreach (var ou in source)
             {
                 result.Add(ou);
-                AddChildren(result, ou);
+                FindChildren(result, ou);
             }
             return result;
         }
 
-        private static void AddChildren(List<OrganizationUnitDto> list, OrganizationUnitDto ou)
+        private static void FindChildren(List<OrganizationUnitDto> list, OrganizationUnitDto ou)
         {
             if (ou.Children != null && ou.Children.Any())
             {
                 foreach (var c in ou.Children)
                 {
                     list.Add(c);
-                    AddChildren(list, c);
+                    FindChildren(list, c);
                 }
             }
         }

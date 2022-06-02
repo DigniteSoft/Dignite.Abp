@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
-    "DisplayName:Placeholder": "Placeholder"
+    "DisplayName:Placeholder": "Placeholder",
+    "DisplayName:Name": "Unique Name"
   }
 }
