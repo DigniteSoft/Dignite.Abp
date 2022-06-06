@@ -1,0 +1,51 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Upload
+@inherits FieldControlConfigurationComponentBase
+
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:Name"]</FieldLabel>
+        <TextEdit MaxLength="64" @bind-Text="@Definition.Name" />
+    </Field>
+</Validation>
+
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:DisplayName"]</FieldLabel>
+        <TextEdit @bind-Text="@Definition.DisplayName" />
+    </Field>
+</Validation>
+<Validation>
+    <Field>
+        <FieldLabel>@L["DisplayName:Description"]</FieldLabel>
+        <TextEdit @bind-Text="@Configuration.Description" />
+    </Field>
+</Validation>
+<Field>
+    <Check TValue="bool" Checked="@(Checked(Definition.DefaultValue))" CheckedChanged="OnChecked">@L["DisplayName:DefaultChecked"]</Check>
+</Field>
+
+@code{
+
+    public override Type FieldControlProviderType => typeof(UploadFieldControlProvider);
+
+    UploadConfiguration Configuration;
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new UploadConfiguration(Definition.Configuration);
+    }
+
+    private bool Checked(string defaultValue)
+    {
+        bool defaultChecked= false;
+        bool.TryParse(defaultValue, out defaultChecked);
+        return defaultChecked;
+    }
+
+    private void OnChecked(bool value)
+    {
+        Definition.DefaultValue = value.ToString();
+    }
+}

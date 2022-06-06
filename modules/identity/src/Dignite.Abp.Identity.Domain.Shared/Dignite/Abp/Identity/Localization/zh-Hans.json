@@ -13,6 +13,8 @@
     "NoUserSelected": "尚未选择用户。",
     "UsernameOrEmailOrNameOrPhoneNumber": "用户名/Email/姓名/手机号",
     "Permission:OrganizationUnitManagement": "组织机构管理",
-    "Permission:OrganizationUnitSuperAuthorization": "超级管理"
+    "Permission:OrganizationUnitSuperAuthorization": "超级管理",
+    "DisplayName": "显示名称",
+    "IsActive": "是否激活"
   }
 }

@@ -1,0 +1,49 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Switch
+@using Dignite.Abp.FieldCustomizing
+@using Dignite.Abp.FieldCustomizing.Blazor.Components.Shared
+@using Microsoft.AspNetCore.Components.Forms
+@inherits FieldControlComponentBase
+
+<Validation>
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">      
+            <Switch TValue="bool" Checked="@Checked(CustomizeField.Entity.GetField(CustomizeField.Definition.Name))" CheckedChanged="@OnCheckedChanged"></Switch>
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+</Validation>
+
+
+@code{
+    public override Type FieldControlProviderType => typeof(SwitchFieldControlProvider);
+
+    public SwitchConfiguration Configuration { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new SwitchConfiguration(CustomizeField.Definition.Configuration);
+    }
+
+
+    private bool Checked(object value)
+    {
+        if (value == null)
+            return false;
+        else
+        {
+            bool defaultChecked = false;
+            bool.TryParse(value.ToString(), out defaultChecked);
+            return defaultChecked;
+        }
+    }
+
+    Task OnCheckedChanged(bool value )
+    {
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, value);
+
+        return Task.CompletedTask;
+    }
+}

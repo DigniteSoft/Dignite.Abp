@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.JSInterop
+@using Volo.Abp.Http.Client
+@inherits InputTextArea
+@inject IJSRuntime JSRuntime
+
+<textarea @attributes="AdditionalAttributes"
+          id="@Id"
+          class="@CssClass"
+          value="@CurrentValue"></textarea>
+
+@code {
+    string _id;
+
+    [Parameter]
+    public string Id
+    {
+        get => _id ?? $"CKEditor_{uid}";
+        set => _id = value;
+    }
+
+    [Parameter]
+    public string UrlToPostImage { get; set; }
+
+    readonly string uid = Guid.NewGuid().ToString("N");
+
+    protected override async Task OnInitializedAsync()
+    {
+        //var remote = await RemoteServiceConfigurationProvider.GetConfigurationOrDefaultAsync("Default");
+        //UrlToPostImage = $"{remote.BaseUrl}/api/app/file/Upload?EntityType=common-attachment&EntityId=Upload";
+        UrlToPostImage = $"/api/app/file/Upload11";
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JSRuntime.InvokeVoidAsync("CKEditorInterop.init", Id, UrlToPostImage, DotNetObjectReference.Create(this));
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    [JSInvokable]
+    public Task EditorDataChanged(string data)
+    {
+        CurrentValue = data;
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        JSRuntime.InvokeVoidAsync("CKEditorInterop.destroy", Id);
+        base.Dispose(disposing);
+    }
+}

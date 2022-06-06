@@ -1,0 +1,52 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.RichTextEditor
+@using Dignite.Abp.FieldCustomizing
+@using Dignite.Abp.FieldCustomizing.Blazor.Components.Shared
+@using Microsoft.AspNetCore.Components.Forms
+@inherits FieldControlComponentBase
+
+<Validation Validator="@ValidateIsRequired">
+    <Field Horizontal="true">
+        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10">      
+            <EditForm Model="@CustomizeField.Entity">
+                <CkEditorBlazor 
+                    Value="@CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()" 
+                    ValueChanged="@OnValueChanged"
+                    ValueExpression="@(() => Configuration.Description )" >
+                </CkEditorBlazor>
+            </EditForm>
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+</Validation>
+
+
+@code{
+    public override Type FieldControlProviderType => typeof(RichTextEditorFieldControlProvider);
+
+    public RichTextEditorConfiguration Configuration { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new RichTextEditorConfiguration(CustomizeField.Definition.Configuration);
+    }
+
+    void ValidateIsRequired( ValidatorEventArgs e )
+    {
+        var value = Convert.ToString( e.Value );
+        if(Configuration.Required)
+        {
+            e.Status = string.IsNullOrWhiteSpace(value) ? ValidationStatus.Error : ValidationStatus.Success;
+        }
+    }
+
+    Task OnValueChanged( string value )
+    {
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, value);
+
+        return Task.CompletedTask;
+    }
+
+}
