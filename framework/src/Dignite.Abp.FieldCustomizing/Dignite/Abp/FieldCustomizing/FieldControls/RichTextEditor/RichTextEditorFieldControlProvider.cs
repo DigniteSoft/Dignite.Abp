@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.RichTextEditor
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.RichTextEditorControl"];
+        public override string DisplayName => L["RichTextEditorControl"];
 
         public override FieldControlType ControlType => FieldControlType.Simple;
 

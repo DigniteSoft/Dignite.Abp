@@ -11,20 +11,13 @@
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+	  <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     <RootNamespace />
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Dignite\Abp\Settings\Localization\Resources\en.json" />
-    <None Remove="Dignite\Abp\Settings\Localization\Resources\zh-Hans.json" />
-    <None Remove="Dignite\Abp\Settings\Localization\Resources\zh-Hant.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\en.json" />
-    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\zh-Hans.json" />
-    <EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\zh-Hant.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Dignite\Abp\Settings\Localization\Resources\*.json" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dignite.Abp.FieldCustomizing\Dignite.Abp.FieldCustomizing.csproj" />

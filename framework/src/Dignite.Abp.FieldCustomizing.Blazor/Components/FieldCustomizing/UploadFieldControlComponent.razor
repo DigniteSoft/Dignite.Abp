@@ -6,15 +6,13 @@
 @using Microsoft.AspNetCore.Components.Forms
 @inherits FieldControlComponentBase
 
-<Validation>
     <Field Horizontal="true">
         <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">      
-            <Upload TValue="bool" Checked="@Checked(CustomizeField.Entity.GetField(CustomizeField.Definition.Name))" CheckedChanged="@OnCheckedChanged"></Upload>
+            <FileEdit Changed="@OnFileChanged" Multiple="@Configuration.Multiple" Filter="@Configuration.Filter" Placeholder="@Configuration.Placeholder" />
             <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>
     </Field>
-</Validation>
 
 
 @code{
@@ -26,24 +24,19 @@
     {
         Configuration = new UploadConfiguration(CustomizeField.Definition.Configuration);
     }
+    
 
-
-    private bool Checked(object value)
+    private Task OnFileChanged( FileChangedEventArgs e )
     {
-        if (value == null)
-            return false;
-        else
+        if (e.Files.Any())
         {
-            bool defaultChecked = false;
-            bool.TryParse(value.ToString(), out defaultChecked);
-            return defaultChecked;
+            List<IFileEntry> files = new List<IFileEntry>();
+            foreach (var file in e.Files)
+            {
+                files.Add(file);
+            }
+            CustomizeField.Entity.SetField(CustomizeField.Definition.Name, files);
         }
-    }
-
-    Task OnCheckedChanged(bool value )
-    {
-        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, value);
-
         return Task.CompletedTask;
     }
 }

@@ -115,7 +115,7 @@ namespace Dignite.Abp.FileManagement
         {
             var fileInfo = await _blobRepository.FindAsync(containerName,blobName);
             var blobContainer = _blobContainerFactory.Create(containerName);
-            var fileStream = await blobContainer.GetAsync(blobName);
+            var fileStream = await blobContainer.GetAsync(fileInfo.ReferBlobName==null?blobName:fileInfo.ReferBlobName);
             var mimeType = MimeTypesMap.GetMimeType(fileInfo.FileName);
 
             return new RemoteStreamContent(fileStream, blobName, mimeType, disposeStream: true);

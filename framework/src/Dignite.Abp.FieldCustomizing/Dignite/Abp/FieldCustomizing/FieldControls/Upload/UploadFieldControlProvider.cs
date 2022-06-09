@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.Upload
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.UploadControl"];
+        public override string DisplayName => L["UploadControl"];
 
         public override FieldControlType ControlType => FieldControlType.Simple;
 

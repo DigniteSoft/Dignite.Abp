@@ -4,9 +4,6 @@ namespace Dignite.Abp.FieldCustomizing
 {
     public class CustomizeField
     {
-        public CustomizeField()
-        {
-        }
 
         public CustomizeField(IHasCustomizableFields entity, ICustomizeFieldDefinition definition)
         {

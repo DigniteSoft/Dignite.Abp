@@ -12,7 +12,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.Upload
         }
 
         [Required]
-        public bool Mode
+        public bool Multiple
         {
             get => _fieldControlConfiguration.GetConfigurationOrDefault(UploadConfigurationNames.Multiple, false);
             set => _fieldControlConfiguration.SetConfiguration(UploadConfigurationNames.Multiple, value);
