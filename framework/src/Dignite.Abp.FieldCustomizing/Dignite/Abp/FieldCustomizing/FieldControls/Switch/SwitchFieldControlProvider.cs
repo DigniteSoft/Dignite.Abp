@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.Switch
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.SwitchControl"];
+        public override string DisplayName => L["SwitchControl"];
 
         public override FieldControlType ControlType => FieldControlType.Simple;
 

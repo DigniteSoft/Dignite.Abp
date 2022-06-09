@@ -5,25 +5,25 @@
 
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:Name"]</FieldLabel>
+        <FieldLabel>@L["FieldName"]</FieldLabel>
         <TextEdit MaxLength="64" @bind-Text="@Definition.Name" />
     </Field>
 </Validation>
 
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:DisplayName"]</FieldLabel>
+        <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
         <TextEdit @bind-Text="@Definition.DisplayName" />
     </Field>
 </Validation>
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:Description"]</FieldLabel>
+        <FieldLabel>@L["Description"]</FieldLabel>
         <TextEdit @bind-Text="@Configuration.Description" />
     </Field>
 </Validation>
 <Field>
-    <Check TValue="bool" Checked="@(Checked(Definition.DefaultValue))" CheckedChanged="OnChecked">@L["DisplayName:DefaultChecked"]</Check>
+    <Check TValue="bool" Checked="@(Checked(Definition.DefaultValue))" CheckedChanged="OnChecked">@L["DefaultValue"]</Check>
 </Field>
 
 @code{

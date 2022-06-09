@@ -1,0 +1,93 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Table
+@using Dignite.Abp.FieldCustomizing
+@using Dignite.Abp.FieldCustomizing.Blazor.Components.Shared
+@using Microsoft.AspNetCore.Components.Forms
+@inject IFieldControlComponentSelector fieldControlComponentSelector
+@inherits FieldControlComponentBase
+
+<Field Horizontal="true">
+    <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
+    <FieldBody ColumnSize="ColumnSize.Is10">      
+        @if (Configuration.TableColumns.Any())
+        {
+            <Table>
+                <TableHeader>
+                    <Blazorise.TableRow>
+                        @foreach(var column in Configuration.TableColumns)
+                        {
+                        <TableHeaderCell>@column.DisplayName</TableHeaderCell>
+                        }
+                        <TableHeaderCell>
+                            <Button @onclick="@AddTableRow"><Icon Name="IconName.PlusCircle" /></Button>
+                        </TableHeaderCell>
+                    </Blazorise.TableRow>
+                </TableHeader>
+                <TableBody>
+                    @foreach(var row in TableRows)
+                    {
+                        <Blazorise.TableRow>
+                            @foreach(var column in Configuration.TableColumns)
+                            {                                    
+                                var component = fieldControlComponentSelector.Get(column.FieldDefinition.FieldControlProviderName);
+                                var parameters = new Dictionary<string, object>();
+                                parameters.Add("CustomizeField", new Abp.FieldCustomizing.CustomizeField(row, column.FieldDefinition));
+                                <TableRowCell>
+                                    <DynamicComponent Type="@component.GetType()" Parameters="@parameters"></DynamicComponent>
+                                </TableRowCell>
+                            }
+                            <TableRowCell>
+                                <Button @onclick="@(val => RemoveTableRow(row))"><Icon Name="IconName.Remove" /></Button>
+                            </TableRowCell>
+                        </Blazorise.TableRow>
+                    }
+                </TableBody>
+            </Table>
+            }
+    <FieldHelp>@Configuration.Description</FieldHelp>
+    </FieldBody>
+</Field>
+@Newtonsoft.Json.JsonConvert.SerializeObject(CustomizeField.Entity.CustomizedFields);
+<hr />
+
+@Newtonsoft.Json.JsonConvert.SerializeObject(TableRows);
+@code{
+    public override Type FieldControlProviderType => typeof(TableFieldControlProvider);
+
+    public TableConfiguration Configuration { get; set; }
+    public List<FieldControls.Table.TableRow> TableRows = new List<FieldControls.Table.TableRow>();
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new TableConfiguration(CustomizeField.Definition.Configuration);
+    }
+
+    protected override void OnInitialized()
+    {
+        var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
+        if (value != null)
+        {
+            TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FieldControls.Table.TableRow>>(value.ToString());
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+        }
+
+        base.OnInitialized();
+    }
+
+    private void AddTableRow()
+    {
+        var row = new FieldControls.Table.TableRow();
+        foreach (var column in Configuration.TableColumns)
+        {
+            row.CustomizedFields.Add(column.Name, column.FieldDefinition.DefaultValue);
+        }
+        TableRows.Add(row);
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+    }
+    private void RemoveTableRow(FieldControls.Table.TableRow row)
+    {
+        TableRows.Remove(row);
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+    }
+}

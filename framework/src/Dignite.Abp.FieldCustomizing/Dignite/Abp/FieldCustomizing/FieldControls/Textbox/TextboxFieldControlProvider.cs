@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.Textbox
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.TextboxControl"];
+        public override string DisplayName => L["TextboxControl"];
 
         public override FieldControlType ControlType => FieldControlType.Simple;
 

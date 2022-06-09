@@ -5,35 +5,35 @@
 
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:Name"]</FieldLabel>
+        <FieldLabel>@L["FieldName"]</FieldLabel>
         <TextEdit MaxLength="64" @bind-Text="@Definition.Name" />
     </Field>
 </Validation>
 
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:DisplayName"]</FieldLabel>
+        <FieldLabel>@L["FieldDisplayName"]</FieldLabel>
         <TextEdit @bind-Text="@Definition.DisplayName" />
     </Field>
 </Validation>
 <Validation>
     <Field>
-        <FieldLabel>@L["DisplayName:Description"]</FieldLabel>
+        <FieldLabel>@L["Description"]</FieldLabel>
         <TextEdit @bind-Text="@Configuration.Description" />
     </Field>
 </Validation>
 <Field>
-    <Check TValue="bool" @bind-Checked="@Configuration.Required">@L["DisplayName:IsRequired"]</Check>
+    <Check TValue="bool" @bind-Checked="@Configuration.Required">@L["IsRequired"]</Check>
 </Field>
 
 <Field>
-    <FieldLabel>@L["DisplayName:SelectListItem"]</FieldLabel>
+    <FieldLabel>@L["SelectListItem"]</FieldLabel>
     <Table>
         <TableHeader>
             <TableRow>
-                <TableHeaderCell>@L["DisplayName:SelectListItemText"]</TableHeaderCell>
-                <TableHeaderCell>@L["DisplayName:SelectListItemValue"]</TableHeaderCell>
-                <TableHeaderCell>@L["DisplayName:IsSelected"]</TableHeaderCell>
+                <TableHeaderCell>@L["SelectListItemText"]</TableHeaderCell>
+                <TableHeaderCell>@L["SelectListItemValue"]</TableHeaderCell>
+                <TableHeaderCell>@L["DefaultSelected"]</TableHeaderCell>
                 <TableHeaderCell>
                     <Button @onclick="@AddSelectListItem"><Icon Name="IconName.PlusCircle" /></Button>
                 </TableHeaderCell>
@@ -57,12 +57,12 @@
 
 <Validation>
 <Field>
-    <FieldLabel>@L["DisplayName:NullText"]</FieldLabel>
+    <FieldLabel>@L["NullText"]</FieldLabel>
     <TextEdit @bind-Text="@Configuration.NullText" />
 </Field>
 </Validation>
 <Field>
-    <Check TValue="bool" @bind-Checked="@Configuration.Multiple">@L["DisplayName:Multiple"]</Check>
+    <Check TValue="bool" @bind-Checked="@Configuration.Multiple">@L["Multiple"]</Check>
 </Field>
 
 @code{

@@ -3,6 +3,8 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Localization;
+using Dignite.Abp.Settings.Localization;
 
 namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
 {
@@ -13,9 +15,9 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
 
         public override string Name => ProviderName;
 
-        public override string DisplayName => L["DisplayName:Dignite.DataDictionary"]; //TODO:Localization needs to be added to this project when the official version is released
+        public override string DisplayName => L["DataDictionaryControl"]; //TODO:Localization needs to be added to this project when the official version is released
 
-        public override FieldControlType ControlType => FieldControlType.Simple;
+        public override FieldControlType ControlType => FieldControlType.Complex;
 
         public override void Validate(FieldControlValidateArgs args)
         {
@@ -56,6 +58,10 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
         public override FieldControlConfigurationBase GetConfiguration(FieldControlConfigurationDictionary fieldConfiguration)
         {
             return new DataDictionaryConfiguration(fieldConfiguration);
+        }
+        protected override IStringLocalizer CreateLocalizer()
+        {
+            return StringLocalizerFactory.Create(typeof(DigniteAbpSettingsResource));
         }
     }
 }

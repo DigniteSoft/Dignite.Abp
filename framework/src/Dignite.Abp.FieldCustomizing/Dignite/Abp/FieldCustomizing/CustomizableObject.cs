@@ -5,14 +5,26 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
+using Volo.Abp.Content;
 
 namespace Dignite.Abp.FieldCustomizing
 {
     [Serializable]
     public abstract class CustomizableObject : IHasCustomizableFields, IValidatableObject
     {
+        protected CustomizableObject()
+        {
+            CustomizedFields=new();
+            CustomizedFieldFiles= new();
+        }
+
         [JsonInclude]
         public CustomizeFieldDictionary CustomizedFields { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, List<IRemoteStreamContent>> CustomizedFieldFiles { get; set; }
 
         public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

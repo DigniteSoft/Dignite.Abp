@@ -41,6 +41,8 @@ namespace Dignite.Abp.BlobStoring
 
                     if (image.Width > configuration.ImageWidth || image.Height > configuration.ImageHeight)
                     {
+                        image.Metadata.ExifProfile = null;
+                        image.Metadata.XmpProfile = null;
                         image.Mutate(x =>
                         {
                             x.Resize(new ResizeOptions()
@@ -52,7 +54,7 @@ namespace Dignite.Abp.BlobStoring
 
                         var encoder = new SixLabors.ImageSharp.Formats.Jpeg.JpegEncoder()
                         {
-                            Quality = 40
+                            Quality = 90
                         };
 
                         context.BlobStream.Position = 0;
