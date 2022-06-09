@@ -49,7 +49,7 @@ namespace Dignite.Abp.FileManagement
 
         
 
-        [HttpPost]
+        [HttpGet]
         [Route("download/{containerName}/{*blobName}")]
         public async Task<FileResult> DownloadAsync([NotNull] string containerName, [NotNull] string blobName, [NotNull] string fileName)
         {
