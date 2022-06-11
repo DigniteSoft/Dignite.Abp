@@ -2,15 +2,15 @@
 @using Dignite.Abp.FieldCustomizing.FieldControls
 @using Dignite.Abp.FieldCustomizing.FieldControls.RichTextEditor
 @using Dignite.Abp.FieldCustomizing
-@using Dignite.Abp.FieldCustomizing.Blazor.Components.Shared
 @using Microsoft.AspNetCore.Components.Forms
+@using Dignite.Abp.AspNetCore.Components.CkEditor
 @inherits FieldControlComponentBase
 
     <Field Horizontal="true">
         <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10">      
             <EditForm Model="@CustomizeField.Entity">
-                <CkEditorBlazor 
+                <CkEditorBlazor UrlToPostImage="/api/file-management/files/save/Cms.RichTextEditorPic"
                     Value="@CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()" 
                     ValueChanged="@OnValueChanged"
                     ValueExpression="@(() => Configuration.Description )" >

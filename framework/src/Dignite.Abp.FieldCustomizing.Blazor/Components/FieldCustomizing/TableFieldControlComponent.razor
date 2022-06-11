@@ -2,7 +2,6 @@
 @using Dignite.Abp.FieldCustomizing.FieldControls
 @using Dignite.Abp.FieldCustomizing.FieldControls.Table
 @using Dignite.Abp.FieldCustomizing
-@using Dignite.Abp.FieldCustomizing.Blazor.Components.Shared
 @using Microsoft.AspNetCore.Components.Forms
 @inject IFieldControlComponentSelector fieldControlComponentSelector
 @inherits FieldControlComponentBase
@@ -48,10 +47,6 @@
     <FieldHelp>@Configuration.Description</FieldHelp>
     </FieldBody>
 </Field>
-@Newtonsoft.Json.JsonConvert.SerializeObject(CustomizeField.Entity.CustomizedFields);
-<hr />
-
-@Newtonsoft.Json.JsonConvert.SerializeObject(TableRows);
 @code{
     public override Type FieldControlProviderType => typeof(TableFieldControlProvider);
 

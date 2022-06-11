@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.JSInterop
-@using Volo.Abp.Http.Client
+@namespace Dignite.Abp.AspNetCore.Components.CkEditor
 @inherits InputTextArea
 @inject IJSRuntime JSRuntime
 
@@ -27,7 +27,6 @@
     protected override async Task OnInitializedAsync()
     {
         //var remote = await RemoteServiceConfigurationProvider.GetConfigurationOrDefaultAsync("Default");
-        //UrlToPostImage = $"{remote.BaseUrl}/api/app/file/Upload?EntityType=common-attachment&EntityId=Upload";
         UrlToPostImage = $"/api/file-management/files/save/Cms.RichTextEditorPic";
         await base.OnInitializedAsync();
     }

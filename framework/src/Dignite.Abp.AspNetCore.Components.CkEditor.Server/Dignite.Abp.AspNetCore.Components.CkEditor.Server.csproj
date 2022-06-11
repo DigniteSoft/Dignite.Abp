@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-
 	<Import Project="..\..\..\configureawait.props" />
 	<Import Project="..\..\..\common.props" />
 
@@ -8,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Volo.Abp.BlazoriseUI" Version="5.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Dignite.Abp.AspNetCore.Components.CkEditor\Dignite.Abp.AspNetCore.Components.CkEditor.csproj" />
-    <ProjectReference Include="..\Dignite.Abp.FieldCustomizing\Dignite.Abp.FieldCustomizing.csproj" />
+	  <PackageReference Include="Volo.Abp.AspNetCore.Components.Server.Theming" Version="5.2.1" />
   </ItemGroup>
 
 </Project>
