@@ -5,9 +5,9 @@
 @using Microsoft.AspNetCore.Components.Forms
 @inherits FieldControlComponentBase
 
-    <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is10">      
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
             <FileEdit Changed="@OnFileChanged" Multiple="@Configuration.Multiple" Filter="@Configuration.Filter" Placeholder="@Configuration.Placeholder" />
             <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>

@@ -6,9 +6,9 @@
 @using Dignite.Abp.AspNetCore.Components.CkEditor
 @inherits FieldControlComponentBase
 
-    <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is10">      
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
             <EditForm Model="@CustomizeField.Entity">
                 <CkEditorBlazor UrlToPostImage="/api/file-management/files/save/Cms.RichTextEditorPic"
                     Value="@CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()" 

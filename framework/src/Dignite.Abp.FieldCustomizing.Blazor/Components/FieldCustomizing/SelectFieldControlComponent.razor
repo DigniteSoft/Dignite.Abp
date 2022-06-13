@@ -5,9 +5,9 @@
 @inherits FieldControlComponentBase
 
 <Validation Validator="@ValidateIsRequired">
-    <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is10">
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
             <Select TValue="string" SelectedValue="@(CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString())" SelectedValueChanged="@OnSelectedValueChanged" Multiple="@Configuration.Multiple">
                 @if (!Configuration.NullText.IsNullOrEmpty() && !Configuration.Multiple)
                 {

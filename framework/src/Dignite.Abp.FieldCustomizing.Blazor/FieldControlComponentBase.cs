@@ -10,11 +10,15 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
         protected FieldControlComponentBase()
         {
             LocalizationResource = typeof(DigniteAbpFieldCustomizingModule);
+            HideFieldLable = false;
         }
 
         public abstract Type FieldControlProviderType { get; }
 
         [Parameter]
         public CustomizeField CustomizeField { get; set; }
+
+        [Parameter]
+        public bool HideFieldLable { get; set; }
     }
 }

@@ -5,9 +5,9 @@
 @inherits FieldControlComponentBase
 
 <Validation Validator="@ValidateIsRequired">
-    <Field Horizontal="true">
-        <FieldLabel ColumnSize="ColumnSize.Is2">@CustomizeField.Definition.DisplayName</FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is10">
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
             @if (Configuration.Mode == TextboxMode.SingleLine)
             {
                 <TextEdit Placeholder="@Configuration.Placeholder" MaxLength="@Configuration.CharLimit" Text="@CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()" TextChanged="@OnValueChanged">
