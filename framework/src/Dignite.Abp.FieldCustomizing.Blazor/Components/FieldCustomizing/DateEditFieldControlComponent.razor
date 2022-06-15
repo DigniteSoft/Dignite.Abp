@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.DateEdit
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.DateEdit
 @using Dignite.Abp.FieldCustomizing
 @inherits FieldControlComponentBase
 
@@ -21,7 +21,7 @@
 </Validation>
 
 @code{
-    public override Type FieldControlProviderType => typeof(DateEditFieldControlProvider);
+    public override Type FieldProviderType => typeof(DateEditFieldProvider);
 
     public DateEditConfiguration Configuration { get; set; }
     private DateTime? value = null;

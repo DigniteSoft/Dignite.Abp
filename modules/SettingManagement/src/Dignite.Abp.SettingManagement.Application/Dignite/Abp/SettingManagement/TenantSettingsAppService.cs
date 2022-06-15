@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace Dignite.Abp.SettingManagement
         public TenantSettingsAppService(
             ISettingDefinitionManager settingDefinitionManager,
             ISettingManager settingManager,
-            IEnumerable<IFieldControlProvider> controlProviders)
+            IEnumerable<IFieldProvider> controlProviders)
             : base(settingDefinitionManager, settingManager, controlProviders)
         {
         }

@@ -8,7 +8,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 using ISettingDefinitionManager = Dignite.Abp.Settings.IDigniteSettingDefinitionManager;
-using Dignite.Abp.FieldCustomizing.FieldControls;
+using Dignite.Abp.FieldCustomizing.Fields;
 
 namespace Dignite.Abp.SettingManagement
 {
@@ -16,12 +16,12 @@ namespace Dignite.Abp.SettingManagement
     {
         protected ISettingDefinitionManager SettingDefinitionManager { get; }
         protected ISettingManager SettingManager { get; }
-        protected IEnumerable<IFieldControlProvider> ControlProviders { get; }
+        protected IEnumerable<IFieldProvider> ControlProviders { get; }
 
         protected SettingsAppServiceBase(
             ISettingDefinitionManager settingDefinitionManager,
             ISettingManager settingManager,
-            IEnumerable<IFieldControlProvider> controlProviders)
+            IEnumerable<IFieldProvider> controlProviders)
         {
             SettingDefinitionManager = settingDefinitionManager;
             SettingManager = settingManager;
@@ -37,7 +37,7 @@ namespace Dignite.Abp.SettingManagement
             foreach (var nav in navigations)
             {
                 var settingDefinitions = nav.SettingDefinitions.Where(sd => 
-                    sd.GetFieldControlConfigurationOrNull()!=null
+                    sd.GetFieldConfigurationOrNull()!=null
                     ).ToList();
                 if (settingDefinitions.Any())
                 {
@@ -52,8 +52,8 @@ namespace Dignite.Abp.SettingManagement
                             sd.DisplayName.Localize(StringLocalizerFactory),
                             sd.Description==null?null:sd.Description.Localize(StringLocalizerFactory),
                             value,
-                            sd.GetFieldControlProviderNameOrNull(),
-                            sd.GetFieldControlConfigurationOrNull()
+                            sd.GetFieldProviderNameOrNull(),
+                            sd.GetFieldConfigurationOrNull()
                             ));
                     }
 

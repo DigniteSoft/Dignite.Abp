@@ -1,5 +1,5 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
-using Dignite.Abp.FieldCustomizing.FieldControls.Textbox;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
+using Dignite.Abp.FieldCustomizing.Fields.Textbox;
 using System;
 using Volo.Abp.Settings;
 
@@ -11,11 +11,11 @@ namespace Dignite.Abp.Settings.SettingItemControls
             this SettingDefinition settingDefinition,
             Action<TextboxConfiguration> textboxConfigureAction)
         {
-            var textboxConfiguration = new TextboxConfiguration(new FieldControlConfigurationDictionary());
+            var textboxConfiguration = new TextboxConfiguration(new FieldConfigurationDictionary());
             textboxConfigureAction(textboxConfiguration);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, textboxConfiguration.GetConfiguration());
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, TextboxFieldControlProvider.ProviderName);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ConfigurationName, textboxConfiguration.GetConfiguration());
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ProviderName, TextboxFieldProvider.ProviderName);
 
             return settingDefinition;
         }

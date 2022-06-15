@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.Switch
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.Switch
 @using Dignite.Abp.FieldCustomizing
 @using Microsoft.AspNetCore.Components.Forms
 @inherits FieldComponentBase
@@ -16,7 +16,7 @@
 
 
 @code{
-    public override Type FieldProviderType => typeof(SwitchFieldControlProvider);
+    public override Type FieldProviderType => typeof(SwitchFieldProvider);
 
     public SwitchConfiguration Configuration { get; set; }
 

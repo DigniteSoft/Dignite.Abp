@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,36 +10,36 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
     public class FieldControlComponentSelector : IFieldControlComponentSelector, ITransientDependency
     {
         private readonly IEnumerable<IFieldControlComponent> _fieldControlComponents;
-        private readonly IFieldControlProviderSelector _fieldControlProviderSelector;
+        private readonly IFieldProviderSelector _fieldProviderSelector;
 
-        public FieldControlComponentSelector(IEnumerable<IFieldControlComponent> fieldControlComponents, IFieldControlProviderSelector fieldControlProviderSelector)
+        public FieldControlComponentSelector(IEnumerable<IFieldControlComponent> fieldControlComponents, IFieldProviderSelector fieldProviderSelector)
         {
             _fieldControlComponents = fieldControlComponents;
-            _fieldControlProviderSelector = fieldControlProviderSelector;
+            _fieldProviderSelector = fieldProviderSelector;
         }
 
 
         /// <summary>
         /// Get blazor component using field control provider name
         /// </summary>
-        /// <param name="fieldControlProviderName">
-        /// <see cref="IFieldControlProvider.Name"/>
+        /// <param name="fieldProviderName">
+        /// <see cref="IFieldProvider.Name"/>
         /// </param>
         /// <returns></returns>
         [NotNull]
-        public IFieldControlComponent Get(string fieldControlProviderName)
+        public IFieldControlComponent Get(string fieldProviderName)
         {
             if (!_fieldControlComponents.Any())
             {
                 throw new AbpException("No field control component was registered! At least one component must be registered to be able to use the field customizing system.");
             }
 
-            var fieldControlProvider = _fieldControlProviderSelector.Get(fieldControlProviderName);
-            var fieldControlComponent = _fieldControlComponents.FirstOrDefault(fp => fp.FieldControlProviderType == fieldControlProvider.GetType());
+            var fieldProvider = _fieldProviderSelector.Get(fieldProviderName);
+            var fieldControlComponent = _fieldControlComponents.FirstOrDefault(fp => fp.FieldProviderType == fieldProvider.GetType());
 
             if (fieldControlComponent == null)
                 throw new AbpException(
-                    $"Could not find the field control component with the field control provider type full name ({fieldControlProvider.GetType().FullName}) ."
+                    $"Could not find the field control component with the field control provider type full name ({fieldProvider.GetType().FullName}) ."
                 );
             else
                 return fieldControlComponent;

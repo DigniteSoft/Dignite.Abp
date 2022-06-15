@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.DataDictionary
 @using Dignite.Abp.FieldCustomizing
 @inherits FieldControlComponentBase
 
@@ -29,7 +29,7 @@
 
 
 @code{
-    public override Type FieldControlProviderType => typeof(DataDictionaryFieldControlProvider);
+    public override Type FieldProviderType => typeof(DataDictionaryFieldProvider);
     public DataDictionaryConfiguration Configuration { get; set; }
 
     private List<DataDictionary> dataDictionaries;

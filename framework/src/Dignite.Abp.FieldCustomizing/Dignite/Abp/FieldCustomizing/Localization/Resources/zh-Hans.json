@@ -25,7 +25,7 @@
     "CustomTableColumns": "定义表格列",
     "TableControl": "表格控件",
     "SelectFieldControls": "--选择控件--",
-    "FieldControlConfiguration": "控件配置项",
+    "FieldConfiguration": "字段配置项",
     "RichTextEditorControl": "富文本框",
     "UploadFilter": "上传文件类型过滤",
     "Multiple": "多选",

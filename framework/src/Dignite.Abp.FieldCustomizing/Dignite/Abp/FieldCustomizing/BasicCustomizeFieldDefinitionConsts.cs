@@ -16,8 +16,8 @@ namespace Dignite.Abp.FieldCustomizing
         public const int MaxDisplayNameLength = 64;
 
         /// <summary>
-        /// Maximum length of the <see cref="BasicCustomizeFieldDefinition.FieldControlProviderName"/> property.
+        /// Maximum length of the <see cref="BasicCustomizeFieldDefinition.FieldProviderName"/> property.
         /// </summary>
-        public const int MaxFieldControlProviderNameLength = 64;
+        public const int MaxFieldProviderNameLength = 64;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+namespace Dignite.Abp.FieldCustomizing.Fields.DataDictionary
 {
     /// <summary>
     /// 

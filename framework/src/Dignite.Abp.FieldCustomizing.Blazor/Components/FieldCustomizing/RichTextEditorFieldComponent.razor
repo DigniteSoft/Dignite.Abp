@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.RichTextEditor
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.RichTextEditor
 @using Dignite.Abp.FieldCustomizing
 @using Microsoft.AspNetCore.Components.Forms
 @using Dignite.Abp.AspNetCore.Components.CkEditor
@@ -18,7 +18,7 @@
 
 
 @code{
-    public override Type FieldProviderType => typeof(RichTextEditorFieldControlProvider);
+    public override Type FieldProviderType => typeof(RichTextEditorFieldProvider);
 
     public RichTextEditorConfiguration Configuration { get; set; }
 

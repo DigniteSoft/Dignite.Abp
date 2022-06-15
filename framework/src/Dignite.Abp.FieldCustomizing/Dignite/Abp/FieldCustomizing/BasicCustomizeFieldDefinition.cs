@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using JetBrains.Annotations;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -9,11 +9,11 @@ namespace Dignite.Abp.FieldCustomizing
     public class BasicCustomizeFieldDefinition: ICustomizeFieldDefinition
     {
 
-        public BasicCustomizeFieldDefinition(string name, string displayName, string fieldControlProviderName, string defaultValue, FieldControlConfigurationDictionary configuration)
+        public BasicCustomizeFieldDefinition(string name, string displayName, string fieldProviderName, string defaultValue, FieldConfigurationDictionary configuration)
         {
             Name = name;
             DisplayName = displayName;
-            FieldControlProviderName=fieldControlProviderName;
+            FieldProviderName=fieldProviderName;
             DefaultValue = defaultValue;
             Configuration = configuration;
         }
@@ -30,11 +30,11 @@ namespace Dignite.Abp.FieldCustomizing
 
 
         /// <summary>
-        /// The provider to be used to <see cref="IFieldControlProvider.Name"/>
+        /// The provider to be used to <see cref="IFieldProvider.Name"/>
         /// </summary>
         [Required]
-        [StringLength(BasicCustomizeFieldDefinitionConsts.MaxFieldControlProviderNameLength)]
-        public string FieldControlProviderName { get; set; }
+        [StringLength(BasicCustomizeFieldDefinitionConsts.MaxFieldProviderNameLength)]
+        public string FieldProviderName { get; set; }
 
 
         /// <summary>
@@ -44,6 +44,6 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        public FieldControlConfigurationDictionary Configuration { get; set; }
+        public FieldConfigurationDictionary Configuration { get; set; }
     }
 }

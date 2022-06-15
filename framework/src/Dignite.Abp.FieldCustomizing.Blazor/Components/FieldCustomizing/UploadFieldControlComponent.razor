@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.Upload
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.Upload
 @using Dignite.Abp.FieldCustomizing
 @using Microsoft.AspNetCore.Components.Forms
 @inherits FieldControlComponentBase
@@ -15,7 +15,7 @@
 
 
 @code{
-    public override Type FieldControlProviderType => typeof(UploadFieldControlProvider);
+    public override Type FieldProviderType => typeof(UploadFieldProvider);
 
     public UploadConfiguration Configuration { get; set; }
 

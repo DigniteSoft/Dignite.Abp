@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ using Volo.Abp.Json.SystemTextJson.JsonConverters;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
 {
-    public  class CustomizedFieldControlConfigurationValueConverter : ValueConverter<FieldControlConfigurationDictionary, string>
+    public  class CustomizedFieldConfigurationValueConverter : ValueConverter<FieldConfigurationDictionary, string>
     {
-        public CustomizedFieldControlConfigurationValueConverter()
+        public CustomizedFieldConfigurationValueConverter()
             : base(
                 d => SerializeObject(d),
                 s => DeserializeObject(s))
@@ -20,7 +20,7 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
 
         }
 
-        private static string SerializeObject(FieldControlConfigurationDictionary extraProperties)
+        private static string SerializeObject(FieldConfigurationDictionary extraProperties)
         {
             var serializeOptions = new JsonSerializerOptions
             {
@@ -30,18 +30,18 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters
             return JsonSerializer.Serialize(extraProperties, serializeOptions);
         }
 
-        private static FieldControlConfigurationDictionary DeserializeObject(string extraPropertiesAsJson)
+        private static FieldConfigurationDictionary DeserializeObject(string extraPropertiesAsJson)
         {
             if (extraPropertiesAsJson.IsNullOrEmpty() || extraPropertiesAsJson == "{}")
             {
-                return new FieldControlConfigurationDictionary();
+                return new FieldConfigurationDictionary();
             }
 
             var deserializeOptions = new JsonSerializerOptions();
             deserializeOptions.Converters.Add(new ObjectToInferredTypesConverter());
 
-            var dictionary = JsonSerializer.Deserialize<FieldControlConfigurationDictionary>(extraPropertiesAsJson, deserializeOptions) ??
-                             new FieldControlConfigurationDictionary();
+            var dictionary = JsonSerializer.Deserialize<FieldConfigurationDictionary>(extraPropertiesAsJson, deserializeOptions) ??
+                             new FieldConfigurationDictionary();
 
 
             return dictionary;

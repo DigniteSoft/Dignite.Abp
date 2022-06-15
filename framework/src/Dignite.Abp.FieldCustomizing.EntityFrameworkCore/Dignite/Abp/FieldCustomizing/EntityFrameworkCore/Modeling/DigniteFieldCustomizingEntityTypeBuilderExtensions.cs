@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using Dignite.Abp.FieldCustomizing.EntityFrameworkCore.ValueConverters;
-using Dignite.Abp.FieldCustomizing.FieldControls;
+using Dignite.Abp.FieldCustomizing.Fields;
 
 namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 {
@@ -29,12 +29,12 @@ namespace Dignite.Abp.FieldCustomizing.EntityFrameworkCore.Modeling
 
             b.Property<string>(nameof(ICustomizeFieldDefinition.DisplayName)).IsRequired().HasMaxLength(64);
             b.Property<string>(nameof(ICustomizeFieldDefinition.Name)).IsRequired().HasMaxLength(64);
-            b.Property<FieldControlConfigurationDictionary>(nameof(ICustomizeFieldDefinition.Configuration))
+            b.Property<FieldConfigurationDictionary>(nameof(ICustomizeFieldDefinition.Configuration))
                 .HasColumnName(nameof(ICustomizeFieldDefinition.Configuration))
                 .HasConversion(
-                    new CustomizedFieldControlConfigurationValueConverter()
+                    new CustomizedFieldConfigurationValueConverter()
                     )
-                .Metadata.SetValueComparer(new CustomizedFieldControlConfigurationDictionaryValueComparer());
+                .Metadata.SetValueComparer(new CustomizedFieldConfigurationDictionaryValueComparer());
         }
 
         /// <summary>

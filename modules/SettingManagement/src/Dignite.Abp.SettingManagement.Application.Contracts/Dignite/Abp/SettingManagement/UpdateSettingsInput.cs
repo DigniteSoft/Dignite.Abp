@@ -18,9 +18,9 @@ namespace Dignite.Abp.SettingManagement
                 .Select(fd => new BasicCustomizeFieldDefinition(
                         fd.Name,
                         fd.DisplayName,
-                        fd.FieldControlProviderName,
+                        fd.FieldProviderName,
                         fd.Value,
-                        fd.FieldControlConfiguration
+                        fd.FieldConfiguration
                         )).ToList();
         }
 

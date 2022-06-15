@@ -1,5 +1,5 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
-using Dignite.Abp.FieldCustomizing.FieldControls.Select;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
+using Dignite.Abp.FieldCustomizing.Fields.Select;
 using System;
 using Volo.Abp.Settings;
 
@@ -11,11 +11,11 @@ namespace Dignite.Abp.Settings.SettingItemControls
             this SettingDefinition settingDefinition,
             Action<SelectConfiguration> configureAction)
         {
-            var config = new SelectConfiguration(new FieldControlConfigurationDictionary());
+            var config = new SelectConfiguration(new FieldConfigurationDictionary());
             configureAction(config);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, config.GetConfiguration());
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, SelectFieldControlProvider.ProviderName);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ConfigurationName, config.GetConfiguration());
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ProviderName, SelectFieldProvider.ProviderName);
 
             return settingDefinition;
         }

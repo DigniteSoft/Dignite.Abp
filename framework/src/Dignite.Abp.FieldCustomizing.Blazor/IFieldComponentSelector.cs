@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using JetBrains.Annotations;
 
 namespace Dignite.Abp.FieldCustomizing.Blazor
@@ -9,7 +9,7 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
         /// Get blazor component using field control provider name
         /// </summary>
         /// <param name="fieldProviderName">
-        /// <see cref="IFieldControlProvider.Name"/>
+        /// <see cref="IFieldProvider.Name"/>
         /// </param>
         /// <returns></returns>
         [NotNull]

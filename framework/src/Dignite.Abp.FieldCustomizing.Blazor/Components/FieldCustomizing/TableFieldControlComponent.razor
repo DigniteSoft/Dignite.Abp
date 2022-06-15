@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.Table
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.Table
 @using Dignite.Abp.FieldCustomizing
 @using Microsoft.AspNetCore.Components.Forms
 @inject IFieldControlComponentSelector fieldControlComponentSelector
@@ -29,7 +29,7 @@
                         <Blazorise.TableRow>
                             @foreach(var column in Configuration.TableColumns)
                             {                                    
-                                var component = fieldControlComponentSelector.Get(column.FieldDefinition.FieldControlProviderName);
+                                var component = fieldControlComponentSelector.Get(column.FieldDefinition.FieldProviderName);
                                 var parameters = new Dictionary<string, object>();
                                 parameters.Add("CustomizeField", new Abp.FieldCustomizing.CustomizeField(row, column.FieldDefinition));
                                 parameters.Add("HideFieldLable", true);
@@ -49,10 +49,10 @@
     </FieldBody>
 </Field>
 @code{
-    public override Type FieldControlProviderType => typeof(TableFieldControlProvider);
+    public override Type FieldProviderType => typeof(TableFieldProvider);
 
     public TableConfiguration Configuration { get; set; }
-    public List<FieldControls.Table.TableRow> TableRows = new List<FieldControls.Table.TableRow>();
+    public List<Abp.FieldCustomizing.Fields.Table.TableRow> TableRows = new List<Abp.FieldCustomizing.Fields.Table.TableRow>();
 
     protected override void OnParametersSet()
     {
@@ -64,7 +64,7 @@
         var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
         if (value != null)
         {
-            TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FieldControls.Table.TableRow>>(value.ToString());
+                TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
         CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
         }
 
@@ -73,7 +73,7 @@
 
     private void AddTableRow()
     {
-        var row = new FieldControls.Table.TableRow();
+        var row = new Abp.FieldCustomizing.Fields.Table.TableRow();
         foreach (var column in Configuration.TableColumns)
         {
             row.CustomizedFields.Add(column.Name, column.FieldDefinition.DefaultValue);
@@ -81,7 +81,7 @@
         TableRows.Add(row);
         CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
     }
-    private void RemoveTableRow(FieldControls.Table.TableRow row)
+    private void RemoveTableRow(Abp.FieldCustomizing.Fields.Table.TableRow row)
     {
         TableRows.Remove(row);
         CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);

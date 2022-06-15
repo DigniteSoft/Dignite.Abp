@@ -13,7 +13,7 @@ namespace Dignite.Abp.FieldCustomizing.Blazor
             HideFieldLable = false;
         }
 
-        public abstract Type FieldControlProviderType { get; }
+        public abstract Type FieldProviderType { get; }
 
         [Parameter]
         public CustomizeField CustomizeField { get; set; }

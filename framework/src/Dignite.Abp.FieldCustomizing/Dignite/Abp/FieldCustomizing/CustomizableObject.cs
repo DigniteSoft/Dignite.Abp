@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace Dignite.Abp.FieldCustomizing
         {
             var validationErrors = new List<ValidationResult>();
             var fieldDefinitions = GetFieldDefinitions(validationContext);
-            var fieldControlProviderSelector = validationContext.GetRequiredService<IFieldControlProviderSelector>();
+            var fieldProviderSelector = validationContext.GetRequiredService<IFieldProviderSelector>();
             try
             {
                 foreach (var customField in CustomizedFields)
@@ -38,9 +38,9 @@ namespace Dignite.Abp.FieldCustomizing
                     var fieldDefinition = fieldDefinitions.FirstOrDefault(fi => fi.Name == customField.Key);
                     if (fieldDefinition == null)
                         continue;
-                    var fieldControlProvider = fieldControlProviderSelector.Get(fieldDefinition.FieldControlProviderName);
-                    fieldControlProvider.Validate(
-                        new FieldControlValidateArgs(
+                    var fieldProvider = fieldProviderSelector.Get(fieldDefinition.FieldProviderName);
+                    fieldProvider.Validate(
+                        new FieldValidateArgs(
                             fieldDefinition,
                             customField.Value,
                             validationErrors

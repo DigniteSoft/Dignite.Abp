@@ -1,5 +1,5 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
-using Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
+using Dignite.Abp.FieldCustomizing.Fields.DataDictionary;
 using System;
 using Volo.Abp.Settings;
 
@@ -11,11 +11,11 @@ namespace Dignite.Abp.Settings.SettingItemControls
             this SettingDefinition settingDefinition,
             Action<DataDictionaryConfiguration> dataDictionaryConfigureAction)
         {
-            var dataDictionaryConfiguration = new DataDictionaryConfiguration(new FieldControlConfigurationDictionary());
+            var dataDictionaryConfiguration = new DataDictionaryConfiguration(new FieldConfigurationDictionary());
             dataDictionaryConfigureAction(dataDictionaryConfiguration);
 
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlConfigurationName, dataDictionaryConfiguration.GetConfiguration());
-            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ControlProviderName, DataDictionaryFieldControlProvider.ProviderName);
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ConfigurationName, dataDictionaryConfiguration.GetConfiguration());
+            settingDefinition.WithProperty(SettingDefinitionPropertiesNames.ProviderName, DataDictionaryFieldProvider.ProviderName);
 
             return settingDefinition;
         }

@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.Select
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.Select
 @using Dignite.Abp.FieldCustomizing
 @inherits FieldControlComponentBase
 
@@ -25,7 +25,7 @@
 
 
 @code{
-    public override Type FieldControlProviderType => typeof(SelectFieldControlProvider);
+    public override Type FieldProviderType => typeof(SelectFieldProvider);
 
     public SelectConfiguration Configuration { get; set; }
 

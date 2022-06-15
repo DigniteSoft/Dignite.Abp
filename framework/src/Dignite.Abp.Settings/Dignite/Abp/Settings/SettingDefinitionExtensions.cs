@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using System.Collections.Generic;
 using Volo.Abp.Localization;
 using Volo.Abp.Settings;
@@ -7,20 +7,20 @@ namespace Dignite.Abp.Settings
 {
     public static class SettingDefinitionExtensions
     {
-        public static FieldControlConfigurationDictionary GetFieldControlConfigurationOrNull(
+        public static FieldConfigurationDictionary GetFieldConfigurationOrNull(
             this SettingDefinition setting)
         {
-            var controlConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ControlConfigurationName);
+            var controlConfiguration = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ConfigurationName);
             if (controlConfiguration == null)
                 return null;
             else
-                return (FieldControlConfigurationDictionary)controlConfiguration;
+                return (FieldConfigurationDictionary)controlConfiguration;
         }
 
-        public static string GetFieldControlProviderNameOrNull(
+        public static string GetFieldProviderNameOrNull(
             this SettingDefinition setting)
         {
-            var providerName = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ControlProviderName);
+            var providerName = setting.Properties.GetOrDefault(SettingDefinitionPropertiesNames.ProviderName);
             if (providerName != null)
             {
                 return (string)providerName;

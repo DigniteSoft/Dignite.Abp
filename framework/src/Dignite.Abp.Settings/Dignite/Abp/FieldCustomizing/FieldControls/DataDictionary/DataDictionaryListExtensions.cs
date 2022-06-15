@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+namespace Dignite.Abp.FieldCustomizing.Fields.DataDictionary
 {
     public static class DataDictionaryListExtensions
     {

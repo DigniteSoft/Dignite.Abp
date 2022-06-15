@@ -1,6 +1,6 @@
 ﻿@using Dignite.Abp.FieldCustomizing.Blazor
-@using Dignite.Abp.FieldCustomizing.FieldControls
-@using Dignite.Abp.FieldCustomizing.FieldControls.Textbox
+@using Dignite.Abp.FieldCustomizing.Fields
+@using Dignite.Abp.FieldCustomizing.Fields.Textbox
 @using Dignite.Abp.FieldCustomizing
 @inherits FieldComponentBase
 
@@ -14,7 +14,7 @@
 
 
 @code{
-    public override Type FieldProviderType => typeof(TextboxFieldControlProvider);
+    public override Type FieldProviderType => typeof(TextboxFieldProvider);
 
     public TextboxConfiguration Configuration { get; set; }
 

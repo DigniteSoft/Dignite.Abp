@@ -1,7 +1,7 @@
 ﻿
-namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
+namespace Dignite.Abp.FieldCustomizing.Fields.DataDictionary
 {
-    public class DataDictionaryConfiguration:FieldControlConfigurationBase
+    public class DataDictionaryConfiguration:FieldConfigurationBase
     {
 
         /// <summary>
@@ -9,12 +9,12 @@ namespace Dignite.Abp.FieldCustomizing.FieldControls.DataDictionary
         /// </summary>
         public int MaxDepth
         {
-            get => _fieldControlConfiguration.GetConfigurationOrDefault<int>(DataDictionaryConfigurationNames.MaxDepth, 1);
-            set => _fieldControlConfiguration.SetConfiguration(DataDictionaryConfigurationNames.MaxDepth, value);
+            get => _fieldConfiguration.GetConfigurationOrDefault<int>(DataDictionaryConfigurationNames.MaxDepth, 1);
+            set => _fieldConfiguration.SetConfiguration(DataDictionaryConfigurationNames.MaxDepth, value);
         }
 
 
-        public DataDictionaryConfiguration(FieldControlConfigurationDictionary fieldConfiguration)
+        public DataDictionaryConfiguration(FieldConfigurationDictionary fieldConfiguration)
             :base(fieldConfiguration)
         {
         }

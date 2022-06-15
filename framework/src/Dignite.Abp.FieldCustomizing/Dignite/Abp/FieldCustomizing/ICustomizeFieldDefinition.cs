@@ -1,4 +1,4 @@
-﻿using Dignite.Abp.FieldCustomizing.FieldControls;
+﻿using Dignite.Abp.FieldCustomizing.Fields;
 using JetBrains.Annotations;
 
 namespace Dignite.Abp.FieldCustomizing
@@ -19,9 +19,9 @@ namespace Dignite.Abp.FieldCustomizing
         public string DefaultValue { get; set; }
 
         [NotNull]
-        public string FieldControlProviderName { get; set; }
+        public string FieldProviderName { get; set; }
 
         [NotNull]
-        FieldControlConfigurationDictionary Configuration { get; set; }
+        FieldConfigurationDictionary Configuration { get; set; }
     }
 }

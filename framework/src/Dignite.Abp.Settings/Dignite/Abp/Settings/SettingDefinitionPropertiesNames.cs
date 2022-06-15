@@ -4,8 +4,8 @@
     {
         public const string GroupName= "Dignite.SettingItemGroupName";
 
-        public const string ControlConfigurationName = "Dignite.SettingItemControlConfigurationName";
+        public const string ConfigurationName = "Dignite.SettingItemConfigurationName";
 
-        public const string ControlProviderName = "Dignite.ControlProviderName";
+        public const string ProviderName = "Dignite.ProviderName";
     }
 }
