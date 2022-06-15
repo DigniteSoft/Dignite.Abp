@@ -1,0 +1,26 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Textbox
+@using Dignite.Abp.FieldCustomizing
+@inherits FieldComponentBase
+
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
+            @CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+
+
+@code{
+    public override Type FieldProviderType => typeof(TextboxFieldControlProvider);
+
+    public TextboxConfiguration Configuration { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new TextboxConfiguration(CustomizeField.Definition.Configuration);
+    }
+
+}

@@ -1,0 +1,41 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.DateEdit
+@using Dignite.Abp.FieldCustomizing
+@inherits FieldComponentBase
+
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
+            <Text>
+                @value
+            </Text>
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+
+@code{
+    public override Type FieldProviderType => typeof(DateEditFieldControlProvider);
+
+    public DateEditConfiguration Configuration { get; set; }
+    private DateTime? value = null;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null) != null)
+        {
+            DateTime convertValue;
+            if (DateTime.TryParse(CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null).ToString(), out convertValue))
+            {
+                value = convertValue;
+            }
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new DateEditConfiguration(CustomizeField.Definition.Configuration);
+    }
+
+}

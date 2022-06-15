@@ -1,0 +1,27 @@
+﻿@using Dignite.Abp.FieldCustomizing.Blazor
+@using Dignite.Abp.FieldCustomizing.FieldControls
+@using Dignite.Abp.FieldCustomizing.FieldControls.Upload
+@using Dignite.Abp.FieldCustomizing
+@using Microsoft.AspNetCore.Components.Forms
+@inherits FieldComponentBase
+
+    <Field Horizontal="@(!HideFieldLable)">
+        <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
+            
+            <FieldHelp>@Configuration.Description</FieldHelp>
+        </FieldBody>
+    </Field>
+
+
+@code{
+    public override Type FieldProviderType => typeof(UploadFieldControlProvider);
+
+    public UploadConfiguration Configuration { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Configuration = new UploadConfiguration(CustomizeField.Definition.Configuration);
+    }
+    
+}
