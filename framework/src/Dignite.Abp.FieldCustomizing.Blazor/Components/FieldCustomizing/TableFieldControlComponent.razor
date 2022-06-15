@@ -8,15 +8,15 @@
 
 <Field Horizontal="@(!HideFieldLable)">
     <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
-    <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
+    <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
         @if (Configuration.TableColumns.Any())
         {
             <Table>
                 <TableHeader>
                     <Blazorise.TableRow>
-                        @foreach(var column in Configuration.TableColumns)
+                        @foreach (var column in Configuration.TableColumns)
                         {
-                        <TableHeaderCell>@column.DisplayName</TableHeaderCell>
+                            <TableHeaderCell>@column.DisplayName</TableHeaderCell>
                         }
                         <TableHeaderCell>
                             <Button @onclick="@AddTableRow"><Icon Name="IconName.PlusCircle" /></Button>
@@ -24,7 +24,7 @@
                     </Blazorise.TableRow>
                 </TableHeader>
                 <TableBody>
-                    @foreach(var row in TableRows)
+                    @foreach (var row in TableRows)
                     {
                         <Blazorise.TableRow>
                             @foreach(var column in Configuration.TableColumns)
@@ -44,8 +44,8 @@
                     }
                 </TableBody>
             </Table>
-            }
-    <FieldHelp>@Configuration.Description</FieldHelp>
+        }
+        <FieldHelp>@Configuration.Description</FieldHelp>
     </FieldBody>
 </Field>
 @code{
@@ -61,6 +61,7 @@
 
     protected override void OnInitialized()
     {
+
         var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
         if (value != null)
         {
@@ -68,6 +69,8 @@
         CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
         }
 
+            }
+        }
         base.OnInitialized();
     }
 
