@@ -8,15 +8,15 @@
 
 <Field Horizontal="@(!HideFieldLable)">
     <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
-    <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
+    <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
         @if (Configuration.TableColumns.Any())
         {
             <Table>
                 <TableHeader>
                     <Blazorise.TableRow>
-                        @foreach(var column in Configuration.TableColumns)
+                        @foreach (var column in Configuration.TableColumns)
                         {
-                        <TableHeaderCell>@column.DisplayName</TableHeaderCell>
+                            <TableHeaderCell>@column.DisplayName</TableHeaderCell>
                         }
                         <TableHeaderCell>
                             <Button @onclick="@AddTableRow"><Icon Name="IconName.PlusCircle" /></Button>
@@ -24,11 +24,11 @@
                     </Blazorise.TableRow>
                 </TableHeader>
                 <TableBody>
-                    @foreach(var row in TableRows)
+                    @foreach (var row in TableRows)
                     {
                         <Blazorise.TableRow>
-                            @foreach(var column in Configuration.TableColumns)
-                            {                                    
+                            @foreach (var column in Configuration.TableColumns)
+                            {
                                 var component = fieldControlComponentSelector.Get(column.FieldDefinition.FieldControlProviderName);
                                 var parameters = new Dictionary<string, object>();
                                 parameters.Add("CustomizeField", new Abp.FieldCustomizing.CustomizeField(row, column.FieldDefinition));
@@ -44,11 +44,11 @@
                     }
                 </TableBody>
             </Table>
-            }
-    <FieldHelp>@Configuration.Description</FieldHelp>
+        }
+        <FieldHelp>@Configuration.Description</FieldHelp>
     </FieldBody>
 </Field>
-@code{
+@code {
     public override Type FieldControlProviderType => typeof(TableFieldControlProvider);
 
     public TableConfiguration Configuration { get; set; }
@@ -61,13 +61,20 @@
 
     protected override void OnInitialized()
     {
+
         var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
         if (value != null)
         {
-            TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FieldControls.Table.TableRow>>(value.ToString());
-        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
-        }
+            try
+            {
+                TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<FieldControls.Table.TableRow>>(value.ToString());
+                CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+            }
+            catch (Exception)
+            {
 
+            }
+        }
         base.OnInitialized();
     }
 
