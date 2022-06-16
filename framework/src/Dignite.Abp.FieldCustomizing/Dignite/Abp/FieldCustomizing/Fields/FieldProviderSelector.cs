@@ -6,11 +6,11 @@ using Volo.Abp.DependencyInjection;
 
 namespace Dignite.Abp.FieldCustomizing.Fields
 {
-    public class FieldSelector : IFieldProviderSelector, ITransientDependency
+    public class FieldProviderSelector : IFieldProviderSelector, ITransientDependency
     {
         protected IEnumerable<IFieldProvider> FieldProviders { get; }
 
-        public FieldSelector(
+        public FieldProviderSelector(
             IEnumerable<IFieldProvider> fieldProviders)
         {
             FieldProviders = fieldProviders;
