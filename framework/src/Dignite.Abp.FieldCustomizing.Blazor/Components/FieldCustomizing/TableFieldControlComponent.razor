@@ -27,8 +27,8 @@
                     @foreach (var row in TableRows)
                     {
                         <Blazorise.TableRow>
-                            @foreach(var column in Configuration.TableColumns)
-                            {                                    
+                            @foreach (var column in Configuration.TableColumns)
+                            {
                                 var component = fieldControlComponentSelector.Get(column.FieldDefinition.FieldProviderName);
                                 var parameters = new Dictionary<string, object>();
                                 parameters.Add("CustomizeField", new Abp.FieldCustomizing.CustomizeField(row, column.FieldDefinition));
@@ -48,7 +48,7 @@
         <FieldHelp>@Configuration.Description</FieldHelp>
     </FieldBody>
 </Field>
-@code{
+@code {
     public override Type FieldProviderType => typeof(TableFieldProvider);
 
     public TableConfiguration Configuration { get; set; }
@@ -65,15 +65,11 @@
         var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
         if (value != null)
         {
-                TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
-        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
-        }
-
-            }
+            TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
+            CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
         }
         base.OnInitialized();
     }
-
     private void AddTableRow()
     {
         var row = new Abp.FieldCustomizing.Fields.Table.TableRow();
