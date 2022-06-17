@@ -9,10 +9,7 @@
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
-            <EditForm Model="@CustomizeField.Entity">
                 @CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()
-            </EditForm>
-            <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>
     </Field>
 

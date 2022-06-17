@@ -9,9 +9,15 @@
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop" Margin="Margin.IsAuto">      
             
-            @(CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString())
-            <FieldHelp>@Configuration.Description</FieldHelp>
-        </FieldBody>
+        @if (value.HasValue)
+        {
+            <span>是</span>
+        }
+        else
+        {
+            <span>是</span>            
+        }
+    </FieldBody>
     </Field>
 
 
@@ -19,9 +25,22 @@
     public override Type FieldProviderType => typeof(SwitchFieldProvider);
 
     public SwitchConfiguration Configuration { get; set; }
+    private bool? value = null;
 
     protected override void OnParametersSet()
     {
         Configuration = new SwitchConfiguration(CustomizeField.Definition.Configuration);
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null) != null)
+        {
+            bool convertValue;
+            if (bool.TryParse(CustomizeField.Entity.GetField(CustomizeField.Definition.Name).ToString(), out convertValue))
+            {
+                value = convertValue;
+            }
+        }
     }
 }

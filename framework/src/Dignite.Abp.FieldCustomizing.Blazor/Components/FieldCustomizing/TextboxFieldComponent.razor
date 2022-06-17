@@ -8,7 +8,6 @@
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
             @CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()
-            <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>
     </Field>
 

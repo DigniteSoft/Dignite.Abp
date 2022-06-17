@@ -7,9 +7,11 @@
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
-            @(CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString())
-            <FieldHelp>@Configuration.Description</FieldHelp>
-        </FieldBody>
+            @if (value != null)
+        {
+            @Configuration.Options.FirstOrDefault(o=>o.Value==value)?.Text
+        }
+    </FieldBody>
     </Field>
 
 
@@ -17,11 +19,22 @@
     public override Type FieldProviderType => typeof(SelectFieldProvider);
 
     public SelectConfiguration Configuration { get; set; }
+    private string value = null;
 
     protected override void OnParametersSet()
     {
         Configuration = new SelectConfiguration(CustomizeField.Definition.Configuration);
-        
+
+    }
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null) != null)
+        {
+            value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null).ToString();
+        }
     }
 
 }

@@ -31,6 +31,7 @@
     "Multiple": "多选",
     "RichTextEditorMode": "编辑模式",
     "RichTextEditorMode.Classic": "经典",
-    "RichTextEditorMode.Document": "文档"
+    "RichTextEditorMode.Document": "文档",
+    "DateEditControl": "日期控件"
   }
 }
