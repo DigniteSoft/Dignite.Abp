@@ -68,6 +68,10 @@
             TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
             CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
         }
+        else
+        {
+            CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+        }
         base.OnInitialized();
     }
     private void AddTableRow()
