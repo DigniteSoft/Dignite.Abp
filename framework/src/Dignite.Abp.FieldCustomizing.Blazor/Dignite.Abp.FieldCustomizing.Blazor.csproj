@@ -9,6 +9,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="Volo.Abp.BlazoriseUI" Version="5.2.1" />
+	  <PackageReference Include="Nanoid" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

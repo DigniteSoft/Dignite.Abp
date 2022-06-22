@@ -32,6 +32,7 @@
     "RichTextEditorMode": "编辑模式",
     "RichTextEditorMode.Classic": "经典",
     "RichTextEditorMode.Document": "文档",
-    "DateEditControl": "日期控件"
+    "DateEditControl": "日期控件",
+    "FiledNameAlreadyExist": "字段唯一名称已存在！"
   }
 }

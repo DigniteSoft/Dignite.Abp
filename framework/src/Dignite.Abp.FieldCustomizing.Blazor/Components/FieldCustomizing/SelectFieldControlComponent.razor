@@ -8,8 +8,10 @@
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
-            <Select TValue="string" SelectedValue="@(CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString())" SelectedValueChanged="@OnSelectedValueChanged" Multiple="@Configuration.Multiple">
-                @if (!Configuration.NullText.IsNullOrEmpty() && !Configuration.Multiple)
+            @if (Configuration.Multiple)
+            { 
+            <Select TValue="string" SelectedValues="@Values" SelectedValuesChanged="@OnSelectedValuesChanged" Multiple="true">
+                @if (!Configuration.NullText.IsNullOrEmpty())
                 {
                     <SelectItem Value="@Configuration.NullText">@Configuration.NullText</SelectItem>
                 }
@@ -18,6 +20,20 @@
                     <SelectItem Value="@option.Value">@option.Text</SelectItem>
                 }
             </Select>
+            }
+            else
+            {
+            <Select TValue="string" SelectedValue="@(Values.Any()?Values[0]:Configuration.NullText)" SelectedValueChanged="@OnSelectedValueChanged">
+                @if (!Configuration.NullText.IsNullOrEmpty())
+                {
+                    <SelectItem Value="@Configuration.NullText">@Configuration.NullText</SelectItem>
+                }
+                @foreach(var option in Configuration.Options)
+                {
+                    <SelectItem Value="@option.Value">@option.Text</SelectItem>
+                }
+            </Select>
+            }
             <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>
     </Field>
@@ -29,25 +45,37 @@
 
     public SelectConfiguration Configuration { get; set; }
 
+    private List<string> Values = new List<string>();
+
     protected override void OnParametersSet()
     {
         Configuration = new SelectConfiguration(CustomizeField.Definition.Configuration);
 
         //
-        if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name) == null)
+        if (!Values.Any())
         {
             if (Configuration.Options.Any(o => o.Selected))
             {
-                CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Configuration.Options.First(o=>o.Selected).Value);
-            }
-            else
-            {
-                if (Configuration.NullText.IsNullOrEmpty() && Configuration.Options.Any())
-                {
-                    CustomizeField.Entity.SetField (CustomizeField.Definition.Name, Configuration.Options.First().Value);                    
-                }
+                Values = Configuration.Options.Where(o => o.Selected).Select(o => o.Value).ToList();
             }
         }
+    }
+
+    protected override void OnInitialized()
+    {
+        var values = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
+        if (values != null)
+        {
+            try
+            {
+                Values = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(values.ToString());
+
+                CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Values);
+            }
+            catch
+            { }
+        }
+        base.OnInitialized();
     }
 
     void ValidateIsRequired( ValidatorEventArgs e )
@@ -58,11 +86,21 @@
         }
     }
 
-    Task OnSelectedValueChanged( string value )
+    Task OnSelectedValueChanged(string value )
     {
-        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, value);
+        Values.Clear();
+        Values.Add(value);
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Values);
 
         return Task.CompletedTask;
     }
 
+    //
+    Task OnSelectedValuesChanged(IReadOnlyList<string> values )
+    {
+        Values = values.ToList();
+        CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Values);
+
+        return Task.CompletedTask;
+    }
 }

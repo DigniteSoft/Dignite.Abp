@@ -46,6 +46,7 @@
         <TableBody>
             @foreach(var column in TableColumns)
             {
+                var index = TableColumns.IndexOf(column);
                 <Blazorise.TableRow>
                     <TableRowCell><TextEdit @bind-Text="@column.FieldDefinition.DisplayName" /></TableRowCell>
                     <TableRowCell>
@@ -65,6 +66,14 @@
                     <TableRowCell>
                         <Button @onclick="@(val => OnSelectedValueChanged(column.FieldDefinition.FieldProviderName, column))"><Icon Name="IconName.Edit" /></Button>
                         <Button @onclick="@(val => RemoveTableColumn(val, column))"><Icon Name="IconName.Remove" /></Button>
+                        @if (index > 0)
+                        {
+                            <Button @onclick="@(val => MoveTableColumn(val, column,index-1))"><Icon Name="IconName.ArrowUp" /></Button>
+                        }
+                        @if (index < TableColumns.Count-1)
+                        {
+                            <Button @onclick="@(val => MoveTableColumn(val, column,index+1))"><Icon Name="IconName.ArrowDown" /></Button>
+                        }
                     </TableRowCell>
                 </Blazorise.TableRow>
             }
@@ -130,7 +139,7 @@
     {
         var column = new TableColumn(
                 new BasicCustomizeFieldDefinition(
-                    "",
+                    Nanoid.Nanoid.Generate("abcdefghijklmnopqrstuvwxyz", 10),
                     "",
                     null,
                     "",
@@ -146,19 +155,27 @@
         TableColumns.Remove(item);
         Configuration.TableColumns=TableColumns;
     }
+    private void MoveTableColumn(MouseEventArgs e,TableColumn item,int targetIndex)
+    {
+        TableColumns.MoveItem(tc=>tc==item, targetIndex);
+        Configuration.TableColumns=TableColumns;
+    }
 
     private async Task OnSelectedValueChanged(string fieldProviderName,TableColumn column)
     {
-        column.FieldDefinition.FieldProviderName = fieldProviderName;
-        if (fieldProviderName != L["SelectFieldControls"].Value)
+        if (!fieldProviderName.IsNullOrEmpty())
         {
-            var component = fieldConfigurationComponentSelector.Get(fieldProviderName);
+            column.FieldDefinition.FieldProviderName = fieldProviderName;
+            if (fieldProviderName != L["SelectFieldControls"].Value)
+            {
+                var component = fieldConfigurationComponentSelector.Get(fieldProviderName);
 
-            filedConfigurationSelectedParameters = new Dictionary<string, object>();
-            filedConfigurationSelectedParameters.Add("Definition", column.FieldDefinition);
-            filedConfigurationSelectedType = component.GetType();
+                filedConfigurationSelectedParameters = new Dictionary<string, object>();
+                filedConfigurationSelectedParameters.Add("Definition", column.FieldDefinition);
+                filedConfigurationSelectedType = component.GetType();
 
-            await OpenFieldConfigModalAsync();
+                await OpenFieldConfigModalAsync();
+            }
         }
     }
 
@@ -179,6 +196,12 @@
             if (AuditValidationsRef != null)
             {
                 validate = await AuditValidationsRef.ValidateAll();
+
+                if (TableColumns.Select(tc => tc.Name).Distinct().Count() != TableColumns.Count)
+                {
+                    validate = false;
+                    await Notify.Error(L["FiledNameAlreadyExist"]);
+                }
             }
             if (validate)
             {
