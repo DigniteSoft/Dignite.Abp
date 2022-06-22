@@ -14,6 +14,7 @@ namespace Dignite.Abp.Identity
         {
             Children = new List<OrganizationUnitDto>();
         }
+        //public string IdStr { get; set; }
 
         /// <summary>
         /// Parent <see cref="OrganizationUnitDto"/> Id.

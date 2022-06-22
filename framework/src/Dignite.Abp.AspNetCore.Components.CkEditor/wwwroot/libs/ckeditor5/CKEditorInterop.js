@@ -34,6 +34,7 @@
             // a POST request with JSON as a data structure but your configuration
             // could be different.
             xhr.open('POST', uploadToUrl, true);
+            // 当__RequestVerificationToken 获取不到，Host.cshtml 增加 @Html.AntiForgeryToken()
             xhr.setRequestHeader("RequestVerificationToken", document.getElementsByName("__RequestVerificationToken")[0].value)
             xhr.responseType = 'json';
         }
@@ -48,7 +49,6 @@
             xhr.addEventListener('abort', () => reject());
             xhr.addEventListener('load', () => {
                 const response = xhr.response;
-                debugger
                 // This example assumes the XHR server's "response" object will come with
                 // an "error" which has its own "message" that can be passed to reject()
                 // in the upload promise.
