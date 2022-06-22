@@ -65,18 +65,26 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 
         private async void FindRootMenuItemAsync(string location)
         {
-            location = location.Replace(NavigationManager.BaseUri, "");
-            var mainMenu = await MenuManager.GetMainMenuAsync();
-            RootMenuItem = mainMenu.Items.FirstOrDefault(menu =>
-                menu.Url!=null && !menu.Url.TrimStart('/', '~').IsNullOrEmpty() && location.StartsWith(menu.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)
-                );
-            if (RootMenuItem == null)
+            try
             {
-                foreach (var topMenuItem in mainMenu.Items)
+                location = location.Replace(NavigationManager.BaseUri, "");
+                var mainMenu = await MenuManager.GetMainMenuAsync();
+                RootMenuItem = mainMenu.Items.FirstOrDefault(menu =>
+                    menu.Url != null && !menu.Url.TrimStart('/', '~').IsNullOrEmpty() && location.StartsWith(menu.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)
+                    );
+                if (RootMenuItem == null)
                 {
-                    FindRootMenuItemWithChildren(topMenuItem, topMenuItem.Items, location);
+                    foreach (var topMenuItem in mainMenu.Items)
+                    {
+                        FindRootMenuItemWithChildren(topMenuItem, topMenuItem.Items, location);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+            }
+           
         }
 
         private void FindRootMenuItemWithChildren(ApplicationMenuItem topMenuItem, ApplicationMenuItemList menuItems, string location)

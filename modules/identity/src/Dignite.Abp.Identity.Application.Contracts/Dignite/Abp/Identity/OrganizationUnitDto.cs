@@ -8,19 +8,24 @@ using Volo.Abp.Domain.Entities;
 
 namespace Dignite.Abp.Identity
 {
-    public class OrganizationUnitDto:ExtensibleEntityDto<Guid>, IEquatable<OrganizationUnitDto>, IHasConcurrencyStamp
+    public class OrganizationUnitDto : ExtensibleEntityDto<Guid>, IEquatable<OrganizationUnitDto>, IHasConcurrencyStamp
     {
-        public OrganizationUnitDto():base()
+        public OrganizationUnitDto() : base()
         {
             Children = new List<OrganizationUnitDto>();
         }
         //public string IdStr { get; set; }
 
+        public string IdStr
+        {
+            get { return Id.ToString(); }
+        }
+
         /// <summary>
         /// Parent <see cref="OrganizationUnitDto"/> Id.
         /// Null, if this OU is a root.
         /// </summary>
-        public virtual Guid? ParentId { get;  set; }
+        public virtual Guid? ParentId { get; set; }
 
         /// <summary>
         /// Hierarchical Code of this organization unit.
@@ -28,7 +33,7 @@ namespace Dignite.Abp.Identity
         /// This is a unique code for an OrganizationUnit.
         /// It's changeable if OU hierarchy is changed.
         /// </summary>
-        public virtual string Code { get;  set; }
+        public virtual string Code { get; set; }
 
         /// <summary>
         /// Display name of this OrganizationUnit.
@@ -40,14 +45,15 @@ namespace Dignite.Abp.Identity
         /// <summary>
         /// 
         /// </summary>
-        [JsonInclude] 
+        [JsonInclude]
         public IList<OrganizationUnitDto> Children { get; protected set; }
 
         /// <summary>
         /// 
         /// </summary>
         [JsonInclude]
-        public bool HasChild {
+        public bool HasChild
+        {
             get; private set;
         }
 
@@ -93,7 +99,7 @@ namespace Dignite.Abp.Identity
         public void Remove(OrganizationUnitDto ou)
         {
             this.Children.RemoveAll(c => ou.Id == c.Id);
-            if(!Children.Any())
+            if (!Children.Any())
                 this.HaveChildren(false);
         }
 
