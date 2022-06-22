@@ -65,8 +65,13 @@
         var value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
         if (value != null)
         {
-            TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
-            CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+            try
+            {
+                TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
+                CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
+            }
+            catch
+            { }
         }
         else
         {

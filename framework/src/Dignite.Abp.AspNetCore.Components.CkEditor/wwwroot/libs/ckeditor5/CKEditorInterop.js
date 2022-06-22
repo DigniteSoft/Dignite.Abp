@@ -64,7 +64,7 @@
                 // This URL will be used to display the image in the content. Learn more in the
                 // UploadAdapter#upload documentation.
                 resolve({
-                    default: "/api/file-management/files/" + response.containerName + "/"+ response.blobName 
+                    default: window.location.protocol+"//"+ window.location.host + "/api/file-management/files/" + response.containerName + "/" + response.blobName
                 });
             });
 

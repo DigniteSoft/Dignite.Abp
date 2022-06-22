@@ -15,7 +15,6 @@ namespace Dignite.Abp.FileManagement
 
         public long BinarySize { get; protected set; }
 
-        public string Hash { get; protected set; }
-        public string FileName { get; set; }
+        public string FileName { get; protected set; }
     }
 }

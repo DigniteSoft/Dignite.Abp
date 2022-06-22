@@ -58,7 +58,6 @@
         if (value != null)
         {
             TableRows = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dignite.Abp.FieldCustomizing.Fields.Table.TableRow>>(value.ToString());
-            CustomizeField.Entity.SetField(CustomizeField.Definition.Name, TableRows);
         }
 
         base.OnInitialized();

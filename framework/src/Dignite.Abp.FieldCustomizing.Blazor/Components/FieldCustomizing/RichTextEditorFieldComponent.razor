@@ -8,8 +8,11 @@
 
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
-        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
-                @CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString()
+        <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">     
+            @if(Value!=null)
+            {
+                @((MarkupString)Value)
+            }
         </FieldBody>
     </Field>
 
@@ -19,10 +22,17 @@
 
     public RichTextEditorConfiguration Configuration { get; set; }
 
+    private string Value { get; set; }
+
     protected override void OnParametersSet()
     {
         Configuration = new RichTextEditorConfiguration(CustomizeField.Definition.Configuration);
     }
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name)?.ToString();
+    }
 
 }

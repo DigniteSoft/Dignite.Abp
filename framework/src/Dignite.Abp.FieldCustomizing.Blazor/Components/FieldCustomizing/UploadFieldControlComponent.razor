@@ -9,6 +9,7 @@
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">      
             <FileEdit Changed="@OnFileChanged" Multiple="@Configuration.Multiple" Filter="@Configuration.Filter" Placeholder="@Configuration.Placeholder" />
+            <UploadFieldComponent CustomizeField="@CustomizeField" HideFieldLable="true"></UploadFieldComponent>
             <FieldHelp>@Configuration.Description</FieldHelp>
         </FieldBody>
     </Field>

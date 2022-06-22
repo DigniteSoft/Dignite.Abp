@@ -7,10 +7,10 @@
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
-            @if (value != null)
-        {
-            @Configuration.Options.FirstOrDefault(o=>o.Value==value)?.Text
-        }
+            @if (Values != null)
+            {
+                @Configuration.Options.Where(o=>Values.Contains( o.Value)).Select(o=>o.Text).JoinAsString(",")
+            }
     </FieldBody>
     </Field>
 
@@ -19,12 +19,11 @@
     public override Type FieldProviderType => typeof(SelectFieldProvider);
 
     public SelectConfiguration Configuration { get; set; }
-    private string value = null;
+    private IReadOnlyList<string> Values = null;
 
     protected override void OnParametersSet()
     {
         Configuration = new SelectConfiguration(CustomizeField.Definition.Configuration);
-
     }
 
 
@@ -33,7 +32,16 @@
         base.OnInitialized();
         if (CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null) != null)
         {
-            value = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null).ToString();
+            var values = CustomizeField.Entity.GetField(CustomizeField.Definition.Name, null);
+            if (values != null)
+            {
+                try
+                {
+                    Values = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(values.ToString());
+                }
+                catch
+                { }
+            }
         }
     }
 
