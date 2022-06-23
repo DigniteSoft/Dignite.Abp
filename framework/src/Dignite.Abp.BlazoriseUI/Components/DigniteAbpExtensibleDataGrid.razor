@@ -43,7 +43,7 @@
         </Row>
     </EmptyTemplate>
     <DataGridColumns>
-        if (SelectionMode == DataGridSelectionMode.Multiple)
+        @if (SelectionMode == DataGridSelectionMode.Multiple)
         {
             <DataGridMultiSelectColumn TItem="TItem" Width="30px"></DataGridMultiSelectColumn>
         }
