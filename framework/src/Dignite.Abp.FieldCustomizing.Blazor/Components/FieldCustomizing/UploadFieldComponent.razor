@@ -24,7 +24,7 @@
                             <Blazorise.TableRow>
                                 <TableRowCell>@file.FileName</TableRowCell>
                                 <TableRowCell>@file.BinarySize</TableRowCell>
-                                <TableRowCell><a href="@($"/api/file-management/files/{file.ContainerName}/{file.BlobName}")" target="_blank"></a></TableRowCell>
+                                <TableRowCell><a href="@($"/api/file-management/files/{file.ContainerName}/{file.BlobName}?fileName={file.FileName}")" target="_blank">下载</a></TableRowCell>
                             </Blazorise.TableRow>
                         }
                     </TableBody>

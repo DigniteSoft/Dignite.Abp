@@ -9,10 +9,12 @@
     <Field Horizontal="@(!HideFieldLable)">
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">     
+            <div class="content">
             @if(Value!=null)
             {
                 @((MarkupString)Value)
             }
+            </div>
         </FieldBody>
     </Field>
 

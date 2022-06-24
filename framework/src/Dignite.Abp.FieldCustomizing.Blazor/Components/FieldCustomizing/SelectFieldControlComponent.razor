@@ -10,11 +10,7 @@
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
             @if (Configuration.Multiple)
             { 
-            <Select TValue="string" SelectedValues="@Values" SelectedValuesChanged="@OnSelectedValuesChanged" Multiple="true">
-                @if (!Configuration.NullText.IsNullOrEmpty())
-                {
-                    <SelectItem Value="@Configuration.NullText">@Configuration.NullText</SelectItem>
-                }
+            <Select TValue="string" SelectedValues="@Values" SelectedValuesChanged="@OnSelectedValuesChanged" Multiple="true">                
                 @foreach(var option in Configuration.Options)
                 {
                     <SelectItem Value="@option.Value">@option.Text</SelectItem>
@@ -52,12 +48,25 @@
         Configuration = new SelectConfiguration(CustomizeField.Definition.Configuration);
 
         //
-        if (!Values.Any())
+        if (Values != null)
         {
-            if (Configuration.Options.Any(o => o.Selected))
+            if (!Values.Any())
             {
-                Values = Configuration.Options.Where(o => o.Selected).Select(o => o.Value).ToList();
+                if (Configuration.Options.Any(o => o.Selected))
+                {
+                    Values = Configuration.Options.Where(o => o.Selected).Select(o => o.Value).ToList();
+                    CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Values);
+                }
+                else if (Configuration.NullText.IsNullOrEmpty())
+                {
+                    Values.Add( Configuration.Options.First().Value);
+                    CustomizeField.Entity.SetField(CustomizeField.Definition.Name, Values);                    
+                }
             }
+        }
+        else
+        {
+            Values = new List<string>();
         }
     }
 
