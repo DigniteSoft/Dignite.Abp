@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Services;
+using System;
 
 namespace Dignite.Abp.FileManagement
 {
@@ -42,7 +43,21 @@ namespace Dignite.Abp.FileManagement
             }
             file.SetBlobInfo(blobInfo);
 
-            await _blobRepository.InsertAsync(file, cancellationToken: cancellationToken);
+            var files = await _blobRepository.GetListAsync(file.EntityType,file.EntityId);
+            if (files.Any(f => f.ContainerName == file.ContainerName && f.BlobName == file.BlobName))
+            {
+                if (file.ReferBlobName.IsNullOrEmpty())
+                {
+                    files[0].BinarySize = file.BinarySize;
+                    files[0].FileName = file.FileName;
+                    files[0].Hash = file.Hash;
+                    await _blobRepository.UpdateAsync(files[0]);
+                }
+            }
+            else
+            {
+                await _blobRepository.InsertAsync(file, cancellationToken: cancellationToken);
+            }
         }
 
         public async Task DeleteAsync(string containerName, string blobName, CancellationToken cancellationToken = default)

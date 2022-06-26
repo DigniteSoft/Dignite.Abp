@@ -253,13 +253,13 @@ div.dataTables_wrapper div.dataTables_length label {
     text-align: center;
 }
 
-    .main-navbar-nav > .nav-item > .nav-link {
-        font-size: 0.75rem;
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
-    }
+.main-navbar-nav > .nav-item > .nav-link {
+    font-size: 0.75rem;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
 
 .main-navbar-nav i.nav-link-icon {
     display: block;
