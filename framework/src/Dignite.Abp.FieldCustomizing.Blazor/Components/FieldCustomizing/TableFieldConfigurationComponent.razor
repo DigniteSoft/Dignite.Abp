@@ -48,7 +48,11 @@
             {
                 var index = TableColumns.IndexOf(column);
                 <Blazorise.TableRow>
-                    <TableRowCell><TextEdit @bind-Text="@column.FieldDefinition.DisplayName" /></TableRowCell>
+                    <TableRowCell>
+                        <Validation Validator="((e)=>ValidateColumnDisplayName(e))">
+                        <TextEdit @bind-Text="@column.FieldDefinition.DisplayName" />
+                        </Validation>
+                    </TableRowCell>
                     <TableRowCell>
                         <Validation Validator="((e)=>ValidateColumnFieldControl(e))">
                         <Select TValue="string" SelectedValue="@column.FieldDefinition.FieldProviderName" SelectedValueChanged="(val => OnSelectedValueChanged((string)val, column))">
@@ -231,7 +235,14 @@
 
     void ValidateColumnFieldControl(ValidatorEventArgs e)
     {
-        e.Status = Convert.ToString(e.Value) == L["SelectFieldControls"].Value
+        e.Status = e.Value ==null || Convert.ToString(e.Value).IsNullOrWhiteSpace() || Convert.ToString(e.Value) == L["SelectFieldControls"].Value
+            ? ValidationStatus.Error
+            : ValidationStatus.Success;
+    }
+
+    void ValidateColumnDisplayName(ValidatorEventArgs e)
+    {
+        e.Status = Convert.ToString(e.Value).IsNullOrWhiteSpace()
             ? ValidationStatus.Error
             : ValidationStatus.Success;
     }

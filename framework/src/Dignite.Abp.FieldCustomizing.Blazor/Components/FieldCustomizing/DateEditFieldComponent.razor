@@ -8,7 +8,21 @@
         <FieldLabel ColumnSize="ColumnSize.Is2.OnDesktop" hidden="@HideFieldLable">@CustomizeField.Definition.DisplayName</FieldLabel>
         <FieldBody ColumnSize="ColumnSize.Is10.OnDesktop">
             <Text>
-                @value
+                @if(value!=null)
+                {
+                    @switch(Configuration.InputMode)
+                    {
+                        case Abp.FieldCustomizing.Fields.DateEdit.DateInputMode.Date:
+                            <span>@value.Value.ToString("d")</span>
+                            break;
+                        case Abp.FieldCustomizing.Fields.DateEdit.DateInputMode.Month:
+                            <span>@value.Value.ToString("y")</span>
+                            break;
+                        default:
+                            <span>@value.Value.ToString("U")</span>
+                            break;
+                    }
+                }
             </Text>
         </FieldBody>
     </Field>

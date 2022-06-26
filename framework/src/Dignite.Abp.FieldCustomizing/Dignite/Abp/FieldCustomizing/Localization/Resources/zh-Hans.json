@@ -33,6 +33,12 @@
     "RichTextEditorMode.Classic": "经典",
     "RichTextEditorMode.Document": "文档",
     "DateEditControl": "日期控件",
-    "FiledNameAlreadyExist": "字段唯一名称已存在！"
+    "FiledNameAlreadyExist": "字段唯一名称已存在！",
+    "NumericEditControl": "数字框",
+    "NumericDecimals": "小数位数",
+    "NumericStep": "步长",
+    "FormatSpecifier": "格式说明符",
+    "Max": "最大值",
+    "Min": "最小值"
   }
 }
