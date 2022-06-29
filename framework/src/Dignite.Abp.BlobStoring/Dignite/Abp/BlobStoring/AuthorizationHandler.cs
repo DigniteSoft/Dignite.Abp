@@ -17,17 +17,7 @@ namespace Dignite.Abp.BlobStoring
 
         public virtual async Task CheckSavingPermissionAsync(AuthorizationHandlerConfiguration configuration)
         {
-            if (!CurrentUser.IsAuthenticated)
-            {
-                // TODO: 考虑异常改为 BusinessException
-                throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
-                // throw new BusinessException(
-                //     code: "Dignite.Abp.BlobStoring:010001",
-                //     message: "Unauthorized!",
-                //     details: "Current user is not authorized!"
-                // );
-            }
-            else if (!configuration.SavingPolicy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.SavingPolicy))
+            if (!configuration.SavingPolicy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.SavingPolicy))
             {
                 // TODO: 考虑异常改为 BusinessException
                 throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
@@ -58,17 +48,7 @@ namespace Dignite.Abp.BlobStoring
 
         public virtual async Task CheckDeletingPermissionAsync(AuthorizationHandlerConfiguration configuration, IBlobInfo blobInfo)
         {
-            if (!CurrentUser.IsAuthenticated)
-            {
-                // TODO: 考虑异常改为 BusinessException
-                throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
-                // throw new BusinessException(
-                //     code: "Dignite.Abp.BlobStoring:010001",
-                //     message: "Unauthorized!",
-                //     details: "Current user is not authorized!"
-                // );
-            }
-            else if (!configuration.DeletingPolicy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.DeletingPolicy))
+            if (!configuration.DeletingPolicy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.DeletingPolicy))
             {
                 // TODO: 考虑异常改为 BusinessException
                 throw new Volo.Abp.Authorization.AbpAuthorizationException("未授权");
