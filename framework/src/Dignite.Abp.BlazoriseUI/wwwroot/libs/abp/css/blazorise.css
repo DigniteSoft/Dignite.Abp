@@ -1,10 +1,10 @@
 .entry-row {
     position: sticky !important;
-    top: 64px;
+    top: 0px;
     left: 0px;
     margin-bottom: 0.75rem;
     background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
-    padding-top: 0.25rem;
+    padding-top: 1rem;
     z-index: 1025;
 }
 @media (max-width: 576px) {

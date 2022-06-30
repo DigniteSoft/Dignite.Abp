@@ -1,11 +1,11 @@
 ﻿
-<Bar @ref="@Sidebar" Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Light"
-     Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Small">    
-    <BarMenu>
-        <BarStart>
             @if (RootMenuItem != null && !RootMenuItem.IsLeaf)
             {
-                foreach (var item in RootMenuItem.Items)
+<Bar @ref="@Sidebar" Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Light"
+     Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Hide">    
+    <BarMenu>
+        <BarStart>
+                @foreach (var item in RootMenuItem.Items)
                 {
                     if (item.Url.IsNullOrEmpty() && !item.IsLeaf)
                     {
@@ -42,9 +42,9 @@
                         </BarItem>                        
                     }                    
                 }
-            }
         </BarStart>
         <BarEnd>
         </BarEnd>
     </BarMenu>
 </Bar>
+            }

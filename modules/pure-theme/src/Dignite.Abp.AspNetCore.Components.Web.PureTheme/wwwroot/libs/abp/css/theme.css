@@ -6,20 +6,6 @@
     font-size: 0.8em;
 }
 
-.dataTables_scrollBody {
-    min-height: 248px;
-}
-
-div.dataTables_wrapper div.dataTables_info {
-    padding-top: 11px;
-    white-space: nowrap;
-}
-
-div.dataTables_wrapper div.dataTables_length label {
-    padding-top: 10px;
-    margin-bottom: 0;
-}
-
 .rtl .dropdown-menu-right {
     right: auto;
     left: 0;
@@ -37,8 +23,6 @@ div.dataTables_wrapper div.dataTables_length label {
     left: auto;
     right: 100%;
 }
-
-
 
 .btn span.spinner-border {
     margin-right: .5rem;
@@ -105,109 +89,25 @@ div.dataTables_wrapper div.dataTables_length label {
     }
 }
 
-/* body style*/
-.abp-application-layout {
-}
-
-    .abp-application-layout.no-side-navbar {
-        padding-left: 0px;
-    }
-        .abp-application-layout.no-side-navbar .side-navbar {
-            /*无子菜单时隐藏侧边栏*/
-            left: -300px;
-        }
-        .abp-application-layout.no-side-navbar .main-navbar .navbar-toggler {
-            /*无子菜单时隐藏侧边栏的切换按钮*/
-            display: none;
-        }
-@media (max-width: 576px) {
-    .abp-application-layout {
-        padding-left: 0px;
-    }
-}
-/*侧边栏*/
-.side-navbar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    padding: 64px 15px 15px;
-    width: 300px;
-    height: 100vh;
-    z-index: 1000;
-}
-
-.side-navbar-container {
-    height: 100%;
-    overflow: auto;
-}
-
-.side-navbar-container >.nav {
-    padding-top:15px;
-}
-
-.side-nav-group-title {
-    font-size: 0.9rem;
-    padding: 15px 15px 0px 15px;
-    color: rgba(0,0,0,.54);
-}
-
-.side-navbar hr {
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
-.side-navbar .nav-pills .nav-link {
-    color: #000;
-    margin-bottom:0.25rem;
-}
-.side-navbar .nav-pills .nav-link .nav-link-icon {
-    display:inline-block;
-    width:30px;
-    text-align:center;
-}
-
-    .side-navbar .nav-pills .nav-link:hover,
-    .side-navbar .nav-pills .nav-link.active,
-    .side-navbar .nav-pills .show > .nav-link {
-        color: #000;
-        background-color: rgba(0,0,0,.05);
-    }
-
-@media (max-width: 576px) {
-    .side-navbar {
-        background-color: #fff;
-        border-right: 1px solid #ccc;
-        width: 75vw;
-        left: -75vw;
-    }
-    .abp-application-layout.no-side-navbar .side-navbar {
-        /*无子菜单时隐藏侧边栏*/
-        left: -75vw;
-    }
-    .side-navbar.show {
-        left: 0vw;
-    }
-}
 /*branding*/
 .navbar-brand {
     margin-right:0rem;
     padding:0rem;
 }
-.navbar-brand > img {
+.navbar-brand-logo {
     max-height: 40px;
 }
 
-.navbar-brand-title {
-    color: #fff;
-}
 .navbar-brand,
 .nav-toolbar {
     /*品牌和导航工具栏宽度设定为300，确保主导航位于屏幕中间*/
     width: 256px;
 }
 
-.nav-toolbar > .nav-item {
-    margin-left: 0.5rem;
+
+.nav-toolbar {
+    justify-content: right !important;
+    margin-left: unset !important;
 }
 .nav-toolbar > .nav-item > .btn {
     padding: 0rem;
@@ -233,20 +133,22 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 /*主导航*/
 .main-navbar {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 64px;
     z-index: 1030;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
 }
 
 @media (max-width: 576px) {
     .main-navbar {
+        width: 100%;
         position: absolute;
     }
 }
 
+.main-navbar-nav {
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
 .main-navbar-nav > .nav-item {
     text-align: center;
 }
@@ -265,7 +167,7 @@ div.dataTables_wrapper div.dataTables_length label {
 }
 
 @media (min-width: 768px) {
-    .navbar-brand > img {
+    .navbar-brand-logo {
         margin-right: 10px;
     }
 

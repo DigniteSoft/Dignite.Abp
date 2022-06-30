@@ -10,8 +10,8 @@
 @inject IStringLocalizer<AbpUiResource> L
 <AuthorizeView>
     <Authorized>
-        <Dropdown>
-            <DropdownToggle Color="Color.Default">
+        <BarDropdown RightAligned>
+            <BarDropdownToggle>
                 @if (CurrentTenant.Name != null)
                 {
                     <span><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</span>
@@ -20,17 +20,19 @@
                 {
                     <span>@CurrentUser.UserName</span>
                 }
-            </DropdownToggle>
-            <DropdownMenu>
+            </BarDropdownToggle>
+            <BarDropdownMenu>
                 @if (Menu != null)
                 {
                     @foreach (var menuItem in Menu.Items)
                     {
-                        <a class="dropdown-item" href="@menuItem.Url?.TrimStart('~')" target="@menuItem.Target">@menuItem.DisplayName</a>
+                        <BarDropdownItem To="@menuItem.Url?.TrimStart('~')" Target="new Target(menuItem.Target)">
+                            @menuItem.DisplayName
+                        </BarDropdownItem>
                     }
                 }
-            </DropdownMenu>
-        </Dropdown>
+            </BarDropdownMenu>
+        </BarDropdown>
     </Authorized>
     <NotAuthorized>
         <a class="nav-link" href="/Account/Login">@L["Login"]</a>

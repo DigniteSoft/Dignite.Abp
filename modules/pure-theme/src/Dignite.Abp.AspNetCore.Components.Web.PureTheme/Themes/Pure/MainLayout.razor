@@ -5,23 +5,15 @@
 
 <Layout>
     <LayoutHeader Fixed>
-        <Bar Breakpoint="Breakpoint.Desktop" Background="Background.Primary" ThemeContrast="ThemeContrast.Light" Class="main-navbar" ElementId="main-navbar">
+        <Bar Breakpoint="Breakpoint.Desktop" Background="Background.Primary" ThemeContrast="ThemeContrast.Dark" Class="main-navbar" ElementId="main-navbar">
             @if(SideNav!=null)
             {
-            <BarToggler Bar="@SideNav.Sidebar" />
+            <BarToggler Bar="@SideNav.Sidebar" ElementId="navbarToggler" />
             }
             <Branding />
             <NavMenu />  
             <NavToolbar />
         </Bar>
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm px-md-3 main-navbar" id="main-navbar">
-            <div class="container-fluid">
-                
-                <button class="navbar-toggler" type="button" id="navbarToggler">
-                <span class="navbar-toggler-icon"></span>
-                </button>      
-            </div>
-        </nav>
     </LayoutHeader>
     <Layout Sider>
         <LayoutSider>

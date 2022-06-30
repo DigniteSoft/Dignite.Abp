@@ -6,7 +6,7 @@
         <BarLink To="/">
             @if (!BrandingProvider.LogoReverseUrl.IsNullOrWhiteSpace())
             {
-                <img src="@BrandingProvider.LogoReverseUrl" alt="@BrandingProvider.AppName" >
+                <img src="@BrandingProvider.LogoReverseUrl" class="navbar-brand-logo" alt="@BrandingProvider.AppName" >
             }
             <span class="navbar-brand-title">
             @BrandingProvider.AppName
@@ -14,3 +14,4 @@
         </BarLink>
     </BarItem>
 </BarBrand>
+
