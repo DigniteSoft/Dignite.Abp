@@ -1,6 +1,7 @@
 @using Microsoft.Extensions.Options
 @using Volo.Abp.AspNetCore.Components.Web.Theming.Routing
 @inject IOptions<AbpRouterOptions> RouterOptions
+<Blazorise.ThemeProvider Theme="@theme">
 <CascadingAuthenticationState>
     <Router AppAssembly="RouterOptions.Value.AppAssembly"
             AdditionalAssemblies="RouterOptions.Value.AdditionalAssemblies">
@@ -26,3 +27,45 @@
     </Router>
 </CascadingAuthenticationState>
 <MessageAlert />
+
+</Blazorise.ThemeProvider>
+@code{
+    private Theme theme = new()
+    {
+        LuminanceThreshold = 170,
+        BarOptions = new()
+        {
+            HorizontalHeight = "64px",
+            VerticalBrandHeight = "64px",
+            LightColors = new()
+            {
+                ItemColorOptions = new()
+                {
+                    ActiveBackgroundColor = "#dedede",
+                    ActiveColor = "#000000",
+                    HoverBackgroundColor = "#dedede",
+                    HoverColor = "#000000",
+                },
+            }
+        },
+        ColorOptions = new()
+        {
+            Primary = "#9317E1",
+            Secondary = "#a5a5a5",
+        },
+        BackgroundOptions = new()
+        {
+            Primary = "#9317E1",
+            Secondary = "#a5a5a5",
+        },
+        TextColorOptions = new()
+        {
+            Primary = "#9317E1",
+            Secondary = "#a5a5a5",
+        },
+        InputOptions = new()
+        {
+            CheckColor = "#0288D1",
+        },
+    };
+}

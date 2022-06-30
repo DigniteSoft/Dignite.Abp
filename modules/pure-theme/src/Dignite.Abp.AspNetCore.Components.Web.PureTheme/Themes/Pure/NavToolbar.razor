@@ -4,3 +4,14 @@
         @render
     }
 </ul>
+
+<BarMenu>
+    <BarEnd>
+        @foreach (var render in ToolbarItemRenders)
+        {
+                <BarItem>
+            @render
+                </BarItem>
+        }
+    </BarEnd>
+</BarMenu>

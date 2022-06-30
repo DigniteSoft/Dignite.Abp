@@ -1,20 +1,20 @@
 ﻿@if (Menu != null)
 {
-    <ul class="navbar-nav mx-auto main-navbar-nav" id="main-navbar-nav">
-    @foreach (var menuItem in Menu.Items)
-    {        
-        var elementId = menuItem.ElementId ?? "MenuItem_" + menuItem.Name.Replace(".", "_");
-        var cssClass = string.IsNullOrEmpty(menuItem.CssClass) ? string.Empty : menuItem.CssClass;
-        var disabled = menuItem.IsDisabled ? "disabled" : string.Empty;
-        <li class="nav-item @cssClass @disabled" id="@elementId">
-            <NavLink class="nav-link" href="@GetNavUrl(menuItem)" target="@menuItem.Target" >
-                @if (menuItem.Icon != null)
-                {
-                    <i class="nav-link-icon @menuItem.Icon"></i>
-                }
-                @menuItem.DisplayName
-            </NavLink>
-        </li>
-    }
-    </ul>
+    <BarMenu Class="main-navbar-nav" ElementId="main-navbar-nav">
+        <BarStart>
+            @foreach (var menuItem in Menu.Items)
+            {        
+                var elementId = menuItem.ElementId ?? "MenuItem_" + menuItem.Name.Replace(".", "_");                
+                <BarItem Class="@menuItem.CssClass" Disabled="@menuItem.IsDisabled" ElementId="@elementId">
+                    <BarLink To="@GetNavUrl(menuItem)" Target="new Target(menuItem.Target)">
+                        @if (menuItem.Icon != null)
+                        {
+                            <i class="nav-link-icon @menuItem.Icon"></i>
+                        }
+                        @menuItem.DisplayName    
+                    </BarLink>
+                </BarItem>
+            }
+        </BarStart>
+    </BarMenu>
 }

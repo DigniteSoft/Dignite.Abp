@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazorise;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.JSInterop;
 using System;
@@ -10,6 +11,10 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 {
     public partial class SideNav
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Bar Sidebar { get; private  set; }
 
         [Inject]
         protected IMenuManager MenuManager { get; set; }
