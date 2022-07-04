@@ -16,7 +16,7 @@ namespace Dignite.Abp.BlobStoring
         protected IAuthorizationService AuthorizationService => LazyServiceProvider.LazyGetRequiredService<IAuthorizationService>();
 
         public virtual async Task CheckSavingPermissionAsync(AuthorizationHandlerConfiguration configuration)
-        {
+        {   
             if (!configuration.SavingPolicy.IsNullOrEmpty() && !await AuthorizationService.IsGrantedAsync(configuration.SavingPolicy))
             {
                 // TODO: 考虑异常改为 BusinessException
