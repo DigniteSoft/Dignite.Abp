@@ -1,6 +1,6 @@
 ﻿
-            @if (RootMenuItem != null && !RootMenuItem.IsLeaf)
-            {
+@if (RootMenuItem != null && !RootMenuItem.IsLeaf)
+{
 <Bar @ref="@Sidebar" Breakpoint="Breakpoint.Desktop" NavigationBreakpoint="Breakpoint.Tablet" ThemeContrast="ThemeContrast.Light"
      Mode="BarMode.VerticalInline" CollapseMode="BarCollapseMode.Hide">    
     <BarMenu>
@@ -47,4 +47,4 @@
         </BarEnd>
     </BarMenu>
 </Bar>
-            }
+}

@@ -7,7 +7,6 @@
 @using IdentityRoleDto=Dignite.Abp.Identity.IdentityRoleDto
 @inject AbpBlazorMessageLocalizerHelper<DigniteAbpIdentityResource> LH
 @inject IOrganizationUnitAppService OrganizationUnitAppService
-@inject IMessageService MessageService
 @inherits AbpCrudPageBase<IOrganizationUnitAppService, OrganizationUnitDto, Guid, GetOrganizationUnitsInput, OrganizationUnitCreateDto, OrganizationUnitUpdateDto>
 
 @code {
@@ -199,7 +198,7 @@
 
     async Task OnDeleteUnitClicked(MouseEventArgs e, TreeNode<OrganizationUnitDto> node)
     {
-        if (await MessageService.Confirm("Are you sure you want to confirm?", "Confirmation"))
+        if (await Message.Confirm("你确认删除该机构吗?", "Confirmation"))
         {
             SelectedNode = node;
             await DeleteEntityAsync(SelectedNode.DataItem);
