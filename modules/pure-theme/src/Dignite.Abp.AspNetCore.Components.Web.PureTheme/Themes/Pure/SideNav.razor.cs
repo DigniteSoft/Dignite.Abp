@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazorise;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.JSInterop;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +10,10 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 {
     public partial class SideNav
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Bar Sidebar { get; private  set; }
 
         [Inject]
         protected IMenuManager MenuManager { get; set; }
@@ -45,17 +49,6 @@ namespace Dignite.Abp.AspNetCore.Components.Web.PureTheme.Themes.Pure
 
         private void OnLocationChanged(object sender, LocationChangedEventArgs e)
         {
-            /*
-            if (RootMenuItem != null && RootMenuItem.Items != null)
-            {
-                var location = e.Location.Replace(NavigationManager.BaseUri, "");
-                //如果当前的导航菜单包含当前URL，则不需要重新
-                if (RootMenuItem.Items.Any(i => i != null && i.Url != null && location.StartsWith(i.Url.TrimStart('/', '~'), StringComparison.OrdinalIgnoreCase)))
-                {
-                    return;
-                }
-            }
-            */
 
             //根据新页面url查询根菜单
             FindRootMenuItemAsync(e.Location);

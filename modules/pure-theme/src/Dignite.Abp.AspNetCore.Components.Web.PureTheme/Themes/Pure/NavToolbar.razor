@@ -1,6 +1,9 @@
-﻿<ul class="navbar-nav justify-content-end nav-toolbar">
+﻿
+<BarEnd Class="nav-toolbar">
     @foreach (var render in ToolbarItemRenders)
     {
+       <BarItem>
         @render
+       </BarItem>
     }
-</ul>
+</BarEnd>

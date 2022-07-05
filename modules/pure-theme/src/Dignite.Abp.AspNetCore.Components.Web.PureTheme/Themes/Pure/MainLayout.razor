@@ -1,27 +1,37 @@
 ﻿@using Volo.Abp.UI.Navigation
-@inject IJSRuntime JS
 @inherits LayoutComponentBase
-<SideNav></SideNav>
-<nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm px-md-3 main-navbar" id="main-navbar">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" @onclick="SideNavToggle" id="navbarToggler">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <Branding />
-        <NavMenu />        
-        <NavToolbar />
-    </div>
-</nav>
-<div class="container-fluid px-md-3 page-container">
-    <PageAlert />
-    @Body
-    <UiMessageAlert />
-    <UiNotificationAlert />
-    <UiPageProgress />
-</div>
-@code{
-    private void SideNavToggle()
-    {
-        JS.InvokeVoidAsync("sideNavToggle");
-    }    
+
+
+<Layout>
+    <LayoutHeader Fixed>
+        <Bar Breakpoint="Breakpoint.Desktop" Background="Background.Primary" ThemeContrast="ThemeContrast.Dark" Class="main-navbar" ElementId="main-navbar">
+            @if(SideNav!=null)
+            {
+            <BarToggler Bar="@SideNav.Sidebar" ElementId="navbarToggler" />
+            }
+            <Branding />
+            <NavMenu />  
+            <NavToolbar />
+        </Bar>
+    </LayoutHeader>
+    <Layout Sider>
+        <LayoutSider>
+            <LayoutSiderContent>
+                <SideNav @ref="SideNav"></SideNav>
+            </LayoutSiderContent>
+        </LayoutSider>
+        <Layout>
+            <LayoutContent Padding="Padding.Is4.OnX">
+                <PageAlert />
+                @Body
+                <UiMessageAlert />
+                <UiNotificationAlert />
+                <UiPageProgress />
+            </LayoutContent>
+        </Layout>
+    </Layout>
+</Layout>
+
+@code {
+    private SideNav SideNav;
 }
