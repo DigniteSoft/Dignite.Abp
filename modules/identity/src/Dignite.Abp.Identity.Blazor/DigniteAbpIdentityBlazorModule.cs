@@ -40,7 +40,6 @@ public class DigniteAbpIdentityBlazorModule : AbpModule
         {
             options.AdditionalAssemblies.Add(typeof(DigniteAbpIdentityBlazorModule).Assembly);
         });
-        context.Services.AddAntDesign();
     }
 
     public override void PostConfigureServices(ServiceConfigurationContext context)
