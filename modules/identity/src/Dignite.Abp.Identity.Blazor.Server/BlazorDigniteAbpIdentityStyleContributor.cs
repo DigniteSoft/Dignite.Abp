@@ -1,4 +1,5 @@
-﻿using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
+﻿using System.Collections.Generic;
+using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 
 namespace Dignite.Abp.Identity.Blazor.Server
 {
@@ -6,7 +7,7 @@ namespace Dignite.Abp.Identity.Blazor.Server
     {
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
-            context.Files.Add("/_content/AntDesign/css/ant-design-blazor.css");
+            context.Files.AddIfNotContains("/_content/Blazorise.TreeView/blazorise.treeview.css");
         }
     }
 }

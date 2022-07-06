@@ -16,7 +16,7 @@
 <Row>
     <Column ColumnSize="ColumnSize.Is3">        
         @* ************************* PAGE TREE ************************* *@
-        <OrganizationUnitsTreeComponent OnNodeClickCallback="TreeNodeClick"></OrganizationUnitsTreeComponent>
+        <OrganizationUnitsTreeComponent OnNodeClick="TreeNodeClick"></OrganizationUnitsTreeComponent>
     </Column>
     <Column ColumnSize="ColumnSize.Is9">    
         <OrganizationUnitMembersComponent OrganizationUnit="selectedOrganizationUnit" @ref="MembersComponent"></OrganizationUnitMembersComponent>

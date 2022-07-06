@@ -1,5 +1,4 @@
-﻿using AntDesign;
-using Dignite.Abp.Identity.Localization;
+﻿using Dignite.Abp.Identity.Localization;
 using System.Threading.Tasks;
 using Volo.Abp.AspNetCore.Components.Web.Theming.PageToolbars;
 using Blazorise;
@@ -36,10 +35,10 @@ namespace Dignite.Abp.Identity.Blazor.Pages.Identity
             return ValueTask.CompletedTask;
         }
 
-        async Task TreeNodeClick(TreeEventArgs<OrganizationUnitDto> e)
+        async Task TreeNodeClick(OrganizationUnitDto e)
         {
             await SetToolbarItemsAsync();
-            selectedOrganizationUnit = e.Node.DataItem;
+            selectedOrganizationUnit = e;
         }
 
         private async Task OpenCreateModalAsync()
