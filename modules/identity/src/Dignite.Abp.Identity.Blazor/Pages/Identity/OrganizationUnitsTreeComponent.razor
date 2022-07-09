@@ -11,8 +11,9 @@
 @code {
     [Parameter]public EventCallback<OrganizationUnitDto> OnNodeClick { get; set; }
 
+    private IList<OrganizationUnitDto> AllOrganizationUnits = new List<OrganizationUnitDto>();
     private IReadOnlyList<IdentityRoleDto> AvailableRoles;
-    private OrganizationUnitDto SelectedNode;
+    private OrganizationUnitDto CurrentNode;
     private IList<OrganizationUnitDto> ExpandedNodes = new List<OrganizationUnitDto>();
     private bool HasSuperAuthorizationPermission = false;
 
@@ -31,6 +32,7 @@
     {
         HasSuperAuthorizationPermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization);
         await GetEntitiesAsync();
+        AllOrganizationUnits = Entities.ToList();
         await base.OnInitializedAsync();
     }
 
@@ -57,6 +59,11 @@
         }
     }
 
+    async Task OnSelectNodeChanged(OrganizationUnitDto args)
+    {
+        CurrentNode = args;
+        await OnNodeClick.InvokeAsync(CurrentNode);
+    }
 
 
     async Task OnExpandChanged(IList<OrganizationUnitDto> args)
@@ -80,45 +87,28 @@
         }
     }
 
-    async Task OnSelectNodeChanged(OrganizationUnitDto args)
-    {
-        SelectedNode = args;
-    }
-
-
 
     async Task OnAddRootUnitClicked()
     {
-        SelectedNode = null;
         await OpenCreateModalAsync();
+        NewEntity.ParentId = null;
     }
 
-    async Task OnAddSubUnitClicked(MouseEventArgs e, OrganizationUnitDto node)
+    async Task OnAddSubUnitClicked( OrganizationUnitDto node)
     {
-        SelectedNode = node;
-        await OpenCreateModalAsync();        
+        await OpenCreateModalAsync();    
+        NewEntity.ParentId = node.Id;    
     }
 
-    async Task OnEditUnitClicked(MouseEventArgs e, OrganizationUnitDto node)
+    async Task OnEditUnitClicked( OrganizationUnitDto node)
     {
-        SelectedNode = node;
         await OpenEditModalAsync(node);
     }
 
-    async Task OnDeleteUnitClicked(MouseEventArgs e, OrganizationUnitDto node)
-    {
-        if (await Message.Confirm("你确认删除该机构吗?", "Confirmation"))
-        {
-            SelectedNode = node;
-            await DeleteEntityAsync(node);
-        }
-    }
 
     protected override async Task OpenCreateModalAsync()
     {
         await base.OpenCreateModalAsync();
-
-        NewEntity.ParentId = SelectedNode ==null?null:SelectedNode.Id;
         AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(NewEntity.ParentId)).Items;
     }
 
@@ -127,37 +117,37 @@
     {
         await base.OpenEditModalAsync(entity);
         AvailableRoles = (await OrganizationUnitAppService.GetAvailableRolesAsync(entity.ParentId)).Items;
-        
+
         var ouRoles = await OrganizationUnitAppService.GetRolesAsync(entity.Id);
         EditingEntity.RoleIds = ouRoles.Items.Select(r=>r.Id).ToList();
     }
 
     protected override async Task OnCreatedEntityAsync()
     {
-        if (SelectedNode == null) //add root unit
+        if (!NewEntity.ParentId.HasValue) //add root unit
         {
             await GetEntitiesAsync();
         }
         else
-        {                        
-            var children = (await OrganizationUnitAppService.GetListAsync(new GetOrganizationUnitsInput
-            {
-                ParentId=SelectedNode.Id
-            })).Items;
+        {
+            var currentNode = AllOrganizationUnits.FindById(NewEntity.ParentId.Value);
 
-            SelectedNode.Children.Clear();
+            var children = (await OrganizationUnitAppService.GetListAsync(new GetOrganizationUnitsInput
+                {
+                    ParentId = currentNode.Id
+                })).Items;
+
+            currentNode.Children.Clear();
             foreach (var ou in children)
             {
-                SelectedNode.AddChild(ou);
+                currentNode.AddChild(ou);
             }
 
-            /*
-            //expand node
-            if (!SelectedNode.Expanded)
+            //Expand current node
+            if (!ExpandedNodes.Any(n => n.Id == currentNode.Id))
             {
-                SelectedNode.Expand(true);
+                ExpandedNodes.Add(currentNode);
             }
-            */
         }
 
         await InvokeAsync(CreateModal.Hide);
@@ -165,23 +155,74 @@
 
     protected override async Task OnUpdatedEntityAsync()
     {
-        SelectedNode.DisplayName =EditingEntity.DisplayName;
-        SelectedNode.IsActive = EditingEntity.IsActive;
+        var currentNode = AllOrganizationUnits.FindById(EditingEntityId);
+        currentNode.DisplayName =EditingEntity.DisplayName;
+        currentNode.IsActive = EditingEntity.IsActive;
 
         await InvokeAsync(EditModal.Hide);
     }
 
-    protected override async Task UpdateGetListInputAsync()
+    protected async override Task DeleteEntityAsync (OrganizationUnitDto node)
     {
-        GetListInput.ParentId = SelectedNode == null ? null : SelectedNode.Id;
-        await base.UpdateGetListInputAsync();
+        if (await Message.Confirm("你确认删除该机构吗?", "Confirmation"))
+        {
+            //执行删除
+            await base.DeleteEntityAsync(node);      
+
+            //
+            if (node.ParentId.HasValue)
+            {
+                var parent = AllOrganizationUnits.FindById(node.ParentId.Value);
+                parent.Remove(node);
+                CurrentNode = parent;
+            }
+            else
+            {
+                await GetEntitiesAsync();  
+                CurrentNode = null;      
+            }
+        }
     }
 
-    protected override Task OnDeletedEntityAsync()
-    {
-        //SelectedNode.Remove();
+    protected override async Task OnDeletedEntityAsync()
+    {        
+        await InvokeAsync(StateHasChanged);
+        await Notify.Success(L["SuccessfullyDeleted"]);
+    }
 
-        return Task.CompletedTask;
+
+
+
+    void StartDrag(OrganizationUnitDto item)
+    {
+        CurrentNode = item;
+    }
+
+
+    int GetIndex(OrganizationUnitDto item)
+    {
+        if (item.ParentId.HasValue)
+        {
+            return AllOrganizationUnits.FindById(item.ParentId.Value).Children.FindIndex(ou => ou.Id == item.Id);
+        }
+        else
+        {
+            return AllOrganizationUnits.ToList().FindIndex(ou => ou.Id == item.Id);
+        }
+    }
+
+    void Drop(OrganizationUnitDto item)
+    {
+        var index = GetIndex(item);
+
+        OrganizationUnitDto targetParent = null;
+        if (item.ParentId.HasValue)
+        {
+            targetParent = AllOrganizationUnits.FindById(item.ParentId.Value);
+        }
+        AllOrganizationUnits.Move(CurrentNode, targetParent, index);
+
+        StateHasChanged();
     }
 }
 
@@ -189,18 +230,30 @@
 {
     <Blazorise.Button Color="Blazorise.Color.Primary" Clicked="@OnAddRootUnitClicked">@L["NewRootUnit"]</Blazorise.Button>
 }
-<TreeView TNode="OrganizationUnitDto" Nodes="Entities"
+<div ondragover="event.preventDefault();">
+<TreeView TNode="OrganizationUnitDto" Nodes="AllOrganizationUnits"
         GetChildNodes="x => x.Children"
         HasChildNodes="x => x.HasChild"
         ExpandedNodes="@ExpandedNodes"
         ExpandedNodesChanged="OnExpandChanged"
-        SelectedNode="@SelectedNode"
+        SelectedNode="@CurrentNode"
         SelectedNodeChanged="OnSelectNodeChanged">
-        <NodeContent>
-            @context.DisplayName
+        <NodeContent>         
+            <div draggable="true" @key="@(context.Id)" @ondrag="@(()=> StartDrag(context))" @ondrop="@(()=> Drop(context))">
+            <Dropdown>
+                <Button Color="Color.Light" Size="Size.Small">@context.DisplayName</Button>
+                <DropdownToggle Color="Color.Light" Size="Size.Small" Split />
+                <DropdownMenu>
+                    <DropdownItem Disabled="@(!HasCreatePermission)" Clicked="@(e=>OnAddSubUnitClicked(context))">@L["NewSubUnit"]</DropdownItem>
+                    <DropdownItem Disabled="@(!HasUpdatePermission)" Clicked="@(e=>OnEditUnitClicked(context))">@L["Edit"]</DropdownItem>
+                    <DropdownDivider />
+                    <DropdownItem Disabled="@(!HasDeletePermission)" Clicked="@(e=>DeleteEntityAsync(context))">@L["Delete"]</DropdownItem>
+                </DropdownMenu>
+            </Dropdown>
+            </div>
         </NodeContent>
 </TreeView>
-
+</div>
 
 
 @* ************************* CREATE MODAL ************************* *@
@@ -251,5 +304,3 @@
     </Blazorise.ModalContent>
 </Blazorise.Modal>
 }
-@* ********未来正式版，需要将此放在主题全局页面中 ***************** *@
-<MessageAlert />
