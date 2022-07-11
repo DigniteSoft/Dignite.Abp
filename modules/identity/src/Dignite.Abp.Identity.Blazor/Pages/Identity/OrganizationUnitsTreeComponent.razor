@@ -14,6 +14,9 @@
     private IList<OrganizationUnitDto> AllOrganizationUnits = new List<OrganizationUnitDto>();
     private IReadOnlyList<IdentityRoleDto> AvailableRoles;
     private OrganizationUnitDto CurrentNode;
+    private OrganizationUnitDto DraggingNode;
+    private OrganizationUnitDto DragOverNode;
+    private OrganizationUnitMovePosition? MovePosition;
     private IList<OrganizationUnitDto> ExpandedNodes = new List<OrganizationUnitDto>();
     private bool HasSuperAuthorizationPermission = false;
 
@@ -190,13 +193,11 @@
         await Notify.Success(L["SuccessfullyDeleted"]);
     }
 
-
-
-
-    void StartDrag(OrganizationUnitDto item)
+    void DragEnter(OrganizationUnitDto item,OrganizationUnitMovePosition position)
     {
-        CurrentNode = item;
-    }
+        DragOverNode = item;
+        MovePosition = position;
+    }    
 
 
     int GetIndex(OrganizationUnitDto item)
@@ -211,8 +212,11 @@
         }
     }
 
-    void Drop(OrganizationUnitDto item)
+    void Drop(OrganizationUnitDto item,OrganizationUnitMovePosition position)
     {
+        if (item.Id == DraggingNode.Id)
+            return;
+
         var index = GetIndex(item);
 
         OrganizationUnitDto targetParent = null;
@@ -220,9 +224,16 @@
         {
             targetParent = AllOrganizationUnits.FindById(item.ParentId.Value);
         }
-        AllOrganizationUnits.Move(CurrentNode, targetParent, index);
+        AllOrganizationUnits.Move(DraggingNode, targetParent, index);
 
         StateHasChanged();
+    }
+    
+    enum OrganizationUnitMovePosition
+    {
+        Top,
+        In,
+        Bottom
     }
 }
 
@@ -239,7 +250,10 @@
         SelectedNode="@CurrentNode"
         SelectedNodeChanged="OnSelectNodeChanged">
         <NodeContent>         
-            <div draggable="true" @key="@(context.Id)" @ondrag="@(()=> StartDrag(context))" @ondrop="@(()=> Drop(context))">
+            <div draggable="true" @key="@(context.Id)"
+            @ondragstart="() => DraggingNode = context"
+		    @ondragend="()=> DraggingNode = null"
+            @ondrag="@(()=> DraggingNode=context)" style="position:relative; margin-bottom:10px;">
             <Dropdown>
                 <Button Color="Color.Light" Size="Size.Small">@context.DisplayName</Button>
                 <DropdownToggle Color="Color.Light" Size="Size.Small" Split />
@@ -250,6 +264,22 @@
                     <DropdownItem Disabled="@(!HasDeletePermission)" Clicked="@(e=>DeleteEntityAsync(context))">@L["Delete"]</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
+                @if (DraggingNode is not null)
+			    {
+				    <div style="top:0px;left:0px;position:absolute;width:100%; height:100%; 
+                     @(DragOverNode!=null && DraggingNode.ParentId!=DragOverNode.Id && MovePosition== OrganizationUnitMovePosition.In &&context.Id==DragOverNode.Id?"border:solid 1px #d5d5d5; background-color:rgba(255, 255, 255, 0.4);":"")"
+			         @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.In))"
+			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.In))"
+                     >
+				    </div>
+
+				    <div style="bottom:-10px;left:0px;position:absolute;width:100%; height:7px; 
+                     @(DragOverNode!=null && DraggingNode.ParentId!=DragOverNode.Id && DragOverNode.Id!=DraggingNode.Id && MovePosition== OrganizationUnitMovePosition.Bottom &&context.Id==DragOverNode.Id?" border-top:solid 3px red;":"")"
+			         @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.Bottom))"
+			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.Bottom))"
+                     >
+				    </div>
+			    }
             </div>
         </NodeContent>
 </TreeView>

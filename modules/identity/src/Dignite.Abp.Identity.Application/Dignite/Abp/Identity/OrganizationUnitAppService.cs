@@ -381,8 +381,15 @@ namespace Dignite.Abp.Identity
             int newSort = 1;
             if (beforeOrganizationUnitId.HasValue)
             {
-                var beforeOrganizationUnit = children.Single(ou => ou.Id == beforeOrganizationUnitId.Value);
-                newSort = beforeOrganizationUnit.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName) + 1;
+                var beforeOrganizationUnit = children.SingleOrDefault(ou => ou.Id == beforeOrganizationUnitId.Value);
+                if (beforeOrganizationUnit != null)
+                {
+                    newSort = beforeOrganizationUnit.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName) + 1;
+                }
+                else
+                {
+                    newSort=children.Select(ou => ou.GetProperty<int>(OrganizationUnitExtraPropertyNames.SortName)).DefaultIfEmpty().Max();
+                }
             }
 
             foreach (var ou in children)
