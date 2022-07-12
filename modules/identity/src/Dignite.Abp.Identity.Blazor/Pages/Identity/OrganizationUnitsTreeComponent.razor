@@ -199,39 +199,86 @@
         MovePosition = position;
     }    
 
-
-    int GetIndex(OrganizationUnitDto item)
-    {
-        if (item.ParentId.HasValue)
-        {
-            return AllOrganizationUnits.FindById(item.ParentId.Value).Children.FindIndex(ou => ou.Id == item.Id);
-        }
-        else
-        {
-            return AllOrganizationUnits.ToList().FindIndex(ou => ou.Id == item.Id);
-        }
-    }
-
-    void Drop(OrganizationUnitDto item,OrganizationUnitMovePosition position)
+    async void Drop(OrganizationUnitDto item,OrganizationUnitMovePosition position)
     {
         if (item.Id == DraggingNode.Id)
             return;
 
-        var index = GetIndex(item);
+        //
+        await MoveAsync(DraggingNode, item,position);
 
-        OrganizationUnitDto targetParent = null;
-        if (item.ParentId.HasValue)
+        await this.InvokeAsync(() => this.StateHasChanged());        
+    }
+
+
+    async Task MoveAsync(OrganizationUnitDto source, OrganizationUnitDto target,OrganizationUnitMovePosition position)
+    {
+        //
+        if (source.ParentId.HasValue)
         {
-            targetParent = AllOrganizationUnits.FindById(item.ParentId.Value);
+            AllOrganizationUnits.FindById(source.ParentId.Value).Remove(source);
         }
-        AllOrganizationUnits.Move(DraggingNode, targetParent, index);
+        else
+        {
+            AllOrganizationUnits.RemoveAll(ou => ou.Id == source.Id);
+        }
 
-        StateHasChanged();
+        //
+        if (position == OrganizationUnitMovePosition.In)
+        {
+            if (target.HasChild)
+            {
+                if (!target.Children.Any())
+                {
+                    var children = (await OrganizationUnitAppService.GetListAsync(new GetOrganizationUnitsInput
+                        {
+                            ParentId = target.Id
+                        })).Items;
+
+                    foreach (var ou in children)
+                    {
+                        target.AddChild(ou);
+                    }
+                }
+            }
+            target.AddChild(source);
+            await OrganizationUnitAppService.MoveAsync(source.Id, new OrganizationUnitMoveInput
+                {
+                    TargetParentId = target.Id
+                });
+
+            //Expand current node
+            if (!ExpandedNodes.Any(n => n.Id == target.Id))
+            {
+                ExpandedNodes.Add(target);
+            }
+        }
+
+        //
+        if (position == OrganizationUnitMovePosition.Bottom)
+        {
+            if (target.ParentId.HasValue)
+            {
+                AllOrganizationUnits.FindById(target.ParentId.Value).Children.InsertAfter(target,source);
+                await OrganizationUnitAppService.MoveAsync(source.Id, new OrganizationUnitMoveInput
+                {
+                    TargetParentId=target.ParentId,
+                    TargetBeforeId=target.Id
+                });
+            }
+            else
+            {
+                AllOrganizationUnits.InsertAfter(target,source);
+                await OrganizationUnitAppService.MoveAsync(source.Id, new OrganizationUnitMoveInput
+                {
+                    TargetBeforeId=target.Id
+                });
+            }
+        }
     }
     
     enum OrganizationUnitMovePosition
     {
-        Top,
         In,
         Bottom
     }

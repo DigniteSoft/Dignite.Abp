@@ -8,36 +8,6 @@ namespace Dignite.Abp.Identity
     public static class OrganizationUnitListExtensions
     {
         /// <summary>
-        /// 移动组织机构
-        /// </summary>
-        /// <param name="source"></param>
-        /// <param name="ou"></param>
-        /// <param name="targetParent">目标父组织机构</param>
-        /// <param name="index">移动后的索引</param>
-        public static void Move([NotNull] this IList<OrganizationUnitDto> source, OrganizationUnitDto ou, OrganizationUnitDto targetParent, int index)
-        {
-            if (ou.ParentId.HasValue)
-            {
-                source.FindById(ou.ParentId.Value).Remove(ou);
-            }
-            else
-            {
-                source.RemoveAll(i=>i.Id==ou.Id);
-            }
-
-
-            if (targetParent!=null)
-            {
-                targetParent.InsertChild(index, ou);
-            }
-            else
-            {
-                ou.ParentId = null;
-                source.Insert(index, ou);
-            }
-        }
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="source"></param>

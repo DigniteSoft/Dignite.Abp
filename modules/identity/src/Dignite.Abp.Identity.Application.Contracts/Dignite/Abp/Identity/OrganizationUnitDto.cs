@@ -85,13 +85,6 @@ namespace Dignite.Abp.Identity
             return this.Id == other.Id;
         }
 
-        public void InsertChild(int index, OrganizationUnitDto ou)
-        {
-            this.HaveChildren(true);
-            ou.ParentId= this.Id;
-            this.Children.Insert(index,ou);
-        }
-
         public void AddChild(OrganizationUnitDto ou)
         {
             this.HaveChildren(true);
