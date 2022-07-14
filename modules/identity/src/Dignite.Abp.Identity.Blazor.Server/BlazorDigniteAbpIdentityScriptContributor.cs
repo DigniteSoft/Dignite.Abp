@@ -6,7 +6,6 @@ namespace Dignite.Abp.Identity.Blazor.Server
     {
         public override void ConfigureBundle(BundleConfigurationContext context)
         {
-            //context.Files.Add("/_content/AntDesign/js/ant-design-blazor.js");
         }
     }
 }
