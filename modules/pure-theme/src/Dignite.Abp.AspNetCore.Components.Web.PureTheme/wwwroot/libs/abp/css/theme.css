@@ -121,6 +121,7 @@
     z-index: 1030;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
+    height: var(--b-bar-horizontal-height, auto);
 }
 
 @media (max-width: 576px) {

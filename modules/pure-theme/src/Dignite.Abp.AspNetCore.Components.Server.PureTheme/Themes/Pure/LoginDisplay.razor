@@ -14,11 +14,11 @@
             <BarDropdownToggle>
                 @if (CurrentTenant.Name != null)
                 {
-                    <span><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</span>
+                    <Text><i>@CurrentTenant.Name</i>\@CurrentUser.UserName</Text>
                 }
                 else
                 {
-                    <span>@CurrentUser.UserName</span>
+                    <Text>@CurrentUser.UserName</Text>
                 }
             </BarDropdownToggle>
             <BarDropdownMenu>
@@ -35,6 +35,8 @@
         </BarDropdown>
     </Authorized>
     <NotAuthorized>
-        <a class="nav-link" href="/Account/Login">@L["Login"]</a>
+        <Link To="/Account/Login">
+            @L["Login"]
+        </Link>
     </NotAuthorized>
 </AuthorizeView>

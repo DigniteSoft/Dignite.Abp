@@ -35,7 +35,6 @@
     {
         HasSuperAuthorizationPermission = await AuthorizationService.IsGrantedAsync(OrganizationUnitPermissions.OrganizationUnits.SuperAuthorization);
         await GetEntitiesAsync();
-        AllOrganizationUnits = Entities.ToList();
         await base.OnInitializedAsync();
     }
 
@@ -55,6 +54,8 @@
             }
             Entities = result.Items;
             TotalCount = (int?)result.Items.Count;
+
+            AllOrganizationUnits = Entities.ToList();
         }
         catch (Exception ex)
         {
@@ -130,6 +131,7 @@
         if (!NewEntity.ParentId.HasValue) //add root unit
         {
             await GetEntitiesAsync();
+            ExpandedNodes.Clear();
         }
         else
         {
@@ -241,12 +243,16 @@
                     }
                 }
             }
-            target.AddChild(source);
-            await OrganizationUnitAppService.MoveAsync(source.Id, new OrganizationUnitMoveInput
+            await OrganizationUnitAppService.MoveAsync(
+                source.Id, 
+                new OrganizationUnitMoveInput
                 {
-                    TargetParentId = target.Id
+                    TargetParentId = target.Id,
+                    TargetBeforeId=target.Children.LastOrDefault()?.Id
                 });
 
+            //
+            target.AddChild(source);
             //Expand current node
             if (!ExpandedNodes.Any(n => n.Id == target.Id))
             {
