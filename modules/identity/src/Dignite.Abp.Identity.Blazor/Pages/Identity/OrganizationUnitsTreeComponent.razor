@@ -306,10 +306,10 @@
             <div draggable="true" @key="@(context.Id)"
             @ondragstart="() => DraggingNode = context"
 		    @ondragend="()=> DraggingNode = null"
-            @ondrag="@(()=> DraggingNode=context)" style="position:relative; margin-bottom:10px;">
+            @ondrag="@(()=> DraggingNode=context)" style="position:relative; margin-bottom:9px;">
             <Dropdown>
-                <Button Color="Color.Light" Size="Size.Small">@context.DisplayName</Button>
-                <DropdownToggle Color="Color.Light" Size="Size.Small" Split />
+                <Button Color="Color.Light"  Padding="Padding.Is0.FromTop.Is0.FromBottom.Is1.FromStart.Is1.FromEnd">@context.DisplayName</Button>
+                <DropdownToggle Color="Color.Light"  Padding="Padding.Is0.FromTop.Is0.FromBottom" Split />
                 <DropdownMenu>
                     <DropdownItem Disabled="@(!HasCreatePermission)" Clicked="@(e=>OnAddSubUnitClicked(context))">@L["NewSubUnit"]</DropdownItem>
                     <DropdownItem Disabled="@(!HasUpdatePermission)" Clicked="@(e=>OnEditUnitClicked(context))">@L["Edit"]</DropdownItem>
@@ -319,19 +319,17 @@
             </Dropdown>
                 @if (DraggingNode is not null)
 			    {
-				    <div style="top:0px;left:0px;position:absolute;width:100%; height:100%; 
-                     @(DragOverNode!=null && DraggingNode.ParentId!=DragOverNode.Id && MovePosition== OrganizationUnitMovePosition.In &&context.Id==DragOverNode.Id?"border:solid 1px #d5d5d5; background-color:rgba(255, 255, 255, 0.4);":"")"
-			         @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.In))"
-			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.In))"
-                     >
-				    </div>
+                    var isAvailableDragging = DragOverNode != null && DraggingNode.ParentId != DragOverNode.Id && DragOverNode.Id != DraggingNode.Id && context.Id == DragOverNode.Id;
+                    <Div Border="(isAvailableDragging && MovePosition == OrganizationUnitMovePosition.In)?Border.Primary:Border.Is0" Width="Width.Is100" Height="Height.Is100" Position="Position.Absolute.Top.Is0.Start.Is0"
+                    @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.In))"
+			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.In))">
+                    </Div>
 
-				    <div style="bottom:-10px;left:0px;position:absolute;width:100%; height:7px; 
-                     @(DragOverNode!=null && DraggingNode.ParentId!=DragOverNode.Id && DragOverNode.Id!=DraggingNode.Id && MovePosition== OrganizationUnitMovePosition.Bottom &&context.Id==DragOverNode.Id?" border-top:solid 3px red;":"")"
-			         @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.Bottom))"
-			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.Bottom))"
-                     >
-				    </div>
+                    <Div Border="(isAvailableDragging && MovePosition == OrganizationUnitMovePosition.Bottom)?Border.Is3.Primary.OnTop:Border.Is0" style="bottom:-9px; height:6px;"  Width="Width.Is100" Position="Position.Absolute.Start.Is0"
+                    @ondrop="@(()=> Drop(context,OrganizationUnitMovePosition.Bottom))"
+			         @ondragenter="@(()=>DragEnter(context, OrganizationUnitMovePosition.Bottom))">
+                    </Div>
+				    
 			    }
             </div>
         </NodeContent>
