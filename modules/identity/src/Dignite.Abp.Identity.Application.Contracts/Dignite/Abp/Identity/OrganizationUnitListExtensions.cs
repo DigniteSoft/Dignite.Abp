@@ -13,7 +13,7 @@ namespace Dignite.Abp.Identity
         /// <param name="source"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static OrganizationUnitDto FindById([NotNull] this IList<OrganizationUnitDto> source,Guid id)
+        public static OrganizationUnitDto FindById([NotNull] this IEnumerable<OrganizationUnitDto> source,Guid id)
         {
             OrganizationUnitDto result = source.FirstOrDefault(ou => ou.Id == id);
 
